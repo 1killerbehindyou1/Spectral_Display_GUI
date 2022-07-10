@@ -1,0 +1,46 @@
+
+#ifndef PIECHART_H
+#define PIECHART_H
+
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+
+//![0]
+class PieChart : public QQuickPaintedItem
+{
+//![0]
+    Q_OBJECT
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QColor color READ color WRITE setColor)
+    // QML_ELEMENT // <- for qmake
+//![1]
+public:
+//![1]
+
+    PieChart(QQuickItem *parent = 0);
+
+    QString name() const;
+    void setName(const QString &name);
+
+    QColor color() const;
+    void setColor(const QColor &color);
+
+    void paint(QPainter *painter);
+
+//![2]
+    Q_INVOKABLE void clearChart();
+
+signals:
+    void chartCleared();
+//![2]
+
+private:
+    QString m_name;
+    QColor m_color;
+
+//![3]
+};
+//![3]
+
+#endif
+
