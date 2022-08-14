@@ -13,7 +13,7 @@ class Led_Matrix : public QObject
     Q_OBJECT
     Q_PROPERTY(QString pixel_size READ getPixelSize WRITE setPixelSize)
     Q_PROPERTY(QString number_of_pixels READ getNumberOfPixels WRITE setNumberOfPixels)
-    Q_PROPERTY(QColor pixel_color READ getColor WRITE setColor)
+   // Q_PROPERTY(QColor pixel_color READ getColor WRITE setColor)
    
 public:
 
@@ -25,10 +25,10 @@ public:
     QString getNumberOfPixels() const;
     void setNumberOfPixels(const QString &number_of_pixels);
 
-    QString getColor() const;
-    void setColor(const QString &pixel_color);
+    //QString getColor() const;
+    //void setColor(const QString &pixel_color);
 
-    void paint(QPainter *painter);
+    //void paint(QPainter *painter);
 
  
 private:

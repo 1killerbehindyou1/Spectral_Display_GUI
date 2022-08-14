@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtQuick>
+#include <iostream>
+#include <QDebug>
 #include "Led_Matrix.h"
 #include "PieChart.h"
 
@@ -35,17 +37,19 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-   // Led_Matrix *matrix = new Led_Matrix();  //<==============================
+    std::cout<< "================";
+    Led_Matrix *matrix = new Led_Matrix();  //<==============================
     
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
 
+    qDebug()<< "XXXXXXXXXXXXXXXXXXXXXXX";
     qInstallMessageHandler(myMessageOutput);
     qmlRegisterType<Led_Matrix>("Main", 1, 0, "Led_Matrix");
 
     QQmlApplicationEngine engine;
-   // engine.rootContext()->setContextProperty("_matrix", matrix);
+    engine.rootContext()->setContextProperty("_matrix", matrix);
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
