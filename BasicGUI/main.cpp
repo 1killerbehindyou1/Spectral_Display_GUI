@@ -46,10 +46,10 @@ int main(int argc, char *argv[])
 
     qDebug()<< "XXXXXXXXXXXXXXXXXXXXXXX";
     qInstallMessageHandler(myMessageOutput);
-    qmlRegisterType<Led_Matrix>("Main", 1, 0, "Led_Matrix");
+    //qmlRegisterType<Led_Matrix>("Main", 1, 0, "Led_Matrix");
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("_matrix", matrix);
+    //engine.rootContext()->setContextProperty("_matrix", matrix);
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

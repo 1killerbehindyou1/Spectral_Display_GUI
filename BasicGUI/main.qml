@@ -13,7 +13,12 @@ Window
     color: "lightgrey"
     maximumHeight: 600; minimumHeight: 600; maximumWidth: 970; minimumWidth: 970
 
+    Rectangle{
+        color: "green"
+        anchors.fill: parameters
+    }
 
+/*
 Item{ id: background; anchors.fill: parent
 
     Row{ id: main_row; spacing: 30; x: 30; y:30
@@ -61,7 +66,7 @@ Item{ id: background; anchors.fill: parent
             Text{text: "grid spacing    pixel res  pixel size"}               
             }
         }
-    } 
+    } */
 } 
 
 //<===============================================================================width: 100; height: 50
