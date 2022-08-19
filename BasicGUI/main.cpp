@@ -4,8 +4,8 @@
 #include <QtQuick>
 #include <iostream>
 #include <QDebug>
-#include "Led_Matrix.h"
-#include "PieChart.h"
+//#include "Led_Matrix.h"
+//#include "PieChart.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    std::cout<< "================";
-    Led_Matrix *matrix = new Led_Matrix();  //<==============================
+    //std::cout<< "================";
+    //Led_Matrix *matrix = new Led_Matrix();  //<==============================
     
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);

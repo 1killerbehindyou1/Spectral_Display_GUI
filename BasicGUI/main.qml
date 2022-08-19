@@ -19,10 +19,7 @@ Item{ id: background; anchors.fill: parent
     Row{ id: main_row; spacing: 30; x: 30; y:30
 
     Rectangle{ id: draw_area; width: 600; height: 520; color: "white"
-            Led_Matrix
-            {
-                
-            }
+            
             
 
             PixelPlot{ id: p_plot}                         
