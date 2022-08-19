@@ -151,7 +151,7 @@ build BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp | ${cmake_ninja_workdir}BasicGUI_a
 #############################################
 # Phony custom command for CMakeFiles\BasicGUI_autogen_timestamp_deps
 
-build CMakeFiles/BasicGUI_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/BasicGUI_autogen_timestamp_deps: phony C$:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a C$:/Qt/5.15.2/mingw81_64/bin/moc.exe C$:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Quick.a
+build CMakeFiles/BasicGUI_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/BasicGUI_autogen_timestamp_deps: phony C$:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a C$:/Qt/5.15.2/mingw81_64/bin/moc.exe C$:/Qt/5.15.2/mingw81_64/lib/libQt5Quick.a
 
 
 #############################################

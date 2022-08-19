@@ -23,7 +23,7 @@ Item{ id: background; anchors.fill: parent
             
             
 
-            //PixelPlot{ id: p_plot}                         
+            PixelPlot{ id: p_plot}                         
              }
         
      Column{ id: controlColumn; spacing: 10; anchors.bottom: parent.bottom

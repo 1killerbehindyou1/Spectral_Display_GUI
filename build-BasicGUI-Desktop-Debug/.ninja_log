@@ -1,19 +1,19 @@
 # ninja log v5
-4	87	6826507162401841	BasicGUI_autogen/timestamp	4836d1c756e14587
-239	294	6826200226582340	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/mocs_compilation.cpp.obj	731a076ec93d49b
-132	175	6826507163297305	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj	729abc4d16c5ee26
-4	87	6826507162401841	BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
-4	87	6826507162401841	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/timestamp	4836d1c756e14587
-4	87	6826507162401841	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
-175	284	6826507164360817	BasicGUI.exe	8116881b60778449
-89	132	6826507162832203	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
-89	132	6826507162832203	BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
-150	3627	6826502507054561	CMakeFiles/BasicGUI.dir/main.cpp.obj	1d9616a1b362c652
 4	76	6826508106033406	BasicGUI_autogen/timestamp	4836d1c756e14587
+239	294	6826200226582340	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/mocs_compilation.cpp.obj	731a076ec93d49b
+121	166	6826508106930028	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj	729abc4d16c5ee26
 4	76	6826508106033406	BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
 4	76	6826508106033406	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/timestamp	4836d1c756e14587
 4	76	6826508106033406	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
-78	120	6826508106458369	BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
-78	120	6826508106458369	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
-121	166	6826508106930028	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj	729abc4d16c5ee26
 166	284	6826508108074425	BasicGUI.exe	8116881b60778449
+78	120	6826508106458369	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
+78	120	6826508106458369	BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
+150	3627	6826502507054561	CMakeFiles/BasicGUI.dir/main.cpp.obj	1d9616a1b362c652
+7	95	6826510040791193	BasicGUI_autogen/timestamp	4836d1c756e14587
+7	95	6826510040791193	BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
+7	95	6826510040791193	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/timestamp	4836d1c756e14587
+7	95	6826510040791193	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/mocs_compilation.cpp	4836d1c756e14587
+97	158	6826510041399155	BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
+97	158	6826510041399155	C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp	7065b95291234123
+158	204	6826510041897493	CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj	729abc4d16c5ee26
+204	318	6826510042983846	BasicGUI.exe	8116881b60778449
