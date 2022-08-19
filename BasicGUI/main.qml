@@ -29,7 +29,7 @@ Item{ id: background; anchors.fill: parent
      Column{ id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
         
                 Text{text: "Matrix pixel size: \t" + _matrix.pixel_size + "\nm_number_of_pixels: \t" + _matrix.number_of_pixels}   
-               // 
+               
        My_button{text: "SET"
                     onPressed: 
                     {
