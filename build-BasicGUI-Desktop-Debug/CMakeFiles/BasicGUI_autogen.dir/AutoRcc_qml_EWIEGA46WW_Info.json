@@ -1,0 +1,22 @@
+{
+	"BUILD_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/BasicGUI",
+	"CMAKE_SOURCE_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/BasicGUI",
+	"INCLUDE_DIR" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/include",
+	"INPUTS" : 
+	[
+		"C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/main.qml"
+	],
+	"LOCK_FILE" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/CMakeFiles/BasicGUI_autogen.dir/AutoRcc_qml_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "qml" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_qml.cpp",
+	"RCC_EXECUTABLE" : "C:/Qt/5.15.2/mingw81_64/bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/CMakeFiles/BasicGUI_autogen.dir/AutoRcc_qml_EWIEGA46WW_Used.txt",
+	"SOURCE" : "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/qml.qrc",
+	"VERBOSITY" : 0
+}

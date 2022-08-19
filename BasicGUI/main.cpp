@@ -35,7 +35,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    
 
     //std::cout<< "================";
     //Led_Matrix *matrix = new Led_Matrix();  //<==============================
@@ -44,8 +44,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
 
-    qDebug()<< "XXXXXXXXXXXXXXXXXXXXXXX";
+    std::cout<< "XXXXXXXXXXXXXXXXXXXXXXX"<< std::endl;
     qInstallMessageHandler(myMessageOutput);
+    QGuiApplication app(argc, argv);
     //qmlRegisterType<Led_Matrix>("Main", 1, 0, "Led_Matrix");
 
     QQmlApplicationEngine engine;
@@ -53,7 +54,9 @@ int main(int argc, char *argv[])
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,&app, [url](QObject *obj, const QUrl &objUrl) {if (!obj && url == objUrl)QCoreApplication::exit(-1);}, Qt::QueuedConnection);
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,&app, 
+    [url](QObject *obj, const QUrl &objUrl) 
+    {if (!obj && url == objUrl)QCoreApplication::exit(-1);}, Qt::QueuedConnection);
     engine.load(url);
     return app.exec();
 }
