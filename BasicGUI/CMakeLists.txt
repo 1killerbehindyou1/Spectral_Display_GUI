@@ -24,7 +24,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 
 set(PROJECT_SOURCES
         main.cpp
-        qml.qrc
+        QML_sources/qml.qrc
         Led_Matrix.cpp
         Led_Matrix.h
 )

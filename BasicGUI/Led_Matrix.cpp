@@ -8,16 +8,6 @@ LedMatrix::LedMatrix(QQuickItem *parent)
 }
 
 
-QString LedMatrix::name() const
-{
-    return m_name;
-}
-
-void LedMatrix::setName(const QString &name)
-{
-    m_name = name;
-}
-
 QColor LedMatrix::color() const
 {
     return m_color;
@@ -28,10 +18,50 @@ void LedMatrix::setColor(const QColor &color)
     m_color = color;
 }
 
+void LedMatrix::setSize( const int &size)
+{
+    m_size = size;
+}
+
+int LedMatrix::size() const
+{
+    return m_size;
+}
+
+int LedMatrix::lx() const
+{
+    return m_lx;
+}
+
+int LedMatrix::ly() const
+{
+    return m_ly;
+}
+
+void LedMatrix::setLx(const int &lx) 
+{
+     m_lx = lx;
+}
+
+void LedMatrix::setLy(const int &ly) 
+{
+     m_ly = ly;
+}
+
 void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
     painter->setPen(pen);
     painter->setRenderHints(QPainter::Antialiasing, true);
-    painter->drawPie(boundingRect().adjusted(1, 1, -1, -1), 90 * 16, 290 * 16);
+    painter->drawRect(m_lx, m_ly, m_size, m_size);
+}
+
+
+void LedMatrix::matrixUpdate()
+{
+    //setColor(m_color);
+
+    update();
+
+    emit matrixUpdated();
 }
