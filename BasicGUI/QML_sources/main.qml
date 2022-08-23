@@ -34,7 +34,8 @@ Item{ id: background; anchors.fill: parent
 
                 onPressed:
                 {
-                   led.matrixUpdate(mouseX, mouseY);
+
+                   led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2);
                 }
             }
                 
