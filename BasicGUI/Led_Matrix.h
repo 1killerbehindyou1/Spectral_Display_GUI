@@ -8,8 +8,6 @@
 #include <QColor>
 #include <QPainter>
 
-#include <QtQuick/QQuickPaintedItem>
-#include <QColor>
 
 class LedMatrix : public QQuickPaintedItem
 {

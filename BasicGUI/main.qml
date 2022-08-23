@@ -22,7 +22,15 @@ Item{ id: background; anchors.fill: parent
     Rectangle{ id: draw_area; width: 600; height: 520; color: "white"
             
             
-
+        LedMatrix
+        {
+        id: aLedMAtrix
+        anchors.centerIn: parent
+        width: 100; 
+        height: 100
+        name: "A simple Plot"
+        color: "red"
+        }
             //PixelPlot{ id: p_plot}
              }
         

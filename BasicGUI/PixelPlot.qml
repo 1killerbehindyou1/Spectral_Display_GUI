@@ -18,14 +18,7 @@ Item
             rotation: 135
             color: "red"
            */
-        LedMatrix
-        {
-        id: aLedMAtrix
-        anchors.centerIn: parent
-        width: 100; height: 100
-        name: "A simple Plot"
-        color: "red"
-        }
+        
     }
     
 }
