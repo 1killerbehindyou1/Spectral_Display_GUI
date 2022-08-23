@@ -24,22 +24,19 @@ Item{ id: background; anchors.fill: parent
                 anchors.fill: parent
                 LedMatrix
                 {
-                id: led          
-                anchors.fill: parent
-                color: "blue"
-                size: 100
-                lx: 100
-                ly: 50               
+                    id: led          
+                    anchors.fill: parent
+                    color: "blue"
+                    size: 100
+                    lx: 50
+                    ly: 50               
                 }
 
                 onPressed:
                 {
-
                    led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2);
                 }
-            }
-                
-                
+            }               
             }
         
         
@@ -60,7 +57,7 @@ Item{ id: background; anchors.fill: parent
         Row{ id: led_par; spacing: 10
                 
                     Data_Input{ id: l_x; text: "50"}
-                    Data_Input{ id: l_y; text: "30"}
+                    Data_Input{ id: l_y; text: "50"}
                     Data_Input{ id: l_size; text: "100"}
                 }
             Text{ text: "led x   led y  led size"}
