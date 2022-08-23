@@ -20,22 +20,27 @@ Item{ id: background; anchors.fill: parent
 
     Rectangle{ id: draw_area; width: 600; height: 520; color: "white"
             
+            MouseArea{
+                anchors.fill: parent
                 LedMatrix
                 {
-                id: led
-                width: 400 
-                height: 400
-                anchors.centerIn: parent
+                id: led          
+                anchors.fill: parent
                 color: "blue"
                 size: 100
                 lx: 100
-                ly: 50
-
-                onMatrixUpdated: console.log("onMatrixUpdated!")
+                ly: 50               
                 }
 
-
-             }
+                onPressed:
+                {
+                   led.matrixUpdate(mouseX, mouseY);
+                }
+            }
+                
+                
+            }
+        
         
      Column{ 
         id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
@@ -45,9 +50,8 @@ Item{ id: background; anchors.fill: parent
                     onPressed: 
                     {
                        led.size = l_size.text
-                       led.lx = l_x.text
-                       led.ly = l_y.text
-                       led.matrixUpdate()
+
+                       led.matrixUpdate(l_x.text, l_y.text)
                     }          
                 }
             
@@ -61,8 +65,9 @@ Item{ id: background; anchors.fill: parent
             Text{ text: "led x   led y  led size"}
                            
             }
-        }
-    } 
+    }
+    }
+     
 } 
 
 //<===============================================================================width: 100; height: 50

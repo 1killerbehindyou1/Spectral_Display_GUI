@@ -52,16 +52,15 @@ void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
     painter->setPen(pen);
-    painter->setRenderHints(QPainter::Antialiasing, true);
+    //painter->setRenderHints(QPainter::Antialiasing, true);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
 }
 
 
-void LedMatrix::matrixUpdate()
+void LedMatrix::matrixUpdate(int x,int y)
 {
-    //setColor(m_color);
-
+    m_lx = x;
+    m_ly = y;
     update();
-
-    emit matrixUpdated();
+    //emit matrixUpdated();
 }

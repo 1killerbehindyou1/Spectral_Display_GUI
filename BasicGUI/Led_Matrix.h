@@ -35,10 +35,10 @@ public:
     void setLx(const int &lx);
     void setLy(const int &ly);
 
- Q_INVOKABLE void matrixUpdate();
+ Q_INVOKABLE void matrixUpdate(int l_x, int l_y);
 
 signals:
-    void matrixUpdated();
+    //void updatedMatrix();
 
 private:
     
