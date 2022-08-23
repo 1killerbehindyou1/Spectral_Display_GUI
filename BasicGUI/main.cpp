@@ -35,14 +35,14 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 int main(int argc, char *argv[])
 {
     
- 
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
-    //qmlRegisterType<Led_Matrix>("Main", 1, 0, "Led_Matrix");
+    qmlRegisterType<LedMatrix>("Main", 1, 0, "LedMatrix");
 
     QQmlApplicationEngine engine;
     //engine.rootContext()->setContextProperty("_matrix", matrix);
@@ -54,4 +54,12 @@ int main(int argc, char *argv[])
     {if (!obj && url == objUrl)QCoreApplication::exit(-1);}, Qt::QueuedConnection);
     engine.load(url);
     return app.exec();
+
+    /*QGuiApplication app(argc, argv);
+
+    QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.setSource(QUrl("qrc:/main.qml"));
+    view.show();
+    return app.exec();*/
 }

@@ -22,32 +22,18 @@ Item{ id: background; anchors.fill: parent
     Rectangle{ id: draw_area; width: 600; height: 520; color: "white"
             
             
-        LedMatrix
-        {
-        id: aLedMAtrix
-        anchors.centerIn: parent
-        width: 100; 
-        height: 100
-        name: "A simple Plot"
-        color: "red"
-        }
-            //PixelPlot{ id: p_plot}
+        
+    PixelPlot{ id: p_plot}
              }
         
      Column{ id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
         
-                Text{text: "Matrix pixel size: \t" + _matrix.pixel_size + "\nm_number_of_pixels: \t" + _matrix.number_of_pixels}   
+                Text{text: "Matrix pixel size: \t"  + "\nm_number_of_pixels: \t"}
                
        My_button{text: "SET"
                     onPressed: 
                     {
-                        p_plot.pix_resolution = p_res.text
-                        p_plot.pix_size = p_size.text
-                        p_plot.pix_grid_spacing = g_spacing.text
 
-                        p_plot.led_ruler_length = l_length.text
-                        p_plot.led_size = l_size.text
-                        p_plot.led_ruler_spacing = l_spacing.text
                     }          
                 }
             
