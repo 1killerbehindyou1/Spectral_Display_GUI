@@ -29,11 +29,3 @@ import QtQuick.Layouts 1.3
     }
 }       
 
-//==============JAVA SCRIPT===================//
-/*
-fuction foo(){
-    console.log(textInp.width)
-    //return textInp.width
-}
-*/
-//============================================//

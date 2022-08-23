@@ -65,6 +65,14 @@ build CMakeFiles/BasicGUI.dir/main.cpp.obj: CXX_COMPILER__BasicGUI_Debug C$:/Use
   OBJECT_DIR = CMakeFiles\BasicGUI.dir
   OBJECT_FILE_DIR = CMakeFiles\BasicGUI.dir
 
+build CMakeFiles/BasicGUI.dir/Led_Matrix.cpp.obj: CXX_COMPILER__BasicGUI_Debug C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/Led_Matrix.cpp || cmake_object_order_depends_target_BasicGUI
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_DEBUG -DQT_QML_LIB -DQT_QUICK_LIB
+  DEP_FILE = CMakeFiles\BasicGUI.dir\Led_Matrix.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17
+  INCLUDES = -I"C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug" -I"C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/BasicGUI" -I"C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/include" -isystem C:/Qt/5.15.2/mingw81_64/include -isystem C:/Qt/5.15.2/mingw81_64/include/QtCore -isystem C:/Qt/5.15.2/mingw81_64/./mkspecs/win32-g++ -isystem C:/Qt/5.15.2/mingw81_64/include/QtQuick -isystem C:/Qt/5.15.2/mingw81_64/include/QtQmlModels -isystem C:/Qt/5.15.2/mingw81_64/include/QtQml -isystem C:/Qt/5.15.2/mingw81_64/include/QtNetwork -isystem C:/Qt/5.15.2/mingw81_64/include/QtGui -isystem C:/Qt/5.15.2/mingw81_64/include/QtANGLE
+  OBJECT_DIR = CMakeFiles\BasicGUI.dir
+  OBJECT_FILE_DIR = CMakeFiles\BasicGUI.dir
+
 build CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj: CXX_COMPILER__BasicGUI_Debug C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp || cmake_object_order_depends_target_BasicGUI
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_DEBUG -DQT_QML_LIB -DQT_QUICK_LIB
   DEP_FILE = CMakeFiles\BasicGUI.dir\BasicGUI_autogen\EWIEGA46WW\qrc_qml.cpp.obj.d
@@ -81,7 +89,7 @@ build CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj: CXX_C
 #############################################
 # Link the executable BasicGUI.exe
 
-build BasicGUI.exe: CXX_EXECUTABLE_LINKER__BasicGUI_Debug CMakeFiles/BasicGUI.dir/BasicGUI_autogen/mocs_compilation.cpp.obj CMakeFiles/BasicGUI.dir/main.cpp.obj CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj | C$:/Qt/5.15.2/mingw81_64/lib/libQt5Quick.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5QmlModels.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Qml.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Network.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a C$:/Qt/5.15.2/mingw81_64/lib/libqtmain.a || BasicGUI_autogen BasicGUI_autogen_timestamp_deps
+build BasicGUI.exe: CXX_EXECUTABLE_LINKER__BasicGUI_Debug CMakeFiles/BasicGUI.dir/BasicGUI_autogen/mocs_compilation.cpp.obj CMakeFiles/BasicGUI.dir/main.cpp.obj CMakeFiles/BasicGUI.dir/Led_Matrix.cpp.obj CMakeFiles/BasicGUI.dir/BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp.obj | C$:/Qt/5.15.2/mingw81_64/lib/libQt5Quick.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5QmlModels.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Qml.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Network.a C$:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a C$:/Qt/5.15.2/mingw81_64/lib/libqtmain.a || BasicGUI_autogen BasicGUI_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/5.15.2/mingw81_64/lib/libQt5Quick.a  C:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a  C:/Qt/5.15.2/mingw81_64/lib/libQt5QmlModels.a  C:/Qt/5.15.2/mingw81_64/lib/libQt5Qml.a  C:/Qt/5.15.2/mingw81_64/lib/libQt5Network.a  C:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a  C:/Qt/5.15.2/mingw81_64/lib/libqtmain.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -142,7 +150,7 @@ build BasicGUI_autogen/timestamp BasicGUI_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Custom command for BasicGUI_autogen\EWIEGA46WW\qrc_qml.cpp
 
-build BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp | ${cmake_ninja_workdir}BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp: CUSTOM_COMMAND C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/qml.qrc CMakeFiles/BasicGUI_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/Data_Input.qml C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/PixelPlot.qml C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/My_button.qml C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/main.qml C$:/Qt/5.15.2/mingw81_64/bin/rcc.exe || BasicGUI_autogen BasicGUI_autogen_timestamp_deps
+build BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp | ${cmake_ninja_workdir}BasicGUI_autogen/EWIEGA46WW/qrc_qml.cpp: CUSTOM_COMMAND C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/qml.qrc CMakeFiles/BasicGUI_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/Data_Input.qml C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/My_button.qml C$:/Users/mplesniak/Desktop/1.$ Mentoring_QT_project/Spectral_Display_GUI/BasicGUI/main.qml C$:/Qt/5.15.2/mingw81_64/bin/rcc.exe || BasicGUI_autogen BasicGUI_autogen_timestamp_deps
   COMMAND = cmd.exe /C "cd /D "C:\Users\mplesniak\Desktop\1. Mentoring_QT_project\Spectral_Display_GUI\build-BasicGUI-Desktop-Debug" && C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autorcc "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/build-BasicGUI-Desktop-Debug/CMakeFiles/BasicGUI_autogen.dir/AutoRcc_qml_EWIEGA46WW_Info.json" Debug"
   DESC = Automatic RCC for qml.qrc
   restat = 1

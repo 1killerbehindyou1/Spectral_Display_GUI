@@ -1,8 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
-//import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.3
 //import Main 1.0
+//import Charts 1.0
 
 Window 
 {
@@ -14,7 +15,6 @@ Window
     maximumHeight: 600; minimumHeight: 600; maximumWidth: 970; minimumWidth: 970
 
 
-
 Item{ id: background; anchors.fill: parent
 
     Row{ id: main_row; spacing: 30; x: 30; y:30
@@ -23,7 +23,7 @@ Item{ id: background; anchors.fill: parent
             
             
 
-            PixelPlot{ id: p_plot}                         
+            //PixelPlot{ id: p_plot}
              }
         
      Column{ id: controlColumn; spacing: 10; anchors.bottom: parent.bottom

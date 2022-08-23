@@ -6,36 +6,32 @@
 #include <QObject>
 #include <QtQuick/QQuickPaintedItem>
 #include <QColor>
+#include <QPainter>
 
-class Led_Matrix : public QObject
+#include <QtQuick/QQuickPaintedItem>
+#include <QColor>
+
+class LedMatrix : public QQuickPaintedItem
 {
-
     Q_OBJECT
-    Q_PROPERTY(QString pixel_size READ getPixelSize WRITE setPixelSize)
-    Q_PROPERTY(QString number_of_pixels READ getNumberOfPixels WRITE setNumberOfPixels)
-   // Q_PROPERTY(QColor pixel_color READ getColor WRITE setColor)
-   
+    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QColor color READ color WRITE setColor)
+    QML_ELEMENT
+
 public:
+    LedMatrix(QQuickItem *parent = 0);
 
-    Led_Matrix(QObject *parent = 0);
+    QString name() const;
+    void setName(const QString &name);
 
-    QString getPixelSize() const;
-    void setPixelSize(const QString &pixel_size);
+    QColor color() const;
+    void setColor(const QColor &color);
 
-    QString getNumberOfPixels() const;
-    void setNumberOfPixels(const QString &number_of_pixels);
+    void paint(QPainter *painter);
 
-    //QString getColor() const;
-    //void setColor(const QString &pixel_color);
-
-    //void paint(QPainter *painter);
-
- 
 private:
-    QString m_pixel_size;
-    QString m_number_of_pixels;
-    QColor m_pixel_color;
+    QString m_name;
+    QColor m_color;
 };
-
 #endif
 
