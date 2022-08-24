@@ -1,0 +1,74 @@
+git add .  		- dodawanie plików do gita
+git commit -m""  	- zapisywanie zmian w repozytorium
+git init 		- inicjalizuje repozytorium
+git status 		- pokazue status
+git clean 		- usuwa wszystkie pliki które nigdy wczesniej nie były dodane do repozytorium (NIEODWRACALNE)
+	-n pokazuje jakie pliki mogłyby być usunięte
+	-d pokazuje dodatkowo mozliwe do usuniecia katalogi
+	-idf tryb interaktywny, foldery, faktycznie usuwanie plików
+git rm <plik> 		- usuwa plik z repozytorium (ODWRACALNE)
+git revert xxxxx	- polega na odwróceniu zmian z danego commitu i zapisaniu ich jako nowy commit, zmiany poczynione dalej nie sa odwracane
+git reset 		- usuwa plik z kolejki oczekiwania, odwrotność polecenia git add
+git reset 	xxxxx	-przywraca stan ze wskazanego kommitu, modyfikuje historie zmian
+	--mixed
+	--soft
+	--hard
+git checkout --<plik>  - usuwa zmiany wprowadzone w danym pliku nie bedacym w poczekalni
+git checkout xxxxx 	-hasz commitu
+git checkout xxxxx <plik> -przywraca wskazany plik ze wskazanego commitu
+git checkout <branch> 	- przełacza na dany branch
+git checkout -b <new-branch-name> - tworzy nowy branch z zachowaniem zmian wprowadzonych w tym commicie i przełacza sie na niego
+
+git log --oneline 	- wyswietla historie w skondensowany sposób
+git log --author="x"	- wyswietlanie commitów danego autora
+git log --grep="fraza"  - wyszukiwanie kommitó w których występuje dana fraza
+git log --oneline 3	- pokazuje 3 ostatnie commity z historii
+git log --oneline --<plik> -pokazuje commity do tego pliku
+	--patch 	- szczegółowe informacje co zostało zmienione w tym pliku
+	--summary
+	--stat 		-statystyki zmian konkretnych plików
+git log --all --oneline	--graph --decorate -wyswietla wykres modyfikacji branchy w lokalnym i zdalnym repo
+
+git stash 		-odkłada na stos zmiany z bierzacego brancha
+git stash pop xxxxx	-zciaga zmiany ze stosu o identyfikatorze xxxxx po przełączeniu na inny branch (roboczy)
+git stash apply	xxxxx	-zciaga zmiany ze stosu o identyfikatorze xxxxx do katalogu roboczego ale zostawia je na stosie wciąż
+git stash push -m"x"	-odkłada na stos zmiany z danym komentarzem
+		-u	-pozwala na odłożenie na stosie zmian w poliku nie śledzonym
+git stash list		-lista zmian na stosie	
+git stash drop xxxxx	-odrzuca zmiany z tego kommita na stosie bez aplikowania ich
+git stash clear 	- czyśi cały stos
+git stash branch <branch> - odkłada zmiany ze stosu do nowego brancha tworzac go jednoczesnie
+
+git branch		-wyświetla gałęzie
+git branch <branch>	-tworzy branch o nazwie branch
+git branch -D <nazwa>	-usuwa branch o danej nazwie
+
+git merge <branch>	-łaczy aktywna gałaz z gałezia branch
+git merge origin/master	-łaczy aktualny branch ze zdalnym branchem origin o nazwie origin/master
+git merge --no--ff	-tworzony jest nowy kommit, w przypadku uzycia samoego polecenia merga nie
+
+git remote add origin <http:> -dodaje zdalne repozytorium i oznacza je jako origin
+git remote		-wskazuje zdalne repozytoria
+		-v 	-wskazuje pełny zapamiętany adres
+git remote 
+git remote show <repo-remote>	- wyswietla zdalne repo
+
+
+git clone <http:>	- kopuje repozytorium spod linka
+
+git pull		-jesli lokalna galaź jest ustwiona tak by śledzić zdalną (wywołane jest wtedy fetch + merge)
+
+git push -u origin master -(-u = --set-upstream) - wskazanie zdalnego brancha na który beda wysyłane zmiany
+git push 		-można używać za kazdy razem jak zostanie ustawione poprzednie polecenie jak nie to trzeba wskazać 
+git push <remote> <branch-remote>  - wysyła zmiany do zdlanego repo "remote" do bracha "branch-remote"
+git push origin --delete <branch> - usuwa zdalny branch
+git push --tags		-wysyła tagi do zdalnego repo
+
+git fetch <repo>	-pobiera zmiany ze zdalnego repozytorium "repo"
+git rebase <branch>	- rebase wykonany w stossunku do gałezi "branch"
+git rebase --continue	-wywołane po rozwiazaniu konfliktów przy rebase
+	   -i		-rebase w trybie interaktywnym
+git tag <tag> -a -m	-dodawanie tagu "tag" -info o autorze -komentarz 	
+git tag show <tag>	-wyświetla tag <tag>
+git tag -d <tag>	-usuwa tag "tag
+git tag <tag> xxxxx	-tworzy tag dla wskazanego kommit

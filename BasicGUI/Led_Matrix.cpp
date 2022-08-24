@@ -54,7 +54,9 @@ void LedMatrix::paint(QPainter *painter)
     painter->setPen(pen);
     //painter->setRenderHints(QPainter::Antialiasing, true);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
+    painter->drawRect(2 * m_lx, 2* m_ly,  m_size, m_size);
 }
+
 
 
 void LedMatrix::matrixUpdate(int x,int y)
