@@ -48,7 +48,7 @@ void LedMatrix::setLy(const int &ly)
      m_ly = ly;
 }
 
-int LedMatrix::rotation() const
+int LedMatrix::rotation() const 
 {
     return m_rotation;
 }
@@ -62,13 +62,9 @@ void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
     painter->setPen(pen);
-    //painter->setRenderHints(QPainter::Antialiasing, true);
+    QPixmap pix("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/szachy.png");
 
-    QLinearGradient gradient(0, 0, 600, 520);
-    gradient.setColorAt(0.0, Qt::red);
-    gradient.setColorAt(1.0, Qt::blue);
-
-    painter->setBrush(gradient);
+    painter->setBrush(Qt::blue);
     painter->rotate(m_rotation);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
 }

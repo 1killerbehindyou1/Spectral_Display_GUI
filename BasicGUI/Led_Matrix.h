@@ -7,6 +7,7 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QColor>
 #include <QPainter>
+#include <QPixmap>
 
 
 class LedMatrix : public QQuickPaintedItem
