@@ -16,6 +16,7 @@ class LedMatrix : public QQuickPaintedItem
     Q_PROPERTY(int size READ size WRITE setSize)
     Q_PROPERTY(int lx READ lx WRITE setLx)
     Q_PROPERTY(int ly READ ly WRITE setLy)
+    Q_PROPERTY(int rotation READ rotation WRITE setRotation)
 
     QML_ELEMENT
 
@@ -35,7 +36,12 @@ public:
     void setLx(const int &lx);
     void setLy(const int &ly);
 
- Q_INVOKABLE void matrixUpdate(int l_x, int l_y);
+    int rotation() const;
+    void setRotation(const int &rotation);
+
+
+
+ Q_INVOKABLE void matrixUpdate(int l_x, int l_y, int rotation );
 
 signals:
     //void updatedMatrix();
@@ -44,6 +50,7 @@ private:
     
     QColor m_color;
     int m_size;
+    int m_rotation;
     int m_lx;
     int m_ly;
 };

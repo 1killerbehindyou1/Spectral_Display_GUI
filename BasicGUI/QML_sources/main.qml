@@ -34,7 +34,7 @@ Item{ id: background; anchors.fill: parent
 
                 onPressed:
                 {
-                   led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2);
+                   led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.text);
                 }
             }               
             }
@@ -49,7 +49,7 @@ Item{ id: background; anchors.fill: parent
                     {
                        led.size = l_size.text
 
-                       led.matrixUpdate(l_x.text, l_y.text)
+                       led.matrixUpdate(l_x.text, l_y.text, l_rot.text)
                     }          
                 }
             
@@ -59,8 +59,9 @@ Item{ id: background; anchors.fill: parent
                     Data_Input{ id: l_x; text: "50"}
                     Data_Input{ id: l_y; text: "50"}
                     Data_Input{ id: l_size; text: "100"}
+                    Data_Input{ id: l_rot; text: "90"}
                 }
-            Text{ text: "led x   led y  led size"}
+            Text{ text: "led x   led y  led size   led rotation"}
                            
             }
     }

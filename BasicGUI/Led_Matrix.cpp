@@ -2,9 +2,9 @@
 #include "Led_Matrix.h"
 #include <QDebug>
 
-LedMatrix::LedMatrix(QQuickItem *parent)
-    : QQuickPaintedItem(parent)
+LedMatrix::LedMatrix(QQuickItem *parent): QQuickPaintedItem(parent)
 {
+    m_rotation =0;
 }
 
 
@@ -48,19 +48,30 @@ void LedMatrix::setLy(const int &ly)
      m_ly = ly;
 }
 
+int LedMatrix::rotation() const
+{
+    return m_rotation;
+}
+
+void LedMatrix::setRotation(const int &rotation)
+{
+    m_rotation = rotation;
+}
+
 void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
     painter->setPen(pen);
     //painter->setRenderHints(QPainter::Antialiasing, true);
+    painter->rotate(m_rotation);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
-    painter->drawRect(2 * m_lx, 2* m_ly,  m_size, m_size);
 }
 
 
 
-void LedMatrix::matrixUpdate(int x,int y)
+void LedMatrix::matrixUpdate(int x,int y, int rotation)
 {
+    m_rotation = rotation;
     m_lx = x;
     m_ly = y;
     update();
