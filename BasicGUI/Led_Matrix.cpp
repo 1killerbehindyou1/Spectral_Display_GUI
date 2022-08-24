@@ -2,9 +2,10 @@
 #include "Led_Matrix.h"
 #include <QDebug>
 
-LedMatrix::LedMatrix(QQuickItem *parent): QQuickPaintedItem(parent)
+LedMatrix::LedMatrix(QQuickItem *parent): QQuickPaintedItem(parent), drawArea(0,0, 600, 520),
+            pix("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/szachy.png")    
 {
-    m_rotation =0;
+    m_rotation =0;  
 }
 
 
@@ -62,13 +63,14 @@ void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
     painter->setPen(pen);
-    QPixmap pix("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/szachy.png");
+    
+    painter->setBrush(pix);
+    painter->drawRect(drawArea);
 
-    painter->setBrush(Qt::blue);
+    painter->setBrush(m_color);
     painter->rotate(m_rotation);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
 }
-
 
 
 void LedMatrix::matrixUpdate(int x,int y, int rotation)
