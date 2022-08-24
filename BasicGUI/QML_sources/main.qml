@@ -11,7 +11,7 @@ Window
     visible: true
     title: qsTr("Hello World")
     color: "lightgrey"
-    maximumHeight: 600; minimumHeight: 600; maximumWidth: 970; minimumWidth: 970
+    maximumHeight: 600; minimumHeight: 600; maximumWidth: 1000; minimumWidth: 1000
 
 
 Item{ id: background; anchors.fill: parent
@@ -59,7 +59,7 @@ Item{ id: background; anchors.fill: parent
                     Data_Input{ id: l_x; text: "50"}
                     Data_Input{ id: l_y; text: "50"}
                     Data_Input{ id: l_size; text: "100"}
-                    Data_Input{ id: l_rot; text: "90"}
+                    Data_Input{ id: l_rot; text: "0"}
                 }
             Text{ text: "led x   led y  led size   led rotation"}
                            

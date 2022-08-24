@@ -63,6 +63,12 @@ void LedMatrix::paint(QPainter *painter)
     QPen pen(m_color, 2);
     painter->setPen(pen);
     //painter->setRenderHints(QPainter::Antialiasing, true);
+
+    QLinearGradient gradient(0, 0, 600, 520);
+    gradient.setColorAt(0.0, Qt::red);
+    gradient.setColorAt(1.0, Qt::blue);
+
+    painter->setBrush(gradient);
     painter->rotate(m_rotation);
     painter->drawRect(m_lx, m_ly, m_size, m_size);
 }
