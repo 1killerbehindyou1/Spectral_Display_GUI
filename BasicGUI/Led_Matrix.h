@@ -49,13 +49,16 @@ signals:
 
 private:
     
-    QRect drawArea;
-    QPixmap pix;
+    QRect m_draw_area;
+    QRect m_pix_rect;
+    QPixmap m_pix_map;
     QColor m_color;
-    int m_size;
+    QSize m_size;
+    QPoint m_point;
     int m_rotation;
-    int m_lx;
-    int m_ly;
+    
+    //int m_point;
+    //int m_ly;
 };
 #endif
 
