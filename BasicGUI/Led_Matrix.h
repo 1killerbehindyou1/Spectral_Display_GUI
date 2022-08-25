@@ -40,12 +40,12 @@ public:
     int rotation() const;
     void setRotation(const int &rotation);
 
-
-
+    QPixmap getPixMap() const;
+    
  Q_INVOKABLE void matrixUpdate(int l_x, int l_y, int rotation );
 
 signals:
-    //void updatedMatrix();
+    void colorUpdate();
 
 private:
     

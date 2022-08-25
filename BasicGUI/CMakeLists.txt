@@ -27,6 +27,9 @@ set(PROJECT_SOURCES
         QML_sources/qml.qrc
         Led_Matrix.cpp
         Led_Matrix.h
+        Interpolation.cpp
+        Interpolation.h
+
 )
 
 

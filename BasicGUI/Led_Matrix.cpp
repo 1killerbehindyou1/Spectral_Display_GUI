@@ -1,5 +1,6 @@
 
 #include "Led_Matrix.h"
+#include "Interpolation.h"
 #include <QDebug>
 
 LedMatrix::LedMatrix(QQuickItem *parent): QQuickPaintedItem(parent), m_draw_area(0,0, 600, 520),  m_pix_rect(0,0, 50,50),
@@ -60,6 +61,11 @@ void LedMatrix::setRotation(const int &rotation)
     m_rotation = rotation;
 }
 
+QPixmap LedMatrix::getPixMap() const
+{
+    return m_part_map;
+}
+
 void LedMatrix::paint(QPainter *painter)
 {
     QPen pen(m_color, 2);
@@ -75,7 +81,8 @@ void LedMatrix::paint(QPainter *painter)
      
      m_part_map = m_map.copy(m_pix_rect);
      painter->rotate(m_rotation);
-     painter->setBrush(m_part_map);
+
+     painter->setBrush(m_color);
      painter->drawRect(m_pix_rect);
 }
 
@@ -84,6 +91,9 @@ void LedMatrix::matrixUpdate(int x,int y, int rotation)
 {
     m_rotation = rotation;
     m_pix_rect.moveTo(x,y);
+
+    Interpolation::setLedColor(this);
+
     update();
-    //emit matrixUpdated();
+    
 }
