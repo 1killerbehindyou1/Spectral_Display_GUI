@@ -49,16 +49,16 @@ signals:
 
 private:
     
-    QRect m_draw_area;
-    QRect m_pix_rect;
-    QPixmap m_pix_map;
-    QColor m_color;
-    QSize m_size;
-    QPoint m_point;
+    QRect m_draw_area;  //określa tablice do rysowania
+
+    QRect m_pix_rect;   //kwadrat reprezentujacu jeden pixel
+    QPixmap m_map;  //bitmapa pobrana z obrazka
+    QPixmap m_part_map;  //wczytana bitmapa jak obraz
+
+    QColor m_color;     
+
     int m_rotation;
     
-    //int m_point;
-    //int m_ly;
 };
 #endif
 
