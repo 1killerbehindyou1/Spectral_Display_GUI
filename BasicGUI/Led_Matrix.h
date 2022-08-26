@@ -41,7 +41,8 @@ public:
     void setRotation(const int &rotation);
 
     QPixmap getPixMap() const;
-    
+    void setPixMap(QPixmap pix);
+
  Q_INVOKABLE void matrixUpdate(int l_x, int l_y, int rotation );
 
 signals:
@@ -52,8 +53,8 @@ private:
     QRect m_draw_area;  //określa tablice do rysowania
 
     QRect m_pix_rect;   //kwadrat reprezentujacu jeden pixel
-    QPixmap m_map;  //bitmapa pobrana z obrazka
-    QPixmap m_part_map;  //wczytana bitmapa jak obraz
+    QPixmap m_map;         //wczytana bitmapa jak obraz
+    QPixmap m_part_map;  //bitmapa pobrana z obrazka
 
     QColor m_color;     
 

@@ -66,23 +66,18 @@ QPixmap LedMatrix::getPixMap() const
     return m_part_map;
 }
 
+void LedMatrix::setPixMap(QPixmap pix)
+{
+    m_part_map = pix;
+}
+
 void LedMatrix::paint(QPainter *painter)
 {
-    QPen pen(m_color, 2);
-    painter->setPen(pen);
-    
-    //painter->setBrush(m_pix_map);
-    //painter->drawRect(m_draw_area);
-
-    //painter->setBrush(m_color);
-    
-    //painter->drawRect(m_point.x(),m_point.y(),m_size.height(), m_size.width());
-
-     
-     m_part_map = m_map.copy(m_pix_rect);
+    painter->setBrush(m_map);
+    painter->drawRect(m_draw_area);
+  
      painter->rotate(m_rotation);
-
-     painter->setBrush(m_color);
+     painter->setBrush(m_part_map);
      painter->drawRect(m_pix_rect);
 }
 
@@ -91,6 +86,7 @@ void LedMatrix::matrixUpdate(int x,int y, int rotation)
 {
     m_rotation = rotation;
     m_pix_rect.moveTo(x,y);
+    m_part_map = m_map.copy(m_pix_rect);
 
     Interpolation::setLedColor(this);
 
