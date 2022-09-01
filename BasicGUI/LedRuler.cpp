@@ -1,77 +1,77 @@
 
-#include "LedMatrix.h"
+#include "LedRuler.h"
 #include "Interpolation.h"
 #include <QDebug>
 
-LedMatrix::LedMatrix(QQuickItem *parent): QQuickPaintedItem(parent), m_draw_area(0,0, 600, 520),  m_pix_rect(0,0, 50,50),
+LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_draw_area(0,0, 600, 520),  m_pix_rect(0,0, 50,50),
            m_map("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/szachy.png")    
 {
     m_rotation =0;  
 }
 
 
-QColor LedMatrix::color() const
+QColor LedRuler::color() const
 {
     return m_color;
 }
 
-void LedMatrix::setColor(const QColor &color)
+void LedRuler::setColor(const QColor &color)
 {
     m_color = color;
 }
 
-void LedMatrix::setSize( const int &size)
+void LedRuler::setSize( const int &size)
 {
     m_pix_rect.setHeight(size);
     m_pix_rect.setWidth(size);
 }
 
-int LedMatrix::size() const
+int LedRuler::size() const
 {
     return m_pix_rect.height();
 }
 
-int LedMatrix::lx() const
+int LedRuler::lx() const
 {
     return m_pix_rect.x();
 }
 
-int LedMatrix::ly() const
+int LedRuler::ly() const
 {
     return m_pix_rect.y();
 }
 
-void LedMatrix::setLx(const int &lx) 
+void LedRuler::setLx(const int &lx) 
 {
      m_pix_rect.setX(lx);
 }
 
-void LedMatrix::setLy(const int &ly) 
+void LedRuler::setLy(const int &ly) 
 {
      m_pix_rect.setY(ly);
 }
 
-int LedMatrix::rotation() const 
+int LedRuler::rotation() const 
 {
     return m_rotation;
 }
 
-void LedMatrix::setRotation(const int &rotation)
+void LedRuler::setRotation(const int &rotation)
 {
     m_rotation = rotation;
 }
 
-QPixmap LedMatrix::getPixMap() const
+QPixmap LedRuler::getPixMap() const
 {
     return m_part_map;
 }
 
-void LedMatrix::setPixMap(QPixmap pix)
+void LedRuler::setPixMap(QPixmap pix)
 {
     m_part_map = pix;
 }
 
-void LedMatrix::paint(QPainter *painter)
+void LedRuler::paint(QPainter *painter)
 {
     painter->setBrush(m_map);
     painter->drawRect(m_draw_area);
@@ -82,7 +82,7 @@ void LedMatrix::paint(QPainter *painter)
 }
 
 
-void LedMatrix::matrixUpdate(int x,int y, int rotation)
+void LedRuler::rulerUpdate(int x,int y, int rotation)
 {
     m_rotation = rotation;
     m_pix_rect.moveTo(x ,y);

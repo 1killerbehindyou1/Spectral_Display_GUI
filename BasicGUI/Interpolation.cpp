@@ -1,7 +1,7 @@
 
 #include "Interpolation.h"
 
-void Interpolation::setLedColor(LedMatrix *led_x)
+void Interpolation::setLedColor(LedRuler *led_x)
 {   
     QPixmap pixmap(led_x->getPixMap());
     QImage image = pixmap.toImage(); 

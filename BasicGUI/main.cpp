@@ -4,7 +4,7 @@
 #include <QtQuick>
 #include <iostream>
 #include <QDebug>
-#include "LedMatrix.h"
+#include "LedRuler.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
-    qmlRegisterType<LedMatrix>("Main", 1, 0, "LedMatrix");
+    qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
 
     QQmlApplicationEngine engine;
    

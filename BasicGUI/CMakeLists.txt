@@ -20,8 +20,8 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 set(PROJECT_SOURCES
         Main.cpp
         QMLSources/qml.qrc
-        LedMatrix.cpp
-        LedMatrix.h
+        LedRuler.cpp
+        LedRuler.h
         Interpolation.cpp
         Interpolation.h
 

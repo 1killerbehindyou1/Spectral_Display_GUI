@@ -10,7 +10,7 @@
 #include <QPixmap>
 
 
-class LedMatrix : public QQuickPaintedItem
+class LedRuler : public QQuickPaintedItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor color READ color WRITE setColor)
@@ -22,7 +22,7 @@ class LedMatrix : public QQuickPaintedItem
     QML_ELEMENT
 
 public:
-    LedMatrix(QQuickItem *parent = 0);
+    LedRuler(QQuickItem *parent = 0);
 
     QColor color() const;
     void setColor(const QColor &color);
@@ -43,7 +43,7 @@ public:
     QPixmap getPixMap() const;
     void setPixMap(QPixmap pix);
 
- Q_INVOKABLE void matrixUpdate(int l_x, int l_y, int rotation );
+ Q_INVOKABLE void rulerUpdate(int l_x, int l_y, int rotation );
 
 signals:
     void colorUpdate();

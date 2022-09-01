@@ -16,12 +16,8 @@ import QtQuick.Layouts 1.3
                 implicitWidth: 70
                 implicitHeight: 50 
                 id: rect
-                //anchors.fill: parent
-                border.color: "black"
-                border.width: 4
-                color: "white"
-                radius: 4
-                TextInput 
+                
+                TextField
                 {
                     id: textInp
                     anchors.fill: parent

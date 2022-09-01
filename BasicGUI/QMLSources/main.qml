@@ -6,15 +6,15 @@ import Main 1.0
 
 Window 
 {
-    width: 1500
+    width: 900
     height: 600
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Basic Gui")
     color: "lightgrey"
-    maximumHeight: 600; 
-    minimumHeight: 600; 
-    maximumWidth: 1500; 
-    minimumWidth: 1500
+    maximumHeight: 600 
+    minimumHeight: 600
+    maximumWidth: 900
+    minimumWidth: 900
 
     Item
     { 
@@ -50,17 +50,10 @@ Window
 
                     onPressed:
                     {
-                    led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.text);
+                    led.rulerUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.value);
                     }
                 }               
-            }
-            Rectangle
-            { 
-                id: render_area; 
-                width: 600; 
-                height: 520; 
-                color: "white"
-            }               
+            }                      
         
             ColumnLayout
             { 
@@ -74,13 +67,10 @@ Window
                     onClicked: 
                     {
                         led.size = l_size.value
-                        led.matrixUpdate(l_x.value, l_y.value, l_rot.value)
+                        led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
                     }          
                 }
-                    
-                Text{text: "Led ruler parameters" }    
-                
-                        
+                    Text{text: "Led ruler parameters" }         
                     DataInput{ id: l_x; value: "50"; label: "x position"}
                     DataInput{ id: l_y; value: "50"; label: "y position"}
                     DataInput{ id: l_size; value: "100"; label: "led size"}
