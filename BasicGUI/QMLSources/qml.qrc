@@ -1,8 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        
-        <file>My_button.qml</file>
-        <file>Data_Input.qml</file>
+        <file>Main.qml</file>
+        <file>MyButton.qml</file>
+        <file>DataInput.qml</file>
     </qresource>
 </RCC>

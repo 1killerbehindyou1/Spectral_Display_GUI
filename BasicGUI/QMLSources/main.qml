@@ -44,7 +44,7 @@ Item{ id: background; anchors.fill: parent
         id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
         
                
-       My_button{text: "SET"
+       MyButton{text: "SET"
                     onPressed: 
                     {
                        led.size = l_size.text
@@ -56,10 +56,10 @@ Item{ id: background; anchors.fill: parent
             Text{text: "Led ruler parameters" }    
         Row{ id: led_par; spacing: 10
                 
-                    Data_Input{ id: l_x; text: "50"}
-                    Data_Input{ id: l_y; text: "50"}
-                    Data_Input{ id: l_size; text: "100"}
-                    Data_Input{ id: l_rot; text: "0"}
+                    DataInput{ id: l_x; text: "50"}
+                    DataInput{ id: l_y; text: "50"}
+                    DataInput{ id: l_size; text: "100"}
+                    DataInput{ id: l_rot; text: "0"}
                 }
             Text{ text: "led x   led y  led size   led rotation"}
                            
@@ -68,5 +68,3 @@ Item{ id: background; anchors.fill: parent
     }
      
 } 
-
-//<===============================================================================width: 100; height: 50
