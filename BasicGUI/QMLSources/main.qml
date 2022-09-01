@@ -6,66 +6,88 @@ import Main 1.0
 
 Window 
 {
-    width: 970
+    width: 1500
     height: 600
     visible: true
     title: qsTr("Hello World")
     color: "lightgrey"
-    maximumHeight: 600; minimumHeight: 600; maximumWidth: 1000; minimumWidth: 1000
+    maximumHeight: 600; 
+    minimumHeight: 600; 
+    maximumWidth: 1500; 
+    minimumWidth: 1500
 
+    Item
+    { 
+        id: background
+        anchors.fill: parent
 
-Item{ id: background; anchors.fill: parent
+        RowLayout
+        { 
+            id: main_row; 
+            spacing: 30; 
+            x: 30; 
+            y:30
 
-    Row{ id: main_row; spacing: 30; x: 30; y:30
-
-    Rectangle{ id: draw_area; width: 600; height: 520; color: "white"
-            
-            MouseArea{
-                anchors.fill: parent
-                LedMatrix
+            Rectangle
+            { 
+                id: draw_area; 
+                width: 600; 
+                height: 520; 
+                color: "white"
+                    
+                MouseArea
                 {
-                    id: led          
                     anchors.fill: parent
-                    color: "blue"
-                    size: 100
-                    lx: 50
-                    ly: 50               
-                }
+                    LedRuler
+                    {
+                        id: led          
+                        anchors.fill: parent
+                        color: "blue"
+                        size: 100
+                        lx: 50
+                        ly: 50               
+                    }
 
-                onPressed:
-                {
-                   led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.text);
-                }
-            }               
+                    onPressed:
+                    {
+                    led.matrixUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.text);
+                    }
+                }               
             }
+            Rectangle
+            { 
+                id: render_area; 
+                width: 600; 
+                height: 520; 
+                color: "white"
+            }               
         
-        
-     Column{ 
-        id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
-        
-               
-            Button{
+            ColumnLayout
+            { 
+                id: controlColumn; 
+                spacing: 10; 
+                anchors.bottom: parent.bottom
+                
+                Button
+                {
                     text: "SET"
                     onClicked: 
                     {
-                       led.size = l_size.text
-
-                       led.matrixUpdate(l_x.text, l_y.text, l_rot.text)
+                        led.size = l_size.value
+                        led.matrixUpdate(l_x.value, l_y.value, l_rot.value)
                     }          
                 }
-            
-            Text{text: "Led ruler parameters" }    
-        Row{ id: led_par; spacing: 10
+                    
+                Text{text: "Led ruler parameters" }    
                 
-                    DataInput{ id: l_x; text: "50"}
-                    DataInput{ id: l_y; text: "50"}
-                    DataInput{ id: l_size; text: "100"}
-                    DataInput{ id: l_rot; text: "0"}
-                }
-            Text{ text: "led x   led y  led size   led rotation"}
-                           
+                        
+                    DataInput{ id: l_x; value: "50"; label: "x position"}
+                    DataInput{ id: l_y; value: "50"; label: "y position"}
+                    DataInput{ id: l_size; value: "100"; label: "led size"}
+                    DataInput{ id: l_rot; value: "0"; label: "led rotation"}                      
             }
+        }
     }
-    }
+}
      
-} 
+
