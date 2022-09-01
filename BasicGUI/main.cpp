@@ -4,7 +4,7 @@
 #include <QtQuick>
 #include <iostream>
 #include <QDebug>
-#include "Led_Matrix.h"
+#include "LedMatrix.h"
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {

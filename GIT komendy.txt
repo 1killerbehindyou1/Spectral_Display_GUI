@@ -13,6 +13,9 @@ git reset 	xxxxx	-przywraca stan ze wskazanego kommitu, modyfikuje historie zmia
 	--mixed
 	--soft
 	--hard
+
+git restore 
+
 git checkout --<plik>  - usuwa zmiany wprowadzone w danym pliku nie bedacym w poczekalni
 git checkout xxxxx 	-hasz commitu
 git checkout xxxxx <plik> -przywraca wskazany plik ze wskazanego commitu
@@ -72,3 +75,5 @@ git tag <tag> -a -m	-dodawanie tagu "tag" -info o autorze -komentarz
 git tag show <tag>	-wyświetla tag <tag>
 git tag -d <tag>	-usuwa tag "tag
 git tag <tag> xxxxx	-tworzy tag dla wskazanego kommit
+
+git switch -c <new-branch name>  -tworzy nowy branch na bazie aktualnego commita i przełącza na niego

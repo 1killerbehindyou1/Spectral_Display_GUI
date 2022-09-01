@@ -1,6 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
 
-project(BasicGUI VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -14,9 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_VERSION_MAJOR 5)
 
 
-message( "+++++++++++++++++++++++++++")
-message( "${CMAKE_CURRENT_SOURCE_DIR}")
-message( "+++++++++++++++++++++++++++")
 
 
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui )
@@ -24,9 +19,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 
 set(PROJECT_SOURCES
         main.cpp
-        QML_sources/qml.qrc
-        Led_Matrix.cpp
-        Led_Matrix.h
+        QMLSources/qml.qrc
+        LedMatrix.cpp
+        LedMatrix.h
         Interpolation.cpp
         Interpolation.h
 

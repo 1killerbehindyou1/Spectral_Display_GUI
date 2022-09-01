@@ -2,7 +2,7 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-#include "Led_Matrix.h"
+#include "LedMatrix.h"
 #include <QColor>
 #include <QPixmap>
 
