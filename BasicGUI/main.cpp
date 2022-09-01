@@ -45,9 +45,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<LedMatrix>("Main", 1, 0, "LedMatrix");
 
     QQmlApplicationEngine engine;
-    //engine.rootContext()->setContextProperty("_matrix", matrix);
-
-
+   
     const QUrl url(QStringLiteral("qrc:/Main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,&app, 
     [url](QObject *obj, const QUrl &objUrl) 

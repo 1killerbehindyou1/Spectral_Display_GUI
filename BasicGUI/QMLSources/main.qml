@@ -44,8 +44,9 @@ Item{ id: background; anchors.fill: parent
         id: controlColumn; spacing: 10; anchors.bottom: parent.bottom
         
                
-       MyButton{text: "SET"
-                    onPressed: 
+            Button{
+                    text: "SET"
+                    onClicked: 
                     {
                        led.size = l_size.text
 
