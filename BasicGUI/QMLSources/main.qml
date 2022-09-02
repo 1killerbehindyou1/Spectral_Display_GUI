@@ -16,65 +16,72 @@ Window
     maximumWidth: 900
     minimumWidth: 900
 
+    
     Item
     { 
         id: background
         anchors.fill: parent
-
-        RowLayout
-        { 
-            id: main_row; 
-            spacing: 30; 
-            x: 30; 
-            y:30
-
+        SplitView 
+        {
+            anchors.fill: parent
             Rectangle
             { 
-                id: draw_area; 
-                width: 600; 
-                height: 520; 
-                color: "white"
-                    
-                MouseArea
-                {
-                    anchors.fill: parent
-                    LedRuler
-                    {
-                        id: led          
-                        anchors.fill: parent
-                        color: "blue"
-                        size: 100
-                        lx: 50
-                        ly: 50               
-                    }
+                implicitWidth: 720
+                height: 520 
+                color: "#ccc"
 
-                    onPressed:
+                Rectangle
+                { 
+                    anchors.fill: parent
+                    anchors.margins: 30
+                    id: draw_area;   
+                    color: "white"
+                        
+                    MouseArea
                     {
-                    led.rulerUpdate(mouseX - led.size/2, mouseY - led.size/2, l_rot.value);
+                        anchors.fill: parent
+                        LedRuler
+                        {
+                            id: led          
+                            anchors.fill: parent
+                            color: "blue"
+                            size: 100
+                            lx: 50
+                            ly: 50               
+                        }
+
+                        onPressed:
+                        {
+                            led.rulerUpdate(mouseX, mouseY, l_rot.value);
+                        }
+                    }               
+                }                      
+            }
+            Rectangle
+            {
+                color: "#AAA"
+                implicitWidth: 180
+                //anchors.rightMargin: 30
+                ColumnLayout
+                { 
+                    spacing: 10; 
+                    anchors.bottom: parent.bottom
+                    anchors.margins: 30
+                    Button
+                    {
+                        text: "SET"
+                        onClicked: 
+                        {
+                            led.size = l_size.value
+                            led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
+                        }          
                     }
-                }               
-            }                      
-        
-            ColumnLayout
-            { 
-                id: controlColumn; 
-                spacing: 10; 
-                anchors.bottom: parent.bottom
-                
-                Button
-                {
-                    text: "SET"
-                    onClicked: 
-                    {
-                        led.size = l_size.value
-                        led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
-                    }          
+                        Text{text: "Led ruler parameters" }         
+                        DataInput{ id: l_x; value: "50"; label: "x position"}
+                        DataInput{ id: l_y; value: "50"; label: "y position"}
+                        DataInput{ id: l_size; value: "100"; label: "led size"}
+                        DataInput{ id: l_rot; value: "0"; label: "led rotation"}                      
                 }
-                    Text{text: "Led ruler parameters" }         
-                    DataInput{ id: l_x; value: "50"; label: "x position"}
-                    DataInput{ id: l_y; value: "50"; label: "y position"}
-                    DataInput{ id: l_size; value: "100"; label: "led size"}
-                    DataInput{ id: l_rot; value: "0"; label: "led rotation"}                      
             }
         }
     }
