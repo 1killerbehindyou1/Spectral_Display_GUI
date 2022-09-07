@@ -16,7 +16,7 @@ Window
     maximumWidth: 900
     minimumWidth: 900
 
-    
+
     Item
     { 
         id: background
@@ -29,7 +29,22 @@ Window
                 implicitWidth: 720
                 height: 520 
                 color: "#ccc"
-
+                MenuBar 
+                {       
+                    Menu 
+                    {
+                        title: qsTr("&File")
+                        Action { text: qsTr("&Open...") }
+                        Action { text: qsTr("&Save") }
+                        MenuSeparator { }
+                        Action { text: qsTr("&Close") }
+                    }
+                    Menu {
+                        title: qsTr("&Help")
+                        Action { text: qsTr("&About") }
+                    }
+                }
+                
                 Rectangle
                 { 
                     anchors.fill: parent
@@ -85,6 +100,7 @@ Window
             }
         }
     }
+    
 }
      
 
