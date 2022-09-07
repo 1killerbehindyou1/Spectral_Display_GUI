@@ -22,7 +22,12 @@ void Interpolation::setLedColor(LedRuler *led_x)
     }
     }
 
-    level_drakness = 255 * it_white/(it_black + it_white);
+    if(it_black > 0 || it_white > 0) 
+    {
+        level_drakness = 255 * it_white/(it_black + it_white);
+    }
+    else level_drakness = 1;
+   
 
     color = color.fromRgb(level_drakness, level_drakness, level_drakness);
     led_x->setColor(color);

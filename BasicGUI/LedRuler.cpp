@@ -3,8 +3,8 @@
 #include "Interpolation.h"
 #include <QDebug>
 
-LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_draw_area(0,0, 600, 520),  m_pix_rect(0,0, 50,50),
-           m_map("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/szachy.png")    
+LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent),  
+                                        m_pix_rect(0,0, 50,50)            
 {
     m_rotation =0;  
 }
@@ -66,19 +66,22 @@ QPixmap LedRuler::getPixMap() const
     return m_part_map;
 }
 
-void LedRuler::setPixMap(QPixmap pix)
+void LedRuler::setPixMap(QUrl path)
 {
-    m_part_map = pix;
+    
+    QString qstr = path.toEncoded();
+    m_map.load("szachy.png");
+    update();
 }
 
 void LedRuler::paint(QPainter *painter)
 {
-    painter->setBrush(m_map);
-    painter->drawRect(m_draw_area);
+
+    painter->drawPixmap(50, 50, m_map);
   
-     painter->rotate(m_rotation);
-     painter->setBrush(m_color);
-     painter->drawRect(m_pix_rect);
+    painter->rotate(m_rotation);
+    painter->setBrush(m_color);
+    painter->drawRect(m_pix_rect);
 }
 
 
