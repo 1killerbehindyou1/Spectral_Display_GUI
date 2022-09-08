@@ -7,6 +7,7 @@ void Interpolation::setLedColor(LedRuler *led_x)
     QImage image = pixmap.toImage(); 
    
     QColor color;
+    
     int it_white =0;
     int it_black =0;
     int level_drakness = 0;
@@ -19,7 +20,7 @@ void Interpolation::setLedColor(LedRuler *led_x)
         if(color == Qt::black) it_black ++;
         if(color == Qt::white) it_white ++;
         
-    }
+        }
     }
 
     if(it_black > 0 || it_white > 0) 
@@ -27,12 +28,10 @@ void Interpolation::setLedColor(LedRuler *led_x)
         level_drakness = 255 * it_white/(it_black + it_white);
     }
     else level_drakness = 1;
-   
 
     color = color.fromRgb(level_drakness, level_drakness, level_drakness);
     led_x->setColor(color);
-
-    
+   
 }
 
 
