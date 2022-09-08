@@ -11,7 +11,11 @@ class Interpolation
    
     public:
 
-   static void setLedColor(LedRuler *led_x);
+    int iterator =0;
+    int sum =0;
+    int level =0;
+
+    static void setLedColor(LedRuler *led_x);
     
 
 };
