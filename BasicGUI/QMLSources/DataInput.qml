@@ -10,6 +10,11 @@ import QtQuick.Layouts 1.3
     implicitHeight: 50 
         RowLayout
         {   
+            Text
+            {
+                id: label
+                text: " "
+            }   
             spacing: 10
             Rectangle
             {
@@ -28,11 +33,7 @@ import QtQuick.Layouts 1.3
                     activeFocusOnTab: true
                 }   
             }    
-            Text
-            {
-                id: label
-                text: " "
-            }    
+             
         } 
                         
 }       
