@@ -70,15 +70,13 @@ void LedRuler::setPixMap(QUrl path)
 {
     
     QString qstr = path.toEncoded();
-    m_map.load("szachy.png");
+    m_map.load("BITMAPA.png");
     update();
 }
 
 void LedRuler::paint(QPainter *painter)
 {
-
-    painter->drawPixmap(50, 50, m_map);
-  
+    painter->drawPixmap(0, 0, m_map);
     painter->rotate(m_rotation);
     painter->setBrush(m_color);
     painter->drawRect(m_pix_rect);
