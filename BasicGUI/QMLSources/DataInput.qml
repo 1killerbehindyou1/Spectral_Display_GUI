@@ -29,7 +29,7 @@ import QtQuick.Layouts 1.3
                     anchors.verticalCenter: rect.verticalCenter
                     text: "0"
                     color: focus ? "black" : "gray"
-                    font.pixelSize: 30
+                    font.pixelSize: 20
                     activeFocusOnTab: true
                 }   
             }    
