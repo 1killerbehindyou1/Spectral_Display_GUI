@@ -17,96 +17,43 @@ Window
     SplitView 
     { 
         anchors.fill: parent
+        
         ColumnLayout
         {
-                 MenuBar 
-                {       
-                    contentWidth: parent.width
-                    Menu 
+            MenuBar 
+            {       
+                contentWidth: parent.width
+                Menu 
+                {
+                    title: qsTr("&File")
+                    Action 
                     {
-                        title: qsTr("&File")
-                        Action 
+                        text: qsTr("&Open...")
+                        onTriggered:
                         {
-                            text: qsTr("&Open...")
-                            onTriggered:
-                            {
-                                fileDialog.open()
-                            }
+                            fileDialog.open()
                         }
-                        MenuSeparator { }
-                        Action { text: qsTr("&Close") }
                     }
-                    Menu 
-                    {
-                        title: qsTr("&Help")
-                        Action { text: qsTr("&About") }
-                    }
+                    MenuSeparator { }
+                    Action { text: qsTr("&Close") }
                 }
+                Menu 
+                {
+                    title: qsTr("&Help")
+                    Action { text: qsTr("&About") }
+                }
+            }
             
-            Control
-            { 
+            DrawPanel
+            {
                 implicitWidth: 720
                 height: root.height 
-                
-                background: Rectangle
-                {
-                    color: "white"
-                }
-                contentItem: MouseArea
-                {
-                    anchors.fill: parent
-                    LedRuler
-                    {
-                        id: led          
-                        anchors.fill: parent
-                        color: "blue"
-                        size: 100
-                        lx: 50
-                        ly: 50               
-                    }
-                    onPressed:{led.rulerUpdate(mouseX, mouseY, l_rot.value)}
-                }                                 
             }
         }
-        Control
+        ControlPanel
         {
-            background: Rectangle
-            {
-                color: "#BBB"
-            }
-            
-            implicitWidth: 150
-            padding: 10
-            
-            contentItem: ColumnLayout
-            { 
-                spacing: 10; 
-
-                ColumnLayout
-                {   
-                    anchors.bottom: button_.top
-                    anchors.bottomMargin: 10
-
-                    Text{text: "Led ruler parameters" }         
-                    DataInput{ id: l_x; value: "50"; label:"x position  "}
-                    DataInput{ id: l_y; value: "50"; label:"y position  "}
-                    DataInput{ id: l_size; value: "100"; label: "led size     "}
-                    DataInput{ id: l_rot; value: "0"; label:"led rotation"}      
-                }
-                
-                Button
-                {
-                    id: button_
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: "SET"
-                    onClicked: 
-                    {
-                        led.size = l_size.value
-                        led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
-                    }          
-                }
-                                    
-            }
+            height: 300
+            width: 300
         }
     }
     
