@@ -66,12 +66,21 @@ QPixmap LedRuler::getPixMap() const
     return m_part_map;
 }
 
-void LedRuler::setPixMap(QUrl path)
+bool LedRuler::setPixMap(QUrl path)
 {
     
     QString qstr = path.toEncoded();
-    m_map.load("BITMAPA.png");
+    if(!m_map.load(qstr) || m_map.isNull()) 
+    {
+        return false;
+    }
+
+    qDebug() << "File" << qstr << "loaded successfully";
     update();
+    
+    return true;
+    
+    
 }
 
 void LedRuler::paint(QPainter *painter)

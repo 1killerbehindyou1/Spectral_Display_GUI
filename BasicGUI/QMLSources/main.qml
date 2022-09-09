@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
 import Main 1.0
 
-Window 
+ApplicationWindow 
 {
     id: root
     width: 900
@@ -13,36 +13,37 @@ Window
     visible: true
     title: qsTr("Basic Gui")
     color: "lightgrey"
-    
+    menuBar: MenuBar 
+    {       
+        contentWidth: parent.width
+        Menu 
+        {
+            title: qsTr("&File")
+            Action 
+            {
+                text: qsTr("&Open...")
+                onTriggered:
+                {
+                    fileDialog.open()
+                }
+            }
+            MenuSeparator { }
+            Action { text: qsTr("&Close") }
+        }
+        Menu 
+        {
+            title: qsTr("&Help")
+            Action { text: qsTr("&About") }
+        }
+    }
+
     SplitView 
     { 
         anchors.fill: parent
         
         ColumnLayout
         {
-            MenuBar 
-            {       
-                contentWidth: parent.width
-                Menu 
-                {
-                    title: qsTr("&File")
-                    Action 
-                    {
-                        text: qsTr("&Open...")
-                        onTriggered:
-                        {
-                            fileDialog.open()
-                        }
-                    }
-                    MenuSeparator { }
-                    Action { text: qsTr("&Close") }
-                }
-                Menu 
-                {
-                    title: qsTr("&Help")
-                    Action { text: qsTr("&About") }
-                }
-            }
+            
             
             DrawPanel
             {
@@ -55,7 +56,7 @@ Window
         {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-            
+
              ControlPanel
             {
                 implicitHeight: 600
@@ -72,13 +73,39 @@ Window
         nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
         onAccepted:
         {
-            led.setPixMap(fileDialog.fileUrls)
+           if(!led.setPixMap(fileDialog.fileUrls)) 
+            {
+                showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrls}`)
+            }
+            else
+            {
+                showMessageBox("Open file...", `Success to load file: ${fileDialog.fileUrls}`)
+            }
         }
         onRejected: 
         {
            fileDialog.close()
         }
         Component.onCompleted: visible = false
+    }
+    
+    MessageDialog 
+    {
+        id: messageDialog
+        title: ""
+        text: ""
+        onAccepted: 
+        {
+            messageDialog.close()  
+        }
+        visible: false
+    }
+
+    function showMessageBox(title: string, message: string)
+    {
+        messageDialog.text = message
+        messageDialog.title = title
+        messageDialog.open()
     }
 }
      
