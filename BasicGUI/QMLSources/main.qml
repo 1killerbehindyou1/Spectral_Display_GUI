@@ -47,14 +47,22 @@ Window
             DrawPanel
             {
                 implicitWidth: 720
-                height: root.height 
+                implicitHeight: root.height 
             }
         }
-        ControlPanel
+
+        ScrollView
         {
-            height: 300
-            width: 300
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            
+             ControlPanel
+            {
+                implicitHeight: 600
+                implicitWidth: 180
+            }
         }
+       
     }
     
     FileDialog 

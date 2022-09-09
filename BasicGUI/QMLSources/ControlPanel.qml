@@ -9,13 +9,14 @@ Item
 {
     Control
     {
+        implicitWidth: 180
+        implicitHeight: 500
+
+        padding: 10
         background: Rectangle
         {
             color: "#BBB"
         }
-        
-        implicitWidth: 150
-        padding: 10
         
         contentItem: ColumnLayout
         { 
