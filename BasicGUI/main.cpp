@@ -1,57 +1,58 @@
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtQuick>
 #include <iostream>
-#include <QDebug>
+
 #include "LedRuler.h"
 
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-   
-    QByteArray localMsg = msg.toLocal8Bit();
-    const char *file = context.file ? context.file : "";
-    const char *function = context.function ? context.function : "";
-    switch (type) {
+void myMessageOutput(QtMsgType type,
+                     [[maybe_unused]] const QMessageLogContext &context,
+                     const QString &msg) {
+  QByteArray localMsg = msg.toLocal8Bit();
+  QString typeStr = "OTHER";
+  switch (type) {
     case QtDebugMsg:
-        fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
+      typeStr = "DBG";
+      break;
     case QtInfoMsg:
-        fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
+      typeStr = "INF";
+      break;
     case QtWarningMsg:
-        fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
+      typeStr = "WRN";
+      break;
     case QtCriticalMsg:
-        fprintf(stdout, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
+      typeStr = "CRT";
+      break;
     case QtFatalMsg:
-        fprintf(stdout, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
-    }
+      typeStr = "FTL";
+      break;
+  }
+  std::cout
+      << QString("%1: %2").arg(typeStr).arg(localMsg.constData()).toStdString()
+      << std::endl;
 }
 
-
-int main(int argc, char *argv[])
-{
-    
-   
+int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+  QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
+  //   std::cout << "-> Application started" << std::endl;
+  qInstallMessageHandler(myMessageOutput);
+  QGuiApplication app(argc, argv);
+  qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
 
-    qInstallMessageHandler(myMessageOutput);
-    QGuiApplication app(argc, argv);
-    qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+  QQmlApplicationEngine engine;
 
-    QQmlApplicationEngine engine;
-   
-    const QUrl url(QStringLiteral("qrc:/Main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,&app, 
-    [url](QObject *obj, const QUrl &objUrl) 
-    {if (!obj && url == objUrl)QCoreApplication::exit(-1);}, Qt::QueuedConnection);
-    
-    engine.load(url);
-    return app.exec();
+  const QUrl url(QStringLiteral("qrc:/Main.qml"));
+  QObject::connect(
+      &engine, &QQmlApplicationEngine::objectCreated, &app,
+      [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl) QCoreApplication::exit(-1);
+      },
+      Qt::QueuedConnection);
 
+  engine.load(url);
+  return app.exec();
 }
