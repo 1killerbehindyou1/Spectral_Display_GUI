@@ -54,6 +54,9 @@ ApplicationWindow
         {
             id: parameters
             SplitView.minimumWidth: parameters.implicitWidth
+            Component.onCompleted: {
+                newParameters.connect(drawing.updateLedParameters)
+            }
         }
     }
     

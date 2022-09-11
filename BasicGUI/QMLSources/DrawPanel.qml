@@ -10,6 +10,11 @@ Control
     implicitWidth: 720
     implicitHeight: 500
 
+    function updateLedParameters(position: point, size: int, rotation: int) {
+        led.size = size
+        led.rulerUpdate(position.x, position.y, rotation)
+    }
+
     background: Rectangle
     {
         color: "white"

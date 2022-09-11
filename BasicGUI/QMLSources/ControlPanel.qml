@@ -10,6 +10,8 @@ Control
     id: root
 
     padding: 10
+    signal newParameters(point position, int size, int rotation)
+
     background: Rectangle
     {
         color: "#DDD"
@@ -45,13 +47,8 @@ Control
             Layout.alignment: Qt.AlignHCenter
             text: "SET"
             highlighted: true
-            onClicked: 
-            {
-                led.size = l_size.value
-                led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
-            }          
+            onClicked: root.newParameters(Qt.point(l_x.value, l_y.value), l_size.value, l_rot.value)
         }
-                            
     }
 }
 
