@@ -16,7 +16,7 @@ Control
     }
     contentItem: LedRuler
     {
-        id: led          
+        id: led
         anchors.fill: parent
         color: "blue"
         size: 100
@@ -26,12 +26,6 @@ Control
         {
             anchors.fill: parent
             onPressed:{led.rulerUpdate(mouseX, mouseY, l_rot.value)}
-        }                 
+        }
     }
-
-                                  
 }
-    
-    
-
-        

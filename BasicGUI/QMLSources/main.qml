@@ -43,27 +43,18 @@ ApplicationWindow
         
         ColumnLayout
         {
-            
-            
             DrawPanel
             {
-                implicitWidth: 720
-                implicitHeight: root.height 
+                id: drawing
             }
         }
 
-        ScrollView
+
+        ControlPanel
         {
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-
-             ControlPanel
-            {
-                implicitHeight: 600
-                implicitWidth: 180
-            }
+            id: parameters
+            SplitView.minimumWidth: parameters.implicitWidth
         }
-       
     }
     
     FileDialog 
