@@ -41,6 +41,9 @@ int main(int argc, char *argv[]) {
   //   std::cout << "-> Application started" << std::endl;
   qInstallMessageHandler(myMessageOutput);
   QGuiApplication app(argc, argv);
+  app.setOrganizationName("1killerbehindyou1");
+  app.setOrganizationDomain("Education");
+
   qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
 
   QQmlApplicationEngine engine;
