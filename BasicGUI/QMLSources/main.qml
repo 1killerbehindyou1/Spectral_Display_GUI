@@ -92,7 +92,6 @@ ApplicationWindow
         {
             messageDialog.close()  
         }
-        visible: false
     }
 
     function showMessageBox(title: string, message: string)
