@@ -14,19 +14,24 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     const char *function = context.function ? context.function : "";
     switch (type) {
     case QtDebugMsg:
-        fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        //fprintf(stdout, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        std::cout << "Debug:\n" << localMsg.constData() << file << context.line << function;
         break;
     case QtInfoMsg:
-        fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        //fprintf(stdout, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        std::cout << "Info:\n" << localMsg.constData() << file << context.line << function;
         break;
     case QtWarningMsg:
-        fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        //fprintf(stdout, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        std::cout << "Warning:\n" << localMsg.constData() << file << context.line << function;
         break;
     case QtCriticalMsg:
-        fprintf(stdout, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        //fprintf(stdout, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        std::cout << "Critical:\n" << localMsg.constData() << file << context.line << function;
         break;
     case QtFatalMsg:
-        fprintf(stdout, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        //fprintf(stdout, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
+        std::cout << "Fatal:\n" << localMsg.constData() << file << context.line << function;
         break;
     }
 }
@@ -34,7 +39,6 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[])
 {
-    
    
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);

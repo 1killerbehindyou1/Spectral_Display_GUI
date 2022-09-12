@@ -89,6 +89,7 @@ void LedRuler::paint(QPainter *painter)
     painter->rotate(m_rotation);
     painter->setBrush(m_color);
     painter->drawRect(m_pix_rect);
+    qDebug() << "paint";
 }
 
 
@@ -99,7 +100,8 @@ void LedRuler::rulerUpdate(int x,int y, int rotation)
     m_part_map = m_map.copy(m_pix_rect);
 
     Interpolation::setLedColor(this);
-
+    
+    //emit rulerUpdateSignal();
     update();
     
 }

@@ -37,32 +37,31 @@ ApplicationWindow
         }
     }
 
+
     SplitView 
     { 
         anchors.fill: parent
         
         ColumnLayout
         {
-            
-            
             DrawPanel
             {
                 implicitWidth: 720
                 implicitHeight: root.height 
             }
         }
-
-        ScrollView
-        {
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-
-             ControlPanel
+            ScrollView
             {
-                implicitHeight: 600
-                implicitWidth: 180
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
+                ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
+                ControlPanel
+                {
+                    implicitHeight: root.height
+                    implicitWidth: 180
+                }
             }
-        }
+        
        
     }
     

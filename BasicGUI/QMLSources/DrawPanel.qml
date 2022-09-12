@@ -7,6 +7,7 @@ import Main 1.0
 
 Control
 { 
+
     implicitWidth: 720
     implicitHeight: 500
 
@@ -22,10 +23,15 @@ Control
         size: 100
         lx: 50
         ly: 50 
+
+        
         MouseArea
         {
             anchors.fill: parent
-            onPressed:{led.rulerUpdate(mouseX, mouseY, l_rot.value)}
+            onPressed:
+            {
+                led.rulerUpdate(mouseX, mouseY, 0)
+            }
         }                 
     }
 
