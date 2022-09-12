@@ -30,7 +30,7 @@ Control
         MouseArea
         {
             anchors.fill: parent
-            onPressed:{led.rulerUpdate(mouseX, mouseY, l_rot.value)}
+            onPressed:{led.rulerUpdate(mouseX, mouseY, led.rotation)}
         }
     }
 }
