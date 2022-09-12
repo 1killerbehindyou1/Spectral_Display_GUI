@@ -15,6 +15,10 @@ Control
         led.rulerUpdate(position.x, position.y, rotation)
     }
 
+    function loadImageFromFile(filePath: url) {
+        return led.setPixMap(filePath)
+    }
+
     background: Rectangle
     {
         color: "white"

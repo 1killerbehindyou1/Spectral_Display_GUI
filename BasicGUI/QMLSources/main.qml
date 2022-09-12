@@ -65,15 +65,12 @@ ApplicationWindow
         id: fileDialog
         title: "Please choose a file"
         nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
+        selectMultiple: false
         onAccepted:
         {
-           if(!led.setPixMap(fileDialog.fileUrls)) 
+            if(!drawing.loadImageFromFile(fileDialog.fileUrl)) 
             {
                 showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrls}`)
-            }
-            else
-            {
-                showMessageBox("Open file...", `Success to load file: ${fileDialog.fileUrls}`)
             }
         }
         onRejected: 
