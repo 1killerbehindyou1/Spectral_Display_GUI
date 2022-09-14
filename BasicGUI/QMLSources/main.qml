@@ -42,17 +42,16 @@ ApplicationWindow
     { 
         anchors.fill: parent
         
-        DrawPanel
-        {
-            id: drawing
-            size: parseInt(controlPanel.l_size)
-            rotation: parseInt(controlPanel.l_rot)
-        }
-        
+        DrawPanel{ id: drawing}
+
         ControlPanel
         {
             id: parameters
             SplitView.minimumWidth: parameters.implicitWidth
+            Component.onCompleted: 
+            {
+                newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+            }
         }  
     }
     

@@ -8,10 +8,10 @@ import Main 1.0
 Control
 {
     id: root
-    property alias l_size: l_size.value
-    property alias l_rot: l_rot.value
 
     padding: 10
+    signal newParameters(int size, int rotation)
+
     background: Rectangle
     {
         color: "#DDD"
@@ -47,8 +47,7 @@ Control
 
                 onClicked: 
                 {
-                    //emit root.clickedButton()
-                    //led.rulerUpdate(l_x.value, l_y.value)
+                    root.newParameters(l_size.value, l_rot.value)
                 }          
             }
         }
