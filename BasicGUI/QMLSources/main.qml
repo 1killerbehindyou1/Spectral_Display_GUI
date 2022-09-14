@@ -24,8 +24,7 @@ ApplicationWindow
                 text: qsTr("&Open...")
                 onTriggered:
                 {
-                    fileDialog.open()
-                    
+                    fileDialog.open()            
 
                 }
             }
@@ -43,32 +42,18 @@ ApplicationWindow
     { 
         anchors.fill: parent
         
-        ColumnLayout
+        DrawPanel
         {
-            DrawPanel
-            {
-                id: drawPanel
-                implicitWidth: 720
-                implicitHeight: root.height 
-
-                size: parseInt(controlPanel.l_size)
-                rotation: parseInt(controlPanel.l_rot)
-            }
+            id: drawing
+            size: parseInt(controlPanel.l_size)
+            rotation: parseInt(controlPanel.l_rot)
         }
-            ScrollView
-            {
-                ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-                ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-
-                ControlPanel
-                {
-                    id: controlPanel
-                    implicitHeight: root.height
-                    implicitWidth: 180
-                }
-            }
         
-       
+        ControlPanel
+        {
+            id: parameters
+            SplitView.minimumWidth: parameters.implicitWidth
+        }  
     }
     
     FileDialog 

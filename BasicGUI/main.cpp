@@ -22,7 +22,7 @@ void myMessageOutput(QtMsgType type,
         typeStr = "WRN";
         break;
     case QtCriticalMsg:
-        typeStr = "WRN";
+        typeStr = "CRT";
         break;
     case QtFatalMsg:
         typeStr = "FTL";
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/Main.qml"));
-    
+
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreated, &app,
       [url](QObject *obj, const QUrl &objUrl) {

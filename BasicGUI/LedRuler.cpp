@@ -87,7 +87,7 @@ void LedRuler::paint(QPainter *painter)
     painter->rotate(m_rotation);
     painter->setBrush(m_color);
     painter->drawRect(m_pix_rect);
-    qDebug() << "paint";
+    qDebug() << "XXXXXXX";
 }
 
 
