@@ -101,3 +101,8 @@ void LedRuler::rulerUpdate(int x,int y)
     update();
     
 }
+
+void LedRuler::rulerUpdate()
+{
+    update();
+}

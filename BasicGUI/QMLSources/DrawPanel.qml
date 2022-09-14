@@ -7,9 +7,12 @@ import Main 1.0
 
 Control
 { 
-    property alias size: led.size
-    property alias rotation: led.rotation
-    property alias color: led.color
+    function updateLedParameters(size: int, rotation: int) 
+    {
+        led.size = size
+        led.rotation = rotation
+        led.rulerUpdate()
+    }
 
     implicitWidth: 720
     implicitHeight: 500
@@ -30,6 +33,7 @@ Control
         
         MouseArea
         {
+            id: mouse_area
             anchors.fill: parent
             onPressed:
             {

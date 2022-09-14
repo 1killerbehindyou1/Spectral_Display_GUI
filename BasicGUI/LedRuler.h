@@ -46,6 +46,7 @@ public:
     
 
  Q_INVOKABLE void rulerUpdate(int l_x, int l_y);
+ Q_INVOKABLE void rulerUpdate();
  Q_INVOKABLE bool setPixMap(QUrl path);
 
 signals:
