@@ -25,6 +25,8 @@ ApplicationWindow
                 onTriggered:
                 {
                     fileDialog.open()
+                    
+
                 }
             }
             MenuSeparator { }
@@ -37,7 +39,6 @@ ApplicationWindow
         }
     }
 
-
     SplitView 
     { 
         anchors.fill: parent
@@ -46,8 +47,12 @@ ApplicationWindow
         {
             DrawPanel
             {
+                id: drawPanel
                 implicitWidth: 720
                 implicitHeight: root.height 
+
+                size: parseInt(controlPanel.l_size)
+                rotation: parseInt(controlPanel.l_rot)
             }
         }
             ScrollView
@@ -57,6 +62,7 @@ ApplicationWindow
 
                 ControlPanel
                 {
+                    id: controlPanel
                     implicitHeight: root.height
                     implicitWidth: 180
                 }

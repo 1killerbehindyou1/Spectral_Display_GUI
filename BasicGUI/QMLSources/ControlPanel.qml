@@ -7,10 +7,11 @@ import Main 1.0
 
 Control
 {
-    signal clickedButton
+    //signal clickedButton
     property alias l_size: l_size.value
     property alias l_rot: l_rot.value
 
+    id: root
     implicitWidth: 180
     implicitHeight: 500
 
@@ -20,12 +21,6 @@ Control
         color: "#BBB"
     }
     
-   // onRulerUpdateSignal:
-    //{
-        //led.size = l_size.value
-        //led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
-        //l_size.value = 50
-    //}
     contentItem: ColumnLayout
     { 
         spacing: 10; 
@@ -48,9 +43,9 @@ Control
             
             onClicked: 
             {
-            
-                led.rulerUpdate(l_x.value, l_y.value, l_rot.value)
-            
+                //emit root.clickedButton()
+                //led.rulerUpdate(l_x.value, l_y.value)
+                //qDebug() << "BBBBBBBBBBBBBBBBB";
             }          
         }
                             
