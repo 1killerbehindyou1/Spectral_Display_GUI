@@ -79,8 +79,6 @@ bool LedRuler::setPixMap(QUrl path)
     update();
     
     return true;
-    
-    
 }
 
 void LedRuler::paint(QPainter *painter)
@@ -93,15 +91,13 @@ void LedRuler::paint(QPainter *painter)
 }
 
 
-void LedRuler::rulerUpdate(int x,int y, int rotation)
+void LedRuler::rulerUpdate(int x,int y)
 {
-    m_rotation = rotation;
     m_pix_rect.moveTo(x - m_pix_rect.height()/2, y - m_pix_rect.height()/2);
     m_part_map = m_map.copy(m_pix_rect);
 
     Interpolation::setLedColor(this);
     
-    //emit rulerUpdateSignal();
     update();
     
 }
