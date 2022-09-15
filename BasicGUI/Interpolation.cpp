@@ -1,5 +1,7 @@
 
 #include "Interpolation.h"
+#include <iostream>
+#include <QDebug>
 
 void Interpolation::setLedColor(LedRuler *led_x)
 {   
@@ -16,47 +18,20 @@ void Interpolation::setLedColor(LedRuler *led_x)
     for (int y = 0; y < image.height(); ++y) {
         color = image.pixelColor(x,y);
 
-            if(color.red() > 0)
-            {
-                red_pixels.iterator++;
                 red_pixels.sum += color.red();
-            }
-            if(color.green() > 0)
-            {
-                green_pixels.iterator++;
                 green_pixels.sum += color.green();
-            }
-            if(color.blue() > 0)
-            {
-                blue_pixels.iterator++;
                 blue_pixels.sum += color.blue();
-            }
-
         }
     }
     
-    if(red_pixels.iterator > 0) 
-    {
-        red_pixels.level = red_pixels.sum/red_pixels.iterator;
-    }
-    else red_pixels.level = 0;
+    int image_size = image.height() * image.height();
 
-    if(green_pixels.iterator > 0) 
-    {
-        green_pixels.level = green_pixels.sum/green_pixels.iterator;
-    }
-    else green_pixels.level = 0;
-
-    if(blue_pixels.iterator > 0) 
-    {
-        blue_pixels.level = blue_pixels.sum/blue_pixels.iterator;
-    }
-    else blue_pixels.level = 0;
-
+    red_pixels.level = red_pixels.sum/image_size;
+    green_pixels.level = green_pixels.sum/image_size;
+    blue_pixels.level = blue_pixels.sum/image_size;
 
     color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
     led_x->setColor(color);
-    
 }
 
 
