@@ -60,15 +60,16 @@ ApplicationWindow
         id: fileDialog
         title: "Please choose a file"
         nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
+        selectMultiple: false
         onAccepted:
         {
-           if(!led.setPixMap(fileDialog.fileUrls)) 
+           if(!drawing.loadImageFromFile(fileDialog.fileUrl)) 
             {
-                showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrls}`)
+                showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
             }
             else
             {
-                showMessageBox("Open file...", `Success to load file: ${fileDialog.fileUrls}`)
+                showMessageBox("Open file...", `Success to load file: ${fileDialog.fileUrl}`)
             }
         }
         onRejected: 
@@ -78,6 +79,13 @@ ApplicationWindow
         Component.onCompleted: visible = false
     }
     
+    function showMessageBox(title: string, message: string)
+    {
+        messageDialog.text = message
+        messageDialog.title = title
+        messageDialog.open()
+    }
+
     MessageDialog 
     {
         id: messageDialog
@@ -87,14 +95,6 @@ ApplicationWindow
         {
             messageDialog.close()  
         }
-        visible: false
-    }
-
-    function showMessageBox(title: string, message: string)
-    {
-        messageDialog.text = message
-        messageDialog.title = title
-        messageDialog.open()
     }
 }
      

@@ -7,11 +7,14 @@ import Main 1.0
 
 Control
 { 
-    function updateLedParameters(size: int, rotation: int) 
-    {
+    function updateLedParameters(size: int, rotation: int){
         led.size = size
         led.rotation = rotation
         led.rulerUpdate()
+    }
+
+    function loadImageFromFile(filepath: url){
+        return led.setPixMap(filepath)
     }
 
     implicitWidth: 720

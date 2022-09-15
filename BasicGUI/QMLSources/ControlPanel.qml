@@ -16,7 +16,7 @@ Control
     {
         color: "#DDD"
     }
-    
+   
     contentItem: ColumnLayout
     { 
         spacing: 10; 
@@ -29,28 +29,27 @@ Control
             Layout.fillWidth: true
             clip: true
 
-        ColumnLayout
-        {
-            width: parent.width
-            Text{text: "Led ruler parameters" }         
-            DataInput{ id: l_size; value: "100"; label: "led size     "}
-            DataInput{ id: l_rot; value: "0"; label:"led rotation"}      
-            Item { Layout.fillHeight: true }
-        
-            
-            Button
+            ColumnLayout
             {
-                id: button_
-                Layout.alignment: Qt.AlignHCenter
-                text: "SET"
-                highlighted: true
-
-                onClicked: 
+                width: parent.width
+                Text{text: "Led ruler parameters" }         
+                DataInput{ id: l_size; value: "100"; label: "led size     "}
+                DataInput{ id: l_rot; value: "0"; label:"led rotation"}      
+                Item { Layout.fillHeight: true }
+                         
+                Button
                 {
-                    root.newParameters(l_size.value, l_rot.value)
-                }          
+                    id: button_
+                    Layout.alignment: Qt.AlignHCenter
+                    text: "SET"
+                    highlighted: true
+
+                    onClicked: 
+                    {
+                        root.newParameters(l_size.value, l_rot.value)
+                    }          
+                }
             }
-        }
         }                        
     }
 }
