@@ -63,7 +63,7 @@ ApplicationWindow
         selectMultiple: false
         onAccepted:
         {
-           if(!drawing.loadImageFromFile(fileDialog.fileUrl)) 
+           if(!drawing.loadImageFromFile(fileDialog.fileUrl)) //calling function from DrawPanel Module
             {
                 showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
             }
@@ -83,7 +83,7 @@ ApplicationWindow
     {
         messageDialog.text = message
         messageDialog.title = title
-        messageDialog.open()
+        messageDialog.open()  
     }
 
     MessageDialog 
