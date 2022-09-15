@@ -8,7 +8,6 @@ import Main 1.0
 Control
 {
     id: root
-
     padding: 10
     signal newParameters(int size, int rotation)
 

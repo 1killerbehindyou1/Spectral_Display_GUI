@@ -7,14 +7,14 @@ import Main 1.0
 
 Control
 { 
-    function updateLedParameters(size: int, rotation: int){
+    function updateLedParameters(size: int, rotation: int){ //global function to Draw panel object
         led.size = size
         led.rotation = rotation
-        led.rulerUpdate()
+        led.rulerUpdate() //overloaded function used to just update view
     }
 
-    function loadImageFromFile(filepath: url){
-        return led.setPixMap(filepath)
+    function loadImageFromFile(filepath: url){ //global function to Draw panel object
+        return led.setPixMap(filepath)  //function set bitmap from location "filepath" return true or false
     }
 
     implicitWidth: 720
@@ -40,7 +40,7 @@ Control
             anchors.fill: parent
             onPressed:
             {
-                led.rulerUpdate(mouseX, mouseY)
+                led.rulerUpdate(mouseX, mouseY)  //updating position of rectangle in LedRuler object
             }
         }                 
     }                             
