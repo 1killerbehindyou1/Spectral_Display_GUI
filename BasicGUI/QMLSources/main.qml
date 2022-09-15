@@ -25,7 +25,6 @@ ApplicationWindow
                 onTriggered:
                 {
                     fileDialog.open()            
-
                 }
             }
             MenuSeparator { }

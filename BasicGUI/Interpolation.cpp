@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QDebug>
 
-void Interpolation::setLedColor(LedRuler *led_x)
+QColor Interpolation::setLedColor(LedRuler *led_x)
 {   
     QPixmap pixmap(led_x->getPixMap());
     QImage image = pixmap.toImage(); 
@@ -30,8 +30,7 @@ void Interpolation::setLedColor(LedRuler *led_x)
     green_pixels.level = green_pixels.sum/image_size;
     blue_pixels.level = blue_pixels.sum/image_size;
 
-    color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
-    led_x->setColor(color);
+    return color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
 }
 
 

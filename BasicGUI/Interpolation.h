@@ -15,7 +15,7 @@ class Interpolation
     int sum =0;
     int level =0;
 
-    static void setLedColor(LedRuler *led_x);
+    static QColor setLedColor(LedRuler *led_x);
     
 
 };
