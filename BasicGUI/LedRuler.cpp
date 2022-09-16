@@ -4,11 +4,11 @@
 #include <iostream>
 #include <QDebug>
 
-LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(10), m_size(30),
+LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(20), m_size(10),
            m_pix_rect(new QRect[m_number_of_leds]), m_color(new QColor[m_number_of_leds]), m_map("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/BITMAPA.png")    
 {
-    int x = 100;
-    int y = 100;
+    int x = 0;
+    int y = 0;
     for(int i =0; m_number_of_leds > i; i++)
     {
         m_pix_rect[i].setHeight(m_size);
@@ -58,21 +58,17 @@ void LedRuler::setPixMap(QPixmap pix){ m_part_map = pix; }
 
 void LedRuler::paint(QPainter *painter)
 {
-    
     painter->drawPixmap(0,0,m_map);
-    
     painter->translate(m_map.width()/2, m_map.height()/2);
     
-    for(int rot = -10; rot <= 360; rot += 5){
+    for(int rot = 0; rot <= 360; rot += 5){
         painter->rotate(rot);
-    for(int i =0; m_number_of_leds > i; i++)
-    {
-        painter->setBrush(m_color[i]);
-        painter->drawRect(m_pix_rect[i]);
+        for(int i =0; m_number_of_leds > i; i++)
+        {
+            painter->setBrush(m_color[i]);
+            painter->drawRect(m_pix_rect[i]);
+        }
     }
-    }
-   
-  
 }
 
 void LedRuler::rulerUpdate(int x,int y, int rotation)
@@ -82,14 +78,16 @@ void LedRuler::rulerUpdate(int x,int y, int rotation)
     {
         m_pix_rect[i].moveTo(x - m_size, y - m_size);
         m_part_map = m_map.copy(m_pix_rect[i]);
-        m_color[i] = Interpolation::setLedColor(this);
 
+        m_color[i] = Interpolation::setLedColor(this);
         x += (m_spacing + m_size);
     }
+    update();
+}
 
-    for(int i =0; m_number_of_leds > i; i++)
-    {
-        std::cout<< "rect nr: " << i << " x: " << m_pix_rect[i].x() << " y: " << m_pix_rect[i].y() <<"\n";
-    }
+void LedRuler::pointUpdate(int x, int y)
+{
+    m_point.setX(x);
+    m_point.setY(y);
     update();
 }

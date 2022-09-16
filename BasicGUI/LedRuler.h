@@ -50,6 +50,7 @@ public:
      void paint(QPainter *painter) override;
 
  Q_INVOKABLE void rulerUpdate(int l_x, int l_y, int rotation );
+ Q_INVOKABLE void pointUpdate(int x, int y);
 
 signals:
     void rulerUpdateSignal();
@@ -64,7 +65,7 @@ private:
     int m_rotation;
     int m_spacing;
     int m_size;
-    
+    QPoint m_point; //służy do kalibracji
 };
 #endif
 
