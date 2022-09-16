@@ -16,6 +16,7 @@ class LedRuler : public QQuickPaintedItem{
 
     Q_OBJECT
     Q_PROPERTY(int size READ size WRITE setSize)
+    Q_PROPERTY(int step READ step WRITE setStep)
     Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
     Q_PROPERTY(int number_of_leds READ number_of_leds WRITE setNumber_of_leds)
     QML_ELEMENT
@@ -28,6 +29,9 @@ public:
 
     int spacing() const;
     void setSpacing(const int &number);
+
+    int step() const;
+    void setStep(const int &number);
 
     int size() const;
     void setSize(const int &size);
@@ -53,6 +57,7 @@ private:
     int m_rotation;
     int m_spacing;
     int m_size;
+    int m_step;
 };
 #endif
 

@@ -17,7 +17,6 @@ LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_l
         x += (m_size + m_spacing);
     }
     std::cout<< "LED Ruler constructor" << std::endl;
-    
 }
 
 void LedRuler::setSize( const int &size)
@@ -44,13 +43,18 @@ QPixmap LedRuler::getPixMap() const{ return m_part_map; }
 
 void LedRuler::setPixMap(QPixmap pix){ m_part_map = pix; }
 
+int LedRuler::step() const {return m_step; }
+
+void LedRuler::setStep(const int &step) { m_step = step; }
+
+
 void LedRuler::paint(QPainter *painter)
 {
     painter->drawPixmap(0,0,m_map);
     painter->translate(m_map.width()/2, m_map.height()/2);
     QColor color("white");
 
-    for(int rot = 0; rot <= 360; rot += 5){
+    for(int rot = 0; rot <= 360; rot += m_step){
         painter->rotate(rot);
         for(int i =0; m_number_of_leds > i; i++)
         {
