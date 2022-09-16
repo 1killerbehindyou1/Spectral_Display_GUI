@@ -32,18 +32,6 @@ void LedRuler::setSize( const int &size)
 
 int LedRuler::size() const { return m_size ;}
 
-int LedRuler::lx() const { return m_pix_rect[0].x(); }
-
-int LedRuler::ly() const { return m_pix_rect[0].y() ;}
-
-void LedRuler::setLx(const int &lx) { m_pix_rect[0].setX(lx); }
-
-void LedRuler::setLy(const int &ly) { m_pix_rect[0].setY(ly); }
-
-int LedRuler::rotation() const { return m_rotation; }
-
-void LedRuler::setRotation(const int &rotation) { m_rotation = rotation; }
-
 int LedRuler::spacing() const { return m_spacing; }
 
 void LedRuler::setSpacing(const int &spacing) { m_spacing = spacing; }
@@ -60,20 +48,23 @@ void LedRuler::paint(QPainter *painter)
 {
     painter->drawPixmap(0,0,m_map);
     painter->translate(m_map.width()/2, m_map.height()/2);
-    
+    QColor color("white");
+
     for(int rot = 0; rot <= 360; rot += 5){
         painter->rotate(rot);
         for(int i =0; m_number_of_leds > i; i++)
         {
-            painter->setBrush(m_color[i]);
+            painter->setBrush(color/*m_color[i]*/);
             painter->drawRect(m_pix_rect[i]);
         }
     }
 }
 
-void LedRuler::rulerUpdate(int x,int y, int rotation)
+void LedRuler::rulerUpdate()
 {
-    m_rotation = rotation;
+    int x = m_size *1.5;
+    int y = m_size * 0.5;
+
     for(int i =0; m_number_of_leds > i; i++)
     {
         m_pix_rect[i].moveTo(x - m_size, y - m_size);
@@ -85,9 +76,3 @@ void LedRuler::rulerUpdate(int x,int y, int rotation)
     update();
 }
 
-void LedRuler::pointUpdate(int x, int y)
-{
-    m_point.setX(x);
-    m_point.setY(y);
-    update();
-}
