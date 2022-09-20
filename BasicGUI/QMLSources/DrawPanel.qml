@@ -20,10 +20,8 @@ Control
     implicitWidth: 720
     implicitHeight: 500
 
-    background: Rectangle
-    {
-        color: "white"
-    }
+    background: Rectangle{ color: "white" }
+    
     contentItem: LedRuler
     {
         id: led  

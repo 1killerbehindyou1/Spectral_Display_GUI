@@ -40,7 +40,6 @@ int main(int argc, char *argv[]){
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
 
-    //std::cout << "-> Application started" << std::endl;
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     app.setOrganizationName("1killerbehindyou1");
@@ -51,13 +50,13 @@ int main(int argc, char *argv[]){
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/Main.qml"));
 
-  QObject::connect(
-      &engine, &QQmlApplicationEngine::objectCreated, &app,
-      [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl) QCoreApplication::exit(-1);
-      },
-      Qt::QueuedConnection);
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::objectCreated, &app,
+        [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl) QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
 
-  engine.load(url);
-  return app.exec();
+    engine.load(url);
+    return app.exec();
 }

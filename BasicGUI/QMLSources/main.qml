@@ -67,10 +67,6 @@ ApplicationWindow
             {
                 showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
             }
-            else
-            {
-                showMessageBox("Open file...", `Success to load file: ${fileDialog.fileUrl}`)
-            }
         }
         onRejected: 
         {
