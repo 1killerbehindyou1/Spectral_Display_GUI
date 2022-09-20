@@ -14,7 +14,6 @@ Control
         Text
         {
             id: label
-            text: " "
         }   
         spacing: 10
         Rectangle
