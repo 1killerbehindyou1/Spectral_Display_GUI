@@ -16,7 +16,6 @@ LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_l
         m_pix_rect[i].moveTo(x, y);
         x += (m_size + m_spacing);
     }
-    std::cout<< "LED Ruler constructor" << std::endl;
 }
 
 void LedRuler::setSize( const int &size)
@@ -62,6 +61,7 @@ bool LedRuler::setPixMap(QUrl path){
     qDebug() << "Loaded file is null";
     return false;
   }
+  emit fileErrLoad("ddd","SSS");
   rulerUpdate();
   return true;
 }

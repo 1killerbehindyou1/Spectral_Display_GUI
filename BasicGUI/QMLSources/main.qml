@@ -41,7 +41,10 @@ ApplicationWindow
     { 
         anchors.fill: parent
         
-        DrawPanel{ id: drawing}
+        DrawPanel
+        { 
+            id: drawing
+        }
 
         ControlPanel
         {
@@ -51,6 +54,7 @@ ApplicationWindow
             Component.onCompleted: 
             {
                 newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+                fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
             }
         }
     }
@@ -65,7 +69,7 @@ ApplicationWindow
         {
            if(!drawing.loadImageFromFile(fileDialog.fileUrl)) //calling function from DrawPanel Module
             {
-                showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
+                messageDialog.showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
             }
         }
         onRejected: 
@@ -73,13 +77,6 @@ ApplicationWindow
            fileDialog.close()
         }
         Component.onCompleted: visible = false
-    }
-    
-    function showMessageBox(title: string, message: string)
-    {
-        messageDialog.text = message
-        messageDialog.title = title
-        messageDialog.open()  
     }
 
     MessageDialog 
@@ -90,6 +87,13 @@ ApplicationWindow
         onAccepted: 
         {
             messageDialog.close()  
+        }
+        
+        function showMessageBox(title: string, message: string)
+        {
+        messageDialog.text = message
+        messageDialog.title = title
+        messageDialog.open()  
         }
     }
 }

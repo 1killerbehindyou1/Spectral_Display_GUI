@@ -47,6 +47,9 @@ public:
  Q_INVOKABLE bool setPixMap(QUrl path);
  Q_INVOKABLE void setPoint(const QPoint &point);
 
+signals: 
+    void fileErrLoad(QString title, QString name);
+
 private:
     
     QRect *m_pix_rect;   //wskaźnik do tablicy kwadratów

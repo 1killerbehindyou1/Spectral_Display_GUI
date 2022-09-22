@@ -7,6 +7,8 @@ import Main 1.0
 
 Control
 { 
+    signal fileLoadErrorInfo(string title, string name)
+
     function updateLedParameters(size: int, spacing: int, step: int){ //global function to Draw panel object
        
         led.size = size;
@@ -19,6 +21,7 @@ Control
         return led.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
 
+    id: root
     implicitWidth: 720
     implicitHeight: 500
 
@@ -37,6 +40,10 @@ Control
             led.rulerUpdate()
         }
 
+        onFileErrLoad:
+        {
+            root.fileLoadErrorInfo("TITTLE", "NAMMME")
+        }
         MouseArea
         {
             id: mouse_area
