@@ -51,6 +51,7 @@ bool LedRuler::setPixMap(QUrl path){
   QString qstr = path.toLocalFile();
 
   QImage img{};
+
   if (!img.load(qstr)) {
     qDebug() << "Loaded file failed";
     return false;
@@ -61,6 +62,8 @@ bool LedRuler::setPixMap(QUrl path){
     qDebug() << "Loaded file is null";
     return false;
   }
+  rulerUpdate();
+  return true;
 }
 
 int LedRuler::step() const {return m_step; }
@@ -69,7 +72,6 @@ void LedRuler::setStep(const int &step) { m_step = step; }
 
 void LedRuler::setPoint(const QPoint &point) {
     
-    std::cout<< point.x() << " " << point.y();
      m_point = point; 
      rulerUpdate();
 }

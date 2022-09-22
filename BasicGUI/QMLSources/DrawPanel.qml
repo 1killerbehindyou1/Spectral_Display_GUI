@@ -43,7 +43,7 @@ Control
             anchors.fill: parent
             onPressed:
             {
-                led.setPoint(Qt.point(mouseX, mouseY))  //updating position of rectangle in LedRuler object
+                led.setPoint(Qt.point(mouseX, mouseY))  //updating transform position
             }
         }                 
     }                             
