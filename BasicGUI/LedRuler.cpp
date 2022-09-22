@@ -4,8 +4,8 @@
 #include <iostream>
 #include <QDebug>
 
-LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(20), m_size(10),
-           m_pix_rect(new QRect[m_number_of_leds]), m_color(new QColor[m_number_of_leds]), m_map("C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/Spectral_Display_GUI/Pictures/BITMAPA.png")    
+LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(20),
+           m_pix_rect(new QRect[m_number_of_leds]), m_color(new QColor[m_number_of_leds])
 {
     int x = 0;
     int y = 0;
@@ -39,19 +39,45 @@ int LedRuler::number_of_leds() const { return m_number_of_leds; }
 
 void LedRuler::setNumber_of_leds(const int &number_of_leds) { m_number_of_leds = number_of_leds; }
 
-QPixmap LedRuler::getPixMap() const{ return m_part_map; }
+QPixmap LedRuler::getPixMap() const { return m_part_map;}
 
-void LedRuler::setPixMap(QPixmap pix){ m_part_map = pix; }
+bool LedRuler::setPixMap(QUrl path){
+    
+  if (!path.isLocalFile()) {
+    qDebug() << "Ouch! This is remote file. We don't have handling for that "
+                "right now";
+    return false;
+  }
+  QString qstr = path.toLocalFile();
+
+  QImage img{};
+  if (!img.load(qstr)) {
+    qDebug() << "Loaded file failed";
+    return false;
+  }
+  m_map = QPixmap::fromImage(std::move(img));
+
+  if (m_map.isNull()) {
+    qDebug() << "Loaded file is null";
+    return false;
+  }
+}
 
 int LedRuler::step() const {return m_step; }
 
 void LedRuler::setStep(const int &step) { m_step = step; }
 
+void LedRuler::setPoint(const QPoint &point) {
+    
+    std::cout<< point.x() << " " << point.y();
+     m_point = point; 
+     rulerUpdate();
+}
 
 void LedRuler::paint(QPainter *painter)
 {
     painter->drawPixmap(0,0,m_map);
-    painter->translate(m_map.width()/2, m_map.height()/2);
+    painter->translate(m_point);
     QColor color("white");
 
     for(int rot = 0; rot <= 360; rot += m_step){

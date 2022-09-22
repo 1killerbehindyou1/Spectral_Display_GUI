@@ -12,9 +12,7 @@ Control
     RowLayout
     {   
         Text
-        {
-            id: label
-        }   
+        { id: label }   
         spacing: 10
         Rectangle
         {
@@ -32,8 +30,7 @@ Control
                 font.pixelSize: 20
                 activeFocusOnTab: true
             }   
-        }    
-            
+        }         
     }                   
 }       
 

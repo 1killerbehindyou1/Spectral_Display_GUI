@@ -14,7 +14,7 @@ ApplicationWindow
     title: qsTr("Basic Gui")
     color: "lightgrey"
     menuBar: MenuBar 
-    {       
+    {     
         contentWidth: parent.width
         Menu 
         {
@@ -47,11 +47,12 @@ ApplicationWindow
         {
             id: parameters
             SplitView.minimumWidth: parameters.implicitWidth
+
             Component.onCompleted: 
             {
                 newParameters.connect(drawing.updateLedParameters) //connection slot and signals
             }
-        }  
+        }
     }
     
     FileDialog 

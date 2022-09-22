@@ -26,10 +26,12 @@ QColor Interpolation::setLedColor(LedRuler *led_x)
     
     int image_size = image.height() * image.height();
 
+    if(image_size > 0){
     red_pixels.level = red_pixels.sum/image_size;
     green_pixels.level = green_pixels.sum/image_size;
     blue_pixels.level = blue_pixels.sum/image_size;
-
+    }
+    
     return color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
 }
 

@@ -8,6 +8,7 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
 #include <QPixmap>
+#include <QPoint>
 #include <QUrl>
 #include <QDebug>
 #include <iostream>
@@ -28,7 +29,7 @@ public:
     void setNumber_of_leds(const int &number);
 
     int spacing() const;
-    void setSpacing(const int &number);
+    void setSpacing(const int &spacing);
 
     int step() const;
     void setStep(const int &number);
@@ -39,12 +40,12 @@ public:
     int rotation() const;
     void setRotation(const int &rotation);
 
+    void paint(QPainter *painter) override;
     QPixmap getPixMap() const;
-    void setPixMap(QPixmap pix);
-
-     void paint(QPainter *painter) override;
 
  Q_INVOKABLE void rulerUpdate();
+ Q_INVOKABLE bool setPixMap(QUrl path);
+ Q_INVOKABLE void setPoint(const QPoint &point);
 
 private:
     
@@ -52,7 +53,8 @@ private:
     QPixmap m_map;         //wczytana bitmapa jak obraz
     QPixmap m_part_map;  //bitmapa pobrana z obrazka
     QColor *m_color;     //tablica zmiennych kolor
-    
+    QPoint m_point;        // środek odrysowywania
+
     int m_number_of_leds;
     int m_rotation;
     int m_spacing;

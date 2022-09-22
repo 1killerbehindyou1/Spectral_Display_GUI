@@ -7,14 +7,16 @@ import Main 1.0
 
 Control
 { 
-    function updateLedParameters(size: int, rotation: int){ //global function to Draw panel object
-        led.size = size
-        led.rotation = rotation
-        led.rulerUpdate() //overloaded function used to just update view
+    function updateLedParameters(size: int, spacing: int, step: int){ //global function to Draw panel object
+       
+        led.size = size;
+        led.spacing = spacing;
+        led.step = step;
+        led.rulerUpdate(); //overloaded function used to just update view
     }
 
     function loadImageFromFile(filepath: url){ //global function to Draw panel object
-        return led.setPixMap(filepath)  //function set bitmap from location "filepath" return true or false
+        return led.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
 
     implicitWidth: 720
@@ -26,19 +28,22 @@ Control
     {
         id: led  
         anchors.fill: parent
-        color: "blue"
-        size: 100
-        lx: 50
-        ly: 50 
-        rotation: 0
-        
+        size: 10
+        spacing: 5
+        step: 90
+
+        Component.onCompleted: 
+        {
+            led.rulerUpdate()
+        }
+
         MouseArea
         {
             id: mouse_area
             anchors.fill: parent
             onPressed:
             {
-                led.rulerUpdate(mouseX, mouseY)  //updating position of rectangle in LedRuler object
+                led.setPoint(Qt.point(mouseX, mouseY))  //updating position of rectangle in LedRuler object
             }
         }                 
     }                             
