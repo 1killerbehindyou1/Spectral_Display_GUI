@@ -16,15 +16,16 @@ QColor Interpolation::setLedColor(LedRuler *led_x)
    for (int x = 0; x < image.width(); ++x) {
     
     for (int y = 0; y < image.height(); ++y) {
-        color = image.pixelColor(x,y);
+        
+            color = image.pixelColor(x,y);
 
-                red_pixels.sum += color.red();
-                green_pixels.sum += color.green();
-                blue_pixels.sum += color.blue();
+            red_pixels.sum += color.red();
+            green_pixels.sum += color.green();
+            blue_pixels.sum += color.blue();
         }
     }
     
-    int image_size = image.height() * image.height();
+    int image_size = image.height() * image.width();
 
     if(image_size > 0){
     red_pixels.level = red_pixels.sum/image_size;
@@ -32,6 +33,7 @@ QColor Interpolation::setLedColor(LedRuler *led_x)
     blue_pixels.level = blue_pixels.sum/image_size;
     }
     
+    std::cout<< "red_pixels.level: " <<red_pixels.level <<" green_pixels.level: " << green_pixels.level << "blue_pixels.level: "<< blue_pixels.level<< std::endl;
     return color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
 }
 

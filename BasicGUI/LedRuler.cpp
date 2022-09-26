@@ -5,28 +5,10 @@
 #include <QDebug>
 
 LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(10),
-           m_pix_rect(new QRect[m_number_of_leds]), m_color(new QColor[m_number_of_leds])
-{
-    int x = 0;
-    int y = 0;
-    for(int i =0; m_number_of_leds > i; i++)
-    {
-        m_pix_rect[i].setHeight(m_size);
-        m_pix_rect[i].setWidth(m_size);
-        m_pix_rect[i].moveTo(x, y);
-        x += (m_size + m_spacing);
-    }
+                                        m_color(new QColor[m_number_of_leds]){
 }
 
-void LedRuler::setSize( const int &size)
-{
-    m_size = size;
-    for(int i =0; m_number_of_leds > i; i++)
-    {
-        m_pix_rect[i].setHeight(size);
-        m_pix_rect[i].setWidth(size);
-    }
-}
+void LedRuler::setSize( const int &size){ m_size = size; }
 
 int LedRuler::size() const { return m_size ;}
 
@@ -43,25 +25,26 @@ QPixmap LedRuler::getPixMap() const { return m_part_map;}
 bool LedRuler::setPixMap(QUrl path){
     
   if (!path.isLocalFile()) {
-    qDebug() << "Ouch! This is remote file. We don't have handling for that "
-                "right now";
+    
+    emit fileErrLoad("Loaded file failed","Ouch! This is remote file. We don't have handling for that "
+                "right now");
     return false;
   }
-  QString qstr = path.toLocalFile();
 
+  QString qstr = path.toLocalFile(); //zamiana ścieżki na sciezke do pliku lokanego
   QImage img{};
 
   if (!img.load(qstr)) {
-    qDebug() << "Loaded file failed";
+    emit fileErrLoad("Loaded file failed","File is corrupted or isn't graphic file");
     return false;
   }
+
   m_map = QPixmap::fromImage(std::move(img));
 
   if (m_map.isNull()) {
-    qDebug() << "Loaded file is null";
+    emit fileErrLoad("Loaded file failed","Loaded file is null");
     return false;
   }
-  emit fileErrLoad("ddd","SSS");
   rulerUpdate();
   return true;
 }
@@ -82,7 +65,7 @@ void LedRuler::paint(QPainter *painter)
     painter->translate(m_point);
     
     QPoint offset(m_size * 0.5, m_size *(-0.5));
-    QColor color;
+    QColor color("red");
 
     for(int rot = 0; rot < 360; rot += m_step){
         
@@ -103,10 +86,7 @@ void LedRuler::paint(QPainter *painter)
     }
 }
 
-void LedRuler::rulerUpdate()
-{
-    update();
-}
+void LedRuler::rulerUpdate(){ update(); }
     
 /*
 namespace {

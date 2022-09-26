@@ -36,15 +36,10 @@ Control
         spacing: 5
         step: 90
 
-        Component.onCompleted: 
-        {
-            led.rulerUpdate()
-        }
+        Component.onCompleted:{ led.rulerUpdate(); }
 
-        onFileErrLoad:
-        {
-            root.fileLoadErrorInfo(title, name)
-        }
+        onFileErrLoad:{ root.fileLoadErrorInfo(title, name); }
+
         MouseArea
         {
             id: mouse_area

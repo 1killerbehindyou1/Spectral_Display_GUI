@@ -6,11 +6,11 @@ import QtQuick.Dialogs 1.3
 import Main 1.0
 
 Control
-{
-    id: root
-    padding: 10
+{   
     signal newParameters(int size, int spacing, int step, int number_of_leds)
 
+    id: root
+    padding: 10
     background: Rectangle
     {
         color: "#DDD"
