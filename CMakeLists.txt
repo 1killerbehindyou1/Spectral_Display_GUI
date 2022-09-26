@@ -6,5 +6,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out)
 
 add_subdirectory(BasicGUI)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/PointsInPoligon)
 
+add_subdirectory(PointsInPoligon)
 
