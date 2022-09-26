@@ -9,7 +9,7 @@ Control
 {
     id: root
     padding: 10
-    signal newParameters(int size, int spacing, int step)
+    signal newParameters(int size, int spacing, int step, int number_of_leds)
 
     background: Rectangle
     {
@@ -32,8 +32,9 @@ Control
             {
                 width: parent.width
                 Text{text: "Led ruler parameters" }         
-                DataInput{ id: l_size; value: "100"; label: "led size       "}
-                DataInput{ id: l_spacing; value: "5"; label: "led spacing  "}
+                DataInput{ id: l_num; value: "10"; label: "led number  "}
+                DataInput{ id: l_size; value: "10"; label: "led size       "}
+                DataInput{ id: l_spacing; value: "2"; label: "led spacing  "}
                 DataInput{ id: l_step; value: "90"; label:"led angle     "}      
                 Item { Layout.fillHeight: true }
                          
@@ -46,7 +47,7 @@ Control
 
                     onClicked: 
                     {
-                        root.newParameters(l_size.value, l_spacing.value, l_step.value)
+                        root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
                     }          
                 }
             }

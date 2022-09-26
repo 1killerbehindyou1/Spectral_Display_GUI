@@ -50,12 +50,6 @@ ApplicationWindow
         {
             id: parameters
             SplitView.minimumWidth: parameters.implicitWidth
-
-            Component.onCompleted: 
-            {
-                newParameters.connect(drawing.updateLedParameters) //connection slot and signals
-                fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
-            }
         }
     }
     
@@ -67,10 +61,7 @@ ApplicationWindow
         selectMultiple: false
         onAccepted:
         {
-           if(!drawing.loadImageFromFile(fileDialog.fileUrl)) //calling function from DrawPanel Module
-            {
-                messageDialog.showMessageBox("Open file...", `Failed to load file: ${fileDialog.fileUrl}`)
-            }
+           drawing.loadImageFromFile(fileDialog.fileUrl)
         }
         onRejected: 
         {
@@ -95,6 +86,11 @@ ApplicationWindow
         messageDialog.title = title
         messageDialog.open()  
         }
+    }
+    Component.onCompleted: 
+    {
+        parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+        drawing.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
     }
 }
      

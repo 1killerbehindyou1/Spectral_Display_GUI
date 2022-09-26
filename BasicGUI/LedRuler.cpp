@@ -4,7 +4,7 @@
 #include <iostream>
 #include <QDebug>
 
-LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(20),
+LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(10),
            m_pix_rect(new QRect[m_number_of_leds]), m_color(new QColor[m_number_of_leds])
 {
     int x = 0;
@@ -81,31 +81,30 @@ void LedRuler::paint(QPainter *painter)
     painter->drawPixmap(0,0,m_map);
     painter->translate(m_point);
     
-    for(int rot = 0; rot <= 360; rot += m_step){
-        
+    QPoint offset(m_size * 0.5, m_size *(-0.5));
+    QColor color;
 
-        for(int i =0; m_number_of_leds > i; i++)
-        {
-            painter->setBrush(m_color[i]);
-            painter->drawRect(m_pix_rect[i]);
-        }
+    for(int rot = 0; rot < 360; rot += m_step){
+        
+        QRect rect{offset, QSize {m_size, m_size}};
+        painter->save();
         painter->rotate(rot);
+        
+        for(int i =0; i < m_number_of_leds ; i++)
+        {
+            m_part_map = m_map.copy(rect);
+            color = Interpolation::setLedColor(this);
+            painter->setBrush(color);
+            painter->drawRect(rect);
+            rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
+           
+        }
+        painter->restore();
     }
 }
 
 void LedRuler::rulerUpdate()
 {
-    int x = m_size *1.5;
-    int y = m_size * 0.5;
-
-    for(int i =0; m_number_of_leds > i; i++)
-    {
-        m_pix_rect[i].moveTo(x - m_size, y - m_size);
-        m_part_map = m_map.copy(m_pix_rect[i]);
-
-        m_color[i] = Interpolation::setLedColor(this);
-        x += (m_spacing + m_size);
-    }
     update();
 }
     

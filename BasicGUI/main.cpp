@@ -40,7 +40,6 @@ int main(int argc, char *argv[]){
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
 
-    std::cout << "XXXXXXXXXXXXX";
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
     app.setOrganizationName("1killerbehindyou1");

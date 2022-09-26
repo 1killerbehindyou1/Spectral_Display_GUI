@@ -9,8 +9,9 @@ Control
 { 
     signal fileLoadErrorInfo(string title, string name)
 
-    function updateLedParameters(size: int, spacing: int, step: int){ //global function to Draw panel object
+    function updateLedParameters(size: int, spacing: int, step: int, number_of_leds: int){ //global function to Draw panel object
        
+        led.number_of_leds = number_of_leds
         led.size = size;
         led.spacing = spacing;
         led.step = step;
@@ -42,7 +43,7 @@ Control
 
         onFileErrLoad:
         {
-            root.fileLoadErrorInfo("TITTLE", "NAMMME")
+            root.fileLoadErrorInfo(title, name)
         }
         MouseArea
         {
