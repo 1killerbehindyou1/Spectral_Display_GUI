@@ -24,9 +24,7 @@ set(PROJECT_SOURCES
         LedRuler.h
         Interpolation.cpp
         Interpolation.h
-
 )
-
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

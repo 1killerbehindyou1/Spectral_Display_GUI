@@ -30,7 +30,7 @@ Control
     
     contentItem: LedRuler
     {
-        id: led  
+        id: led 
         anchors.fill: parent
         size: 10
         spacing: 5

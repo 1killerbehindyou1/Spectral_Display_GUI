@@ -18,17 +18,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 set(PROJECT_SOURCES
         Main.cpp
         QMLSources/qml.qrc
-        LedRuler.cpp
-        LedRuler.h
-        Interpolation.cpp
-        Interpolation.h
-
 )
 
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(PointsInPoligon
+    qt_add_executable(PointsInPolygon
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
@@ -38,21 +33,21 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(PointsInPoligon SHARED
+        add_library(PointsInPolygon SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(PointsInPoligon
+        add_executable(PointsInPolygon
           ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_compile_definitions(PointsInPoligon
+target_compile_definitions(PointsInPolygon
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(PointsInPoligon
+target_link_libraries(PointsInPolygon
   PRIVATE 
     Qt${QT_VERSION_MAJOR}::Core 
     Qt${QT_VERSION_MAJOR}::Quick 
@@ -60,7 +55,7 @@ target_link_libraries(PointsInPoligon
     Qt${QT_VERSION_MAJOR}::QuickControls2
 )
   
-set_target_properties(PointsInPoligon PROPERTIES
+set_target_properties(PointsInPolygon PROPERTIES
   MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
   MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
   MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -69,7 +64,7 @@ set_target_properties(PointsInPoligon PROPERTIES
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_import_qml_plugins(PointsInPoligon)
-    qt_finalize_executable(PointsInPoligon)
+    qt_import_qml_plugins(PointsInPolygon)
+    qt_finalize_executable(PointsInPolygon)
 endif()
 

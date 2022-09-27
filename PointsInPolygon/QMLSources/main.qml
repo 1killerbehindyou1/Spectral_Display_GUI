@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
-import Main 1.0
+// import Main 1.0
 
 ApplicationWindow 
 {
@@ -41,10 +41,10 @@ ApplicationWindow
     { 
         anchors.fill: parent
         
-        DrawPanel
+        /*DrawPanel
         { 
             id: drawing
-        }
+        }*/
 
         ControlPanel
         {
@@ -61,7 +61,7 @@ ApplicationWindow
         selectMultiple: false
         onAccepted:
         {
-           drawing.loadImageFromFile(fileDialog.fileUrl)
+           //drawing.loadImageFromFile(fileDialog.fileUrl)
         }
         onRejected: 
         {
@@ -89,8 +89,8 @@ ApplicationWindow
     }
     Component.onCompleted: 
     {
-        parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
-        drawing.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
+        //parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+        //drawing.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
     }
 }
      
