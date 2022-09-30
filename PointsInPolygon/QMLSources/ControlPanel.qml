@@ -7,7 +7,7 @@ import Main 1.0
 
 Control
 {   
-    signal newParameters(int size, int spacing, int step, int number_of_leds)
+    signal newParameters(int angle, point top_left, int size)
 
     id: root
     padding: 10
@@ -47,7 +47,7 @@ Control
 
                     onClicked: 
                     {
-                       root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
+                       root.newParameters(l_step.value, Qt.point(100,100), l_size.value)
                     }          
                 }
             }

@@ -89,7 +89,7 @@ ApplicationWindow
     }
     Component.onCompleted: 
     {
-        parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+        parameters.newParameters.connect(drawing.updatePolygon) //connection slot and signals
         drawing.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
     }
 }

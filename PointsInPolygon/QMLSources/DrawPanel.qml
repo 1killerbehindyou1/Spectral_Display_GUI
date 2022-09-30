@@ -13,6 +13,11 @@ Control
         return poly.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
 
+    function updatePolygon(angle: int, point: Qt.point, size: int){
+        
+        return poly.polygonUpdate(angle, point, size);
+    }
+
     id: root
     implicitWidth: 720
     implicitHeight: 500
@@ -23,10 +28,10 @@ Control
     {
         id: poly 
         anchors.fill: parent
-        //A: Qt.point(50,50)
-        //B: Qt.point(150, 50)
-        //C: Qt.point(50, 150)
-       // D: Qt.point(150, 150)
+          //a: Qt.point(50, 50)
+          //b: Qt.point(40, 180)
+         // c: Qt.point(130, 250)
+         // d: Qt.point(300, 300)
 
         onFileErrLoad:{ root.fileLoadErrorInfo(title, name); }
     }                             
