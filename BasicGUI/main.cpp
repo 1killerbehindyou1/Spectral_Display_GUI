@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/Main.qml"));
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,

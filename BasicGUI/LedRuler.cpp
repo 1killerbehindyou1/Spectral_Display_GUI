@@ -22,7 +22,7 @@ void LedRuler::setNumber_of_leds(const int &number_of_leds) { m_number_of_leds =
 
 QPixmap LedRuler::getPixMap() const { return m_part_map;}
 
-bool LedRuler::setPixMap(QUrl path){
+bool LedRuler::setPixMap(const QUrl &path){
     
   if (!path.isLocalFile()) {
     

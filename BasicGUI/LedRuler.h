@@ -44,7 +44,7 @@ public:
     QPixmap getPixMap() const;
 
  Q_INVOKABLE void rulerUpdate();
- Q_INVOKABLE bool setPixMap(QUrl path);
+ Q_INVOKABLE bool setPixMap(const QUrl &path);
  Q_INVOKABLE void setPoint(const QPoint &point);
 
 signals: 

@@ -9,15 +9,6 @@ Control
 { 
     signal fileLoadErrorInfo(string title, string name)
 
-    function updateLedParameters(size: int, spacing: int, step: int, number_of_leds: int){ //global function to Draw panel object
-       
-        led.number_of_leds = number_of_leds
-        led.size = size;
-        led.spacing = spacing;
-        led.step = step;
-        led.rulerUpdate(); //overloaded function used to just update view
-    }
-
     function loadImageFromFile(filepath: url){ //global function to Draw panel object
         return led.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
@@ -36,18 +27,10 @@ Control
         spacing: 5
         step: 90
 
-        Component.onCompleted:{ led.rulerUpdate(); }
-
-        onFileErrLoad:{ root.fileLoadErrorInfo(title, name); }
-
-        MouseArea
-        {
-            id: mouse_area
+        MouseArea{
             anchors.fill: parent
-            onPressed:
-            {
-                led.setPoint(Qt.point(mouseX, mouseY))  //updating transform position
-            }
-        }                 
+            onClicked: led.setPoint(Qt.point(mouseX, mouseY))
+        }
+        onFileErrLoad:{ root.fileLoadErrorInfo(title, name); }
     }                             
 }

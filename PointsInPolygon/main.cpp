@@ -4,6 +4,7 @@
 #include <QtQuick>
 #include <iostream>
 //#include <QDebug>
+#include "Polygon.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext &context,
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]){
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
     
-    //qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<T_Polygon>("Main", 1, 0, "T_Polygon");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

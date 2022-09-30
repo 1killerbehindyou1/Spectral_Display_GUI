@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
-// import Main 1.0
+import Main 1.0
 
 Control
 {   
@@ -47,7 +47,7 @@ Control
 
                     onClicked: 
                     {
-                        root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
+                       root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
                     }          
                 }
             }
