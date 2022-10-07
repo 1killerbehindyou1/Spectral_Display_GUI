@@ -24,14 +24,15 @@ public:
 
     void paint(QPainter *painter) override;
     void imageViewreUpdate();
-    static QPixmap m_map;         //wczytana bitmapa jak obraz
 
  Q_INVOKABLE bool setPixMap(const QUrl &path);
 
 signals: 
     void fileErrLoad(QString title, QString name);
+    void bitMapLoadedCorrectly(QPixmap pixmap);
     
-    
+private:
+    QPixmap m_map;
 };
 #endif
 

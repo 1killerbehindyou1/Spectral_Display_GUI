@@ -7,6 +7,7 @@
 
 LedRuler::LedRuler(QQuickItem *parent)
                 : QQuickPaintedItem(parent), m_number_of_leds(10){
+                    m_pixmap.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
 }
 
 void LedRuler::setSize( const int &size){ m_size = size; }
@@ -47,7 +48,7 @@ void LedRuler::paint(QPainter *painter)
         for(int i =0; i < m_number_of_leds ; i++)
         {
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
-            color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),ImageViewer::m_map); 
+            color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_pixmap); 
             painter->setBrush(color);
             painter->drawRect(rect);
         }
@@ -56,7 +57,8 @@ void LedRuler::paint(QPainter *painter)
 }
 
 void LedRuler::rulerUpdate(){ update(); }
-    
+
+void LedRuler::onBitMapLoadedCorrectly(QPixmap pixmap) {m_pixmap = pixmap;}
 /*
 namespace {
 void drawArm(QPainter* painter, double length, int ledCount)

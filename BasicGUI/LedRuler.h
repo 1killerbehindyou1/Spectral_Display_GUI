@@ -46,9 +46,14 @@ public:
  Q_INVOKABLE void rulerUpdate();
  Q_INVOKABLE void setPoint(const QPoint &point);
 
+public slots:
+    void onBitMapLoadedCorrectly(QPixmap pixmap);
+
+
 private:
     
     QPoint m_point;        // środek odrysowywania
+    QPixmap m_pixmap;
 
     int m_number_of_leds;
     int m_rotation;

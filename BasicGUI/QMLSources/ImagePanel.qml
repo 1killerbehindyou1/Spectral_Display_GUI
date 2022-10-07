@@ -14,15 +14,16 @@ Control
     }
 
     id: root
-    implicitWidth: 720
+    implicitWidth: 400
     implicitHeight: 500
 
     background: Rectangle{ color: "white" }
     contentItem: ImageViewer 
     {
         id: picture
+        anchors.fill: parent
+        
+        onFileErrLoad:{ root.fileLoadErrorInfo(title, name); } //emit signal aftere recevinig signag from C++ after file load error
+
     }
-
-    onFileErrLoad:{ root.fileLoadErrorInfo(title, name); } //emit signal aftere recevinig signag from C++ after file load error
-
 }

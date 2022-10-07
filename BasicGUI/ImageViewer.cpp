@@ -5,6 +5,7 @@
 
 ImageViewer::ImageViewer(QQuickItem *parent)
                 :QQuickPaintedItem(parent){
+                  m_map.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
 }
 
 
@@ -32,6 +33,8 @@ bool ImageViewer::setPixMap(const QUrl &path){
     return false;
   }
   imageViewreUpdate();
+  
+  emit bitMapLoadedCorrectly(m_map);
   return true;
 }
 
@@ -39,7 +42,4 @@ void ImageViewer::paint(QPainter *painter){
     painter->drawPixmap(0,0,m_map);
 }
 
-void ImageViewer::imageViewreUpdate()
-{
-    update();
-}
+void ImageViewer::imageViewreUpdate(){ update();}

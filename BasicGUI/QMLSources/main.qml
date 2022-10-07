@@ -48,7 +48,7 @@ ApplicationWindow
 
         ImagePanel
         {
-            id: picture
+            id: id_picture
         }
 
         ControlPanel
@@ -66,7 +66,7 @@ ApplicationWindow
         selectMultiple: false
         onAccepted:
         {
-           picture.loadImageFromFile(fileDialog.fileUrl)
+           id_picture.loadImageFromFile(fileDialog.fileUrl)
         }
         onRejected: 
         {
@@ -95,7 +95,7 @@ ApplicationWindow
     Component.onCompleted: 
     {
         parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
-        picture.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
+        id_picture.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
     }
 }
      
