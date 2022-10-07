@@ -2,10 +2,10 @@
 #include "Interpolation.h"
 #include <iostream>
 #include <QDebug>
+#include <cmath>
 
-QColor Interpolation::setLedColor(LedRuler *led_x)
+QColor Interpolation::setLedColor(QVector<QPoint> vector_points, QPixmap pixmap)
 {   
-    QPixmap pixmap(led_x->getPixMap());
     QImage image = pixmap.toImage(); 
    
     QColor color;
@@ -13,29 +13,58 @@ QColor Interpolation::setLedColor(LedRuler *led_x)
     Interpolation green_pixels;
     Interpolation blue_pixels;
 
-   for (int x = 0; x < image.width(); ++x) {
-    
-    for (int y = 0; y < image.height(); ++y) {
-        
-            color = image.pixelColor(x,y);
+    for(QPoint point : vector_points){
 
-            red_pixels.sum += color.red();
-            green_pixels.sum += color.green();
-            blue_pixels.sum += color.blue();
-        }
+        //std::cout<< "wartosc X: " << point.x() << "wartosc Y: " << point.y()<< std::endl;
+        color = image.pixelColor(point);
+
+        red_pixels.sum += color.red();
+        green_pixels.sum += color.green();
+        blue_pixels.sum += color.blue();
+    }
+
+    
+    int rect_size = vector_points.size();
+
+    if(rect_size > 0){
+    red_pixels.level = red_pixels.sum/rect_size;
+    green_pixels.level = green_pixels.sum/rect_size;
+    blue_pixels.level = blue_pixels.sum/rect_size;
     }
     
-    int image_size = image.height() * image.width();
-
-    if(image_size > 0){
-    red_pixels.level = red_pixels.sum/image_size;
-    green_pixels.level = green_pixels.sum/image_size;
-    blue_pixels.level = blue_pixels.sum/image_size;
-    }
-    
-    std::cout<< "red_pixels.level: " <<red_pixels.level <<" green_pixels.level: " << green_pixels.level << "blue_pixels.level: "<< blue_pixels.level<< std::endl;
+    //std::cout<< "red_pixels.level: " <<red_pixels.level <<" green_pixels.level: " << green_pixels.level << "blue_pixels.level: "<< blue_pixels.level<< std::endl;
     return color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
 }
+
+
+QVector<QPoint> Interpolation::transform(QPoint sr_obr, QRect rect, int angle)
+{
+        QVector<QPoint> vector_points;
+        QPoint p_top_left = rect.topLeft();
+        
+        QPoint wzgl_point;
+        
+        float rad = angle * 3.14/180;
+
+        for(int i =0; i <= rect.height();  i++){   
+        
+            wzgl_point.setY(p_top_left.y() + i);
+
+            for(int j =0; j <= rect.width();  j++){   
+                
+                wzgl_point.setX(p_top_left.x() + i);
+                
+                int R =  p_top_left.x();
+                
+                QPoint bezwzgl_point;  //punkty bezwględne
+                bezwzgl_point.setX(R*cos(rad) + sr_obr.x());  
+                bezwzgl_point.setY(R*sin(rad) + sr_obr.y());
+                vector_points.push_front(bezwzgl_point);
+            }
+        }
+        return vector_points;
+}
+
 
 
 

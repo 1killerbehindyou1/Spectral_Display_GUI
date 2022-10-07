@@ -11,6 +11,7 @@
 #include <QPoint>
 #include <QUrl>
 #include <QDebug>
+#include <cmath>
 #include <iostream>
 
 class LedRuler : public QQuickPaintedItem{
@@ -55,8 +56,8 @@ private:
     QRect *m_pix_rect;   //wskaźnik do tablicy kwadratów
     QPixmap m_map;         //wczytana bitmapa jak obraz
     QPixmap m_part_map;  //bitmapa pobrana z obrazka
-    QColor *m_color;     //tablica zmiennych kolor
     QPoint m_point;        // środek odrysowywania
+    static QPoint A, B, C, D;
 
     int m_number_of_leds;
     int m_rotation;

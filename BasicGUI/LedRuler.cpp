@@ -4,8 +4,8 @@
 #include <iostream>
 #include <QDebug>
 
-LedRuler::LedRuler(QQuickItem *parent): QQuickPaintedItem(parent), m_number_of_leds(10),
-                                        m_color(new QColor[m_number_of_leds]){
+LedRuler::LedRuler(QQuickItem *parent)
+                : QQuickPaintedItem(parent), m_number_of_leds(10){
 }
 
 void LedRuler::setSize( const int &size){ m_size = size; }
@@ -62,10 +62,12 @@ void LedRuler::setPoint(const QPoint &point) {
 void LedRuler::paint(QPainter *painter)
 {
     painter->drawPixmap(0,0,m_map);
+    painter->save();
     painter->translate(m_point);
     
+    
     QPoint offset(m_size * 0.5, m_size *(-0.5));
-    QColor color("red");
+    QColor color;
 
     for(int rot = 0; rot < 360; rot += m_step){
         
@@ -75,11 +77,11 @@ void LedRuler::paint(QPainter *painter)
         
         for(int i =0; i < m_number_of_leds ; i++)
         {
-            m_part_map = m_map.copy(rect);
-            color = Interpolation::setLedColor(this);
+            rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
+            color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_map); 
             painter->setBrush(color);
             painter->drawRect(rect);
-            rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
+           
            
         }
         painter->restore();

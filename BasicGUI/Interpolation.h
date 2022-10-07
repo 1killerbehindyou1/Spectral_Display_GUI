@@ -4,6 +4,8 @@
 
 #include "LedRuler.h"
 #include <QColor>
+#include <QPoint>
+#include <QVector>
 #include <QPixmap>
 
 class Interpolation
@@ -15,13 +17,10 @@ class Interpolation
     int sum =0;
     int level =0;
 
-    static QColor setLedColor(LedRuler *led_x);
+    static QColor setLedColor(QVector<QPoint> vector_points, QPixmap pixmap);
     
-    /*static QColor transform(QPoint sr_obr, QPoint point, int angle)
-    {
-
-    }*/
-
+    static QVector<QPoint> transform(QPoint sr_obr, QRect rect, int angle);
+    
 };
 #endif
 

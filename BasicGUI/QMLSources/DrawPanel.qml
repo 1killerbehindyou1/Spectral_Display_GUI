@@ -9,6 +9,16 @@ Control
 { 
     signal fileLoadErrorInfo(string title, string name)
 
+    function updateLedParameters(size: int, spacing: int, angle: int, num: int){
+        
+        led.number_of_leds = num;
+        led.size = size;
+        led.spacing = spacing;
+        led.step =angle;
+        return led.rulerUpdate();
+        
+    }
+
     function loadImageFromFile(filepath: url){ //global function to Draw panel object
         return led.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
@@ -26,6 +36,8 @@ Control
         size: 10
         spacing: 5
         step: 90
+        number_of_leds: 10
+
 
         MouseArea{
             anchors.fill: parent
