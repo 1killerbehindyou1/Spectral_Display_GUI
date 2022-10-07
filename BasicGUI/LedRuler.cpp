@@ -62,7 +62,6 @@ void LedRuler::setPoint(const QPoint &point) {
 void LedRuler::paint(QPainter *painter)
 {
     painter->drawPixmap(0,0,m_map);
-    painter->save();
     painter->translate(m_point);
     
     
@@ -81,8 +80,6 @@ void LedRuler::paint(QPainter *painter)
             color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_map); 
             painter->setBrush(color);
             painter->drawRect(rect);
-           
-           
         }
         painter->restore();
     }

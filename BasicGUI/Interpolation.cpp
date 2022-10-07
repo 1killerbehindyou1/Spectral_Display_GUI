@@ -15,7 +15,6 @@ QColor Interpolation::setLedColor(QVector<QPoint> vector_points, QPixmap pixmap)
 
     for(QPoint point : vector_points){
 
-        //std::cout<< "wartosc X: " << point.x() << "wartosc Y: " << point.y()<< std::endl;
         color = image.pixelColor(point);
 
         red_pixels.sum += color.red();
@@ -25,6 +24,7 @@ QColor Interpolation::setLedColor(QVector<QPoint> vector_points, QPixmap pixmap)
 
     
     int rect_size = vector_points.size();
+    std::cout<< "ilosc pixeli:  " << rect_size<< std::endl;
 
     if(rect_size > 0){
     red_pixels.level = red_pixels.sum/rect_size;
@@ -32,7 +32,7 @@ QColor Interpolation::setLedColor(QVector<QPoint> vector_points, QPixmap pixmap)
     blue_pixels.level = blue_pixels.sum/rect_size;
     }
     
-    //std::cout<< "red_pixels.level: " <<red_pixels.level <<" green_pixels.level: " << green_pixels.level << "blue_pixels.level: "<< blue_pixels.level<< std::endl;
+   //std::cout<< "red_pixels.level: " <<red_pixels.level <<" green_pixels.level: " << green_pixels.level << "blue_pixels.level: "<< blue_pixels.level<< std::endl;
     return color = color.fromRgb(red_pixels.level, green_pixels.level, blue_pixels.level);
 }
 
@@ -46,15 +46,15 @@ QVector<QPoint> Interpolation::transform(QPoint sr_obr, QRect rect, int angle)
         
         float rad = angle * 3.14/180;
 
-        for(int i =0; i <= rect.height();  i++){   
+        for(int yy =0; yy <= rect.height();  yy++){   
         
-            wzgl_point.setY(p_top_left.y() + i);
+            wzgl_point.setY(p_top_left.y() + yy);
 
-            for(int j =0; j <= rect.width();  j++){   
+            for(int xx =0; xx <= rect.width();  xx++){   
                 
-                wzgl_point.setX(p_top_left.x() + i);
+                wzgl_point.setX(p_top_left.x() + xx);
                 
-                int R =  p_top_left.x();
+                int R =  p_top_left.x() + xx;
                 
                 QPoint bezwzgl_point;  //punkty bezwględne
                 bezwzgl_point.setX(R*cos(rad) + sr_obr.x());  
