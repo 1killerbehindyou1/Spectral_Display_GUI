@@ -1,6 +1,7 @@
 
 #include "LedRuler.h"
 #include "Interpolation.h"
+#include "ImageViewer.h"
 #include <iostream>
 #include <QDebug>
 
@@ -20,35 +21,6 @@ int LedRuler::number_of_leds() const { return m_number_of_leds; }
 
 void LedRuler::setNumber_of_leds(const int &number_of_leds) { m_number_of_leds = number_of_leds; }
 
-QPixmap LedRuler::getPixMap() const { return m_part_map;}
-
-bool LedRuler::setPixMap(const QUrl &path){
-    
-  if (!path.isLocalFile()) {
-    
-    emit fileErrLoad("Loaded file failed","Ouch! This is remote file. We don't have handling for that "
-                "right now");
-    return false;
-  }
-
-  QString qstr = path.toLocalFile(); //zamiana ścieżki na sciezke do pliku lokanego
-  QImage img{};
-
-  if (!img.load(qstr)) {
-    emit fileErrLoad("Loaded file failed","File is corrupted or isn't graphic file");
-    return false;
-  }
-
-  m_map = QPixmap::fromImage(std::move(img));
-
-  if (m_map.isNull()) {
-    emit fileErrLoad("Loaded file failed","Loaded file is null");
-    return false;
-  }
-  rulerUpdate();
-  return true;
-}
-
 int LedRuler::step() const {return m_step; }
 
 void LedRuler::setStep(const int &step) { m_step = step; }
@@ -61,10 +33,8 @@ void LedRuler::setPoint(const QPoint &point) {
 
 void LedRuler::paint(QPainter *painter)
 {
-    painter->drawPixmap(0,0,m_map);
     painter->translate(m_point);
-    
-    
+
     QPoint offset(m_size * 0.5, m_size *(-0.5));
     QColor color;
 
@@ -77,7 +47,7 @@ void LedRuler::paint(QPainter *painter)
         for(int i =0; i < m_number_of_leds ; i++)
         {
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
-            color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_map); 
+            color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),ImageViewer::m_map); 
             painter->setBrush(color);
             painter->drawRect(rect);
         }

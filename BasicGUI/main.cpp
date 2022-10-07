@@ -5,6 +5,7 @@
 #include <iostream>
 //#include <QDebug>
 #include "LedRuler.h"
+#include "ImageViewer.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext &context,
@@ -46,6 +47,7 @@ int main(int argc, char *argv[]){
     app.setOrganizationDomain("Education");
     
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<ImageViewer>("Main", 1, 0, "ImageViewer");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

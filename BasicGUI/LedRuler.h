@@ -42,22 +42,13 @@ public:
     void setRotation(const int &rotation);
 
     void paint(QPainter *painter) override;
-    QPixmap getPixMap() const;
 
  Q_INVOKABLE void rulerUpdate();
- Q_INVOKABLE bool setPixMap(const QUrl &path);
  Q_INVOKABLE void setPoint(const QPoint &point);
-
-signals: 
-    void fileErrLoad(QString title, QString name);
 
 private:
     
-    QRect *m_pix_rect;   //wskaźnik do tablicy kwadratów
-    QPixmap m_map;         //wczytana bitmapa jak obraz
-    QPixmap m_part_map;  //bitmapa pobrana z obrazka
     QPoint m_point;        // środek odrysowywania
-    static QPoint A, B, C, D;
 
     int m_number_of_leds;
     int m_rotation;

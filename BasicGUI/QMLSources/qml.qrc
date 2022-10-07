@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>DrawPanel.qml</file>
+        <file>RenderPanel.qml</file>
         <file>ControlPanel.qml</file>
         <file>DataInput.qml</file>
+        <file>ImagePanel.qml</file>
     </qresource>
 </RCC>

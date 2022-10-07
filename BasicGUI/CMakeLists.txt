@@ -24,6 +24,8 @@ set(PROJECT_SOURCES
         LedRuler.h
         Interpolation.cpp
         Interpolation.h
+        ImageViewer.cpp
+        ImageViewer.h
 )
 
 
