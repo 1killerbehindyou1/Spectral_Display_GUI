@@ -17,6 +17,10 @@ class Interpolation
 
     static QColor setLedColor(LedRuler *led_x);
     
+    /*static QColor transform(QPoint sr_obr, QPoint point, int angle)
+    {
+
+    }*/
 
 };
 #endif
