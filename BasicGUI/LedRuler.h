@@ -18,28 +18,23 @@
 class LedRuler : public QQuickPaintedItem{
 
     Q_OBJECT
-    Q_PROPERTY(int size READ size WRITE setSize)
-    Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
-    Q_PROPERTY(int step READ step WRITE setStep)
-    Q_PROPERTY(int number_of_leds READ number_of_leds WRITE setNumber_of_leds)
+    Q_PROPERTY(int size WRITE setSize)
+    Q_PROPERTY(int spacing WRITE setSpacing)
+    Q_PROPERTY(int step WRITE setStep)
+    Q_PROPERTY(int number_of_leds WRITE setNumber_of_leds)
     QML_ELEMENT
 
 public:
     LedRuler(QQuickItem *parent = 0);
 
-    int number_of_leds() const;
     void setNumber_of_leds(const int &number);
 
-    int spacing() const;
     void setSpacing(const int &spacing);
 
-    int step() const;
     void setStep(const int &number);
 
-    int size() const;
     void setSize(const int &size);
 
-    int rotation() const;
     void setRotation(const int &rotation);
 
     void paint(QPainter *painter) override;

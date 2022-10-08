@@ -14,17 +14,9 @@ LedRuler::LedRuler(QQuickItem *parent)
 
 void LedRuler::setSize( const int &size){ m_size = size; }
 
-int LedRuler::size() const { return m_size ;}
-
-int LedRuler::spacing() const { return m_spacing; }
-
 void LedRuler::setSpacing(const int &spacing) { m_spacing = spacing; }
 
-int LedRuler::number_of_leds() const { return m_number_of_leds; }
-
 void LedRuler::setNumber_of_leds(const int &number_of_leds) { m_number_of_leds = number_of_leds; }
-
-int LedRuler::step() const {return m_step; }
 
 void LedRuler::setStep(const int &step) { m_step = step; }
 
@@ -68,7 +60,6 @@ void LedRuler::paint(QPainter *painter)
 
         if(m_acquire_data_flag == true){
             LedRuler::m_projection->push_front(single_line);
-           // std::cout<< "wielkosc wektora:  "<< LedRuler::m_projection->size()<<  std::endl;
         }
         painter->restore();
     }
