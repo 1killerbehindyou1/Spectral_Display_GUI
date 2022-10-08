@@ -1,6 +1,6 @@
 
 #include "LedRuler.h"
-#include "Interpolation.h"
+#include "Interpolator.h"
 #include "ImageViewer.h"
 #include <iostream>
 #include <QDebug>

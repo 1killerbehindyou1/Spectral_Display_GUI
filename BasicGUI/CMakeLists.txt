@@ -22,8 +22,8 @@ set(PROJECT_SOURCES
         QMLSources/qml.qrc
         LedRuler.cpp
         LedRuler.h
-        Interpolation.cpp
-        Interpolation.h
+        Interpolator.cpp
+        Interpolator.h
         ImageViewer.cpp
         ImageViewer.h
 )
