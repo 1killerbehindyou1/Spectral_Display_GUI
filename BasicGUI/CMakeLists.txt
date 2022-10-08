@@ -14,6 +14,12 @@ set(PROJECT_SOURCES
   ${SOURCE_DIR}/LedRuler.h
   ${SOURCE_DIR}/FileManager.cpp
   ${SOURCE_DIR}/FileManager.h
+  ${SOURCE_DIR}/cpu_load_monitor.h
+  ${SOURCE_DIR}/cpu_load_monitor.cpp
+  ${SOURCE_DIR}/ram_usage_monitor.h
+  ${SOURCE_DIR}/ram_usage_monitor.cpp
+  ${SOURCE_DIR}/system_telemetry.h
+  ${SOURCE_DIR}/system_telemetry.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
