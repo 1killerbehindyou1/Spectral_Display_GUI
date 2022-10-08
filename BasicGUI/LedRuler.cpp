@@ -4,6 +4,7 @@
 #include "ImageViewer.h"
 #include <iostream>
 #include <QDebug>
+#include <QPen>
 
 LedRuler::LedRuler(QQuickItem *parent)
                 : QQuickPaintedItem(parent), m_number_of_leds(10){
@@ -49,6 +50,9 @@ void LedRuler::paint(QPainter *painter)
         {
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
             color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_pixmap); 
+            QPen pen = painter->pen();
+            pen.setColor(Qt::transparent);
+            painter->setPen(pen);
             painter->setBrush(color);
             painter->drawRect(rect);
         }
