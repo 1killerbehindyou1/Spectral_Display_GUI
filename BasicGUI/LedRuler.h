@@ -19,8 +19,8 @@ class LedRuler : public QQuickPaintedItem{
 
     Q_OBJECT
     Q_PROPERTY(int size READ size WRITE setSize)
-    Q_PROPERTY(int step READ step WRITE setStep)
     Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
+    Q_PROPERTY(int step READ step WRITE setStep)
     Q_PROPERTY(int number_of_leds READ number_of_leds WRITE setNumber_of_leds)
     QML_ELEMENT
 
@@ -44,6 +44,8 @@ public:
 
     void paint(QPainter *painter) override;
 
+    static QVector<QColor *>* m_projection;
+
  Q_INVOKABLE void rulerUpdate();
  Q_INVOKABLE void setPoint(const QPoint &point);
  Q_INVOKABLE void setAcquire(bool set);
@@ -52,7 +54,7 @@ public slots:
     void onBitMapLoadedCorrectly(QPixmap pixmap);
 
 signals:
-    void acquisitionFinished(QVector<QColor *>* m_projection);
+    void acquisitionFinished();
 
 private:
     

@@ -8,7 +8,8 @@
 
 LedRuler::LedRuler(QQuickItem *parent)
                 : QQuickPaintedItem(parent), m_number_of_leds(10){
-                    m_pixmap.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
+
+    m_pixmap.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
 }
 
 void LedRuler::setSize( const int &size){ m_size = size; }
@@ -35,12 +36,11 @@ void LedRuler::setPoint(const QPoint &point) {
 
 void LedRuler::paint(QPainter *painter)
 {
+    LedRuler::m_projection = new (QVector<QColor *>); 
+
     painter->translate(m_point);
     QPoint offset(m_size * 0.5, m_size *(-0.5));
     QColor color;
-
-     QVector<QColor *> *projection = new (QVector<QColor *>);
-    
 
     for(int rot = 0; rot < 360; rot += m_step){ 
         
@@ -67,13 +67,13 @@ void LedRuler::paint(QPainter *painter)
         }
 
         if(m_acquire_data_flag == true){
-        projection->push_front(single_line);
-        std::cout<< "wielkosc wektora:  "<< projection->size()<<  std::endl;
+            LedRuler::m_projection->push_front(single_line);
+           // std::cout<< "wielkosc wektora:  "<< LedRuler::m_projection->size()<<  std::endl;
         }
         painter->restore();
     }
      
-    emit acquisitionFinished(projection);
+    emit acquisitionFinished();
 }
 
 void LedRuler::rulerUpdate(){ update(); }
@@ -82,6 +82,7 @@ void LedRuler::onBitMapLoadedCorrectly(QPixmap pixmap) {m_pixmap = pixmap;}
 
 void LedRuler::setAcquire(bool set){ m_acquire_data_flag = set; }
 
+QVector<QColor *>* LedRuler::m_projection = nullptr;
 /*
 namespace {
 void drawArm(QPainter* painter, double length, int ledCount)
