@@ -1,18 +1,30 @@
 
 #ifndef DATA_MANAGER_H
-#define ACQUISITION_H
+#define DATA_MANAGER_H
 
-#include "LedRuler.h"
+#include <QObject>
 #include <QColor>
-#include <QPoint>
+#include "FileManager.h"
 #include <QVector>
-#include <QPixmap>
 
-class DataManager{
+class DataManager : public QObject{
 
-    acqusitonFromRuler();
+    Q_OBJECT
 
-    acqistionFromFile();
+public:
+    DataManager(QObject *parent =0);
+
+    void acqistionFromFile();
+
+    void sendDataToFile();
+
+public slots:
+    void acqusitonFromRuler();
+
+private:
+
+    FileManager m_file_manager;
+
 };
 
 #endif

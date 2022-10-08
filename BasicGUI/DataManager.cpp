@@ -1,13 +1,21 @@
 
 #include "DataManager.h"
 #include <iostream>
-#include <QDebug>
-#include <cmath>
 
-DataManager::acqistionFromFile(){
+DataManager::DataManager(QObject* parent) : QObject(parent){
 
 }
 
-DataManager::acqusitonFromRuler{
-    
+void DataManager::acqistionFromFile(){
+
+}
+
+void  DataManager::acqusitonFromRuler(){
+  
+  std::cout<< "wielkosc wektora: ??????? "  << std::endl;
+}
+
+void  DataManager::sendDataToFile()
+{
+     m_file_manager.saveToFile();
 }

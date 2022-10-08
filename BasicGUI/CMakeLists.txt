@@ -26,6 +26,10 @@ set(PROJECT_SOURCES
         Interpolator.h
         ImageViewer.cpp
         ImageViewer.h
+        DataManager.h
+        DataManager.cpp
+        FileManager.h
+        FileManager.cpp
 )
 
 

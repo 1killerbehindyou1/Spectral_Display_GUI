@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <cmath>
 #include <iostream>
+#include <QVector>
 
 class LedRuler : public QQuickPaintedItem{
 
@@ -45,10 +46,13 @@ public:
 
  Q_INVOKABLE void rulerUpdate();
  Q_INVOKABLE void setPoint(const QPoint &point);
+ Q_INVOKABLE void setAcquire(bool set);
 
 public slots:
     void onBitMapLoadedCorrectly(QPixmap pixmap);
 
+signals:
+    void acquisitionFinished(QVector<QColor *>* m_projection);
 
 private:
     
@@ -60,6 +64,8 @@ private:
     int m_spacing;
     int m_size;
     int m_step;
+    bool m_acquire_data_flag = true;
+   
 };
 #endif
 

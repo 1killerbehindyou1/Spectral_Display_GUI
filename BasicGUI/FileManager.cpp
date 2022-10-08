@@ -4,6 +4,6 @@
 #include <QDebug>
 
 
-FileManager::loadFromFile();
+void FileManager::loadFromFile(){}
 
-FileManager::saveToFile();
+void FileManager::saveToFile(){}

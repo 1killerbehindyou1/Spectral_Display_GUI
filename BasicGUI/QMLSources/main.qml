@@ -95,7 +95,9 @@ ApplicationWindow
     Component.onCompleted: 
     {
         parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
+        parameters.acquisitionStatusChanged.connect(drawing.setAcquireStatus)
         id_picture.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
+        drawing.acquisitionFinished.connect(_data_manager.acqusitonFromRuler)
     }
 }
      

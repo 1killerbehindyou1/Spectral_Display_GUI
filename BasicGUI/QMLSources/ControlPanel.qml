@@ -8,6 +8,8 @@ import Main 1.0
 Control
 {   
     signal newParameters(int size, int spacing, int step, int number_of_leds)
+    signal acquisitionStatusChanged(bool set)
+    property int state 
 
     id: root
     padding: 10
@@ -48,6 +50,24 @@ Control
                     onClicked: 
                     {
                         root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
+                    }          
+                }
+
+                Button
+                {
+                    id: button2
+                    Layout.alignment: Qt.AlignHCenter
+                    text: "SET"
+                    highlighted: true
+
+                    onClicked: 
+                    {
+                        console.log(root.state? "true" : "false");
+                        if(root.state) root.state = false;
+                        else root.state = true;
+                        
+                        root.acquisitionStatusChanged(state)
+
                     }          
                 }
             }

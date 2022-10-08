@@ -7,6 +7,7 @@ import Main 1.0
 
 Control
 { 
+    signal acquisitionFinished()
     
     function updateLedParameters(size: int, spacing: int, angle: int, num: int){
         
@@ -16,6 +17,11 @@ Control
         led.step =angle;
         return led.rulerUpdate();
         
+    }
+
+    function setAcquireStatus(status: bool)
+    {
+        return led.setAcquire(status)
     }
 
     id: root
@@ -33,6 +39,7 @@ Control
         step: 90
         number_of_leds: 10
 
+        onAcquisitionFinished:{ root.acquisitionFinished() }
 
         MouseArea{
             anchors.fill: parent

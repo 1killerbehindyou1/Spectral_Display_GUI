@@ -11,7 +11,7 @@
 class Interpolation
 {
    
-    public:
+public:
 
     int iterator =0;
     int sum =0;

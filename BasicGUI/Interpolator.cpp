@@ -24,8 +24,7 @@ QColor Interpolation::setLedColor(QVector<QPoint> vector_points, QPixmap pixmap)
 
     
     int rect_size = vector_points.size();
-    std::cout<< "ilosc pixeli:  " << rect_size<< std::endl;
-
+   
     if(rect_size > 0){
     red_pixels.level = red_pixels.sum/rect_size;
     green_pixels.level = green_pixels.sum/rect_size;

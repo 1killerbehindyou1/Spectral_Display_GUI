@@ -36,33 +36,52 @@ void LedRuler::setPoint(const QPoint &point) {
 void LedRuler::paint(QPainter *painter)
 {
     painter->translate(m_point);
-
     QPoint offset(m_size * 0.5, m_size *(-0.5));
     QColor color;
 
-    for(int rot = 0; rot < 360; rot += m_step){
+     QVector<QColor *> *projection = new (QVector<QColor *>);
+    
+
+    for(int rot = 0; rot < 360; rot += m_step){ 
         
+        QColor single_line[m_number_of_leds];       
         QRect rect{offset, QSize {m_size, m_size}};
         painter->save();
         painter->rotate(rot);
         
         for(int i =0; i < m_number_of_leds ; i++)
         {
+
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
             color =Interpolation::setLedColor(Interpolation::transform(m_point, rect, rot),m_pixmap); 
+            
+            if(m_acquire_data_flag == true){
+                single_line[i] = color;
+            }
+
             QPen pen = painter->pen();
             pen.setColor(Qt::transparent);
             painter->setPen(pen);
             painter->setBrush(color);
             painter->drawRect(rect);
         }
+
+        if(m_acquire_data_flag == true){
+        projection->push_front(single_line);
+        std::cout<< "wielkosc wektora:  "<< projection->size()<<  std::endl;
+        }
         painter->restore();
     }
+     
+    emit acquisitionFinished(projection);
 }
 
 void LedRuler::rulerUpdate(){ update(); }
 
 void LedRuler::onBitMapLoadedCorrectly(QPixmap pixmap) {m_pixmap = pixmap;}
+
+void LedRuler::setAcquire(bool set){ m_acquire_data_flag = set; }
+
 /*
 namespace {
 void drawArm(QPainter* painter, double length, int ledCount)

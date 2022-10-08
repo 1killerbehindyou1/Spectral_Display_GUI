@@ -6,6 +6,7 @@
 //#include <QDebug>
 #include "LedRuler.h"
 #include "ImageViewer.h"
+#include "DataManager.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext &context,
@@ -43,14 +44,19 @@ int main(int argc, char *argv[]){
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
+    
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
     
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<ImageViewer>("Main", 1, 0, "ImageViewer");
-
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    
+    DataManager data_manager(&app);
+    
+    engine.rootContext()->setContextProperty("_data_manager", &data_manager);
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
