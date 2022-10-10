@@ -10,11 +10,11 @@
 LedRuler::LedRuler(QQuickItem *parent)
                 : QQuickPaintedItem(parent){
 
-    m_interpolator.inerpolator_pixmap.load("BITMAPA.png");
-    m_number_of_leds = 10;
-    m_rotation = 45;
-    m_spacing = 2;
-    m_size =10;
+    m_interpolator.inerpolator_pixmap.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
+    m_number_of_leds = 1;
+    m_rotation = 360;
+    m_spacing = 0;
+    m_size =2;
 }
 
 void LedRuler::paint(QPainter *painter)

@@ -15,11 +15,11 @@ class PointInReferenceSystem{
 public:
     void calcModule();
     void calcAngle();
-    void calcPoint();
+    void calcPoint(QPoint);
 
     float module =0;
     float angle =0;
-    QPoint point;
+    QPointF point;
 };
 
 
@@ -44,6 +44,7 @@ public:
 
     QPixmap inerpolator_pixmap;
     float m_angle;
+    
 
 private:
     Component red_component;
