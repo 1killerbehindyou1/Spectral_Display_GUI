@@ -23,16 +23,15 @@ public:
     ImageViewer(QQuickItem *parent = 0);
 
     void paint(QPainter *painter) override;
-    void imageViewreUpdate();
 
  Q_INVOKABLE bool setPixMap(const QUrl &path);
 
 signals: 
     void fileErrLoad(QString title, QString name);
-    void bitMapLoadedCorrectly(QPixmap pixmap);
-    
+
 private:
-    QPixmap m_map;
+    QPixmap m_pixmap;
+
 };
 #endif
 

@@ -7,6 +7,7 @@
 #include "LedRuler.h"
 #include "ImageViewer.h"
 #include "DataManager.h"
+#include "Interpolator.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext &context,

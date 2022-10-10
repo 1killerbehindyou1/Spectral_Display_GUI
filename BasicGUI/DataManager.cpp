@@ -7,13 +7,8 @@ DataManager::DataManager(QObject* parent) : QObject(parent){
 
 }
 
-void DataManager::acqistionFromFile(){
+void DataManager::loadFromFile(){
 
-}
-
-void  DataManager::acqusitonFromRuler(){
-  
-  std::cout<< "wielkosc wektora:  "  << LedRuler::m_projection->size() << std::endl;
 }
 
 void  DataManager::sendDataToFile()
@@ -21,3 +16,4 @@ void  DataManager::sendDataToFile()
      m_file_manager.saveToFile();
 }
 
+QVector<QVector<QColor>>* DataManager::m_projection = nullptr;

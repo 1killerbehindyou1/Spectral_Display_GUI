@@ -3,11 +3,7 @@
 #include <iostream>
 #include <QDebug>
 
-ImageViewer::ImageViewer(QQuickItem *parent)
-                :QQuickPaintedItem(parent){
-                  m_map.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
-}
-
+ImageViewer::ImageViewer(QQuickItem *parent) :QQuickPaintedItem(parent){}
 
 bool ImageViewer::setPixMap(const QUrl &path){
     
@@ -26,20 +22,21 @@ bool ImageViewer::setPixMap(const QUrl &path){
     return false;
   }
 
-  m_map = QPixmap::fromImage(std::move(img));
+    m_pixmap  = QPixmap::fromImage(std::move(img)); 
+  
+   if(m_pixmap.isNull()) {
 
-  if (m_map.isNull()) {
     emit fileErrLoad("Loaded file failed","Loaded file is null");
     return false;
   }
-  imageViewreUpdate();
-  
-  emit bitMapLoadedCorrectly(m_map);
+  update();
+
   return true;
 }
 
 void ImageViewer::paint(QPainter *painter){
-    painter->drawPixmap(0,0,m_map);
+
+      painter->drawPixmap(0,0,m_pixmap);
 }
 
-void ImageViewer::imageViewreUpdate(){ update();}
+ 

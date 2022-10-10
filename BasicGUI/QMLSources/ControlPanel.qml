@@ -7,8 +7,7 @@ import Main 1.0
 
 Control
 {   
-    signal newParameters(int size, int spacing, int step, int number_of_leds)
-    signal acquisitionStatusChanged(bool set)
+    signal parameterChanged(int number_of_leds, int rotation, int spacing,int size);
     property int state 
 
     id: root
@@ -32,12 +31,13 @@ Control
 
             ColumnLayout
             {
+                
                 width: parent.width
                 Text{text: "Led ruler parameters" }         
                 DataInput{ id: l_num; value: "10"; label: "led number  "}
                 DataInput{ id: l_size; value: "10"; label: "led size       "}
                 DataInput{ id: l_spacing; value: "2"; label: "led spacing  "}
-                DataInput{ id: l_step; value: "90"; label:"led angle     "}      
+                DataInput{ id: l_rotation; value: "90"; label:"led angle     "}      
                 Item { Layout.fillHeight: true }
                          
                 Button
@@ -49,7 +49,7 @@ Control
 
                     onClicked: 
                     {
-                        root.newParameters(l_size.value, l_spacing.value, l_step.value, l_num.value)
+                        root.parameterChanged(l_num.value,  l_rotation.value, l_spacing.value, l_size.value )
                     }          
                 }
 
@@ -66,8 +66,6 @@ Control
                         if(root.state) root.state = false;
                         else root.state = true;
                         
-                        root.acquisitionStatusChanged(state)
-
                     }          
                 }
             }

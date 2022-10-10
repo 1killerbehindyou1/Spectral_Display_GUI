@@ -14,17 +14,14 @@ class DataManager : public QObject{
 public:
     DataManager(QObject *parent =0);
 
-    void acqistionFromFile();
-
+    void loadFromFile();
     void sendDataToFile();
 
-public slots:
-    void acqusitonFromRuler();
+    static QVector<QVector<QColor>>* m_projection;
 
 private:
-
     FileManager m_file_manager;
-
+    
 };
 
 #endif
