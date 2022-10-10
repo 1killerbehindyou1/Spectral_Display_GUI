@@ -31,7 +31,6 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPoint> vector_points)
             blue_component.sum += color.blue();
         }
 
-        std::cout << "rect size :  " << vector_points.size() <<std::endl;
         std::cout << "KKKKKKKKKKKKKK  " << std::endl;
         int rect_size = pow(vector_points.size(),2);
         
