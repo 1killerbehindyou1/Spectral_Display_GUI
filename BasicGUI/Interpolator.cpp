@@ -8,31 +8,32 @@ Interpolator::Interpolator(QObject *parent) : QObject(parent)
 {
 }
 
-QColor Interpolator::interpolatorSetLedColor(QVector<QPoint> vector_points)
+QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 {
     QImage image = inerpolator_pixmap.toImage();
     QColor color;
 
-    /*red_component.sum = 0;
+    red_component.sum = 0;
     green_component.sum = 0;
     blue_component.sum = 0;
     red_component.level = 0;
     green_component.level = 0;
-    blue_component.level = 0;*/
+    blue_component.level = 0;
 
-    for (QPoint point : vector_points)
+    for (QPointF point : vector_points)
     {
 
-        color = image.pixelColor(point);
-       // std::cout << "point X:  " << point.x() << "  point Y:  " << point.y() << std::endl;
+        color = image.pixelColor(static_cast<int>(point.x()), static_cast<int>(point.y()));
+
+        //std::cout << " SetLedColor() point X:  " << point.x() << " SetLedColor() point Y:  " << point.y() << std::endl;
 
         red_component.sum += color.red();
         green_component.sum += color.green();
         blue_component.sum += color.blue();
     }
 
-    //std::cout << "KKKKKKKKKKKKKK  " << std::endl;
-    int rect_size = pow(vector_points.size(), 2);
+    
+    int rect_size = vector_points.size();
 
     if (rect_size > 0)
     {
@@ -40,14 +41,7 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPoint> vector_points)
         green_component.level = green_component.sum / rect_size;
         blue_component.level = blue_component.sum / rect_size;
     }
-
-    // std::cout << "size blue_component.level:  " <<  blue_component.level  << std::endl;
-    // std::cout << "blue_component.sum:  " <<  blue_component.sum  << std::endl;
-    // std::cout << "rect_size:  " <<  rect_size  << std::endl;
-    /*std::cout << "size blue_component.level:  " <<  blue_component.level  << std::endl;
-    std::cout << "size green_component.level:  " <<  green_component.level  << std::endl;
-    std::cout << "size red_component.level:  " <<  red_component.level  << std::endl;*/
-
+   
     return color = color.fromRgb(red_component.level, green_component.level, blue_component.level);
 }
 /*
@@ -55,51 +49,46 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPoint> vector_points)
         creates a vector points, which are contained in actually checked rectangle
 */
 
-QVector<QPoint> Interpolator::interpolatorTransform(QPoint center_of_rot, QRect rect, int angle)
+QVector<QPointF> Interpolator::interpolatorTransform(QPoint center_of_rot, QRect rect, float deg_angle)
 {
-    QVector<QPoint> vector_points;
-    QPoint rect_top_left = rect.topLeft();
+    QVector<QPointF> vector_points;
+    QPointF rect_top_left = rect.topLeft();
+     PointInReferenceSystem current_point;
+    float ext_angle = current_point.convertAngleToRad(deg_angle);
 
-    //std::cout << "point X:  " << rect_top_left.x() << "   point Y:  " << rect_top_left.y() << std::endl;
-            
-    PointInReferenceSystem current_point;
-    degreeToRad(angle);
-
+  
     for (int yy = 0; yy < rect.height(); yy++)
     {
-
         current_point.point.setY(rect_top_left.y() + yy);
-
+         
         for (int xx = 0; xx < rect.width(); xx++)
         {
-
-            current_point.point.setX(rect_top_left.x() + xx);
+             current_point.point.setX(rect_top_left.x() + xx);
             
-            current_point.calcModule();
             current_point.calcAngle();
+            current_point.calcModule();
+            current_point.updateAngle(ext_angle);
+            current_point.updatePoint(center_of_rot);
+            vector_points.push_front(current_point.point);
 
-            current_point.angle += m_angle;
-
-            current_point.calcPoint(center_of_rot);
-
-            std::cout << "point X:  " << current_point.point.x() << "   point Y:  " << current_point.point.y() << std::endl;
-            std::cout << "point module:  "<<  current_point.module << "  point angle:  " << current_point.angle << "\n" << std::endl;
-
-           // vector_points.push_front(current_point.point);
-            
+            std::cout << " point X: " << current_point.point.x() << " point Y:  "<< current_point.point.y() << std::endl;
+            current_point.angle =0;
+            current_point.point.setY(rect_top_left.y() + yy);
+            current_point.point.setX(rect_top_left.x() + xx); 
         }
     }
     return vector_points;
-}
+} 
 
-void Interpolator::degreeToRad(int angle) { m_angle = angle * 3.14 / 180; }
+float PointInReferenceSystem::convertAngleToRad(float ext_angle) {return ext_angle * 3.14159 / 180; }
 
-void PointInReferenceSystem::calcModule() { module = sqrt(pow(point.x(), 2) + pow(point.y(), 2)); }
+void PointInReferenceSystem::calcAngle() { angle = atan2(point.y(), point.x()); }
+void PointInReferenceSystem::calcModule(){  module = point.x()/cosf(angle); }
 
-void PointInReferenceSystem::calcAngle() { angle = asin(point.y() / module); }
+void PointInReferenceSystem::updateAngle(float ext_angle){ angle += ext_angle; }
 
-void PointInReferenceSystem::calcPoint(QPoint center_of_rot)
-{
-    point.setX(module * cos(angle) + center_of_rot.x());
-    point.setY(module * sin(angle) + center_of_rot.y());
+void PointInReferenceSystem::updatePoint(QPoint center_of_rot){
+
+    point.setX(module * cos(angle) + center_of_rot.x()); 
+    point.setY(module * sin(angle) + center_of_rot.y()); 
 }

@@ -12,28 +12,30 @@ LedRuler::LedRuler(QQuickItem *parent)
 
     m_interpolator.inerpolator_pixmap.load("C:\\Users\\mplesniak\\Desktop\\1. Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
     m_number_of_leds = 1;
-    m_rotation = 360;
-    m_spacing = 0;
-    m_size =2;
+    m_rotation = 90;
+    m_spacing = 5;
+    m_size =3;
 }
 
 void LedRuler::paint(QPainter *painter)
-{
+{   
     DataManager::m_projection = new (QVector<QVector<QColor>>); 
 
     painter->translate(m_point);
     QPoint offset(m_size * 0.5, m_size *(-0.5));
+
     
 
     for(int rot = 0; rot < 360; rot += m_rotation){ 
         
         QVector<QColor> single_line;       
-        QRect rect{offset, QSize {m_size, m_size}};
+       
         painter->save();
         painter->rotate(rot);
-        
+        QRect rect{offset, QSize {m_size, m_size}};
        for(int i =0; i < m_number_of_leds ; i++)
         {
+             
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
             QColor color = m_interpolator.interpolatorSetLedColor(m_interpolator.interpolatorTransform(m_point, rect, rot)); 
             

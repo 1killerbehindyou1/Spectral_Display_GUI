@@ -15,11 +15,17 @@ class PointInReferenceSystem{
 public:
     void calcModule();
     void calcAngle();
-    void calcPoint(QPoint);
-
+    void updateAngle(float ext_angle);
+    void updatePoint(QPoint);
+    
     float module =0;
     float angle =0;
     QPointF point;
+    float convertAngleToRad(float ext_angle);
+private:
+    
+
+
 };
 
 
@@ -37,14 +43,12 @@ class Interpolator  : public QObject{
 public:
     Interpolator(QObject* parent =0);
 
-    QColor interpolatorSetLedColor(QVector<QPoint> vector_points);
-    QVector<QPoint> interpolatorTransform(QPoint sr_obr, QRect rect, int angle);
+    QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
+    QVector<QPointF> interpolatorTransform(QPoint sr_obr, QRect rect, float angle);
 
-    void degreeToRad(int angle);
+    
 
     QPixmap inerpolator_pixmap;
-    float m_angle;
-    
 
 private:
     Component red_component;
