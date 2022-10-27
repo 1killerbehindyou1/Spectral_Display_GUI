@@ -8,3 +8,7 @@ add_subdirectory(BasicGUI)
 
 add_subdirectory(PointsInPolygon)
 
+message("CMAKE GENERATOR: " ${CMAKE_GENERATOR})
+message("CMAKE_MAKE_PROGRAM:  " ${CMAKE_MAKE_PROGRAM})
+
+set(CMAKE_VERBOSE_MAKEFILE TRUE)

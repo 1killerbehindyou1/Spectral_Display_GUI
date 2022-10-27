@@ -40,7 +40,7 @@ void LedRuler::paint(QPainter *painter)
             QColor color = m_interpolator.interpolatorSetLedColor(m_interpolator.interpolatorTransform(m_point, rect, rot)); 
             
             single_line.push_front(color);
-
+            
             QPen pen = painter->pen();
             pen.setColor(Qt::transparent);
             painter->setPen(pen);

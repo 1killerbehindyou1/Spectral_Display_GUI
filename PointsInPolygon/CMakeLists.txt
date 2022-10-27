@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 5)
 
+set(VAR1 2)
+
 
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui )
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
@@ -23,6 +25,19 @@ set(PROJECT_SOURCES
 )
 
 
+function(multi_scopes RESULT_VARIABLE)
+
+    # here set(PARENT_SCOPE) is not usable because it will not set the
+    # variable in the caller scope but in the parent scope of the block()
+    set(${RESULT_VARIABLE} "new-value")
+    message("MY_VAR is equal: " ${RESULT_VARIABLE})
+    #return(PROPAGATE ${RESULT_VARIABLE})
+  
+endfunction()
+
+
+set(MY_VAR "initial-value")
+multi_scopes(MY_VAR)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(PointsInPolygon
