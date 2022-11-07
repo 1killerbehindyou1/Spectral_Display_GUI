@@ -22,14 +22,11 @@ public:
     float angle =0;
     QPointF point;
     float convertAngleToRad(float ext_angle);
-private:
-    
-
 
 };
 
 
-struct Component{
+struct ColorComponent{
 
     int iterator =0;
     int sum =0;
@@ -51,9 +48,9 @@ public:
     QPixmap inerpolator_pixmap;
 
 private:
-    Component red_component;
-    Component green_component;
-    Component blue_component;
+    ColorComponent red_component;
+    ColorComponent green_component;
+    ColorComponent blue_component;
 };
 #endif
 

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <QDebug>
 #include <QPen>
-#include "DataManager.h"
 
 LedRuler::LedRuler(QQuickItem *parent)
                 : QQuickPaintedItem(parent){
@@ -19,12 +18,10 @@ LedRuler::LedRuler(QQuickItem *parent)
 
 void LedRuler::paint(QPainter *painter)
 {   
-    DataManager::m_projection = new (QVector<QVector<QColor>>); 
+   QVector<QVector<QColor>> m_projection; 
 
     painter->translate(m_point);
     QPoint offset(m_size * 0.5, m_size *(-0.5));
-
-    
 
     for(int rot = 0; rot < 360; rot += m_rotation){ 
         
@@ -48,7 +45,7 @@ void LedRuler::paint(QPainter *painter)
             painter->drawRect(rect);
         }
          
-        DataManager::m_projection->push_front(single_line);
+        m_projection.push_front(single_line);
         painter->restore();
     }
 }

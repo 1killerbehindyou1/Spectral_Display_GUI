@@ -6,7 +6,6 @@
 //#include <QDebug>
 #include "LedRuler.h"
 #include "ImageViewer.h"
-#include "DataManager.h"
 #include "Interpolator.h"
 
 void myMessageOutput(QtMsgType type,
@@ -56,10 +55,6 @@ int main(int argc, char *argv[]){
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<ImageViewer>("Main", 1, 0, "ImageViewer");
     
-    DataManager data_manager(&app);
-    
-    engine.rootContext()->setContextProperty("_data_manager", &data_manager);
-
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
         [url](QObject *obj, const QUrl &objUrl) {

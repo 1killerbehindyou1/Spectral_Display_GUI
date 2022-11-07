@@ -12,8 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_VERSION_MAJOR 5)
 
 
-
-
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui )
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
@@ -26,10 +24,6 @@ set(PROJECT_SOURCES
         Interpolator.h
         ImageViewer.cpp
         ImageViewer.h
-        DataManager.h
-        DataManager.cpp
-        FileManager.h
-        FileManager.cpp
 )
 
 

@@ -71,7 +71,6 @@ QVector<QPointF> Interpolator::interpolatorTransform(QPoint center_of_rot, QRect
             current_point.updatePoint(center_of_rot);
             vector_points.push_front(current_point.point);
 
-            std::cout << " point X: " << current_point.point.x() << " point Y:  "<< current_point.point.y() << std::endl;
             current_point.angle =0;
             current_point.point.setY(rect_top_left.y() + yy);
             current_point.point.setX(rect_top_left.x() + xx); 
