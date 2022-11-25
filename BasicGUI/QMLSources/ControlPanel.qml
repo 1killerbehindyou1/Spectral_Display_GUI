@@ -7,7 +7,7 @@ import Main 1.0
 
 Control
 {   
-    signal parameterChanged(int number_of_leds, int rotation, int spacing,int size);
+    signal parameterChanged(int number_of_leds, int rotation, int spacing, int size);
     property int state 
 
     id: root

@@ -3,47 +3,56 @@
 #define INTERPOLATION_H
 
 #include <QColor>
+#include <QPixmap>
 #include <QPoint>
 #include <QVector>
-#include <QPixmap>
 #include <cmath>
 
-
-
-class PointInReferenceSystem{
-
-public:
-    void calcModule();
-    void calcAngle();
-    void updateAngle(float ext_angle);
-    void updatePoint(QPoint);
-    
-    float module =0;
-    float angle =0;
+/**
+ * @brief Class responsible for .. @ref..
+ *
+ */
+//////////////////////////////////////////////////////////////////
+struct PointInReferenceSystem
+{
+    float module = 0;
+    float angle = 0;
     QPointF point;
-    float convertAngleToRad(float ext_angle);
-
 };
 
-
-struct ColorComponent{
-
-    int iterator =0;
-    int sum =0;
-    int level =0;
+/**
+ * @brief Instance of ColorColmponent Class represent single color component
+ * in RGB image format.
+ */
+//////////////////////////////////////////////////////////////////
+struct ColorComponent
+{
+    int iterator = 0;
+    int sum = 0;
+    int level = 0;
 };
-
-class Interpolator  : public QObject{
-   
+//////////////////////////////////////////////////////////////////
+class Transform
+{
+public:
+    float static calcModule(QPointF point, float angle);
+    float static calcAngle(QPointF point);
+    float static convertAngleToRad(float deg_angle);
+    float static updateAngle(float ext_angle, float angle);
+    QPointF static updatePoint(QPointF center_of_rot, QPointF point,
+                               float module, float angle);
+};
+//////////////////////////////////////////////////////////////////
+class Interpolator : public QObject
+{
     Q_OBJECT
 
 public:
-    Interpolator(QObject* parent =0);
+    Interpolator(QObject* parent = 0);
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
-    QVector<QPointF> interpolatorTransform(QPoint sr_obr, QRect rect, float angle);
-
-    
+    QVector<QPointF> interpolatorTransform(QPoint sr_obr, QRect rect,
+                                           float angle);
 
     QPixmap inerpolator_pixmap;
 
@@ -53,4 +62,3 @@ private:
     ColorComponent blue_component;
 };
 #endif
-

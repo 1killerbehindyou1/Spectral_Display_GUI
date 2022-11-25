@@ -9,7 +9,8 @@ Control
 { 
     signal fileLoadErrorInfo(string title, string name) //signal declaration
 
-    function loadImageFromFile(filepath: url){ //global function to Draw panel object (slot)
+    function loadImageFromFile(filepath: url)//global function to Draw panel object (slot)
+    { 
         return picture.setPixMap(filepath);  //function set bitmap from location "filepath" return true or false
     }
 
@@ -24,6 +25,5 @@ Control
         anchors.fill: parent
         
         onFileErrLoad:{ root.fileLoadErrorInfo(title, name); } //emit signal aftere recevinig signag from C++ after file load error
-
     }
 }

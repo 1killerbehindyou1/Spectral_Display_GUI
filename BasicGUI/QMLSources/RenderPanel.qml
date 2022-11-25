@@ -8,7 +8,8 @@ import Main 1.0
 Control
 { 
     
-    function updateLedParameters(size: int, spacing: int, angle: int, num: int){
+    function updateLedParameters(size: int, spacing: int, angle: int, num: int)
+    {
         return led.onParameterChanged(num, angle, spacing, size);  
     }
 

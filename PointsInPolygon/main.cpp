@@ -3,39 +3,43 @@
 #include <QQmlContext>
 #include <QtQuick>
 #include <iostream>
-//#include <QDebug>
+// #include <QDebug>
 #include "Polygon.h"
 
 void myMessageOutput(QtMsgType type,
-                     [[maybe_unused]] const QMessageLogContext &context,
-                     const QString &msg) {
-  QByteArray localMsg = msg.toLocal8Bit();
-  QString typeStr = "OTHER";
-  switch (type) {
-    case QtDebugMsg:
-        typeStr = "DBG";
-        break;
-    case QtInfoMsg:
-        typeStr = "INF";
-        break;
-    case QtWarningMsg:
-        typeStr = "WRN";
-        break;
-    case QtCriticalMsg:
-        typeStr = "CRT";
-        break;
-    case QtFatalMsg:
-        typeStr = "FTL";
-        break;
+                     [[maybe_unused]] const QMessageLogContext& context,
+                     const QString& msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    QString typeStr = "OTHER";
+    switch (type)
+    {
+        case QtDebugMsg:
+            typeStr = "DBG";
+            break;
+        case QtInfoMsg:
+            typeStr = "INF";
+            break;
+        case QtWarningMsg:
+            typeStr = "WRN";
+            break;
+        case QtCriticalMsg:
+            typeStr = "CRT";
+            break;
+        case QtFatalMsg:
+            typeStr = "FTL";
+            break;
     }
-    std::cout
-      << QString("%1: %2").arg(typeStr).arg(localMsg.constData()).toStdString()
-      << std::endl;
+    std::cout << QString("%1: %2")
+                     .arg(typeStr)
+                     .arg(localMsg.constData())
+                     .toStdString()
+              << std::endl;
 }
 
+int main(int argc, char* argv[])
+{
 
-int main(int argc, char *argv[]){
-   
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
@@ -44,7 +48,7 @@ int main(int argc, char *argv[]){
     QGuiApplication app(argc, argv);
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
-    
+
     qmlRegisterType<T_Polygon>("Main", 1, 0, "T_Polygon");
 
     QQmlApplicationEngine engine;
@@ -52,8 +56,10 @@ int main(int argc, char *argv[]){
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl) QCoreApplication::exit(-1);
+        [url](QObject* obj, const QUrl& objUrl)
+        {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
         },
         Qt::QueuedConnection);
 

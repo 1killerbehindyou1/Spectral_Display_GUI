@@ -2,35 +2,35 @@
 #ifndef LED_RULER_H
 #define LED_RULER_H
 
+#include "Interpolator.h"
 #include <QColor>
-#include <QString>
+#include <QDebug>
 #include <QObject>
-#include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QString>
 #include <QUrl>
-#include <QDebug>
+#include <QVector>
+#include <QtQuick/QQuickPaintedItem>
 #include <cmath>
 #include <iostream>
-#include <QVector>
-#include "Interpolator.h"
 
-class LedRuler : public QQuickPaintedItem{
-
+class LedRuler : public QQuickPaintedItem
+{
     Q_OBJECT
     QML_ELEMENT
 
 public:
-    LedRuler(QQuickItem *parent = 0);
-    void paint(QPainter *painter) override;
+    LedRuler(QQuickItem* parent = 0);
+    void paint(QPainter* painter) override;
 
- Q_INVOKABLE void setPoint(QPoint point);
- Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation, int spacing,int size);
-  
+    Q_INVOKABLE void setPoint(QPoint point);
+    Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
+                                        int spacing, int size);
+
 private:
-       
-    QPoint m_point;        // środek odrysowywania
+    QPoint m_point; // środek odrysowywania
     Interpolator m_interpolator;
     int m_number_of_leds;
     int m_rotation;
@@ -39,4 +39,3 @@ private:
     bool m_acquire_data_flag = true;
 };
 #endif
-

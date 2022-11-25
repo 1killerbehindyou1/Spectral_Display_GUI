@@ -1,18 +1,17 @@
 #ifndef POLYGON_P
 #define POLYGON_P
 
-#include <QString>
+#include <QDebug>
 #include <QObject>
-#include <QPoint>
-#include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
 #include <QPixmap>
+#include <QPoint>
+#include <QString>
 #include <QUrl>
-#include <QDebug>
-#include <QVector> 
-#include <iostream>
+#include <QVector>
+#include <QtQuick/QQuickPaintedItem>
 #include <cmath>
-
+#include <iostream>
 
 class T_Polygon : public QQuickPaintedItem
 {
@@ -24,13 +23,13 @@ class T_Polygon : public QQuickPaintedItem
     QML_ELEMENT
 
 public:
-    T_Polygon(QQuickItem *parent = 0);
+    T_Polygon(QQuickItem* parent = 0);
 
     QPoint A_point() const;
-    void setA_Point( QPoint A);
+    void setA_Point(QPoint A);
 
     QPoint B_point() const;
-    void setB_Point( QPoint B);
+    void setB_Point(QPoint B);
 
     QPoint C_point() const;
     void setC_Point(QPoint C);
@@ -38,17 +37,17 @@ public:
     QPoint D_point() const;
     void setD_Point(QPoint D);
 
-    void paint(QPainter *painter) override;
+    void paint(QPainter* painter) override;
     QPolygon translate(int agle, QPoint top_left, int side);
 
-   Q_INVOKABLE bool setPixMap(const QUrl &path);
-   Q_INVOKABLE void polygonUpdate(int angle, QPoint m_top_left, int m_side);
+    Q_INVOKABLE bool setPixMap(const QUrl& path);
+    Q_INVOKABLE void polygonUpdate(int angle, QPoint m_top_left, int m_side);
 
-signals: 
+signals:
     void fileErrLoad(QString title, QString name);
 
 private:
-    QPoint m_A;   
+    QPoint m_A;
     QPoint m_B;
     QPoint m_C;
     QPoint m_D;
