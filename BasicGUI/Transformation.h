@@ -13,6 +13,7 @@ class Transform
 public:
     Transform(QPoint rotCenter, float deg_angle);
     QPointF transformFrom(QPointF point);
+    QPointF operator()(QPointF point);
 
 private:
     float static calcModule(QPointF point, float angle);

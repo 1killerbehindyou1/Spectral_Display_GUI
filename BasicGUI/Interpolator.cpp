@@ -62,7 +62,7 @@ QVector<QPointF> Interpolator::interpolatorTransform(QPoint center_of_rot,
             curr_point.setX(rect.topLeft().x() + x);
 
             Transform trans(center_of_rot, deg_angle);
-            vector_points.push_front(trans.transformFrom(curr_point));
+            vector_points.push_front(trans(curr_point));
         }
     }
     return vector_points;

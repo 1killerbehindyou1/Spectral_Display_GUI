@@ -36,9 +36,8 @@ Transform::Transform(QPoint rotCenter, float deg_angle) : m_rotCenter(rotCenter)
     m_angle = convertAngleToRad(deg_angle);
 }
 
-QPointF Transform::transformFrom(QPointF point)
+QPointF Transform::operator()(QPointF point)
 {
-
     float a_angle = Transform::calcAngle(point);
     float a_module = Transform::calcModule(point, a_angle);
     m_angle += a_angle;
