@@ -19,6 +19,7 @@ private:
     float static calcAngle(QPointF point);
     float static convertAngleToRad(float deg_angle);
     float static updateAngle(float ext_angle, float angle);
+
     QPointF static transformPoint(QPointF point, QPointF rotCenter,
                                   float module, float angle);
     QPoint m_rotCenter;
