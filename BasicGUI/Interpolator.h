@@ -29,8 +29,8 @@ public:
     Interpolator(QObject* parent = 0);
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
-    QVector<QPointF> interpolatorTransform(QPoint sr_obr, QRect rect,
-                                           float angle);
+    QVector<QPointF> interpolatorTransform(QPoint center_of_rot, QRect rect,
+                                           float deg_angle);
 
     QPixmap inerpolator_pixmap;
 
