@@ -1,12 +1,12 @@
+#include "ImageViewer.h"
+#include "Interpolator.h"
+#include "LedRuler.h"
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtQuick>
 #include <iostream>
-// #include <QDebug>
-#include "ImageViewer.h"
-#include "Interpolator.h"
-#include "LedRuler.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,

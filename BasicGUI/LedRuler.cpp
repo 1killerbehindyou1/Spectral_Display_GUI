@@ -7,14 +7,15 @@
 #include <QPen>
 #include <iostream>
 
-LedRuler::LedRuler(QQuickItem* parent) : QQuickPaintedItem(parent)
+LedRuler::LedRuler(QQuickItem* parent)
+    : QQuickPaintedItem(parent), m_point(200, 200)
 {
     m_interpolator.inerpolator_pixmap.load(
         "C:\\Users\\mplesniak\\Desktop\\1. "
         "Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
-    m_number_of_leds = 1;
+    m_number_of_leds = 3;
     m_rotation = 90;
-    m_spacing = 5;
+    m_spacing = 10;
     m_size = 3;
 }
 
@@ -45,6 +46,8 @@ void LedRuler::paint(QPainter* painter)
             painter->setBrush(color);
             painter->drawRect(rect);
         }
+        qDebug()
+            << "=============================================================";
         m_projection.push_front(single_line);
         painter->restore();
     }

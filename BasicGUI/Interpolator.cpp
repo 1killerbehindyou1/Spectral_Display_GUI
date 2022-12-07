@@ -40,8 +40,10 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
         blue_component.level = blue_component.sum / rect_size;
     }
 
-    return color = color.fromRgb(red_component.level, green_component.level,
-                                 blue_component.level);
+    color = color.fromRgb(red_component.level, green_component.level,
+                          blue_component.level);
+
+    return color;
 }
 //////////////////////////////////////////////////////////////////
 
@@ -62,5 +64,10 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
             vector_points.push_front(transform(curr_point));
         }
     }
+    for (QPointF point : vector_points)
+    {
+        qDebug() << " point X: " << point.x() << " point Y:  " << point.y();
+    }
+    qDebug() << "\n";
     return vector_points;
 }

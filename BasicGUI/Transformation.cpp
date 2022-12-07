@@ -37,8 +37,8 @@ float calcAngle(QPointF point)
 
 float convertAngleToRad(int deg_angle)
 {
-    float ext_angle;
-    return ext_angle * 3.14159 / 180;
+    float ext_angle = deg_angle * 3.14159 / 180;
+    return ext_angle;
 }
 
 QPointF transformPoint(QPointF rotCenter, QPointF point, float module,
