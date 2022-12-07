@@ -94,8 +94,7 @@ ApplicationWindow
     }
     Component.onCompleted: 
     {
-        parameters.newParameters.connect(drawing.updateLedParameters) //connection slot and signals
-        id_picture.fileLoadErrorInfo.connect(messageDialog.showMessageBox) //printing connection errors
+        parameters.parameterChanged.connect(drawing.updateLedParameters);
     }
 }
      

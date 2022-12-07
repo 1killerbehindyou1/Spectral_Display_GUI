@@ -1,65 +1,41 @@
 
-#ifndef LED_MATRIX_H
-#define LED_MATRIX_H
+#ifndef LED_RULER_H
+#define LED_RULER_H
 
+#include "Interpolator.h"
 #include <QColor>
-#include <QString>
+#include <QDebug>
 #include <QObject>
-#include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QString>
 #include <QUrl>
-#include <QDebug>
+#include <QVector>
+#include <QtQuick/QQuickPaintedItem>
 #include <cmath>
 #include <iostream>
 
-class LedRuler : public QQuickPaintedItem{
-
+class LedRuler : public QQuickPaintedItem
+{
     Q_OBJECT
-    Q_PROPERTY(int size READ size WRITE setSize)
-    Q_PROPERTY(int step READ step WRITE setStep)
-    Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
-    Q_PROPERTY(int number_of_leds READ number_of_leds WRITE setNumber_of_leds)
     QML_ELEMENT
 
 public:
-    LedRuler(QQuickItem *parent = 0);
+    LedRuler(QQuickItem* parent = 0);
+    void paint(QPainter* painter) override;
 
-    int number_of_leds() const;
-    void setNumber_of_leds(const int &number);
-
-    int spacing() const;
-    void setSpacing(const int &spacing);
-
-    int step() const;
-    void setStep(const int &number);
-
-    int size() const;
-    void setSize(const int &size);
-
-    int rotation() const;
-    void setRotation(const int &rotation);
-
-    void paint(QPainter *painter) override;
-
- Q_INVOKABLE void rulerUpdate();
- Q_INVOKABLE void setPoint(const QPoint &point);
-
-public slots:
-    void onBitMapLoadedCorrectly(QPixmap pixmap);
-
+    Q_INVOKABLE void setPoint(QPoint point);
+    Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
+                                        int spacing, int size);
 
 private:
-    
-    QPoint m_point;        // środek odrysowywania
-    QPixmap m_pixmap;
-
+    QPoint m_point; // środek odrysowywania
+    Interpolator m_interpolator;
     int m_number_of_leds;
     int m_rotation;
     int m_spacing;
     int m_size;
-    int m_step;
+    bool m_acquire_data_flag = true;
 };
 #endif
-
