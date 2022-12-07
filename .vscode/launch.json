@@ -14,7 +14,8 @@
       "logging": {
         "moduleLoad": false
       },
-      "internalConsoleOptions": "openOnSessionStart"
+      "internalConsoleOptions": "openOnSessionStart",
+      "visualizerFile": "c:\\Users\\mplesniak\\AppData\\Roaming\\Code\\User\\workspaceStorage\\415c4e3a299b2b2ea7d7b8f014c7dfc9\\tonka3000.qtvsctools\\qt.natvis.xml"
     }
   ]
 }
