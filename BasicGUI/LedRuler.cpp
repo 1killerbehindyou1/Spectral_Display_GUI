@@ -2,6 +2,7 @@
 #include "LedRuler.h"
 #include "ImageViewer.h"
 #include "Interpolator.h"
+#include "Transformation.h"
 #include <QDebug>
 #include <QPen>
 #include <iostream>
@@ -33,7 +34,8 @@ void LedRuler::paint(QPainter* painter)
         {
             rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
             QColor color = m_interpolator.interpolatorSetLedColor(
-                m_interpolator.interpolatorTransform(m_point, rect, rot));
+                m_interpolator.interpolatorTransform(Transform{m_point, rot},
+                                                     rect));
 
             single_line.push_front(color);
 

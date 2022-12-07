@@ -1,6 +1,5 @@
 
 #include "Interpolator.h"
-#include "Transformation.h"
 #include <QDebug>
 #include <cmath>
 #include <iostream>
@@ -46,13 +45,11 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 }
 //////////////////////////////////////////////////////////////////
 
-QVector<QPointF> Interpolator::interpolatorTransform(QPoint center_of_rot,
-                                                     QRect rect,
-                                                     float deg_angle)
+QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
+                                                     QRect rect)
 {
     QVector<QPointF> vector_points;
     QPointF curr_point;
-    Transform transform(center_of_rot, deg_angle);
 
     for (int y = 0; y < rect.height(); y++)
     {

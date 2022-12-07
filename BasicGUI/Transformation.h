@@ -11,7 +11,7 @@
 class Transform
 {
 public:
-    Transform(QPoint rotCenter, float deg_angle);
+    Transform(QPoint rotCenter, int deg_angle);
     QPointF transformFrom(QPointF point);
     QPointF operator()(QPointF point);
 
@@ -25,7 +25,7 @@ namespace
 {
 float calcModule(QPointF point, float angle);
 float calcAngle(QPointF point);
-float convertAngleToRad(float deg_angle);
+float convertAngleToRad(int deg_angle);
 float updateAngle(float ext_angle, float angle);
 QPointF transformPoint(QPointF point, QPointF rotCenter, float module,
                        float angle);

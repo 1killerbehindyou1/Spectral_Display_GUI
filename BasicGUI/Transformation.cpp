@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iostream>
 
-Transform::Transform(QPoint rotCenter, float deg_angle) : m_rotCenter(rotCenter)
+Transform::Transform(QPoint rotCenter, int deg_angle) : m_rotCenter(rotCenter)
 {
     m_angle = convertAngleToRad(deg_angle);
 }
@@ -35,7 +35,7 @@ float calcAngle(QPointF point)
     return angle;
 }
 
-float convertAngleToRad(float deg_angle)
+float convertAngleToRad(int deg_angle)
 {
     float ext_angle;
     return ext_angle * 3.14159 / 180;

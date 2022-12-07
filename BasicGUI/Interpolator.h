@@ -2,11 +2,13 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
+#include "Transformation.h"
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>
 #include <QVector>
 #include <cmath>
+
 
 /**
  * @brief Instance of ColorColmponent Class represent single color component
@@ -29,8 +31,7 @@ public:
     Interpolator(QObject* parent = 0);
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
-    QVector<QPointF> interpolatorTransform(QPoint center_of_rot, QRect rect,
-                                           float deg_angle);
+    QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
 
     QPixmap inerpolator_pixmap;
 

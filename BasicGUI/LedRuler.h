@@ -36,6 +36,5 @@ private:
     int m_rotation;
     int m_spacing;
     int m_size;
-    bool m_acquire_data_flag = true;
 };
 #endif
