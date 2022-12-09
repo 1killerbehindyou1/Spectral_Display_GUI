@@ -21,8 +21,8 @@ set(PROJECT_SOURCES
   LedRuler.h
   Interpolator.cpp
   Interpolator.h
-  ImageViewer.cpp
-  ImageViewer.h
+  FileManager.cpp
+  FileManager.h
   Transformation.cpp
   Transformation.h
 )

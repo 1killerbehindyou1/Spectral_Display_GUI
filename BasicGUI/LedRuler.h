@@ -20,14 +20,19 @@ class LedRuler : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_ELEMENT
+    Q_PROPERTY(QPixmap* pixmap WRITE setPixmap)
 
 public:
+    void setPixmap(QPixmap* pixmap);
     LedRuler(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
 
     Q_INVOKABLE void setPoint(QPoint point);
+    Q_INVOKABLE void saveImage();
     Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
                                         int size);
+    QPixmap* m_pixmap = 0;
+    QImage* m_output_image = 0;
 
 private:
     QPoint m_point; // środek odrysowywania

@@ -4,6 +4,6 @@
         <file>RenderPanel.qml</file>
         <file>ControlPanel.qml</file>
         <file>DataInput.qml</file>
-        <file>ImagePanel.qml</file>
+        <file>TransformatedPreview.qml</file>
     </qresource>
 </RCC>

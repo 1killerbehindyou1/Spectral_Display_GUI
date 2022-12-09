@@ -10,7 +10,10 @@ Interpolator::Interpolator(QObject* parent) : QObject(parent) {}
 //////////////////////////////////////////////////////////////////
 QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 {
-    QImage image = inerpolator_pixmap.toImage();
+    QImage image{};
+    if (inerpolator_pixmap != nullptr)
+        image = inerpolator_pixmap->toImage();
+
     QColor color;
 
     red_component.sum = 0;
@@ -67,3 +70,5 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 
     return vector_points;
 }
+
+///////////////////////////////////////////////////////////////////

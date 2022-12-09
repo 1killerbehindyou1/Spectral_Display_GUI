@@ -1,9 +1,10 @@
-#include "ImageViewer.h"
+#include "FileManager.h"
 #include "Interpolator.h"
 #include "LedRuler.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlComponent>
 #include <QQmlContext>
 #include <QtQuick>
 #include <iostream>
@@ -51,12 +52,20 @@ int main(int argc, char* argv[])
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+    ///////////////////////////////////////////////////////////////
+    QQmlComponent component(
+        &engine, QUrl::fromLocalFile(QStringLiteral("qrc:/RenderPanel.qml")));
+    QObject* object = component.create();
+    ////////////////////////////////////////////////////////////////////////
 
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
-    qmlRegisterType<ImageViewer>("Main", 1, 0, "ImageViewer");
+    qRegisterMetaType<QPixmap*>("QPixmap*");
+    FileManager file_manager(&app);
+
+    engine.rootContext()->setContextProperty("file_manager", &file_manager);
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,

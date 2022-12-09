@@ -12,7 +12,15 @@ Control
     {
         return led.onParameterChanged(num, angle, size);  
     }
+    function setPixmap()
+    {
+        led.pixmap = file_manager.pixmap_pointer
+    }
 
+    function saveImage()
+    {
+        return led.saveImage();
+    }
     id: root
     implicitWidth: 720
     implicitHeight: 500

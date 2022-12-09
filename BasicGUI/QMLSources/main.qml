@@ -13,6 +13,9 @@ ApplicationWindow
     visible: true
     title: qsTr("Basic Gui")
     color: "lightgrey"
+
+    property bool image_selected: false
+
     menuBar: MenuBar 
     {     
         contentWidth: parent.width
@@ -21,19 +24,45 @@ ApplicationWindow
             title: qsTr("&File")
             Action 
             {
-                text: qsTr("&Open...")
+                text: qsTr("&Load Image...")
                 onTriggered:
                 {
                     fileDialog.open()            
                 }
             }
             MenuSeparator { }
-            Action { text: qsTr("&Close") }
+            Action 
+            {
+                text: qsTr("&Save Transformated Image...")
+                onTriggered:
+                {
+                    drawing.saveImage();
+                }
+            }
         }
         Menu 
         {
-            title: qsTr("&Help")
-            Action { text: qsTr("&About") }
+            title: qsTr("&View")
+            Action 
+            {
+                text: qsTr("&Show Image before trasformation...")
+                onTriggered:
+                {
+                       if(image_selected)
+                       {
+                        loaded_image.visible = true;
+                       }
+                }
+            }
+             MenuSeparator { }
+            Action 
+            {
+                text: qsTr("&HideImage before trasformation...")
+                onTriggered:
+                {
+                       loaded_image.visible = false;
+                }
+            }
         }
     }
 
@@ -41,32 +70,42 @@ ApplicationWindow
     { 
         anchors.fill: parent
         
+        Image
+        {
+            id: loaded_image
+            visible: false
+
+        }
         RenderPanel
         { 
             id: drawing
         }
 
-        ImagePanel
-        {
-            id: id_picture
-        }
-
         ControlPanel
         {
             id: parameters
+            
             SplitView.minimumWidth: parameters.implicitWidth
         }
     }
     
     FileDialog 
     {
+        signal pixmapLoaded()
+
         id: fileDialog
         title: "Please choose a file"
         nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
         selectMultiple: false
         onAccepted:
         {
-           id_picture.loadImageFromFile(fileDialog.fileUrl)
+           if(file_manager.loadPixMap(fileDialog.fileUrl))
+           {
+                loaded_image.source = fileDialog.fileUrl;
+                image_selected = true;
+                fileDialog.pixmapLoaded();
+           }
+         
         }
         onRejected: 
         {
@@ -95,6 +134,7 @@ ApplicationWindow
     Component.onCompleted: 
     {
         parameters.parameterChanged.connect(drawing.updateLedParameters);
+        fileDialog.pixmapLoaded.connect(drawing.setPixmap);
     }
 }
      

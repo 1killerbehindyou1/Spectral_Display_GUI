@@ -9,7 +9,6 @@
 #include <QVector>
 #include <cmath>
 
-
 /**
  * @brief Instance of ColorColmponent Class represent single color component
  * in RGB image format.
@@ -32,8 +31,7 @@ public:
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
     QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
-
-    QPixmap inerpolator_pixmap;
+    QPixmap* inerpolator_pixmap = 0;
 
 private:
     ColorComponent red_component;
