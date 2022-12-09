@@ -13,10 +13,9 @@ LedRuler::LedRuler(QQuickItem* parent)
     m_interpolator.inerpolator_pixmap.load(
         "C:\\Users\\mplesniak\\Desktop\\1. "
         "Mentoring_QT_project\\Spectral_Display_GUI\\Pictures\\BITMAPA.png");
-    m_number_of_leds = 3;
+    m_number_of_leds = 10;
     m_rotation = 90;
-    m_spacing = 10;
-    m_size = 3;
+    m_size = 10;
 }
 
 void LedRuler::paint(QPainter* painter)
@@ -33,7 +32,7 @@ void LedRuler::paint(QPainter* painter)
         QRect rect{offset, QSize{m_size, m_size}};
         for (int i = 0; i < m_number_of_leds; i++)
         {
-            rect.moveTo(rect.topLeft() + QPoint{m_spacing + m_size, 0});
+            rect.moveTo(rect.topLeft() + QPoint{m_size, 0});
             QColor color = m_interpolator.interpolatorSetLedColor(
                 m_interpolator.interpolatorTransform(Transform{m_point, rot},
                                                      rect));
@@ -46,19 +45,16 @@ void LedRuler::paint(QPainter* painter)
             painter->setBrush(color);
             painter->drawRect(rect);
         }
-        qDebug()
-            << "=============================================================";
+
         m_projection.push_front(single_line);
         painter->restore();
     }
 }
 
-void LedRuler::onParameterChanged(int number_of_leds, int spacing, int rotation,
-                                  int size)
+void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
 {
     m_number_of_leds = number_of_leds;
     m_rotation = rotation;
-    m_spacing = spacing;
     m_size = size;
     update();
 }

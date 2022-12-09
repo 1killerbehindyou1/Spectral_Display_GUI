@@ -64,10 +64,6 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
             vector_points.push_front(transform(curr_point));
         }
     }
-    for (QPointF point : vector_points)
-    {
-        qDebug() << " point X: " << point.x() << " point Y:  " << point.y();
-    }
-    qDebug() << "\n";
+
     return vector_points;
 }
