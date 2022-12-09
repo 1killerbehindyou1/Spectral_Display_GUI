@@ -4,15 +4,15 @@ import QtQuick.Layouts 1.3
 
 Control
 {
-    id: root
+   id: root
     property alias value: textInp.text
     property alias label: label.text
     property alias min: slider.from
     property alias max: slider.to
     property alias init_value: slider.value
     
-    signal update()//slider value changed
-
+    signal update()
+    
     implicitWidth: 70
     implicitHeight: 50 
     
