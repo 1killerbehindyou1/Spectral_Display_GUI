@@ -24,15 +24,16 @@ public:
     FileManager(QObject* parent = 0);
     QPixmap* getPixmapPointer();
 
-    QPixmap m_pixmap;
-    QPixmap m_transformed;
-    QString m_path;
-
 public slots:
     bool loadPixMap(QUrl path);
 
 signals:
     void fileErrLoad(QString title, QString name);
     void setImageOnGui();
+
+private:
+    QPixmap m_pixmap;
+    QPixmap m_transformed;
+    QString m_path;
 };
 #endif

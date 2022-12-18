@@ -14,11 +14,30 @@
  * in RGB image format.
  */
 //////////////////////////////////////////////////////////////////
-struct ColorComponent
+class ColorComponent
 {
-    int iterator = 0;
-    int sum = 0;
-    int level = 0;
+
+public:
+    ColorComponent() : sum(0), level(0) {}
+
+    void clearMembers()
+    {
+        int sum = 0;
+        int level = 0;
+    }
+
+    void sumUpdate(int color) { sum += color; }
+
+    void calculateColorIntensivity(int sample_amount)
+    {
+        level = sum / sample_amount;
+    }
+
+    int componentColorIntensivity() { return level; }
+
+private:
+    int sum;
+    int level;
 };
 
 //////////////////////////////////////////////////////////////////
@@ -31,7 +50,7 @@ public:
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
     QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
-    QPixmap* inerpolator_pixmap = 0;
+    QPixmap* inerpolator_pixmap;
 
 private:
     ColorComponent red_component;
