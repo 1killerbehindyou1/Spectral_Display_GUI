@@ -8,19 +8,12 @@
 #include <iostream>
 
 LedRuler::LedRuler(QQuickItem* parent)
-    : QQuickPaintedItem(parent), m_point(200, 200)
+    : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
+      m_rotation(1), m_size(1)
 {
-
-    m_interpolator.inerpolator_pixmap = nullptr;
-    m_number_of_leds = 30;
-    m_rotation = 1;
-    m_size = 1;
 }
 /////////////////////////////////////////////////////////
-void LedRuler::setPixmap(QPixmap* pixmap)
-{
-    m_interpolator.inerpolator_pixmap = pixmap;
-}
+void LedRuler::setPixmap(QPixmap* pixmap) { m_interpolator.setPixmap(pixmap); }
 ////////////////////////////////////////////////////////
 void LedRuler::saveImage() { qDebug() << m_output_image->save("result.png"); }
 
@@ -49,11 +42,12 @@ void LedRuler::paint(QPainter* painter)
         {
             pixel.setX(i);
             rect.moveTo(rect.topLeft() + QPoint{m_size, 0});
+
             QColor color = m_interpolator.interpolatorSetLedColor(
                 m_interpolator.interpolatorTransform(Transform{m_point, rot},
                                                      rect));
-
-            m_output_image->setPixelColor(pixel, color);
+            if (color.isValid())
+                m_output_image->setPixelColor(pixel, color);
 
             QPen pen = painter->pen();
             pen.setColor(Qt::transparent);

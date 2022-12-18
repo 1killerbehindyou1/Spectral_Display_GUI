@@ -5,26 +5,34 @@
 #include <iostream>
 
 //////////////////////////////////////////////////////////////////
-Interpolator::Interpolator(QObject* parent) : QObject(parent) {}
-
+Interpolator::Interpolator(QObject* parent)
+    : QObject(parent), inerpolator_pixmap(nullptr)
+{
+}
+void Interpolator::setPixmap(QPixmap* pixmap) { inerpolator_pixmap = pixmap; }
 //////////////////////////////////////////////////////////////////
 QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 {
+    QColor led_color{};
     QImage image{};
+
     if (inerpolator_pixmap != nullptr)
         image = inerpolator_pixmap->toImage();
-
-    QColor led_color{
-        0,
-        0,
-        0,
-    };
+    else
+        return led_color;
 
     for (QPointF point : vector_points)
     {
-        increaseTotalInensivity(led_color,
-                                image.pixelColor(static_cast<int>(point.x()),
-                                                 static_cast<int>(point.y())));
+        if (point.x() <= image.width() && point.y() <= image.height())
+        {
+            increaseTotalIntensivity(
+                led_color, image.pixelColor(static_cast<int>(point.x()),
+                                            static_cast<int>(point.y())));
+        }
+        else
+        {
+            increaseTotalIntensivity(led_color, QColor{255, 255, 255});
+        }
     }
 
     int rect_size = vector_points.size();
@@ -35,8 +43,8 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
     }
     else
     {
-        led_color.setRgb(0, 0, 0);
-        return led_color;
+        QColor color{};
+        return color;
     }
 }
 //////////////////////////////////////////////////////////////////
@@ -55,7 +63,9 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
         {
             curr_point.setX(rect.topLeft().x() + x);
 
-            vector_points.push_front(transform(curr_point));
+            QPointF point(transform(curr_point));
+            if (point.x() > 0 && point.y() > 0)
+                vector_points.push_front(point);
         }
     }
 
@@ -65,7 +75,7 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 ///////////////////////////////////////////////////////////////////
 namespace
 {
-void increaseTotalInensivity(QColor& color, QColor color_from_image)
+void increaseTotalIntensivity(QColor& color, QColor color_from_image)
 {
 
     color.setRedF(color.redF() + color_from_image.redF());

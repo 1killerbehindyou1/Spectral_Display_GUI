@@ -23,12 +23,15 @@ public:
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
     QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
+    void setPixmap(QPixmap* pixmap);
+
+private:
     QPixmap* inerpolator_pixmap;
 };
 
 namespace
 {
-void increaseTotalInensivity(QColor& color, QColor color_from_image);
+void increaseTotalIntensivity(QColor& color, QColor color_from_image);
 QColor calculateaAverageIntensivity(int sample_amount,
                                     QColor total_intensivity);
 } // namespace

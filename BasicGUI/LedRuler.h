@@ -31,10 +31,10 @@ public:
     Q_INVOKABLE void saveImage();
     Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
                                         int size);
-    QPixmap* m_pixmap = 0;
-    QImage* m_output_image = 0;
 
 private:
+    QPixmap* m_pixmap = 0;
+    QImage* m_output_image = 0;
     QPoint m_point; // środek odrysowywania
     Interpolator m_interpolator;
     int m_number_of_leds;
