@@ -64,6 +64,7 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
             curr_point.setX(rect.topLeft().x() + x);
 
             QPointF point(transform(curr_point));
+
             if (point.x() > 0 && point.y() > 0)
                 vector_points.push_front(point);
         }
