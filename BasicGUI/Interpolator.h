@@ -9,20 +9,11 @@
 #include <QVector>
 #include <cmath>
 
-
 /**
  * @brief Instance of ColorColmponent Class represent single color component
  * in RGB image format.
  */
-//////////////////////////////////////////////////////////////////
-struct ColorComponent
-{
-    int iterator = 0;
-    int sum = 0;
-    int level = 0;
-};
 
-//////////////////////////////////////////////////////////////////
 class Interpolator : public QObject
 {
     Q_OBJECT
@@ -32,12 +23,17 @@ public:
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
     QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
-
-    QPixmap inerpolator_pixmap;
+    void setPixmap(QPixmap* pixmap);
 
 private:
-    ColorComponent red_component;
-    ColorComponent green_component;
-    ColorComponent blue_component;
+    QPixmap* inerpolator_pixmap;
 };
+
+namespace
+{
+void increaseTotalIntensivity(QColor& color, QColor color_from_image);
+QColor calculateaAverageIntensivity(int sample_amount,
+                                    QColor total_intensivity);
+} // namespace
+
 #endif

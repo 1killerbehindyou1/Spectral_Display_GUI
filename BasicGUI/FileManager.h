@@ -14,21 +14,26 @@
 #include <cmath>
 #include <iostream>
 
-class ImageViewer : public QQuickPaintedItem
+class FileManager : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
+    Q_PROPERTY(QString path MEMBER m_path)
+    Q_PROPERTY(QPixmap* pixmap_pointer READ getPixmapPointer)
 
 public:
-    ImageViewer(QQuickItem* parent = 0);
+    FileManager(QObject* parent = 0);
+    QPixmap* getPixmapPointer();
 
-    void paint(QPainter* painter) override;
-    Q_INVOKABLE bool setPixMap(const QUrl& path);
+public slots:
+    bool loadPixMap(QUrl path);
 
 signals:
     void fileErrLoad(QString title, QString name);
+    void setImageOnGui();
 
 private:
     QPixmap m_pixmap;
+    QPixmap m_transformed;
+    QString m_path;
 };
 #endif

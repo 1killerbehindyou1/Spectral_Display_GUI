@@ -4,6 +4,5 @@
         <file>RenderPanel.qml</file>
         <file>ControlPanel.qml</file>
         <file>DataInput.qml</file>
-        <file>ImagePanel.qml</file>
     </qresource>
 </RCC>

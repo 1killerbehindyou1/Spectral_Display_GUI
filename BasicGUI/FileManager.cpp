@@ -1,11 +1,13 @@
 
-#include "ImageViewer.h"
+#include "FileManager.h"
 #include <QDebug>
 #include <iostream>
 
-ImageViewer::ImageViewer(QQuickItem* parent) : QQuickPaintedItem(parent) {}
+FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
-bool ImageViewer::setPixMap(const QUrl& path)
+QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
+
+bool FileManager::loadPixMap(QUrl path)
 {
     if (!path.isLocalFile())
     {
@@ -34,12 +36,8 @@ bool ImageViewer::setPixMap(const QUrl& path)
         emit fileErrLoad("Loaded file failed", "Loaded file is null");
         return false;
     }
-    update();
+    m_path = qstr;
+    emit setImageOnGui();
+
     return true;
-}
-
-void ImageViewer::paint(QPainter* painter)
-{
-
-    painter->drawPixmap(0, 0, m_pixmap);
 }

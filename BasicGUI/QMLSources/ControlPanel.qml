@@ -7,10 +7,16 @@ import Main 1.0
 
 Control
 {   
-    signal parameterChanged(int number_of_leds, int rotation, int spacing, int size);
-    property int state 
-
     id: root
+    signal parameterChanged(int size, int rotation , int number_of_leds)
+    
+
+    function onUpdate()
+    {
+       return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )  
+    }
+
+    
     padding: 10
     background: Rectangle
     {
@@ -28,49 +34,29 @@ Control
             Layout.fillHeight: true
             Layout.fillWidth: true
             clip: true
-
+ 
             ColumnLayout
             {
-                
                 width: parent.width
                 Text{text: "Led ruler parameters" }         
-                DataInput{ id: l_num; value: "10"; label: "led number  "}
-                DataInput{ id: l_size; value: "10"; label: "led size       "}
-                DataInput{ id: l_spacing; value: "2"; label: "led spacing  "}
-                DataInput{ id: l_rotation; value: "90"; label:"led angle     "}      
-                Item { Layout.fillHeight: true }
-                         
-                Button
-                {
-                    id: button_
-                    Layout.alignment: Qt.AlignHCenter
-                    text: "SET"
-                    highlighted: true
-
-                    onClicked: 
-                    {
-                        root.parameterChanged(l_num.value,  l_rotation.value, l_spacing.value, l_size.value )
-                    }          
-                }
-
-                Button
-                {
-                    id: button2
-                    Layout.alignment: Qt.AlignHCenter
-                    text: "SET"
-                    highlighted: true
-
-                    onClicked: 
-                    {
-                        console.log(root.state? "true" : "false");
-                        if(root.state) root.state = false;
-                        else root.state = true;
-                        
-                    }          
-                }
+                DataInput{ id: l_num; label: "led number";init_value: 25;  max: 200; min: 1}
+                DataInput{ id: l_size; label: "led size";init_value: 10;  max: 20; min: 1}
+                DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1}      
+                
+            
+            
+                //Item { Layout.fillHeight: true }
             }
+              
         }                        
     }
+
+    Component.onCompleted: 
+    {   
+        l_num.update.connect(onUpdate);  
+        l_size.update.connect(onUpdate);  
+        l_rotation.update.connect(onUpdate);  
+    }     
 }
 
        

@@ -8,11 +8,19 @@ import Main 1.0
 Control
 { 
     
-    function updateLedParameters(size: int, spacing: int, angle: int, num: int)
+    function updateLedParameters(size: int, angle: int, num: int)
     {
-        return led.onParameterChanged(num, angle, spacing, size);  
+        return led.onParameterChanged(num, angle, size);  
+    }
+    function setPixmap()
+    {
+        led.pixmap = file_manager.pixmap_pointer
     }
 
+    function saveImage()
+    {
+        return led.saveImage();
+    }
     id: root
     implicitWidth: 720
     implicitHeight: 500
