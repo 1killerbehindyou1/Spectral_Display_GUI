@@ -23,15 +23,16 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 
     for (QPointF point : vector_points)
     {
-        if (point.x() <= image.width() && point.y() <= image.height())
+        if (point.x() < image.width() && point.y() < image.height())
         {
+
             increaseTotalIntensivity(
                 led_color, image.pixelColor(static_cast<int>(point.x()),
                                             static_cast<int>(point.y())));
         }
         else
         {
-            increaseTotalIntensivity(led_color, QColor{255, 255, 255});
+            increaseTotalIntensivity(led_color, QColor{0, 0, 0});
         }
     }
 
@@ -65,7 +66,7 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 
             QPointF point(transform(curr_point));
 
-            if (point.x() > 0 && point.y() > 0)
+            if (point.x() >= 0 && point.y() >= 0)
                 vector_points.push_front(point);
         }
     }
@@ -87,9 +88,12 @@ void increaseTotalIntensivity(QColor& color, QColor color_from_image)
 QColor calculateaAverageIntensivity(int sample_amount, QColor total_intensivity)
 {
     QColor color;
-    color.setRedF(total_intensivity.redF() / sample_amount);
-    color.setGreenF(total_intensivity.greenF() / sample_amount);
-    color.setBlueF(total_intensivity.blueF() / sample_amount);
+    if (sample_amount > 0)
+    {
+        color.setRedF(total_intensivity.redF() / sample_amount);
+        color.setGreenF(total_intensivity.greenF() / sample_amount);
+        color.setBlueF(total_intensivity.blueF() / sample_amount);
+    }
 
     return color;
 }

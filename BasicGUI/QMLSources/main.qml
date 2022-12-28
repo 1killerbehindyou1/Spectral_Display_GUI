@@ -69,23 +69,30 @@ ApplicationWindow
     SplitView 
     { 
         anchors.fill: parent
-        
-        Image
-        {
-            id: loaded_image
-            visible: false
+        id: splitView
 
-        }
+       
+            Image
+            {
+                anchors.fill: parents
+                id: loaded_image
+                visible: false
+                //sourceSize.width: 1024
+                //sourceSize.height: 1024
+                fillMode: Image.PreserveAspectFit
+            }
+        
         RenderPanel
         { 
             id: drawing
         }
 
-        ControlPanel
+       ControlPanel
         {
+            //SplitView.fillWidth : true
             id: parameters
-            
-            SplitView.minimumWidth: parameters.implicitWidth
+            SplitView.minimumWidth: 250
+            SplitView.maximumWidth: 250
         }
     }
     
