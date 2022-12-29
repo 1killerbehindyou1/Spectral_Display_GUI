@@ -28,6 +28,7 @@ public:
     void paint(QPainter* painter) override;
 
     Q_INVOKABLE void setPoint(QPoint point);
+    Q_INVOKABLE void showOutputPreview(bool show);
     Q_INVOKABLE void saveImage();
     Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
                                         int size);
@@ -40,5 +41,6 @@ private:
     int m_number_of_leds;
     int m_rotation;
     int m_size;
+    bool m_out_img_prev;
 };
 #endif

@@ -82,11 +82,13 @@ ApplicationWindow
             visible: false
 
         }
+        
         RenderPanel
         { 
             id: drawing
         }
-
+       
+        
         ControlPanel
         {
             id: parameters
