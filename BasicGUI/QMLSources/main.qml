@@ -46,29 +46,25 @@ ApplicationWindow
             title: qsTr("&View")
             delegate: CheckBox
             {
-                checked: previev_is_active
+            }
+            Action {
+                text: "Preview selected image..."
                 checkable: true
-                onClicked: 
-                {
-                    if(previev_is_active == false)
-                    {   
-                        previev_is_active = true;
-                        if(image_selected)
-                        {
-                            loaded_image.visible = true;
-                        }
-                    }
-                    else 
-                    {
-                        previev_is_active = false;
-                        if(image_selected)
-                        {
-                            loaded_image.visible = false;
-                        }
-                    }
+                onCheckedChanged: {
+                    preview_is_active = value
+                    loaded_image.visible = value
+                }
+                Component.onCompleted: {
+                    checked = preview_is_active
                 }
             }
-            Action{ text: "Preview selected image...";}
+            Action {
+                text: "Other checkable option"
+                checkable: true
+            }
+            Action {
+                text: "Normal option"
+            }
         }
     }
 
