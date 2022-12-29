@@ -15,6 +15,7 @@ ApplicationWindow
     color: "lightgrey"
 
     property bool image_selected: false
+    property bool previev_is_active: false
 
     menuBar: MenuBar 
     {     
@@ -43,26 +44,31 @@ ApplicationWindow
         Menu 
         {
             title: qsTr("&View")
-            Action 
+            delegate: CheckBox
             {
-                text: qsTr("&Show Image before trasformation...")
-                onTriggered:
+                checked: previev_is_active
+                checkable: true
+                onClicked: 
                 {
-                       if(image_selected)
-                       {
-                        loaded_image.visible = true;
-                       }
+                    if(previev_is_active == false)
+                    {   
+                        previev_is_active = true;
+                        if(image_selected)
+                        {
+                            loaded_image.visible = true;
+                        }
+                    }
+                    else 
+                    {
+                        previev_is_active = false;
+                        if(image_selected)
+                        {
+                            loaded_image.visible = false;
+                        }
+                    }
                 }
             }
-             MenuSeparator { }
-            Action 
-            {
-                text: qsTr("&HideImage before trasformation...")
-                onTriggered:
-                {
-                       loaded_image.visible = false;
-                }
-            }
+            Action{ text: "Preview selected image...";}
         }
     }
 
