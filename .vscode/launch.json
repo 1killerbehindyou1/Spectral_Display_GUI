@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run BasicGUI",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/BasicGUI.exe",
+            "cwd": "${workspaceFolder}/build/bin/",
+            "console": "internalConsole",
+            "logging": {
+                "moduleLoad": false
+            },
+            "internalConsoleOptions": "openOnSessionStart",
+            "visualizerFile": "c:\\Users\\mplesniak\\AppData\\Roaming\\Code\\User\\workspaceStorage\\415c4e3a299b2b2ea7d7b8f014c7dfc9\\tonka3000.qtvsctools\\qt.natvis.xml"
+        },
+        {
+            "name": "Run PointsInPolygon",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/PointsInPolygon.exe",
+            "cwd": "${workspaceFolder}/build/bin/",
+            "console": "internalConsole",
+            "logging": {
+                "moduleLoad": false
+            },
+            "internalConsoleOptions": "openOnSessionStart",
+            "visualizerFile": "c:\\Users\\mplesniak\\AppData\\Roaming\\Code\\User\\workspaceStorage\\415c4e3a299b2b2ea7d7b8f014c7dfc9\\tonka3000.qtvsctools\\qt.natvis.xml"
+        }
+    ]
+}
