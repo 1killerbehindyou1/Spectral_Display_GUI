@@ -15,45 +15,52 @@ Control
     
     implicitWidth: 70
     implicitHeight: 50 
-    
-    ColumnLayout
-    {
-        Text{ id: label }
-            
+       
+        ColumnLayout
+        {
             RowLayout
-            {   
-                Slider 
+            {        
+                Text
+                { 
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignRight
+                    id: label 
+                }    
+                TextField
                 {
-                    id: slider 
-                    stepSize: 1
-                    snapMode: Slider.SnapAlways
-                                  
-                    onMoved: 
+                    id: textInp
+                    text: "0"
+                    color: "#243956"
+                    background: Rectangle
                     {
-                        root.update();
-                        textInp.text = slider.value;
+                        implicitWidth: 70
+                        implicitHeight: 30 
+                        color: "transparent"
                     }
-                }                 
-                spacing: 10
-                Rectangle
+                    font
+                    {   
+                        bold: true
+                        pixelSize: 20
+                    }
+                    activeFocusOnTab: true
+                }
+            }  
+            Slider 
+            {
+                id: slider 
+                stepSize: 1
+                implicitHeight: 20 
+                snapMode: Slider.SnapAlways
+                                
+                onMoved: 
                 {
-                    implicitWidth: 70
-                    implicitHeight: 50 
-                    id: rect
-                    
-                    TextField
-                    {
-                        id: textInp
-                        anchors.fill: parent
-                        anchors.verticalCenter: rect.verticalCenter
-                        text: "0"
-                        color: "black" 
-                        font.pixelSize: 16
-                        activeFocusOnTab: true
-                    }   
-                }         
-            }   
-        }
+                    root.update();
+                    textInp.text = slider.value;
+                }
+            }            
+        }    
+            
+        
         Component.onCompleted:
         {
            value = init_value;

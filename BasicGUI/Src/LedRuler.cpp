@@ -24,7 +24,7 @@ void LedRuler::paint(QPainter* painter)
     QPoint offset(m_size * 0.5, m_size * (-0.5));
     QPoint pixel{0, 0};
 
-    int width = static_cast<int>(360 / m_rotation);
+    int width = static_cast<int>(360 / m_rotation) + 1;
     if (m_output_image != nullptr)
         delete m_output_image;
 
