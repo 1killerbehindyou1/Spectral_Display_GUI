@@ -77,8 +77,6 @@ ApplicationWindow
                 anchors.fill: parents
                 id: loaded_image
                 visible: false
-                //sourceSize.width: 1024
-                //sourceSize.height: 1024
                 fillMode: Image.PreserveAspectFit
             }
         
@@ -89,7 +87,6 @@ ApplicationWindow
 
        ControlPanel
         {
-            //SplitView.fillWidth : true
             id: parameters
             SplitView.minimumWidth: 250
             SplitView.maximumWidth: 250

@@ -49,9 +49,6 @@ void LedRuler::paint(QPainter* painter)
             if (color.isValid())
                 m_output_image->setPixelColor(pixel, color);
 
-            /* qDebug() << "pixel:" << pixel << "color: " << color
-                      << "width: " << width << "rotation: " << m_rotation;*/
-
             QPen pen = painter->pen();
             pen.setColor(Qt::transparent);
             painter->setPen(pen);
