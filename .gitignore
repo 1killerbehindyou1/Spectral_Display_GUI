@@ -1,7 +1,11 @@
-Mentoring QT project.codeworkspace.code-workspace
-/.vscode
-/build-BasicGUI-Desktop_Qt_5_15_2_MinGW_64_bit-Debug
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
 /build
-*.txt.user
-vscode_qt.bat
-GIT komendy.txt
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/.vscode

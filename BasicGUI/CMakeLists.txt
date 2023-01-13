@@ -2,29 +2,18 @@
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(QT_VERSION_MAJOR 5)
-
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
+set(SOURCE_DIR Src)
+
 set(PROJECT_SOURCES
-  Main.cpp
+  ${SOURCE_DIR}/Main.cpp
   QMLSources/qml.qrc
-  LedRuler.cpp
-  LedRuler.h
-  Interpolator.cpp
-  Interpolator.h
-  FileManager.cpp
-  FileManager.h
-  Transformation.cpp
-  Transformation.h
+  ${SOURCE_DIR}/LedRuler.cpp
+  ${SOURCE_DIR}/LedRuler.h
+  ${SOURCE_DIR}/FileManager.cpp
+  ${SOURCE_DIR}/FileManager.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -60,6 +49,7 @@ target_link_libraries(BasicGUI
   Qt${QT_VERSION_MAJOR}::Quick
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
+  Interpolator
 )
 
 set_target_properties(BasicGUI PROPERTIES
