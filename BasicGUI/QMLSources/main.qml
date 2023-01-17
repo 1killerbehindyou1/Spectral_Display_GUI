@@ -44,11 +44,14 @@ ApplicationWindow
         Menu 
         {
             title: qsTr("&View")
-            delegate: CheckBox
+            delegate: CheckBox{}
+
+            Action
             {
                 checked: previev_is_active
                 checkable: true
-                onClicked: 
+                text: "Preview selected image..."
+                onCheckedChanged: 
                 {
                     if(previev_is_active == false)
                     {   
@@ -68,7 +71,8 @@ ApplicationWindow
                     }
                 }
             }
-            Action{ text: "Preview selected image...";}
+
+            Action{ text: "Preview rendered image...";}
         }
     }
 
@@ -76,8 +80,6 @@ ApplicationWindow
     { 
         anchors.fill: parent
         id: splitView
-
-       
         Image
         {
             anchors.fill: parents
