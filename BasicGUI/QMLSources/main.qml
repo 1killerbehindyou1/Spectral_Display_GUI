@@ -16,6 +16,7 @@ ApplicationWindow
 
     property bool image_selected: false
     property bool previev_is_active: false
+    property bool rendered_previev_is_active: false
 
     menuBar: MenuBar 
     {     
@@ -70,9 +71,35 @@ ApplicationWindow
                         }
                     }
                 }
+                Component.onCompleted: 
+                {
+                    checked = preview_is_active
+                }
             }
 
-            Action{ text: "Preview rendered image...";}
+            Action
+            {
+                text: "Preview rendered image..."
+                checked: rendered_previev_is_active
+                checkable: true
+                onCheckedChanged: 
+                {
+                    if(rendered_previev_is_active == false)
+                    {   
+                        rendered_previev_is_active = true;
+                        drawing.checkRenderedPreview(rendered_previev_is_active); 
+                    }
+                    else 
+                    {
+                        rendered_previev_is_active = false;
+                        drawing.checkRenderedPreview(rendered_previev_is_active); 
+                    }
+                }
+                Component.onCompleted: 
+                {
+                    checked = rendered_previev_is_active
+                }
+            }
         }
     }
 
@@ -139,9 +166,9 @@ ApplicationWindow
         
         function showMessageBox(title: string, message: string)
         {
-        messageDialog.text = message
-        messageDialog.title = title
-        messageDialog.open()  
+            messageDialog.text = message
+            messageDialog.title = title
+            messageDialog.open()  
         }
     }
     Component.onCompleted: 

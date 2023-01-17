@@ -21,6 +21,10 @@ Control
     {
         return led.saveImage(file_name);
     }
+    function checkRenderedPreview(state: bool)
+    { 
+        return led.showOutputPreview(state);
+    }
 
     id: root
     implicitWidth: 720

@@ -23,9 +23,9 @@ class LedRuler : public QQuickPaintedItem
     Q_PROPERTY(QPixmap* pixmap WRITE setPixmap)
 
 public:
-    void setPixmap(QPixmap* pixmap);
     LedRuler(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
+    void setPixmap(QPixmap* pixmap);
 
     Q_INVOKABLE void setPoint(QPoint point);
     Q_INVOKABLE void showOutputPreview(bool show);
@@ -41,6 +41,6 @@ private:
     int m_number_of_leds;
     int m_rotation;
     int m_size;
-    bool m_out_img_prev;
+    bool m_rendered_preview;
 };
 #endif
