@@ -1,10 +1,7 @@
+#include "Interpolator.h"
+#include <QDebug>
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QtQuick>
 #include <iostream>
-// #include <QDebug>
-#include "Polygon.h"
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
@@ -40,29 +37,15 @@ void myMessageOutput(QtMsgType type,
 int main(int argc, char* argv[])
 {
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
-#endif
-
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
-    app.setOrganizationName("1killerbehindyou1");
-    app.setOrganizationDomain("Education");
 
-    qmlRegisterType<T_Polygon>("Main", 1, 0, "T_Polygon");
+    QPixmap pix_map;
+    pix_map.load("C:\\Users\\mplesniak\\Pictures\\BITMAPA.png");
 
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    Interpolator interpolator_obj(&app);
+    Transform transform_obj({100, 100}, 1);
+    interpolator_obj.setPixmap(&pix_map);
 
-    QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreated, &app,
-        [url](QObject* obj, const QUrl& objUrl)
-        {
-            if (!obj && url == objUrl)
-                QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
-
-    engine.load(url);
     return app.exec();
 }
