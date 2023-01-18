@@ -36,13 +36,15 @@ void myMessageOutput(QtMsgType type,
 
 int main(int argc, char* argv[])
 {
-    QString pixmap_path = "";
+    QString q_pixmap_path = "";
+    std::string pixmap_path;
+    std::string str_led_number;
+    std::string str_led_size;
+    std::string str_angle;
+
     int led_number;
     int led_size;
     int angle;
-
-    // qDebug() << argc;
-    // qDebug() << argv[0];
 
     if (argc == 1)
     {
@@ -59,56 +61,20 @@ int main(int argc, char* argv[])
     }
     else
     {
-        for (int i = 1; i <= argc; ++i)
-        {
-        }
+        str_led_number = argv[1];
+        str_led_size = argv[2];
+        str_angle = argv[3];
+        pixmap_path = argv[4];
     }
 
-    // This could be a sub method "parse(argc, argv)"
-    /*
-        String parameter = "";
-        Boolean executed = false;
+    std::cout << str_led_number << "\t" << str_led_size << "\t" << str_angle
+              << "\t" << pixmap_path << std::endl;
 
-        for (i = 0; i < argc; ++i)
-        {
-
-            if element
-                == "close"
-                {
-                    set parameter = argv[i + 1];
-                    i++; // skip next element which was the parameter
-
-                    // myCloseOperation would check if parameter is
-                    // "all" for example and closes all windows
-                    // or treat any other value as window title for
-                    // example and closes only the matching window.
-                    myCloseOperation(parameter);
-                    set executed = true;
-                }
-
-            if element
-                == "operation2"
-                {
-                    set parameter = argv[i + 1];
-                    i++;
-
-                    myOperation2Method(parameter);
-                    set executed = true;
-                }
-        }
-
-        if (executed == false)
-        {
-            showSyntaxErrorMessage();
-            exit(1);
-        }
-    */
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
     QPixmap pix_map;
-    pix_map.load(pixmap_path);
-    // qDebug() << pix_map;
+    pix_map.load(q_pixmap_path);
 
     Interpolator interpolator_obj(&app);
     Transform transform_obj({100, 100}, 1);
@@ -116,3 +82,43 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
+// This could be a sub method "parse(argc, argv)"
+/*
+    String parameter = "";
+    Boolean executed = false;
+
+    for (i = 0; i < argc; ++i)
+    {
+
+        if element
+            == "close"
+            {
+                set parameter = argv[i + 1];
+                i++; // skip next element which was the parameter
+
+                // myCloseOperation would check if parameter is
+                // "all" for example and closes all windows
+                // or treat any other value as window title for
+                // example and closes only the matching window.
+                myCloseOperation(parameter);
+                set executed = true;
+            }
+
+        if element
+            == "operation2"
+            {
+                set parameter = argv[i + 1];
+                i++;
+
+                myOperation2Method(parameter);
+                set executed = true;
+            }
+    }
+
+    if (executed == false)
+    {
+        showSyntaxErrorMessage();
+        exit(1);
+    }
+*/
