@@ -33,42 +33,58 @@ void myMessageOutput(QtMsgType type,
                      .toStdString()
               << std::endl;
 }
-
+typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>>
+    MojString;
 int main(int argc, char* argv[])
 {
     QString q_pixmap_path = "";
-    std::string pixmap_path;
-    std::string str_led_number;
-    std::string str_led_size;
-    std::string str_angle;
+    std::string pixmap_path = "";
 
-    int led_number;
-    int led_size;
-    int angle;
+    int led_number = 0;
+    int led_size = 0;
+    int angle = 0;
 
-    if (argc == 1)
+    for (int i = 0; i < argc; i++)
+    {
+        std::string parsed_arg(argv[i]);
+
+        if (parsed_arg.find("--led-number=") != std::string::npos)
+        {
+            led_number =
+                std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+        }
+        else if (parsed_arg.find("--led-size=") != std::string::npos)
+        {
+            led_size = std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+        }
+        else if (parsed_arg.find("--angle=") != std::string::npos)
+        {
+            angle = std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+        }
+        else if (parsed_arg.find("--image-path=") != std::string::npos)
+        {
+            pixmap_path = parsed_arg.erase(0, parsed_arg.find("=") + 1);
+        }
+    }
+    if (led_number == 0)
     {
         led_number = 250;
-        led_size = 1;
-        angle = 1;
-        pixmap_path = "C:\\Users\\mplesniak\\Pictures\\BITMAPA.png";
-        qDebug()
-            << "application run with default parameters:"
-            << "\npixmap_path = C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"
-            << "\nled_number = 250 "
-            << "\nled_size = 1"
-            << "\nangle = 1";
     }
-    else
+    if (angle == 0)
     {
-        str_led_number = argv[1];
-        str_led_size = argv[2];
-        str_angle = argv[3];
-        pixmap_path = argv[4];
+        angle = 1;
+    }
+    if (led_size == 0)
+    {
+        led_size = 1;
+    }
+    if (pixmap_path == "")
+    {
+        pixmap_path = "C:\\Users\\mplesniak\\Pictures\\BITMAPA.png";
     }
 
-    std::cout << str_led_number << "\t" << str_led_size << "\t" << str_angle
-              << "\t" << pixmap_path << std::endl;
+    std::cout << led_number << "\t" << led_size << "\t" << angle << "\t"
+              << pixmap_path << std::endl;
 
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
