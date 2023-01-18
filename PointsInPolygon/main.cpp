@@ -57,6 +57,12 @@ int main(int argc, char* argv[])
             << "\nled_size = 1"
             << "\nangle = 1";
     }
+    else
+    {
+        for (int i = 1; i <= argc; ++i)
+        {
+        }
+    }
 
     // This could be a sub method "parse(argc, argv)"
     /*
