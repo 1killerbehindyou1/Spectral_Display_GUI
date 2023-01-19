@@ -4,7 +4,6 @@
 #include <chrono>
 #include <iostream>
 
-
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
                      const QString& msg)
@@ -89,7 +88,8 @@ int main(int argc, char* argv[])
     }
     std::cout << "parameters:\nled numer: " << led_number
               << "\tled_size: " << led_size << "\tangle: " << angle
-              << "\tpixmap_path: " << pixmap_path << std::endl;
+              << "\tpixmap_path: " << pixmap_path << "\n"
+              << std::endl;
 
     QPixmap pix_map;
     pix_map.load(QString::fromStdString(pixmap_path));
@@ -99,13 +99,34 @@ int main(int argc, char* argv[])
 
     QRect rect{QPoint{led_size * 0.5, led_size * (-0.5)},
                QSize{led_size, led_size}};
-    Transform transform_obj(QPoint{pix_map.width() / 2, pix_map.height() / 2},
-                            angle); // centrum obrotu w centrum obrazka
 
-    QVector<QPointF> vector_transformed_points(
-        interpolator_obj.interpolatorTransform(transform_obj, rect));
+    // centrum obrotu w centrum obrazka
+    QPoint rot_centr(pix_map.width() / 2, pix_map.height() / 2);
+
+    // Start measuring time on transforation points
+    auto begin = std::chrono::high_resolution_clock::now();
+
+    for (int rot = 0; rot < 360; rot += angle)
+    {
+        for (int i = 0; i < led_number; i++)
+        {
+            rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
+
+            QColor color = interpolator_obj.interpolatorSetLedColor(
+                interpolator_obj.interpolatorTransform(
+                    Transform{rot_centr, angle}, rect));
+        }
+    }
+    // Stop measuring time on transformation points and calculate the
+    // elapsed time
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed =
+        std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    qDebug() << "Time on transformation points:\t" << elapsed.count() / 1000
+             << "miliseconds";
 
     qDebug() << pix_map;
-    qDebug() << vector_transformed_points;
+
     return 0;
 }
