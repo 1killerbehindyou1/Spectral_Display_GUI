@@ -17,10 +17,8 @@ Control
          
     contentItem: ColumnLayout
     {
-        //spacing: 20
         RowLayout
         {       
-            //Layout.fillWidth: true 
             Text
             { 
                 font.pixelSize: 20
@@ -61,13 +59,14 @@ Control
                         id: rect
                         color: "transparent"
                     }
-                    
                 }
 
                 up.indicator: Rectangle 
                 {
-                    x: 0
-                    
+                    radius: 8
+                    implicitHeight: control.height
+                    color: "#7799c6"
+                    x: parent.width - width
                     implicitWidth: 40
                     Text 
                     {
@@ -80,20 +79,15 @@ Control
                        horizontalAlignment: Text.AlignHCenter
                        verticalAlignment: Text.AlignVCenter
                     }
-                    radius: 8
-                    implicitHeight: control.height
-                    color: "#7799c6"
                 }
                 
                 down.indicator: Rectangle 
                 {
-                    x: parent.width - width
+                    x: 0
                     implicitWidth: 40
                     implicitHeight: control.height
                     radius: 8
                     color: "#7799c6"
-                 
-
                     Text 
                     {
                         text: "-"
@@ -105,7 +99,6 @@ Control
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
-            
                 }
             }
         }  
