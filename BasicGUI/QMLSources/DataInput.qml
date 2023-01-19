@@ -13,24 +13,24 @@ Control
     signal update()
     
     implicitWidth: 270
-    implicitHeight: 80 
          
     contentItem: ColumnLayout
     {
-        spacing: 10
+        //spacing: 20
         RowLayout
         {       
-            Layout.fillWidth: true 
+            //Layout.fillWidth: true 
             Text
             { 
                 font.pixelSize: 20
                 id: label 
             }    
             Item{Layout.fillWidth: true}
+
             SpinBox 
             {
                 id: control
-                //Layout.alignment: Qt.AlignRight
+                implicitHeight: 48
                 activeFocusOnTab: true
                 value: textInp.text
                 from: min
@@ -45,34 +45,80 @@ Control
                 contentItem:TextField
                 {
                     id: textInp
+                    z: 2
                     text: control.value
                     color: "#243956"
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    font.bold: true
+                    font.pixelSize: 20
                     activeFocusOnTab: true
-                    background: Rectangle
+                    validator: IntValidator {bottom: min; top: max;}
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    background: Rectangle 
                     {
-                        //implicitWidth: 30
-                        //implicitHeight: 20 
-                        color: "red"
+                        id: rect
+                        color: "transparent"
                     }
-                    font{bold: true; pixelSize: 20}
+                    
                 }
+
                 up.indicator: Rectangle 
                 {
-                    x: parent.width - width
-                    height: parent.height
+                    x: 0
+                    
                     implicitWidth: 40
-                    implicitHeight: 40
+                    Text 
+                    {
+                       text: "+"
+                       color: "#243956"
+                       font.bold: true
+                       font.pixelSize: textInp.font.pixelSize
+                       anchors.fill: parent
+                       fontSizeMode: Text.Fit
+                       horizontalAlignment: Text.AlignHCenter
+                       verticalAlignment: Text.AlignVCenter
+                    }
+                    radius: 8
+                    implicitHeight: control.height
+                    color: "#7799c6"
                 }
                 
                 down.indicator: Rectangle 
                 {
-                    id: down
-                    height: parent.height
+                    x: parent.width - width
                     implicitWidth: 40
-                    implicitHeight: 40
+                    implicitHeight: control.height
+                    radius: 8
+                    color: "#7799c6"
+                 
+
+                    Text 
+                    {
+                        text: "-"
+                        color: "#243956"
+                        font.bold: true
+                        font.pixelSize: textInp.font.pixelSize
+                        anchors.fill: parent
+                        fontSizeMode: Text.Fit
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+            
                 }
+                
+                Component.onCompleted: 
+                {
+                    //console.log(rect.width);
+                    console.log("control.width");
+                    console.log(control.width);
+                    console.log("control.height");
+                    console.log(control.height);
+                }
+                
             }
         }  
+        Item{Layout.fillHeight: true}
         Slider 
         {
             id: slider 
@@ -80,7 +126,7 @@ Control
             Layout.fillWidth: true
             from: min
             to: max
-            implicitHeight: 20 
+            height: 17 
             snapMode: Slider.SnapAlways
             activeFocusOnTab: false
             
