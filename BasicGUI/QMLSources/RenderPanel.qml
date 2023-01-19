@@ -17,10 +17,11 @@ Control
         led.pixmap = file_manager.pixmap_pointer
     }
 
-    function saveImage()
+    function saveImage(file_name: string)
     {
-        return led.saveImage();
+        return led.saveImage(file_name);
     }
+
     id: root
     implicitWidth: 720
     implicitHeight: 500

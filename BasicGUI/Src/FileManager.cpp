@@ -7,6 +7,7 @@ FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
 QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
 
+bool FileManager::savePixMap(QUrl path) {}
 bool FileManager::loadPixMap(QUrl path)
 {
     if (!path.isLocalFile())
