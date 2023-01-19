@@ -81,6 +81,7 @@ ApplicationWindow
     { 
         anchors.fill: parent
         id: splitView
+
         Image
         {
             anchors.fill: parents
@@ -88,7 +89,16 @@ ApplicationWindow
             visible: false
             fillMode: Image.PreserveAspectFit
         }
-        
+
+
+        handle: Rectangle 
+        {
+            implicitWidth: 4
+            implicitHeight: 4
+            color: SplitHandle.pressed ? "#243956"
+                : (SplitHandle.hovered ? Qt.lighter("#243956", 1.5) : Qt.lighter("#243956", 2))
+        }
+       
         RenderPanel
         { 
             id: drawing
