@@ -106,6 +106,8 @@ int main(int argc, char* argv[])
     // Start measuring time on transforation points
     auto begin = std::chrono::high_resolution_clock::now();
 
+    int amout_of_calc_points = 0;
+
     for (int rot = 0; rot < 360; rot += angle)
     {
         for (int i = 0; i < led_number; i++)
@@ -115,6 +117,8 @@ int main(int argc, char* argv[])
             QColor color = interpolator_obj.interpolatorSetLedColor(
                 interpolator_obj.interpolatorTransform(
                     Transform{rot_centr, angle}, rect));
+
+            amout_of_calc_points += led_size * led_size;
         }
     }
     // Stop measuring time on transformation points and calculate the
@@ -125,7 +129,8 @@ int main(int argc, char* argv[])
 
     qDebug() << "Time on transformation points:\t" << elapsed.count() / 1000
              << "miliseconds";
-
+    qDebug() << "amout of transformed points:\t" << amout_of_calc_points
+             << "\n";
     qDebug() << pix_map;
 
     return 0;
