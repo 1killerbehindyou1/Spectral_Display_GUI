@@ -26,7 +26,6 @@ Control
     contentItem: ColumnLayout
     { 
         spacing: 10; 
-
         ScrollView
         {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
@@ -37,14 +36,11 @@ Control
  
             ColumnLayout
             {
-                spacing: 30
-                width: parent.width
-                Text{text: "Led ruler parameters" }         
+                spacing: 20
+                Text{text: "Led ruler parameters"; font.bold: true; font.pixelSize: 20 }         
                 DataInput{ id: l_num; label: "led number";init_value: 25;  max: 200; min: 1}
                 DataInput{ id: l_size; label: "led size";init_value: 10;  max: 20; min: 1}
                 DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1}      
-                
-                Item { Layout.fillHeight: true }
             }
               
         }                        
