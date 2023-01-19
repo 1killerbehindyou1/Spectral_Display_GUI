@@ -6,8 +6,9 @@ Control
 {
    id: root
     property alias label: label.text
-    property int min
+    property alias value: control.value
     property int max
+    property int min
     property int init_value
     
     signal update()

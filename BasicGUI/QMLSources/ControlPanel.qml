@@ -13,10 +13,7 @@ Control
 
     function onUpdate()
     {
-        console.log(l_size.value);
-        console.log(l_rotation.value);
-        console.log(l_num.value);
-       //return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )  
+       return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )  
     }
 
     
