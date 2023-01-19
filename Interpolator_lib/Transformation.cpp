@@ -8,6 +8,7 @@ Transform::Transform(QPoint rotCenter, int deg_angle) : m_rotCenter(rotCenter)
 {
     m_angle = convertAngleToRad(deg_angle);
 }
+
 QPointF Transform::operator()(QPointF point)
 {
     float a_angle = calcAngle(point);
@@ -17,17 +18,6 @@ QPointF Transform::operator()(QPointF point)
 
     return a_point;
 }
-/*
-QPointF Transform::operator()(QPointF point)
-{
-    float a_angle = calcAngle(point);
-    float a_module = calcModule(point, a_angle);
-    m_angle += a_angle;
-    QPointF a_point = transformPoint(m_rotCenter, point, a_module, m_angle);
-
-    return a_point;
-}
-*/
 ////////////////////////////////////////////////////////////////////////////
 namespace
 {
@@ -56,12 +46,4 @@ QPointF transformPoint(QPointF rotCenter, float module, float angle)
     i_point.setY(module * sin(angle) + rotCenter.y());
     return i_point;
 }
-/*
-QPointF transformPoint(QPointF rotCenter, QPointF point, float module,
-                       float angle)
-{
-    point.setX(module * cos(angle) + rotCenter.x());
-    point.setY(module * sin(angle) + rotCenter.y());
-    return point;
-}*/
 } // namespace

@@ -1,7 +1,9 @@
 #include "Interpolator.h"
 #include <QDebug>
 #include <QGuiApplication>
+#include <chrono>
 #include <iostream>
+
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
@@ -35,11 +37,14 @@ void myMessageOutput(QtMsgType type,
 }
 typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>>
     MojString;
+
 int main(int argc, char* argv[])
 {
-    QString q_pixmap_path = "";
-    std::string pixmap_path = "";
 
+    qInstallMessageHandler(myMessageOutput);
+    QGuiApplication app(argc, argv);
+
+    std::string pixmap_path = "";
     int led_number = 0;
     int led_size = 0;
     int angle = 0;
@@ -82,59 +87,25 @@ int main(int argc, char* argv[])
     {
         pixmap_path = "C:\\Users\\mplesniak\\Pictures\\BITMAPA.png";
     }
-
-    std::cout << led_number << "\t" << led_size << "\t" << angle << "\t"
-              << pixmap_path << std::endl;
-
-    qInstallMessageHandler(myMessageOutput);
-    QGuiApplication app(argc, argv);
+    std::cout << "parameters:\nled numer: " << led_number
+              << "\tled_size: " << led_size << "\tangle: " << angle
+              << "\tpixmap_path: " << pixmap_path << std::endl;
 
     QPixmap pix_map;
-    pix_map.load(q_pixmap_path);
+    pix_map.load(QString::fromStdString(pixmap_path));
 
     Interpolator interpolator_obj(&app);
-    Transform transform_obj({100, 100}, 1);
     interpolator_obj.setPixmap(&pix_map);
 
+    QRect rect{QPoint{led_size * 0.5, led_size * (-0.5)},
+               QSize{led_size, led_size}};
+    Transform transform_obj(QPoint{pix_map.width() / 2, pix_map.height() / 2},
+                            angle); // centrum obrotu w centrum obrazka
+
+    QVector<QPointF> vector_transformed_points(
+        interpolator_obj.interpolatorTransform(transform_obj, rect));
+
+    qDebug() << pix_map;
+    qDebug() << vector_transformed_points;
     return 0;
 }
-
-// This could be a sub method "parse(argc, argv)"
-/*
-    String parameter = "";
-    Boolean executed = false;
-
-    for (i = 0; i < argc; ++i)
-    {
-
-        if element
-            == "close"
-            {
-                set parameter = argv[i + 1];
-                i++; // skip next element which was the parameter
-
-                // myCloseOperation would check if parameter is
-                // "all" for example and closes all windows
-                // or treat any other value as window title for
-                // example and closes only the matching window.
-                myCloseOperation(parameter);
-                set executed = true;
-            }
-
-        if element
-            == "operation2"
-            {
-                set parameter = argv[i + 1];
-                i++;
-
-                myOperation2Method(parameter);
-                set executed = true;
-            }
-    }
-
-    if (executed == false)
-    {
-        showSyntaxErrorMessage();
-        exit(1);
-    }
-*/

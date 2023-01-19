@@ -38,6 +38,7 @@ void LedRuler::paint(QPainter* painter)
         painter->save();
         painter->rotate(rot);
         QRect rect{offset, QSize{m_size, m_size}};
+
         for (int i = 0; i < m_number_of_leds; i++)
         {
             pixel.setX(i);
