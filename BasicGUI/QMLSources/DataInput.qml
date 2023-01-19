@@ -31,6 +31,7 @@ Control
                     id: textInp
                     text: "0"
                     color: "#243956"
+                    activeFocusOnTab: true
                     background: Rectangle
                     {
                         implicitWidth: 70
@@ -42,7 +43,11 @@ Control
                         bold: true
                         pixelSize: 20
                     }
-                    activeFocusOnTab: true
+                    onEditingFinished:
+                    {
+                        slider.value = textInp.text;
+                        root.update();
+                    }    
                 }
             }  
             Slider 
@@ -51,19 +56,17 @@ Control
                 stepSize: 1
                 implicitHeight: 20 
                 snapMode: Slider.SnapAlways
-                                
+                activeFocusOnTab: false
                 onMoved: 
                 {
-                    root.update();
                     textInp.text = slider.value;
+                    root.update();
                 }
             }            
         }    
             
-        
         Component.onCompleted:
         {
            value = init_value;
-        }
-                   
+        }  
 }       
