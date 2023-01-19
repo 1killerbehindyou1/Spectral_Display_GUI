@@ -23,7 +23,7 @@ Control
         color: "#c8d6e8"
     }
    
-    contentItem: ColumnLayout
+    /*contentItem: ColumnLayout
     { 
         spacing: 10; 
         ScrollView
@@ -32,9 +32,9 @@ Control
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             Layout.fillHeight: true
             Layout.fillWidth: true
-            clip: true
+            clip: true*/
  
-            ColumnLayout
+            contentItem:ColumnLayout
             {
                 spacing: 20
                 Text{text: "Led ruler parameters"; font.bold: true; font.pixelSize: 20 }         
@@ -43,8 +43,8 @@ Control
                 DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1}      
             }
               
-        }                        
-    }
+       // }                        
+   // }
 
     Component.onCompleted: 
     {   

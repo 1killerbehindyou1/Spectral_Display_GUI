@@ -76,11 +76,11 @@ ApplicationWindow
             }
         }
     }
-
+ 
     SplitView 
     { 
         anchors.fill: parent
-        id: splitView
+        id: split_View
 
         Image
         {
@@ -111,6 +111,9 @@ ApplicationWindow
             SplitView.minimumWidth: 400
             SplitView.maximumWidth: 400
         }
+
+        Component.onCompleted: parameters.width = 250
+        
     }
     
     FileDialog 
