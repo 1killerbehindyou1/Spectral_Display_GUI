@@ -40,7 +40,7 @@ Control
                 onValueModified:
                 {
                     slider.value = control.value;
-                    //root.update();
+                    root.update();
                 }   
                 contentItem:TextField
                 {
@@ -106,16 +106,6 @@ Control
                     }
             
                 }
-                
-                Component.onCompleted: 
-                {
-                    //console.log(rect.width);
-                    console.log("control.width");
-                    console.log(control.width);
-                    console.log("control.height");
-                    console.log(control.height);
-                }
-                
             }
         }  
         Item{Layout.fillHeight: true}
@@ -133,7 +123,7 @@ Control
             onMoved: 
             {
                 control.value = slider.value;
-                //root.update();
+                root.update();
             }
         }            
     }    

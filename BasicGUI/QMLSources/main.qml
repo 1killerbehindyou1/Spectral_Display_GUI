@@ -85,7 +85,7 @@ ApplicationWindow
             id: drawing
         }
 
-       ControlPanel
+        ControlPanel
         {
             id: parameters
            
