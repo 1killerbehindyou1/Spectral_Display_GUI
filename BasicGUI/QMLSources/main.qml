@@ -119,50 +119,6 @@ ApplicationWindow
         Component.onCompleted: visible = false
     }
    
-   FileDialog{
-       //defaultSuffix: string
-       //fileUrl: url
-       //fileUrls: list<url>
-       //folder: url
-       //modality: Qt: : WindowModality
-       //nameFilters: list<string>
-       //selectExisting: bool
-       //selectFolder: bool
-       //selectMultiple: bool
-       //selectedNameFilter: string
-       //shortcuts: Object
-       //sidebarVisible: bool
-       //title: string
-       //visible: bool
-   }
-    FileDialog 
-    {
-        id: fileSaveDialog
-        title: "Save file"
-        folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-        //nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
-        //selectMultiple: false
-        //currentFile: "file:///"
-        //folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-        //fileMode: FileDialog.SaveFile | FileDialog.OpenFile
-        onAccepted:
-        {
-            
-           if(file_manager.savePixMap(fileSaveDialog.fileUrl))
-           {
-                loaded_image.source = fileDialog.fileUrl;
-                image_selected = true;
-                fileSaveDialog.pixmapLoaded();
-           }
-         
-        }
-        onRejected: 
-        {
-           fileSaveDialog.close()
-        }
-        Component.onCompleted: visible = false
-    }
-
     MessageDialog 
     {
         id: messageDialog
