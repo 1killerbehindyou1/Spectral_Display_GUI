@@ -37,6 +37,32 @@ void myMessageOutput(QtMsgType type,
 typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>>
     MojString;
 
+QVector<QString> parseArgs(int argc, char* argv[]) {
+    QVector<QString> result;
+    std::copy(argv, argv + argc, std::back_inserter(result));
+    return result;
+}
+
+
+QColor operator*(const QColor& color, double factor) {
+    return {qRgba(color.red() * factor, color.green() * factor, color.blue() * factor, color.alpha())};
+}
+
+QColor operator*(double factor, const QColor& color) {
+    return color * factor;
+}
+
+QColor operator+(const QColor& color1, const QColor& color2) {
+    return {qRgba(color1.red() + color2.red(), color1.green() + color2.green(), color1.blue() + color2.blue(), (color1.alpha() + color2.alpha())/2)};
+}
+
+QColor computeAverageColor(QColor currentAverage, std::size_t aggregatedPoints, QColor newColor) {
+    double oldFactor = static_cast<double>(aggregatedPoints) / (aggregatedPoints + 1);
+    double newFactor = 1.0 / (aggregatedPoints + 1);
+    return currentAverage * oldFactor + newFactor * newColor;
+}
+
+
 int main(int argc, char* argv[])
 {
 
@@ -51,7 +77,8 @@ int main(int argc, char* argv[])
     for (int i = 0; i < argc; i++)
     {
         std::string parsed_arg(argv[i]);
-
+        //--led-number 1
+        //--led-number=1
         if (parsed_arg.find("--led-number=") != std::string::npos)
         {
             led_number =
@@ -103,6 +130,9 @@ int main(int argc, char* argv[])
     // centrum obrotu w centrum obrazka
     QPoint rot_centr(pix_map.width() / 2, pix_map.height() / 2);
 
+    QColor averageColor{};
+    std::size_t numberOfAgregatedColors;
+
     // Start measuring time on transforation points
     auto begin = std::chrono::high_resolution_clock::now();
 
@@ -117,7 +147,8 @@ int main(int argc, char* argv[])
             QColor color = interpolator_obj.interpolatorSetLedColor(
                 interpolator_obj.interpolatorTransform(
                     Transform{rot_centr, angle}, rect));
-
+//            averageColor = computeAverageColor(averageColor, numberOfAgregatedColors, color);
+//            ++numberOfAgregatedColors;
             amout_of_calc_points += led_size * led_size;
         }
     }
@@ -125,12 +156,14 @@ int main(int argc, char* argv[])
     // elapsed time
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed =
-        std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+//        std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+        std::chrono::duration_cast<std::chrono::duration<double, std::micro>>(end - begin);
 
     qDebug() << "Time on transformation points:\t" << elapsed.count() / 1000
              << "miliseconds";
-    qDebug() << "amout of transformed points:\t" << amout_of_calc_points
+    qDebug() << "aproximation of transformed point amout:\t" << amout_of_calc_points
              << "\n";
+    qDebug() << "Average color:" << averageColor;
     qDebug() << pix_map;
 
     return 0;
