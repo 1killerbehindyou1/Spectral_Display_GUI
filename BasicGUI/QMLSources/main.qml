@@ -36,7 +36,7 @@ ApplicationWindow
                 text: qsTr("&Save Transformated Image...")
                 onTriggered:
                 {
-                    drawing.saveImage();
+                    fileSaveDialog.open();
                 }
             }
         }
@@ -118,7 +118,7 @@ ApplicationWindow
         }
         Component.onCompleted: visible = false
     }
-
+   
     MessageDialog 
     {
         id: messageDialog
