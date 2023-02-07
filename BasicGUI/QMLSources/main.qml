@@ -54,21 +54,11 @@ ApplicationWindow
                 text: "Preview selected image..."
                 onCheckedChanged: 
                 {
-                    if(previev_is_active == false)
-                    {   
-                        previev_is_active = true;
-                        if(image_selected)
-                        {
-                            loaded_image.visible = true;
-                        }
-                    }
-                    else 
+                    previev_is_active = !previev_is_active;
+                     
+                    if(image_selected)
                     {
-                        previev_is_active = false;
-                        if(image_selected)
-                        {
-                            loaded_image.visible = false;
-                        }
+                        loaded_image.visible = previev_is_active 
                     }
                 }
                 Component.onCompleted: 
@@ -84,16 +74,8 @@ ApplicationWindow
                 checkable: true
                 onCheckedChanged: 
                 {
-                    if(rendered_previev_is_active == false)
-                    {   
-                        rendered_previev_is_active = true;
-                        drawing.checkRenderedPreview(rendered_previev_is_active); 
-                    }
-                    else 
-                    {
-                        rendered_previev_is_active = false;
-                        drawing.checkRenderedPreview(rendered_previev_is_active); 
-                    }
+                    rendered_previev_is_active = !rendered_previev_is_active;
+                    drawing.checkRenderedPreview(rendered_previev_is_active); 
                 }
                 Component.onCompleted: 
                 {
