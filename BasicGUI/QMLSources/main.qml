@@ -33,7 +33,11 @@ ApplicationWindow
                 text: qsTr("&Load Image...")
                 onTriggered:
                 {
-                    fileDialog.open()            
+                    file_operation = "load";
+                    fileDialog.title = "Please choose a file";
+                    fileDialog.nameFilters = [ "Image files (*.jpg *.png)", "All files (*)" ];
+                    fileDialog.selectExisting = true;
+                    fileDialog.open();      
                 }
             }
             MenuSeparator { }
@@ -42,7 +46,11 @@ ApplicationWindow
                 text: qsTr("&Save Transformated Image...")
                 onTriggered:
                 {
-                    fileSaveDialog.open();
+                    file_operation = "save";
+                    fileDialog.title = "Save to file";
+                    fileDialog.nameFilters = [ "All files (*)" ];
+                    fileDialog.selectExisting = false;
+                    fileDialog.open();
                 }
             }
         }
@@ -100,16 +108,20 @@ ApplicationWindow
         signal pixmapLoaded()
 
         id: fileDialog
-        title: "Please choose a file"
-        nameFilters: [ "Image files (*.jpg *.png)", "All files (*)" ]
         selectMultiple: false
         onAccepted:
         {
-           if(file_manager.loadPixMap(fileDialog.fileUrl))
+
+           if((file_operation == "load")&&(file_manager.loadPixMap(fileDialog.fileUrl)))
            {
                 loadedImage.source = fileDialog.fileUrl;
                 imageSelected = true;
                 fileDialog.pixmapLoaded();
+           }
+           if(file_operation == "save")
+           {
+                 image_selected = false;
+                 file_manager.savePixMap(fileDialog.fileUrl)
            }
          
         }
@@ -120,6 +132,7 @@ ApplicationWindow
         Component.onCompleted: visible = false
     }
    
+    
     MessageDialog 
     {
         id: messageDialog

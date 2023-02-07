@@ -7,7 +7,12 @@ FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
 QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
 
-bool FileManager::savePixMap(QUrl path) {}
+bool FileManager::savePixMap(QUrl path)
+{
+    QString qstr = path.toLocalFile();
+} // must waiting for merge
+  // branch
+  // 10-please-consider-checkable-actions-which-could-cover-both-hide-and-show-menu-entries
 bool FileManager::loadPixMap(QUrl path)
 {
     if (!path.isLocalFile())
