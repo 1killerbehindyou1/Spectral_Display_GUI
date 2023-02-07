@@ -9,7 +9,7 @@
 
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
-      m_rotation(1), m_size(1), m_rendered_preview(false)
+      m_rotation(1), m_size(1), m_rendered_preview(false), m_center(300, 300)
 {
 }
 /////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ void LedRuler::paint(QPainter* painter)
         painter->drawImage(QPoint{0, 0}, *m_output_image);
         painter->restore();
     }
-    painter->translate(m_point);
+    painter->translate(m_center);
     QPoint offset(m_size * 0.5, m_size * (-0.5));
     QPoint pixel{0, 0};
 

@@ -7,6 +7,8 @@ import Main 1.0
 
 Control
 {
+    signal pointUpdate(real xPosition, real yPosition)
+
     function selectorParameterChanged(l_size: int, angle: int, number_of_leds: int)
     {
         return selector_local.selectorUpdate(number_of_leds, l_size);
@@ -33,7 +35,11 @@ Control
         MouseArea
         {
             anchors.fill: parent
-            onClicked: selector_local.setPoint(Qt.point(mouseX, mouseY))
+            onClicked:
+            {
+                selector_local.setPoint(Qt.point(mouseX, mouseY));
+                root.pointUpdate(mouseX, mouseY);
+            }
         }
     }
 }

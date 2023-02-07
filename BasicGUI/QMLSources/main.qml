@@ -152,6 +152,7 @@ ApplicationWindow
         parameters.parameterChanged.connect(selector.selectorParameterChanged);
         parameters.parameterChanged.connect(drawing.updateLedParameters);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
+        selector.pointUpdate.connect(drawing.updatePoint);
     }
 }
      
