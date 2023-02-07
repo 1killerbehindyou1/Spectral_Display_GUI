@@ -7,17 +7,25 @@ import Main 1.0
 
 Control
 {
-    function selectorParameterChanged(l_size: int, number_of_leds: int)
+    function selectorParameterChanged(l_size: int, angle: int, number_of_leds: int)
     {
         return selector_local.selectorUpdate(number_of_leds, l_size);
     }
+
+    property alias img_visible: loaded_image.visible
+    property alias img_source:  loaded_image.source
 
     id: root
     implicitWidth: 720
     implicitHeight: 500
 
-    background: Rectangle{ color: "white" }
-
+    background: Image
+    {
+        anchors.fill: parents
+        id: loaded_image
+        visible: false
+        fillMode: Image.PreserveAspectFit
+    }
     Selector
     {
         id: selector_local

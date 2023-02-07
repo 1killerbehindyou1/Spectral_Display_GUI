@@ -86,13 +86,6 @@ ApplicationWindow
         {
             id: selector
         }
-        Image
-        {
-            anchors.fill: parents
-            id: loadedImage
-            visible: false
-            fillMode: Image.PreserveAspectFit
-        }
         
         RenderPanel
         { 
@@ -119,8 +112,8 @@ ApplicationWindow
 
            if((file_operation == "load")&&(file_manager.loadPixMap(fileDialog.fileUrl)))
            {
-                loadedImage.source = fileDialog.fileUrl;
-                imageSelected = true;
+                selector.img_source = fileDialog.fileUrl;
+                image_selected = true;
                 fileDialog.pixmapLoaded();
            }
            if(file_operation == "save")
@@ -150,7 +143,7 @@ ApplicationWindow
         function showMessageBox(title: string, message: string)
         {
             messageDialog.text = message
-            messageDialog.title = title
+            messageDialog.title = titlegit
             messageDialog.open()  
         }
     }

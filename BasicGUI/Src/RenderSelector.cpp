@@ -14,8 +14,12 @@ RenderSelector::RenderSelector(QQuickItem* parent)
 void RenderSelector::paint(QPainter* painter)
 {
     int radius = m_number_of_leds * m_size;
-    qDebug() << radius << m_point;
-    painter->translate(m_point);
+
+    // painter->translate(m_point);
+    QPen pen = painter->pen();
+    pen.setColor(Qt::transparent);
+    painter->setPen(pen);
+    painter->setBrush(QColor{"red"});
     painter->drawEllipse(m_point, radius, radius);
 }
 
@@ -23,7 +27,6 @@ void RenderSelector::selectorUpdate(int number_of_leds, int size)
 {
     m_number_of_leds = number_of_leds;
     m_size = size;
-    qDebug() << m_size << m_number_of_leds;
     update();
 }
 
