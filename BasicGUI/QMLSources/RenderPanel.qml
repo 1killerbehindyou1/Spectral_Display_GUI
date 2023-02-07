@@ -7,7 +7,8 @@ import Main 1.0
 
 Control
 { 
-    
+    id: root
+
     function updateLedParameters(size: int, angle: int, num: int)
     {
         return led.onParameterChanged(num, angle, size);  
@@ -26,7 +27,12 @@ Control
         return led.showOutputPreview(state);
     }
 
-    id: root
+    function updatePoint(mouseX: real, mouseY: real)
+    {
+        return led.setPoint(Qt.point(mouseX, mouseY));
+    }
+
+    
     implicitWidth: 720
     implicitHeight: 500
 
@@ -36,10 +42,5 @@ Control
     {
         id: led 
         anchors.fill: parent
-
-        MouseArea{
-            anchors.fill: parent
-            onClicked: led.setPoint(Qt.point(mouseX, mouseY))
-        }
     }                             
 }

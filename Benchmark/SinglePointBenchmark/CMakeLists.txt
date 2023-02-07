@@ -14,3 +14,7 @@ target_link_libraries(SinglePointBenchmark
     SinglePointTransform
     LibraryBenchmark
 )
+
+target_include_directories(SinglePointBenchmark
+    PUBLIC ${SINGLE_POINT_INCLUDE_DIR}
+)

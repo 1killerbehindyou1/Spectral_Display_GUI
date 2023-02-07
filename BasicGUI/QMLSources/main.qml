@@ -8,7 +8,7 @@ import Main 1.0
 ApplicationWindow
 {
     id: root
-    width: 900
+    width: 1300
     height: 600
     visible: true
     title: qsTr("Basic Gui")
@@ -19,7 +19,7 @@ ApplicationWindow
     property bool renderedPreviewIsActive: showRenderedPreview.checked
     property string file_operation: ""
 
-    onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
+    onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
 
     menuBar: MenuBar
@@ -80,9 +80,11 @@ ApplicationWindow
     SplitView
     {
         anchors.fill: parent
-        id: splitView
+        id: split_View
+
         Image
         {
+<<<<<<< HEAD
             anchors.fill: parent
             id: loadedImage
             visible: false
@@ -92,15 +94,42 @@ ApplicationWindow
         RenderPanel
         {
             id: drawing
+=======
+            id: selector
+            width: (parent.width - parameters.width)/2
+>>>>>>> 52fce8c (circle drawing impl)
         }
 
-        ControlPanel
+
+        handle: Rectangle
+        {
+            implicitWidth: 4
+            implicitHeight: 4
+            color: SplitHandle.pressed ? "#243956"
+                : (SplitHandle.hovered ? Qt.lighter("#243956", 1.5) : Qt.lighter("#243956", 2))
+        }
+
+        RenderPanel
+        {
+            id: drawing
+            width: (parent.width - parameters.width)/2
+        }
+            ControlPanel
         {
             id: parameters
+<<<<<<< HEAD
 
             SplitView.minimumWidth: 400
             SplitView.maximumWidth: 400
+=======
+            //implicitWidth: 300
+            //SplitView.minimumWidth: 250
+            //SplitView.preferredWidth: 300
+>>>>>>> 52fce8c (circle drawing impl)
         }
+
+        Component.onCompleted: parameters.width = 250
+
     }
 
     FileDialog
@@ -114,7 +143,7 @@ ApplicationWindow
 
            if((file_operation == "load")&&(file_manager.loadPixMap(fileDialog.fileUrl)))
            {
-                loadedImage.source = fileDialog.fileUrl;
+                selector.img_source = fileDialog.fileUrl;
                 imageSelected = true;
                 fileDialog.pixmapLoaded();
            }
@@ -145,14 +174,20 @@ ApplicationWindow
         function showMessageBox(title: string, message: string)
         {
             messageDialog.text = message
+<<<<<<< HEAD
             messageDialog.title = title
+=======
+            messageDialog.title = titlegit
+>>>>>>> 52fce8c (circle drawing impl)
             messageDialog.open()
         }
     }
     Component.onCompleted:
     {
+        parameters.parameterChanged.connect(selector.selectorParameterChanged);
         parameters.parameterChanged.connect(drawing.updateLedParameters);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
+        selector.pointUpdate.connect(drawing.updatePoint);
     }
 }
 
