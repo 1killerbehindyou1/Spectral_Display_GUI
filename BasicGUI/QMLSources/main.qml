@@ -81,6 +81,11 @@ ApplicationWindow
     { 
         anchors.fill: parent
         id: splitView
+
+        RenderSelector
+        {
+            id: selector
+        }
         Image
         {
             anchors.fill: parents
@@ -151,6 +156,7 @@ ApplicationWindow
     }
     Component.onCompleted: 
     {
+        parameters.parameterChanged.connect(selector.selectorParameterChanged);
         parameters.parameterChanged.connect(drawing.updateLedParameters);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
     }

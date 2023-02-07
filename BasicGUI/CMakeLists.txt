@@ -12,6 +12,7 @@ set(PROJECT_SOURCES
   ${SOURCE_DIR}/LedRuler.h
   ${SOURCE_DIR}/FileManager.cpp
   ${SOURCE_DIR}/FileManager.h
+  ${SOURCE_DIR}/RenderSelector.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
