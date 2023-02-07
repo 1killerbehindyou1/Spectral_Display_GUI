@@ -1,6 +1,8 @@
 #include "FileManager.hpp"
-#include "InterpolatorQPoly.hpp"
+#include "Interpolator.hpp"
 #include "LedRuler.hpp"
+#include "RenderSelector.hpp"
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
@@ -56,6 +58,7 @@ int main(int argc, char* argv[])
     app.setOrganizationDomain("Education");
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
     qRegisterMetaType<QPixmap*>("QPixmap*");
     qRegisterMetaType<QImage*>("QImage*");
 
