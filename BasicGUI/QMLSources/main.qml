@@ -16,7 +16,9 @@ ApplicationWindow
 
     property bool image_selected: false
     property bool previev_is_active: false
-    property bool rendered_previev_is_active: false
+    property bool renderedPrevievIsActive: showRederedPreview.checked
+
+    onRenderedPrevievIsActiveChanged: drawing.checkRenderedPreview(renderedPrevievIsActive);
 
     menuBar: MenuBar 
     {     
@@ -69,18 +71,10 @@ ApplicationWindow
 
             Action
             {
+                id: showRederedPreview
                 text: "Preview rendered image..."
-                checked: rendered_previev_is_active
+                checked: false
                 checkable: true
-                onCheckedChanged: 
-                {
-                    rendered_previev_is_active = !rendered_previev_is_active;
-                    drawing.checkRenderedPreview(rendered_previev_is_active); 
-                }
-                Component.onCompleted: 
-                {
-                    checked = rendered_previev_is_active
-                }
             }
         }
     }
