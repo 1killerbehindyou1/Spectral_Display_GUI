@@ -17,16 +17,24 @@ Control
     property alias img_visible: loaded_image.visible
     property alias img_source:  loaded_image.source
 
+    onImg_sourceChanged:
+    {
+        console.log(loaded_image.width, loaded_image.height)
+        root.width = loaded_image.width;
+        root.height= loaded_image.height;
+    }
+
     id: root
-    implicitWidth: 720
+    implicitWidth: 500
     implicitHeight: 500
+    //width: loaded_image.width
+    //height: loaded_image.height
 
     background: Image
     {
-        anchors.fill: parents
         id: loaded_image
         visible: false
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
     }
     Selector
     {
@@ -43,3 +51,4 @@ Control
         }
     }
 }
+

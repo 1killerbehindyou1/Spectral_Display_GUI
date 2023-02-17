@@ -75,13 +75,13 @@ ApplicationWindow
                 checkable: true
             }
         }
-    }
-
+    }   
     SplitView 
     { 
+        
         anchors.fill: parent
         id: splitView
-
+        
         RenderSelector
         {
             id: selector
@@ -91,16 +91,13 @@ ApplicationWindow
         { 
             id: drawing
         }
-
-        ControlPanel
+            ControlPanel
         {
+            
             id: parameters
-           
-            SplitView.minimumWidth: 400
-            SplitView.maximumWidth: 400
         }
     }
-    
+ 
     FileDialog 
     {
         signal pixmapLoaded()

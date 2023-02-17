@@ -16,6 +16,8 @@ Control
        return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )  
     }
 
+    implicitWidth: 500
+    implicitHeight: 500
     
     padding: 10
     background: Rectangle
