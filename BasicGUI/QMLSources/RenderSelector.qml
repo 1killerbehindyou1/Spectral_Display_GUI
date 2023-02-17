@@ -27,8 +27,7 @@ Control
     id: root
     implicitWidth: 500
     implicitHeight: 500
-    //width: loaded_image.width
-    //height: loaded_image.height
+   
 
     background: Image
     {

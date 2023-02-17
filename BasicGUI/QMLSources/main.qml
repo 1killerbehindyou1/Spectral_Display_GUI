@@ -8,7 +8,7 @@ import Main 1.0
 ApplicationWindow 
 {
     id: root
-    width: 900
+    width: 1300
     height: 600
     visible: true
     title: qsTr("Basic Gui")
@@ -78,26 +78,34 @@ ApplicationWindow
     }   
     SplitView 
     { 
-        
         anchors.fill: parent
         id: splitView
         
         RenderSelector
         {
             id: selector
+            width: (parent.width - parameters.width)/2
         }
         
         RenderPanel
         { 
             id: drawing
+            width: (parent.width - parameters.width)/2
         }
             ControlPanel
         {
-            
             id: parameters
+            //implicitWidth: 300
+            //SplitView.minimumWidth: 250
+            //SplitView.preferredWidth: 300
         }
+        
     }
- 
+       
+       
+    
+     
+    
     FileDialog 
     {
         signal pixmapLoaded()
