@@ -15,12 +15,12 @@ ApplicationWindow
     color: "lightgrey"
 
     property bool imageSelected: false
-    property bool previevIsActive: showSelectedImage.checked
-    property bool renderedPrevievIsActive: showRenderedPreview.checked
+    property bool previewIsActive: showSelectedImage.checked
+    property bool renderedPreviewIsActive: showRenderedPreview.checked
 
-    onPrevievIsActiveChanged: loadedImage.visible = imageSelected && previevIsActive;
+    onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
     
-    onRenderedPrevievIsActiveChanged: drawing.checkRenderedPreview(renderedPrevievIsActive);
+    onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
     
     menuBar: MenuBar 
     {     
