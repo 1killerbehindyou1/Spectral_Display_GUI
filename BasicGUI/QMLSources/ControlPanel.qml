@@ -37,10 +37,46 @@ Control
             ColumnLayout
             {
                 spacing: 20
-                Text{text: "Led ruler parameters"; font.bold: true; font.pixelSize: 20 }         
+                Text{text: "Spectral display hardware"; font.bold: true; font.pixelSize: 18 }         
                 DataInput{ id: l_num; label: "led number";init_value: 25;  max: 200; min: 1}
-                DataInput{ id: l_size; label: "led size";init_value: 10;  max: 20; min: 1}
-                DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1}      
+                DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1} 
+                RowLayout
+                {
+                    Text{text: "Spectral display resolution: "; font.pixelSize: 18 } 
+                    TextField
+                    {
+                        readOnly: true
+                        text: parseInt(360/l_rotation.value) + " x " + l_num.value + " pixels";
+                        color: "#243956"
+                        font.pixelSize: 20
+                        activeFocusOnTab: false
+                        background: Rectangle {color: "transparent"}
+                    }
+                }
+                  
+                Rectangle
+                {
+                    height: 1 
+                    border.width: 2
+                    color: "black"
+                    Layout.fillWidth: true
+                }
+
+                Text{text: "Selector size"; font.bold: true; font.pixelSize: 18 }
+                DataInput{ id: l_size; label: "Size"; init_value: 10;  max: 20; min: 1}     
+                RowLayout
+                {
+                    Text{text: "Diameter selector in pixels: "; font.pixelSize: 18 } 
+                    TextField
+                    {
+                        readOnly: true
+                        text: l_num.value * l_size.value * 2 + " pixels";
+                        color: "#243956"
+                        font.pixelSize: 20
+                        activeFocusOnTab: false
+                        background: Rectangle {color: "transparent"}
+                    }
+                }
             }
               
         }                        
@@ -54,7 +90,6 @@ Control
     }     
 }
 
-       
-    
+      
     
    
