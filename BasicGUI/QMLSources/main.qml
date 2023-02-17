@@ -14,8 +14,14 @@ ApplicationWindow
     title: qsTr("Basic Gui")
     color: "lightgrey"
 
-    property bool image_selected: false
+    property bool imageSelected: false
+    property bool previewIsActive: showSelectedImage.checked
+    property bool renderedPreviewIsActive: showRenderedPreview.checked
 
+    onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
+    
+    onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
+    
     menuBar: MenuBar 
     {     
         contentWidth: parent.width
@@ -43,25 +49,22 @@ ApplicationWindow
         Menu 
         {
             title: qsTr("&View")
-            Action 
+            delegate: CheckBox{}
+
+            Action
             {
-                text: qsTr("&Show Image before trasformation...")
-                onTriggered:
-                {
-                       if(image_selected)
-                       {
-                        loaded_image.visible = true;
-                       }
-                }
+                id: showSelectedImage
+                checked: false
+                checkable: true
+                text: "Preview selected image..."
             }
-             MenuSeparator { }
-            Action 
+
+            Action
             {
-                text: qsTr("&HideImage before trasformation...")
-                onTriggered:
-                {
-                       loaded_image.visible = false;
-                }
+                id: showRenderedPreview
+                text: "Preview rendered image..."
+                checked: false
+                checkable: true
             }
         }
     }
@@ -70,12 +73,10 @@ ApplicationWindow
     { 
         anchors.fill: parent
         id: splitView
-
-       
         Image
         {
             anchors.fill: parents
-            id: loaded_image
+            id: loadedImage
             visible: false
             fillMode: Image.PreserveAspectFit
         }
@@ -106,8 +107,8 @@ ApplicationWindow
         {
            if(file_manager.loadPixMap(fileDialog.fileUrl))
            {
-                loaded_image.source = fileDialog.fileUrl;
-                image_selected = true;
+                loadedImage.source = fileDialog.fileUrl;
+                imageSelected = true;
                 fileDialog.pixmapLoaded();
            }
          
@@ -131,9 +132,9 @@ ApplicationWindow
         
         function showMessageBox(title: string, message: string)
         {
-        messageDialog.text = message
-        messageDialog.title = title
-        messageDialog.open()  
+            messageDialog.text = message
+            messageDialog.title = title
+            messageDialog.open()  
         }
     }
     Component.onCompleted: 

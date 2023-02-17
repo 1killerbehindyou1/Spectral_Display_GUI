@@ -52,11 +52,6 @@ int main(int argc, char* argv[])
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    ///////////////////////////////////////////////////////////////
-    QQmlComponent component(
-        &engine, QUrl::fromLocalFile(QStringLiteral("qrc:/RenderPanel.qml")));
-    QObject* object = component.create();
-    ////////////////////////////////////////////////////////////////////////
 
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");

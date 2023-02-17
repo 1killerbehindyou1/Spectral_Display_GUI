@@ -9,7 +9,7 @@
 
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
-      m_rotation(1), m_size(1)
+      m_rotation(1), m_size(1), m_rendered_preview(false)
 {
 }
 /////////////////////////////////////////////////////////
@@ -20,6 +20,14 @@ void LedRuler::saveImage() { qDebug() << m_output_image->save("result.png"); }
 ////////////////////////////////////////////////////////
 void LedRuler::paint(QPainter* painter)
 {
+    if (m_rendered_preview && (m_output_image != nullptr))
+    {
+        painter->save();
+        painter->translate(400, 400);
+        painter->rotate(90);
+        painter->drawImage(QPoint{0, 0}, *m_output_image);
+        painter->restore();
+    }
     painter->translate(m_point);
     QPoint offset(m_size * 0.5, m_size * (-0.5));
     QPoint pixel{0, 0};
@@ -71,5 +79,11 @@ void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
 void LedRuler::setPoint(QPoint point)
 {
     m_point = point;
+    update();
+}
+
+void LedRuler::showOutputPreview(bool show)
+{
+    m_rendered_preview = show;
     update();
 }
