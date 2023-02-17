@@ -17,13 +17,12 @@ Control
         led.pixmap = file_manager.pixmap_pointer
     }
 
-    function saveImage(file_name: string)
+    function getOutImage()
     {
-        return led.saveImage(file_name);
+        return led.getRenderedImage();
     }
     function checkRenderedPreview(state: bool)
     { 
-        
         return led.showOutputPreview(state);
     }
 

@@ -58,6 +58,8 @@ int main(int argc, char* argv[])
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qRegisterMetaType<QPixmap*>("QPixmap*");
+    qRegisterMetaType<QImage*>("QImage*");
+
     FileManager file_manager(&app);
 
     engine.rootContext()->setContextProperty("file_manager", &file_manager);

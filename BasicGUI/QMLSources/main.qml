@@ -18,8 +18,8 @@ ApplicationWindow
     property bool previewIsActive: showSelectedImage.checked
     property bool renderedPreviewIsActive: showRenderedPreview.checked
     property string file_operation: ""
+
     onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
-    
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
     
     menuBar: MenuBar 
@@ -48,7 +48,7 @@ ApplicationWindow
                 {
                     file_operation = "save";
                     fileDialog.title = "Save to file";
-                    fileDialog.nameFilters = [ "All files (*)" ];
+                    fileDialog.nameFilters = [ "Image files (*.jpg *.png)" ];
                     fileDialog.selectExisting = false;
                     fileDialog.open();
                 }
@@ -120,8 +120,7 @@ ApplicationWindow
            }
            if(file_operation == "save")
            {
-                 image_selected = false;
-                 file_manager.savePixMap(fileDialog.fileUrl)
+                 file_manager.savePixMap(fileDialog.fileUrl, drawing.getOutImage());
            }
          
         }

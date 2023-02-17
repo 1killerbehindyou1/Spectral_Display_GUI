@@ -26,7 +26,7 @@ public:
 
 public slots:
     bool loadPixMap(QUrl path);
-    bool savePixMap(QUrl path);
+    void savePixMap(QUrl path, QImage* output_image);
 
 signals:
     void fileErrLoad(QString title, QString name);

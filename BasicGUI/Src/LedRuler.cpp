@@ -15,8 +15,7 @@ LedRuler::LedRuler(QQuickItem* parent)
 /////////////////////////////////////////////////////////
 void LedRuler::setPixmap(QPixmap* pixmap) { m_interpolator.setPixmap(pixmap); }
 ////////////////////////////////////////////////////////
-void LedRuler::saveImage() { qDebug() << m_output_image->save("result.png"); }
-
+QImage* LedRuler::getRenderedImage() { return m_output_image; }
 ////////////////////////////////////////////////////////
 void LedRuler::paint(QPainter* painter)
 {
