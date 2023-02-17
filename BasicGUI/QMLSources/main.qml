@@ -14,10 +14,19 @@ ApplicationWindow
     title: qsTr("Basic Gui")
     color: "lightgrey"
 
-    property bool image_selected: false
-    property bool previev_is_active: false
-    property bool rendered_previev_is_active: false
+    property bool imageSelected: false
+    property bool previevIsActive: showSelectedImage.checked
+    property bool renderedPrevievIsActive: showRenderedPreview.checked
 
+    onPrevievIsActiveChanged: 
+    {
+        if(imageSelected)
+        {
+            loadedImage.visible = previevIsActive 
+        }
+    }
+    onRenderedPrevievIsActiveChanged: drawing.checkRenderedPreview(renderedPrevievIsActive);
+    
     menuBar: MenuBar 
     {     
         contentWidth: parent.width
@@ -49,38 +58,18 @@ ApplicationWindow
 
             Action
             {
-                checked: previev_is_active
+                id: showSelectedImage
+                checked: false
                 checkable: true
                 text: "Preview selected image..."
-                onCheckedChanged: 
-                {
-                    previev_is_active = !previev_is_active;
-                     
-                    if(image_selected)
-                    {
-                        loaded_image.visible = previev_is_active 
-                    }
-                }
-                Component.onCompleted: 
-                {
-                    checked = preview_is_active
-                }
             }
 
             Action
             {
+                id: showRenderedPreview
                 text: "Preview rendered image..."
-                checked: rendered_previev_is_active
+                checked: false
                 checkable: true
-                onCheckedChanged: 
-                {
-                    rendered_previev_is_active = !rendered_previev_is_active;
-                    drawing.checkRenderedPreview(rendered_previev_is_active); 
-                }
-                Component.onCompleted: 
-                {
-                    checked = rendered_previev_is_active
-                }
             }
         }
     }
@@ -92,7 +81,7 @@ ApplicationWindow
         Image
         {
             anchors.fill: parents
-            id: loaded_image
+            id: loadedImage
             visible: false
             fillMode: Image.PreserveAspectFit
         }
@@ -123,8 +112,8 @@ ApplicationWindow
         {
            if(file_manager.loadPixMap(fileDialog.fileUrl))
            {
-                loaded_image.source = fileDialog.fileUrl;
-                image_selected = true;
+                loadedImage.source = fileDialog.fileUrl;
+                imageSelected = true;
                 fileDialog.pixmapLoaded();
            }
          
