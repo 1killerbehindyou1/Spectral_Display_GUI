@@ -18,13 +18,8 @@ ApplicationWindow
     property bool previevIsActive: showSelectedImage.checked
     property bool renderedPrevievIsActive: showRenderedPreview.checked
 
-    onPrevievIsActiveChanged: 
-    {
-        if(imageSelected)
-        {
-            loadedImage.visible = previevIsActive 
-        }
-    }
+    onPrevievIsActiveChanged: loadedImage.visible = imageSelected && previevIsActive;
+    
     onRenderedPrevievIsActiveChanged: drawing.checkRenderedPreview(renderedPrevievIsActive);
     
     menuBar: MenuBar 
