@@ -17,7 +17,7 @@ ApplicationWindow
     property bool imageSelected: false
     property bool previewIsActive: showSelectedImage.checked
     property bool renderedPreviewIsActive: showRenderedPreview.checked
-
+    property string file_operation: ""
     onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
     
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
