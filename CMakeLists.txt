@@ -15,6 +15,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib_static)
 
-add_subdirectory(BasicGUI)
-add_subdirectory(Benchmark)
-add_subdirectory(SinglePointTransform_lib)
+add_subdirectory(PluginConcept)
