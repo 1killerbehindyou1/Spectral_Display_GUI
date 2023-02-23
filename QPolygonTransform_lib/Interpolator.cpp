@@ -68,11 +68,11 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 
     QRectF rect_f{transformed_poly.boundingRect()};
 
-    for (float y = 0; y < rect_f.height(); y += 0.1)
+    for (float y = 0; y < rect_f.height(); y++)
     {
         curr_point.setY(rect_f.topLeft().y() + y);
 
-        for (float x = 0; x < rect_f.width(); x += 0.1)
+        for (float x = 0; x < rect_f.width(); x++)
         {
             curr_point.setX(rect_f.topLeft().x() + x);
 
