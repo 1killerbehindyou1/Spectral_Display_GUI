@@ -1,4 +1,4 @@
-#include "../Interpolator_lib/Interpolator.h"
+#include "../SinglePointTransform_lib/Interpolator.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <algorithm>

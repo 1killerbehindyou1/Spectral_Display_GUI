@@ -10,17 +10,17 @@ set(PROJECT_SOURCES
   Transformation.h
 )
 
-add_library(Interpolator STATIC
+add_library(SinglePointTransform STATIC
   ${PROJECT_SOURCES})
 
-target_include_directories(Interpolator
+target_include_directories(SinglePointTransform
   PUBLIC .
 )
 
-target_compile_definitions(Interpolator
+target_compile_definitions(SinglePointTransform
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(Interpolator
+target_link_libraries(SinglePointTransform
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick

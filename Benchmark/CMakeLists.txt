@@ -7,19 +7,19 @@ set(PROJECT_SOURCES
     Main.cpp
 )
 
-add_executable(PointsInPolygon ${PROJECT_SOURCES})
+add_executable(LibraryBenchmark ${PROJECT_SOURCES})
 
-target_compile_definitions(PointsInPolygon
+target_compile_definitions(LibraryBenchmark
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(PointsInPolygon
+target_link_libraries(LibraryBenchmark
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
-    Interpolator
+    SinglePointTransform
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_import_qml_plugins(PointsInPolygon)
-    qt_finalize_executable(PointsInPolygon)
+    qt_import_qml_plugins(LibraryBenchmarky)
+    qt_finalize_executable(LibraryBenchmarky)
 endif()
