@@ -1,4 +1,4 @@
-#include "Interpolator.h"
+#include "../Interpolator_lib/Interpolator.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <chrono>
@@ -36,6 +36,36 @@ void myMessageOutput(QtMsgType type,
 }
 typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>>
     MojString;
+
+int calculation(int led_number, int led_size, int angle, QObject* q_obj,
+                QPixmap* p_map)
+{
+
+    Interpolator interpolator_obj{q_obj};
+    interpolator_obj.setPixmap(p_map);
+
+    int amout_of_calc_points = 0;
+    QPoint rot_centr(p_map->width() / 2, p_map->height() / 2);
+
+    QRect rect{QPoint{static_cast<int>(led_size * 0.5),
+                      static_cast<int>(led_size * (-0.5))},
+               QSize{led_size, led_size}};
+
+    for (int rot = 0; rot < 360; rot += angle)
+    {
+        for (int i = 0; i < led_number; i++)
+        {
+            rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
+
+            QColor color = interpolator_obj.interpolatorSetLedColor(
+                interpolator_obj.interpolatorTransform(
+                    Transform{rot_centr, angle}, rect));
+
+            amout_of_calc_points += led_size * led_size;
+        }
+    }
+    return amout_of_calc_points;
+}
 
 int main(int argc, char* argv[])
 {
@@ -91,36 +121,17 @@ int main(int argc, char* argv[])
               << "\tpixmap_path: " << pixmap_path << "\n"
               << std::endl;
 
+    // centrum obrotu w centrum obrazka
+
+    // Start measuring time on transforation points
     QPixmap pix_map;
     pix_map.load(QString::fromStdString(pixmap_path));
 
-    Interpolator interpolator_obj(&app);
-    interpolator_obj.setPixmap(&pix_map);
-
-    QRect rect{QPoint{led_size * 0.5, led_size * (-0.5)},
-               QSize{led_size, led_size}};
-
-    // centrum obrotu w centrum obrazka
-    QPoint rot_centr(pix_map.width() / 2, pix_map.height() / 2);
-
-    // Start measuring time on transforation points
     auto begin = std::chrono::high_resolution_clock::now();
 
-    int amout_of_calc_points = 0;
+    int amout_of_points =
+        calculation(led_number, led_size, angle, &app, &pix_map);
 
-    for (int rot = 0; rot < 360; rot += angle)
-    {
-        for (int i = 0; i < led_number; i++)
-        {
-            rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
-
-            QColor color = interpolator_obj.interpolatorSetLedColor(
-                interpolator_obj.interpolatorTransform(
-                    Transform{rot_centr, angle}, rect));
-
-            amout_of_calc_points += led_size * led_size;
-        }
-    }
     // Stop measuring time on transformation points and calculate the
     // elapsed time
     auto end = std::chrono::high_resolution_clock::now();
@@ -129,8 +140,7 @@ int main(int argc, char* argv[])
 
     qDebug() << "Time on transformation points:\t" << elapsed.count() / 1000
              << "miliseconds";
-    qDebug() << "amout of transformed points:\t" << amout_of_calc_points
-             << "\n";
+    qDebug() << "amout of transformed points:\t" << amout_of_points << "\n";
     qDebug() << pix_map;
 
     return 0;
