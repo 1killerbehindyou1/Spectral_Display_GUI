@@ -1,8 +1,10 @@
 #include "../Interpolator_lib/Interpolator.h"
 #include <QDebug>
 #include <QGuiApplication>
+#include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <vector>
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
@@ -34,17 +36,13 @@ void myMessageOutput(QtMsgType type,
                      .toStdString()
               << std::endl;
 }
-typedef std::basic_string<char, std::char_traits<char>, std::allocator<char>>
-    MojString;
 
-int calculation(int led_number, int led_size, int angle, QObject* q_obj,
-                QPixmap* p_map)
+void interpolatorMeasurement(int led_number, int led_size, int angle,
+                             Interpolator* interpolator_obj, QPixmap* p_map)
 {
 
-    Interpolator interpolator_obj{q_obj};
-    interpolator_obj.setPixmap(p_map);
+    interpolator_obj->setPixmap(p_map);
 
-    int amout_of_calc_points = 0;
     QPoint rot_centr(p_map->width() / 2, p_map->height() / 2);
 
     QRect rect{QPoint{static_cast<int>(led_size * 0.5),
@@ -57,31 +55,54 @@ int calculation(int led_number, int led_size, int angle, QObject* q_obj,
         {
             rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
 
-            QColor color = interpolator_obj.interpolatorSetLedColor(
-                interpolator_obj.interpolatorTransform(
+            QColor color = interpolator_obj->interpolatorSetLedColor(
+                interpolator_obj->interpolatorTransform(
                     Transform{rot_centr, angle}, rect));
-
-            amout_of_calc_points += led_size * led_size;
         }
     }
-    return amout_of_calc_points;
 }
 
-int main(int argc, char* argv[])
+using algorithm = void (*)(int, int, int, Interpolator*, QPixmap*);
+
+int measureStatisticTime(int iteration, algorithm fun, int a, int b, int c,
+                         Interpolator* interpol, QPixmap* pix)
 {
+    std::vector<double> average_cont{};
 
-    qInstallMessageHandler(myMessageOutput);
-    QGuiApplication app(argc, argv);
+    for (int i = 0; i < iteration; i++)
+    {
+        auto begin = std::chrono::high_resolution_clock::now();
+        fun(a, b, c, interpol, pix);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+        average_cont.push_back(elapsed.count());
+    }
 
-    std::string pixmap_path = "";
-    int led_number = 0;
-    int led_size = 0;
-    int angle = 0;
+    std::sort(average_cont.begin(), average_cont.end());
+    average_cont.erase(average_cont.begin());
+    average_cont.erase(average_cont.end() - 1);
 
+    double sum{};
+    for (double dd : average_cont)
+    {
+        sum += dd;
+    }
+    sum /= average_cont.size();
+    return sum;
+}
+
+void argParsing(int argc, char* argv[], int& led_number, int& led_size,
+                int& angle, int& iteration, std::string& pixmap_path)
+{
     for (int i = 0; i < argc; i++)
     {
         std::string parsed_arg(argv[i]);
-
+        if (parsed_arg.find("--iteration-number=") != std::string::npos)
+        {
+            iteration =
+                std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+        }
         if (parsed_arg.find("--led-number=") != std::string::npos)
         {
             led_number =
@@ -99,6 +120,10 @@ int main(int argc, char* argv[])
         {
             pixmap_path = parsed_arg.erase(0, parsed_arg.find("=") + 1);
         }
+    }
+    if (iteration == 0)
+    {
+        iteration = 100;
     }
     if (led_number == 0)
     {
@@ -120,28 +145,30 @@ int main(int argc, char* argv[])
               << "\tled_size: " << led_size << "\tangle: " << angle
               << "\tpixmap_path: " << pixmap_path << "\n"
               << std::endl;
+}
 
-    // centrum obrotu w centrum obrazka
+int main(int argc, char* argv[])
+{
 
-    // Start measuring time on transforation points
-    QPixmap pix_map;
+    qInstallMessageHandler(myMessageOutput);
+    QGuiApplication app(argc, argv);
+
+    std::string pixmap_path{};
+    int led_number{};
+    int led_size{};
+    int angle{};
+    int iteration{};
+
+    argParsing(argc, argv, led_number, led_size, angle, iteration, pixmap_path);
+
+    QPixmap pix_map{};
     pix_map.load(QString::fromStdString(pixmap_path));
+    Interpolator interpolator_obj{&app};
 
-    auto begin = std::chrono::high_resolution_clock::now();
-
-    int amout_of_points =
-        calculation(led_number, led_size, angle, &app, &pix_map);
-
-    // Stop measuring time on transformation points and calculate the
-    // elapsed time
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed =
-        std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
-
-    qDebug() << "Time on transformation points:\t" << elapsed.count() / 1000
-             << "miliseconds";
-    qDebug() << "amout of transformed points:\t" << amout_of_points << "\n";
-    qDebug() << pix_map;
+    qDebug() << "Average time: "
+             << measureStatisticTime(iteration, interpolatorMeasurement,
+                                     led_number, led_size, angle,
+                                     &interpolator_obj, &pix_map);
 
     return 0;
 }
