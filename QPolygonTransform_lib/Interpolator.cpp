@@ -53,28 +53,39 @@ QColor Interpolator::interpolatorSetLedColor(QVector<QPointF> vector_points)
 QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
                                                      QRect rect)
 {
-    QVector<QPointF> vector_points;
-    QPointF curr_point;
+    QVector<QPointF> vector_points{};
+    QPointF curr_point{};
 
-    for (int y = 0; y < rect.height(); y++)
+    QPolygonF transformed_poly{};
+
+    QVector<QPointF> poly_points{rect.topLeft(), rect.topRight(),
+                                 rect.bottomLeft(), rect.bottomRight()};
+
+    for (auto point : poly_points)
     {
-        curr_point.setY(rect.topLeft().y() + y);
-
-        for (int x = 0; x < rect.width(); x++)
-        {
-            curr_point.setX(rect.topLeft().x() + x);
-
-            QPointF point(transform(curr_point));
-
-            if (point.x() >= 0 && point.y() >= 0)
-                vector_points.push_front(point);
-        }
+        transformed_poly << transform(point);
     }
 
+    QRectF rect_f{transformed_poly.boundingRect()};
+
+    for (float y = 0; y < rect_f.height(); y += 0.1)
+    {
+        curr_point.setY(rect_f.topLeft().y() + y);
+
+        for (float x = 0; x < rect_f.width(); x += 0.1)
+        {
+            curr_point.setX(rect_f.topLeft().x() + x);
+
+            if (curr_point.x() >= 0 && curr_point.y() >= 0 &&
+                transformed_poly.containsPoint(curr_point, Qt::OddEvenFill))
+                vector_points.push_front(curr_point);
+        }
+    }
+    qDebug() << vector_points.size();
     return vector_points;
 }
 
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////q
 namespace
 {
 void increaseTotalIntensivity(QColor& color, QColor color_from_image)
