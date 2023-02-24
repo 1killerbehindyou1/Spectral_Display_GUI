@@ -22,28 +22,19 @@ QPointF Transform::operator()(QPointF point)
 namespace
 {
 
-float calcModule(QPointF point, float angle)
-{
-    float module = point.x() / cosf(angle);
-    return module;
-}
+float calcModule(QPointF point, float angle) { return point.x() / cosf(angle); }
 
-float calcAngle(QPointF point)
-{
-    float angle = atan2(point.y(), point.x());
-    return angle;
-}
+float calcAngle(QPointF point) { return atan2(point.y(), point.x()); }
 
-float convertAngleToRad(int deg_angle)
-{
-    float ext_angle = deg_angle * 3.14159 / 180;
-    return ext_angle;
-}
+float convertAngleToRad(int deg_angle) { return deg_angle * 3.14159 / 180; }
+
 QPointF transformPoint(QPointF rotCenter, float module, float angle)
 {
-    QPointF i_point;
-    i_point.setX(module * cos(angle) + rotCenter.x());
-    i_point.setY(module * sin(angle) + rotCenter.y());
-    return i_point;
+    return fromPolar(module, angle) + rotCenter;
+}
+
+QPointF fromPolar(float module, float angle)
+{
+    return {module * cos(angle), module * sin(angle)};
 }
 } // namespace

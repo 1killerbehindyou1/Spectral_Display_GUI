@@ -9,8 +9,8 @@
 struct Parameters
 {
     std::string pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
-    int led_number{250};
-    int led_size{1};
+    int led_number{100};
+    int led_size{5};
     int angle{1};
     int iteration{100};
 };
@@ -136,7 +136,9 @@ Parameters argParsing(int argc, char* argv[])
                 parsed_arg.erase(0, parsed_arg.find("=") + 1);
         }
     }
-    std::cout << "parameters:\nled numer: " << run_params.led_number
+    std::cout << "Library: SinglePointTransform"
+              << "\nparameters:\nled numer: " << run_params.led_number
+              << "\tNo iteration: " << run_params.iteration
               << "\tled_size: " << run_params.led_size
               << "\tangle: " << run_params.angle
               << "\tpixmap_path: " << run_params.pixmap_path << "\n"
