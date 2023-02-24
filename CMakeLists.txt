@@ -16,5 +16,5 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib_static)
 
 add_subdirectory(BasicGUI)
-add_subdirectory(PointsInPolygon)
-add_subdirectory(Interpolator_lib)
+add_subdirectory(Benchmark)
+add_subdirectory(SinglePointTransform_lib)

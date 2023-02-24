@@ -23,12 +23,12 @@ private:
 //////////////////////////////////////////////////////////////////
 namespace
 {
+QPointF fromPolar(float module, float angle);
 float calcModule(QPointF point, float angle);
 float calcAngle(QPointF point);
 float convertAngleToRad(int deg_angle);
 float updateAngle(float ext_angle, float angle);
-QPointF transformPoint(QPointF point, QPointF rotCenter, float module,
-                       float angle);
+QPointF transformPoint(QPointF rotCenter, float module, float angle);
 } // namespace
 
 #endif
