@@ -19,7 +19,7 @@ class Interpolator : public QObject
     Q_OBJECT
 
 public:
-    Interpolator(QObject* parent = 0);
+    Interpolator(QObject* parent = nullptr);
 
     QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
     QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);

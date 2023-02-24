@@ -38,11 +38,11 @@ void myMessageOutput(QtMsgType type,
 }
 
 void interpolatorMeasurement(int led_number, int led_size, int angle,
-                             const std::string& pixmap_path, QObject* q_obj)
+                             const std::string& pixmap_path)
 {
     QPixmap pix_map{};
     pix_map.load(QString::fromStdString(pixmap_path));
-    Interpolator interpolator_obj{q_obj};
+    Interpolator interpolator_obj{};
 
     interpolator_obj.setPixmap(&pix_map);
 
@@ -65,17 +65,17 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
     }
 }
 
-using algorithm = void (*)(int, int, int, const std::string&, QObject*);
+using algorithm = void (*)(int, int, int, const std::string&);
 
 int measureStatisticTime(int iteration, algorithm fun, int a, int b, int c,
-                         const std::string& pixmap_path, QObject* q_obj)
+                         const std::string& pixmap_path)
 {
     std::vector<double> average_cont{};
 
     for (int i = 0; i < iteration; i++)
     {
         auto begin = std::chrono::high_resolution_clock::now();
-        fun(a, b, c, pixmap_path, q_obj);
+        fun(a, b, c, pixmap_path);
         auto end = std::chrono::high_resolution_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
@@ -166,8 +166,7 @@ int main(int argc, char* argv[])
 
     qDebug() << "Average time: "
              << measureStatisticTime(iteration, interpolatorMeasurement,
-                                     led_number, led_size, angle, pixmap_path,
-                                     &app)
+                                     led_number, led_size, angle, pixmap_path)
              << "microseconds";
 
     return 0;
