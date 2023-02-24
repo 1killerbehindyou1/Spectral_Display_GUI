@@ -56,8 +56,10 @@ void LedRuler::paint(QPainter* painter)
                                                      rect));
             if (color.isValid())
                 m_output_image->setPixelColor(pixel, color);
+            else
+                break;
 
-            QPen pen = painter->pen();
+            QPen pen{painter->pen()};
             pen.setColor(Qt::transparent);
             painter->setPen(pen);
             painter->setBrush(color);
