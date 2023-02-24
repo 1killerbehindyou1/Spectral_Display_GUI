@@ -6,6 +6,15 @@
 #include <iostream>
 #include <vector>
 
+struct Parameters
+{
+    std::string pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
+    int led_number{250};
+    int led_size{1};
+    int angle{1};
+    int iteration{100};
+};
+
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
                      const QString& msg)
@@ -67,15 +76,14 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
 
 using algorithm = void (*)(int, int, int, const std::string&);
 
-int measureStatisticTime(int iteration, algorithm fun, int a, int b, int c,
-                         const std::string& pixmap_path)
+int measureStatisticTime(algorithm fun, const Parameters& param)
 {
     std::vector<double> average_cont{};
 
-    for (int i = 0; i < iteration; i++)
+    for (int i = 0; i < param.iteration; i++)
     {
         auto begin = std::chrono::high_resolution_clock::now();
-        fun(a, b, c, pixmap_path);
+        fun(param.led_number, param.led_size, param.angle, param.pixmap_path);
         auto end = std::chrono::high_resolution_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
@@ -95,59 +103,46 @@ int measureStatisticTime(int iteration, algorithm fun, int a, int b, int c,
     return sum;
 }
 
-void argParsing(int argc, char* argv[], int& led_number, int& led_size,
-                int& angle, int& iteration, std::string& pixmap_path)
+Parameters argParsing(int argc, char* argv[])
 {
+    Parameters run_params{};
+
     for (int i = 0; i < argc; i++)
     {
         std::string parsed_arg(argv[i]);
         if (parsed_arg.find("--iteration-number=") != std::string::npos)
         {
-            iteration =
+            run_params.iteration =
                 std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
         }
         if (parsed_arg.find("--led-number=") != std::string::npos)
         {
-            led_number =
+            run_params.led_number =
                 std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
         }
         else if (parsed_arg.find("--led-size=") != std::string::npos)
         {
-            led_size = std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+            run_params.led_size =
+                std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
         }
         else if (parsed_arg.find("--angle=") != std::string::npos)
         {
-            angle = std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
+            run_params.angle =
+                std::stoi(parsed_arg.erase(0, parsed_arg.find("=") + 1));
         }
         else if (parsed_arg.find("--image-path=") != std::string::npos)
         {
-            pixmap_path = parsed_arg.erase(0, parsed_arg.find("=") + 1);
+            run_params.pixmap_path =
+                parsed_arg.erase(0, parsed_arg.find("=") + 1);
         }
     }
-    if (iteration == 0)
-    {
-        iteration = 100;
-    }
-    if (led_number == 0)
-    {
-        led_number = 250;
-    }
-    if (angle == 0)
-    {
-        angle = 1;
-    }
-    if (led_size == 0)
-    {
-        led_size = 1;
-    }
-    if (pixmap_path == "")
-    {
-        pixmap_path = "C:\\Users\\mplesniak\\Pictures\\BITMAPA.png";
-    }
-    std::cout << "parameters:\nled numer: " << led_number
-              << "\tled_size: " << led_size << "\tangle: " << angle
-              << "\tpixmap_path: " << pixmap_path << "\n"
+    std::cout << "parameters:\nled numer: " << run_params.led_number
+              << "\tled_size: " << run_params.led_size
+              << "\tangle: " << run_params.angle
+              << "\tpixmap_path: " << run_params.pixmap_path << "\n"
               << std::endl;
+
+    return run_params;
 }
 
 int main(int argc, char* argv[])
@@ -156,17 +151,9 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
-    std::string pixmap_path{};
-    int led_number{};
-    int led_size{};
-    int angle{};
-    int iteration{};
-
-    argParsing(argc, argv, led_number, led_size, angle, iteration, pixmap_path);
-
     qDebug() << "Average time: "
-             << measureStatisticTime(iteration, interpolatorMeasurement,
-                                     led_number, led_size, angle, pixmap_path)
+             << measureStatisticTime(interpolatorMeasurement,
+                                     argParsing(argc, argv))
              << "microseconds";
 
     return 0;
