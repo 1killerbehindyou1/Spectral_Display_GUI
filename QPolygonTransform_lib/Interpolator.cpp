@@ -28,8 +28,7 @@ Interpolator::interpolatorSetLedColor(const QVector<QPointF>& vector_points)
             }
             else
             {
-                return {}; // increaseTotalIntensivity(led_color, QColor{0, 0,
-                           // 0});
+                return {};
             }
         }
 
@@ -48,27 +47,32 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 {
 
     QPolygonF transformed_poly; // poligon with transformed points
-    transformed_poly << transform(rect.topLeft()) << transform(rect.topRight())
+    transformed_poly << transform(rect.topLeft())
                      << transform(rect.bottomLeft())
-                     << transform(rect.bottomRight());
+                     << transform(rect.bottomRight())
+                     << transform(rect.topRight());
 
     QPointF curr_point{};
     QVector<QPointF> vector_points{};
     QRectF rect_f{transformed_poly.boundingRect()};
 
-    for (float y = 0; y < rect_f.height(); y += 0.1)
+    for (float y = 0; y < rect_f.height(); y++)
     {
         curr_point.setY(rect_f.topLeft().y() + y);
 
-        for (float x = 0; x < rect_f.width(); x += 0.1)
+        for (float x = 0; x < rect_f.width(); x++)
         {
             curr_point.setX(rect_f.topLeft().x() + x);
 
-            if (curr_point.x() >= 0 && curr_point.y() >= 0 &&
-                transformed_poly.containsPoint(curr_point, Qt::WindingFill))
+            if ((curr_point.x() >= 0) && (curr_point.y() >= 0) &&
+                (transformed_poly.containsPoint(curr_point, Qt::OddEvenFill)))
                 vector_points.push_front(curr_point);
         }
     }
+    /*qDebug() << "boundingRect dimensions: " << rect_f.height()
+             << rect_f.width();
+    qDebug() << "boundingRect pointss: " << rect_f.height() * rect_f.width();
+    qDebug() << "points: " << vector_points.size() << "\n";*/
     return vector_points;
 }
 
