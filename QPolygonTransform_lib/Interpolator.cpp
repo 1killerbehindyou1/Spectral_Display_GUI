@@ -81,7 +81,6 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
                 vector_points.push_front(curr_point);
         }
     }
-    qDebug() << vector_points.size();
     return vector_points;
 }
 

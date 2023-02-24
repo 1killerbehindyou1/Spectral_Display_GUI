@@ -4,9 +4,9 @@
 #include <cmath>
 #include <iostream>
 
-Transform::Transform(QPoint rotCenter, int deg_angle) : m_rotCenter(rotCenter)
+Transform::Transform(QPoint rotCenter, int deg_angle)
+    : m_rotCenter(rotCenter), m_angle(deg_angle * 3.14159 / 180)
 {
-    m_angle = deg_angle * 3.14159 / 180;
 }
 
 QPointF Transform::operator()(QPointF point)
