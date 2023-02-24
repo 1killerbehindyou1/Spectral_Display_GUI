@@ -64,11 +64,11 @@ Control
                     Layout.fillWidth: true
                 }
 
-                Text{text: "Selector size"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_size; label: "Size"; init_value: 10;  max: 20; min: 1}     
+                Text{text: "Selector Diameter"; font.bold: true; font.pixelSize: 18 }
+                DataInput{ id: l_size; label: "Size [pixels]: "; init_value: 10;  max: 1000; min: 1}     
                 RowLayout
                 {
-                    Text{text: "Diameter selector in pixels: "; font.pixelSize: 18 } 
+                    Text{text: "selector in pixels: "; font.pixelSize: 18 } 
                     TextField
                     {
                         readOnly: true

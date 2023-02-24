@@ -19,7 +19,7 @@ ApplicationWindow
     property bool renderedPreviewIsActive: showRenderedPreview.checked
     property string file_operation: ""
 
-    onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
+    onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
     
     menuBar: MenuBar 
@@ -118,7 +118,7 @@ ApplicationWindow
            if((file_operation == "load")&&(file_manager.loadPixMap(fileDialog.fileUrl)))
            {
                 selector.img_source = fileDialog.fileUrl;
-                image_selected = true;
+                imageSelected = true;
                 fileDialog.pixmapLoaded();
            }
            if(file_operation == "save")
