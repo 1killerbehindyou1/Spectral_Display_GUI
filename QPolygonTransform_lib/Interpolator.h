@@ -21,8 +21,9 @@ class Interpolator : public QObject
 public:
     Interpolator(QObject* parent = 0);
 
-    QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
-    QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
+    QColor interpolatorSetLedColor(const QVector<QPointF>& vect);
+    QVector<QPointF> interpolatorTransform(Transform transform,
+                                           const QRect& rect);
     void setPixmap(QPixmap* pixmap);
 
 private:
@@ -31,9 +32,9 @@ private:
 
 namespace
 {
-void increaseTotalIntensivity(QColor& color, QColor color_from_image);
+void increaseTotalIntensivity(QColor& color, const QColor& color_from_image);
 QColor calculateaAverageIntensivity(int sample_amount,
-                                    QColor total_intensivity);
+                                    const QColor& total_intensivity);
 } // namespace
 
 #endif
