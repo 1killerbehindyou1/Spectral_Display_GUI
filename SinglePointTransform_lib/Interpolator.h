@@ -29,11 +29,4 @@ private:
     QPixmap* inerpolator_pixmap;
 };
 
-namespace
-{
-void increaseTotalIntensivity(QColor& color, QColor color_from_image);
-QColor calculateaAverageIntensivity(int sample_amount,
-                                    QColor total_intensivity);
-} // namespace
-
 #endif

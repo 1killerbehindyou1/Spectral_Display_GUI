@@ -4,6 +4,32 @@
 #include <cmath>
 #include <iostream>
 
+namespace
+{
+
+QColor operator+=(QColor& color_a, const QColor& color_b)
+{
+    color_a.setRedF(color_a.redF() + color_b.redF());
+    color_a.setGreenF(color_a.greenF() + color_b.greenF());
+    color_a.setBlueF(color_a.blueF() + color_b.blueF());
+
+    return color_a;
+}
+
+QColor operator/(const QColor& total_intensivity, int sample_amount)
+{
+    QColor color;
+    if (sample_amount > 0)
+    {
+        color.setRedF(total_intensivity.redF() / sample_amount);
+        color.setGreenF(total_intensivity.greenF() / sample_amount);
+        color.setBlueF(total_intensivity.blueF() / sample_amount);
+        // color.setAlpha(0.6);
+    }
+    return color;
+}
+} // namespace
+
 Interpolator::Interpolator(QObject* parent)
     : QObject(parent), inerpolator_pixmap(nullptr)
 {
@@ -23,16 +49,14 @@ Interpolator::interpolatorSetLedColor(const QVector<QPointF>& vector_points)
         {
             if (point.x() < image.width() && point.y() < image.height())
             {
-                increaseTotalIntensivity(
-                    led_color, image.pixelColor(point.x(), point.y()));
+                led_color += image.pixelColor(point.x(), point.y());
             }
             else
             {
                 return {};
             }
         }
-
-        return calculateaAverageIntensivity(vector_points.size(), led_color);
+        return led_color / vector_points.size();
     }
 
     else
@@ -77,28 +101,3 @@ QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
 }
 
 ///////////////////////////////////////////////////////////////////q
-namespace
-{
-void increaseTotalIntensivity(QColor& color, const QColor& color_from_image)
-{
-
-    color.setRedF(color.redF() + color_from_image.redF());
-    color.setGreenF(color.greenF() + color_from_image.greenF());
-    color.setBlueF(color.blueF() + color_from_image.blueF());
-}
-
-QColor calculateaAverageIntensivity(int sample_amount,
-                                    const QColor& total_intensivity)
-{
-    QColor color;
-    if (sample_amount > 0)
-    {
-        color.setRedF(total_intensivity.redF() / sample_amount);
-        color.setGreenF(total_intensivity.greenF() / sample_amount);
-        color.setBlueF(total_intensivity.blueF() / sample_amount);
-        // color.setAlpha(0.6);
-    }
-    // qDebug() << color;
-    return color;
-}
-} // namespace
