@@ -34,14 +34,14 @@ target_link_libraries(SinglePointBenchmark
 )
 
 # /////////////// Create executable to benchmark QPolygonTransform library
-add_executable(QPoligonBenchmark
-    QPoligonBenchmark/QPoligonTask.cpp
+add_executable(QPolygonBenchmark
+    QPolygonBenchmark/QPolygonTask.cpp
 )
 
-target_compile_definitions(QPoligonBenchmark
+target_compile_definitions(QPolygonBenchmark
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(QPoligonBenchmark
+target_link_libraries(QPolygonBenchmark
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
