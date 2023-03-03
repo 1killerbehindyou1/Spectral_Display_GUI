@@ -3,11 +3,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
-set(PROJECT_SOURCES
-    Main.cpp
+# ////////////////////////// Create library witch function main()
+add_library(LibraryBenchmark STATIC
+    BenchmarkLibrary/main.cpp
 )
-
-add_executable(LibraryBenchmark ${PROJECT_SOURCES})
 
 target_compile_definitions(LibraryBenchmark
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
@@ -16,7 +15,38 @@ target_link_libraries(LibraryBenchmark
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
+)
+
+# //////////////// Create executable to benchmark SinglePointTransform library
+add_executable(SinglePointBenchmark
+    SinglePointBenchmark/SinglePointTask.cpp
+)
+
+target_compile_definitions(SinglePointBenchmark
+    PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+target_link_libraries(SinglePointBenchmark
+    PRIVATE
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
     SinglePointTransform
+    LibraryBenchmark
+)
+
+# /////////////// Create executable to benchmark QPolygonTransform library
+add_executable(QPoligonBenchmark
+    QPoligonBenchmark/QPoligonTask.cpp
+)
+
+target_compile_definitions(QPoligonBenchmark
+    PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+target_link_libraries(QPoligonBenchmark
+    PRIVATE
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
+    QPolygonTransform
+    LibraryBenchmark
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

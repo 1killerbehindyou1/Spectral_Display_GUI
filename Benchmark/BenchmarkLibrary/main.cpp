@@ -149,7 +149,6 @@ Parameters argParsing(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
