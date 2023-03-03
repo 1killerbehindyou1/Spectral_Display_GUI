@@ -1,10 +1,8 @@
 #include "SinglePointTask.hpp"
 #include "../../SinglePointTransform_lib/Interpolator.h"
 
-
-void singlePoint::interpolatorMeasurement(int led_number, int led_size,
-                                          int angle,
-                                          const std::string& pixmap_path)
+void interpolatorMeasurement(int led_number, int led_size, int angle,
+                             const std::string& pixmap_path)
 {
     QPixmap pix_map{};
     pix_map.load(QString::fromStdString(pixmap_path));

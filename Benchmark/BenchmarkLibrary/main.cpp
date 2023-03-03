@@ -1,9 +1,12 @@
+#include "../QPolygonBenchmark/QPolygonTask.hpp"
+#include "../SinglePointBenchmark/SinglePointTask.hpp"
 #include <QDebug>
 #include <QGuiApplication>
 #include <algorithm>
 #include <chrono>
 #include <iostream>
 #include <vector>
+
 
 struct Parameters
 {
@@ -123,10 +126,10 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
-    /*qDebug() << "Average time: "
+    qDebug() << "Average time: "
              << measureStatisticTime(interpolatorMeasurement,
                                      argParsing(argc, argv))
-             << "microseconds";*/
+             << "microseconds";
 
     return 0;
 }
