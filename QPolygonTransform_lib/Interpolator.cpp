@@ -24,7 +24,6 @@ QColor operator/(const QColor& total_intensivity, int sample_amount)
         color.setRedF(total_intensivity.redF() / sample_amount);
         color.setGreenF(total_intensivity.greenF() / sample_amount);
         color.setBlueF(total_intensivity.blueF() / sample_amount);
-        // color.setAlpha(0.6);
     }
     return color;
 }
