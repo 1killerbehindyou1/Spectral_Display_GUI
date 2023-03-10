@@ -20,11 +20,9 @@ class Interpolator : public QObject
 
 public:
     Interpolator(QObject* parent = 0);
-
-    QColor interpolatorSetLedColor(const QVector<QPointF>& vect);
-    QVector<QPointF> interpolatorTransform(Transform transform,
-                                           const QRect& rect);
     void setPixmap(QPixmap* pixmap);
+
+    QColor interpolatePixmap(Transform transform, const QRect& rect);
 
 private:
     QPixmap* inerpolator_pixmap;

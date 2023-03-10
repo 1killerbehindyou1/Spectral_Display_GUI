@@ -22,9 +22,8 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
         {
             rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
 
-            QColor color = interpolator_obj.interpolatorSetLedColor(
-                interpolator_obj.interpolatorTransform(
-                    Transform{rot_centr, angle}, rect));
+            QColor color = interpolator_obj.interpolatePixmap(
+                Transform{rot_centr, angle}, rect);
         }
     }
 }

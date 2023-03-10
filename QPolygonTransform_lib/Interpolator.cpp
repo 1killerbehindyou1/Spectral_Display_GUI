@@ -35,68 +35,46 @@ Interpolator::Interpolator(QObject* parent)
 }
 void Interpolator::setPixmap(QPixmap* pixmap) { inerpolator_pixmap = pixmap; }
 
-QColor
-Interpolator::interpolatorSetLedColor(const QVector<QPointF>& vector_points)
+QColor Interpolator::interpolatePixmap(Transform transform, const QRect& rect)
 {
-
-    if ((inerpolator_pixmap != nullptr) && (vector_points.size() > 0))
+    if (inerpolator_pixmap != nullptr)
     {
+        QPolygonF transformed_poly; // poligon with transformed points
+        transformed_poly << transform(rect.topLeft())
+                         << transform(rect.bottomLeft())
+                         << transform(rect.bottomRight())
+                         << transform(rect.topRight());
+
+        QPointF curr_point{};
         QColor led_color{};
+        QRectF rect_f{transformed_poly.boundingRect()};
         QImage image{inerpolator_pixmap->toImage()};
 
-        for (QPointF point : vector_points)
+        int count{};
+
+        for (float y = 0; y < rect_f.height(); y++)
         {
-            if (point.x() < image.width() && point.y() < image.height())
+            curr_point.setY(rect_f.topLeft().y() + y);
+
+            for (float x = 0; x < rect_f.width(); x++)
             {
-                led_color += image.pixelColor(point.x(), point.y());
-            }
-            else
-            {
-                return {};
+                curr_point.setX(rect_f.topLeft().x() + x);
+
+                if ((curr_point.x() >= 0) && (curr_point.y() >= 0) &&
+                    (transformed_poly.containsPoint(curr_point,
+                                                    Qt::OddEvenFill)) &&
+                    (curr_point.x() < image.width() &&
+                     curr_point.y() < image.height()))
+
+                {
+                    count++;
+                    led_color +=
+                        image.pixelColor(curr_point.x(), curr_point.y());
+                }
             }
         }
-        return led_color / vector_points.size();
+        return led_color / count;
     }
-
     else
-    {
-        return {};
-    }
+        return QColor{};
 }
-//////////////////////////////////////////////////////////////////
-
-QVector<QPointF> Interpolator::interpolatorTransform(Transform transform,
-                                                     const QRect& rect)
-{
-
-    QPolygonF transformed_poly; // poligon with transformed points
-    transformed_poly << transform(rect.topLeft())
-                     << transform(rect.bottomLeft())
-                     << transform(rect.bottomRight())
-                     << transform(rect.topRight());
-
-    QPointF curr_point{};
-    QVector<QPointF> vector_points{};
-    QRectF rect_f{transformed_poly.boundingRect()};
-
-    for (float y = 0; y < rect_f.height(); y++)
-    {
-        curr_point.setY(rect_f.topLeft().y() + y);
-
-        for (float x = 0; x < rect_f.width(); x++)
-        {
-            curr_point.setX(rect_f.topLeft().x() + x);
-
-            if ((curr_point.x() >= 0) && (curr_point.y() >= 0) &&
-                (transformed_poly.containsPoint(curr_point, Qt::OddEvenFill)))
-                vector_points.push_front(curr_point);
-        }
-    }
-    /*qDebug() << "boundingRect dimensions: " << rect_f.height()
-             << rect_f.width();
-    qDebug() << "boundingRect pointss: " << rect_f.height() * rect_f.width();
-    qDebug() << "points: " << vector_points.size() << "\n";*/
-    return vector_points;
-}
-
-///////////////////////////////////////////////////////////////////q
