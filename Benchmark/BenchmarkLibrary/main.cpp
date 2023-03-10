@@ -1,7 +1,9 @@
-#include "../QPolygonBenchmark/QPolygonTask.hpp"
-#include "../SinglePointBenchmark/SinglePointTask.hpp"
+#include "BenchmarkMeasuredTask.hpp"
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 #include <QGuiApplication>
+#include <QImage>
 #include <algorithm>
 #include <chrono>
 #include <iostream>
@@ -9,11 +11,13 @@
 
 struct Parameters
 {
-    std::string pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
+    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
     int led_number{100};
     int led_size{5};
     int angle{1};
     int iteration{100};
+    QFileInfo output_path{
+        "C:\\Users\\mplesniak\\Pictures\\BITMAPA_transformed.png"};
 };
 
 void myMessageOutput(QtMsgType type,
@@ -47,21 +51,27 @@ void myMessageOutput(QtMsgType type,
               << std::endl;
 }
 
-using algorithm = void (*)(int, int, int, const std::string&);
+using algorithm = QImage (*)(int, int, int, const std::string&);
 
 int measureStatisticTime(algorithm fun, const Parameters& param)
 {
     std::vector<double> average_cont{};
 
+    QImage result{};
+
     for (int i = 0; i < param.iteration; i++)
     {
         auto begin = std::chrono::high_resolution_clock::now();
-        fun(param.led_number, param.led_size, param.angle, param.pixmap_path);
+        result = fun(param.led_number, param.led_size, param.angle,
+                     param.pixmap_path.absoluteFilePath().toStdString());
         auto end = std::chrono::high_resolution_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
         average_cont.push_back(elapsed.count());
     }
+
+    qDebug() << result;
+    result.save(param.output_path.absoluteFilePath());
 
     std::sort(average_cont.begin(), average_cont.end());
     average_cont.erase(average_cont.begin());
@@ -79,7 +89,7 @@ int measureStatisticTime(algorithm fun, const Parameters& param)
 Parameters argParsing(int argc, char* argv[])
 {
     Parameters run_params{};
-
+    QString appName = QFileInfo{argv[0]}.baseName();
     for (int i = 0; i < argc; i++)
     {
         std::string parsed_arg(argv[i]);
@@ -105,17 +115,23 @@ Parameters argParsing(int argc, char* argv[])
         }
         else if (parsed_arg.find("--image-path=") != std::string::npos)
         {
-            run_params.pixmap_path =
-                parsed_arg.erase(0, parsed_arg.find("=") + 1);
+            run_params.pixmap_path = QString::fromStdString(
+                parsed_arg.erase(0, parsed_arg.find("=") + 1));
+
+            auto& path = run_params.pixmap_path;
+            run_params.output_path =
+                QFileInfo{path.dir(), QString("%1_%2_transformed.%3")
+                                          .arg(path.baseName())
+                                          .arg(appName)
+                                          .arg(path.completeSuffix())};
         }
     }
-    std::cout << "Library: SinglePointTransform"
-              << "\nparameters:\nled numer: " << run_params.led_number
-              << "\tNo iteration: " << run_params.iteration
-              << "\tled_size: " << run_params.led_size
-              << "\tangle: " << run_params.angle
-              << "\tpixmap_path: " << run_params.pixmap_path << "\n"
-              << std::endl;
+    qDebug() << "Library: SinglePointTransform"
+             << "\nparameters:\nled numer: " << run_params.led_number
+             << "\tNo iteration: " << run_params.iteration
+             << "\tled_size: " << run_params.led_size
+             << "\tangle: " << run_params.angle
+             << "\tpixmap_path: " << run_params.pixmap_path << "\n";
 
     return run_params;
 }

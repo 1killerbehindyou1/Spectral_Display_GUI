@@ -1,11 +1,10 @@
-#include "QPolygonTask.hpp"
 #include "../../QPolygonTransform_lib/Interpolator.h"
+#include "BenchmarkMeasuredTask.hpp"
 #include <QDebug>
 #include <string>
 
-
-void interpolatorMeasurement(int led_number, int led_size, int angle,
-                             const std::string& pixmap_path)
+QImage interpolatorMeasurement(int led_number, int led_size, int angle,
+                               const std::string& pixmap_path)
 {
     QPixmap pix_map{};
     pix_map.load(QString::fromStdString(pixmap_path));
@@ -15,6 +14,6 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
 
     QImage output_image =
         interpolator_obj.transformImage(angle, led_size, led_number);
-    output_image.save("transformed");
-    qDebug() << output_image;
+
+    return output_image;
 }

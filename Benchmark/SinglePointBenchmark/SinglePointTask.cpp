@@ -1,8 +1,8 @@
-#include "SinglePointTask.hpp"
 #include "../../SinglePointTransform_lib/Interpolator.h"
+#include "BenchmarkMeasuredTask.hpp"
 
-void interpolatorMeasurement(int led_number, int led_size, int angle,
-                             const std::string& pixmap_path)
+QImage interpolatorMeasurement(int led_number, int led_size, int angle,
+                               const std::string& pixmap_path)
 {
     QPixmap pix_map{};
     pix_map.load(QString::fromStdString(pixmap_path));
@@ -16,7 +16,13 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
                       static_cast<int>(led_size * (-0.5))},
                QSize{led_size, led_size}};
 
-    for (int rot = 0; rot < 360; rot += angle)
+    int rows = 360 / angle;
+    int cols = led_number;
+
+    QImage output_image{QSize{cols, rows}, QImage::Format_RGB32};
+
+    int rotCount = 0;
+    for (int rot = 0; rot < 360; rot += angle, ++rotCount)
     {
         for (int i = 0; i < led_number; i++)
         {
@@ -25,6 +31,9 @@ void interpolatorMeasurement(int led_number, int led_size, int angle,
             QColor color = interpolator_obj.interpolatorSetLedColor(
                 interpolator_obj.interpolatorTransform(
                     Transform{rot_centr, angle}, rect));
+            output_image.setPixelColor(QPoint{i, rotCount}, color);
         }
     }
+
+    return output_image;
 }

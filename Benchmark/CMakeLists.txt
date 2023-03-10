@@ -1,12 +1,13 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
+find_package(QT NAMES Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 # ////////////////////////// Create library witch function main()
 add_library(LibraryBenchmark STATIC
     BenchmarkLibrary/main.cpp
 )
+target_include_directories(LibraryBenchmark PUBLIC BenchmarkLibrary/public)
 
 target_compile_definitions(LibraryBenchmark
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
