@@ -52,7 +52,7 @@ void LedRuler::paint(QPainter* painter)
             rect.moveTo(rect.topLeft() + QPoint{m_size, 0});
 
             QColor color =
-                m_interpolator.interpolatePixmap(Transform{m_point, rot}, rect);
+                m_interpolator.interpolateColor(Transform{m_point, rot}, rect);
             if (color.isValid())
                 m_output_image->setPixelColor(pixel, color);
             else

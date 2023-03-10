@@ -7,7 +7,6 @@
 #include <iostream>
 #include <vector>
 
-
 struct Parameters
 {
     std::string pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};

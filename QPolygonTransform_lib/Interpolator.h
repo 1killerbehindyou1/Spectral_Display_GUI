@@ -22,7 +22,8 @@ public:
     Interpolator(QObject* parent = 0);
     void setPixmap(QPixmap* pixmap);
 
-    QColor interpolatePixmap(Transform transform, const QRect& rect);
+    QColor interpolateColor(Transform transform, const QRect& rect);
+    QImage transformImage(int deg_angle, int led_size, int number_of_leds);
 
 private:
     QPixmap* inerpolator_pixmap;
