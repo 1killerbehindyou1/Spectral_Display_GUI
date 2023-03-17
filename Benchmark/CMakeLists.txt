@@ -6,6 +6,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 # ////////////////////////// Create library witch function main()
 add_library(LibraryBenchmark STATIC
     BenchmarkLibrary/main.cpp
+    BenchmarkLibrary/MeasurementTools.cpp
 )
 target_include_directories(LibraryBenchmark PUBLIC BenchmarkLibrary/public)
 

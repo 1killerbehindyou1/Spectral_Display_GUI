@@ -45,31 +45,27 @@ QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
                          << transform(rect.bottomRight())
                          << transform(rect.topRight());
 
-        QPointF curr_point{};
+        QPoint curr_point{};
         QColor led_color{};
         QRectF rect_f{transformed_poly.boundingRect()};
         QImage image{inerpolator_pixmap->toImage()};
 
         int count{};
 
-        for (float y = 0; y < rect_f.height(); y++)
+        for (int y = 0; y < rect_f.height(); y++)
         {
             curr_point.setY(rect_f.topLeft().y() + y);
 
-            for (float x = 0; x < rect_f.width(); x++)
+            for (int x = 0; x < rect_f.width(); x++)
             {
                 curr_point.setX(rect_f.topLeft().x() + x);
 
-                if ((curr_point.x() >= 0) && (curr_point.y() >= 0) &&
+                if (image.valid(curr_point) &&
                     (transformed_poly.containsPoint(curr_point,
-                                                    Qt::OddEvenFill)) &&
-                    (curr_point.x() < image.width() &&
-                     curr_point.y() < image.height()))
-
+                                                    Qt::OddEvenFill)))
                 {
                     count++;
-                    led_color +=
-                        image.pixelColor(curr_point.x(), curr_point.y());
+                    led_color += image.pixelColor(curr_point);
                 }
             }
         }

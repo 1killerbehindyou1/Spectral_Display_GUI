@@ -13,10 +13,6 @@ set(PROJECT_SOURCES
 add_library(SinglePointTransform STATIC
   ${PROJECT_SOURCES})
 
-target_include_directories(SinglePointTransform
-  PUBLIC .
-)
-
 target_compile_definitions(SinglePointTransform
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 

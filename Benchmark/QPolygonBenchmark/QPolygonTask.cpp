@@ -1,7 +1,8 @@
-#include "../../QPolygonTransform_lib/Interpolator.h"
 #include "BenchmarkMeasuredTask.hpp"
+#include <Interpolator.h>
 #include <QDebug>
 #include <string>
+
 
 QImage interpolatorMeasurement(int led_number, int led_size, int angle,
                                const std::string& pixmap_path)

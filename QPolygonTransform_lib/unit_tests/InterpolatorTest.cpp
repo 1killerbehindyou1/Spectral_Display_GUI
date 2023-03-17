@@ -1,12 +1,11 @@
-#include "../src/Interpolator.h"
-#include <QColor>
+#include <Interpolator.h>
 #include <gtest/gtest.h>
-
 
 TEST(InterpolatorShould, shouldReturnEmptyColorWhenNoPixmapSet)
 {
     Interpolator interpolator{};
-
-    QColor result = interpolator.interpolatorSetLedColor({});
+    Transform transform{QPoint{}, 0};
+    QRect rect{};
+    QColor result = interpolator.interpolateColor(transform, rect);
     EXPECT_EQ(result, QColor{});
 }
