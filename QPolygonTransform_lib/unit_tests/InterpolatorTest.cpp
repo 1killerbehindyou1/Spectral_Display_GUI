@@ -1,8 +1,10 @@
-#include <gtest/gtest.h>
-#include <Interpolator.h>
+#include "../src/Interpolator.h"
 #include <QColor>
+#include <gtest/gtest.h>
 
-TEST(InterpolatorShould, shouldReturnEmptyColorWhenNoPixmapSet) {
+
+TEST(InterpolatorShould, shouldReturnEmptyColorWhenNoPixmapSet)
+{
     Interpolator interpolator{};
 
     QColor result = interpolator.interpolatorSetLedColor({});
