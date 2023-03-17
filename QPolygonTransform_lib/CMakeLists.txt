@@ -4,10 +4,8 @@ find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
 set(PROJECT_SOURCES
-  Interpolator.cpp
-  Interpolator.h
-  Transformation.cpp
-  Transformation.h
+  src/Interpolator.cpp
+  src/Transformation.cpp
 )
 
 add_library(QPolygonTransform STATIC
