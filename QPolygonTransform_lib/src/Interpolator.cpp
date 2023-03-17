@@ -7,6 +7,25 @@
 namespace
 {
 
+//struct Mean {
+//    void add(double val);
+//    double value();
+
+//private:
+//    double accu = 0;
+//    std::size_t count = 0;
+//};
+
+//struct MeanColor {
+//    Mean r, g, b;
+
+//    QColor operator() {
+//        return QColor{ r.value(), g.value(), b.value()};
+//    }
+//};
+
+//MeanColor operator+=(MeanColor& color_a, const QColor& color_b)
+
 QColor operator+=(QColor& color_a, const QColor& color_b)
 {
     color_a.setRedF(color_a.redF() + color_b.redF());
@@ -50,6 +69,8 @@ QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
         QRectF rect_f{transformed_poly.boundingRect()};
         QImage image{inerpolator_pixmap->toImage()};
 
+        QRectF imageRect{QPoint{0, 0}, image.size() - QSize{1, 1}};
+
         int count{};
 
         for (int y = 0; y < rect_f.height(); y++)
@@ -69,7 +90,7 @@ QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
                 }
             }
         }
-        return led_color / count;
+        return led_color / count; //{meanColor};
     }
     else
         return QColor{};
@@ -94,6 +115,7 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
     for (int rot = 0; rot < 360; rot += deg_angle)
     {
         pixel.setY(k++);
+        Transform transform{rot_centr, rot};
 
         for (int i = 0; i < number_of_leds; i++)
         {
@@ -101,6 +123,8 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
             rect.moveTo(rect.topLeft() + QPoint{rect.width(), 0});
 
             QColor color = interpolateColor(Transform{rot_centr, rot}, rect);
+//            QColor color = interpolateColor(transform(toPolygon(rect))); //QColor interpolateColor(QPolygon poly, const QPixmap& pixmap)
+            //std::function<QColor(QPolygon, const QImage&)>
             if (color.isValid())
                 output_image.setPixelColor(pixel, color);
             else
