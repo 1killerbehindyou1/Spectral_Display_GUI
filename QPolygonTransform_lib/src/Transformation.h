@@ -11,7 +11,7 @@
 class Transform
 {
 public:
-    Transform(QPoint rotCenter, int deg_angle);
+    Transform(QPoint rotCenter, float deg_angle);
     QPointF operator()(const QPointF& point);
 
 private:
