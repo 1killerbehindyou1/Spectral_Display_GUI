@@ -11,11 +11,11 @@
 class Transform
 {
 public:
-    Transform(QPoint rotCenter, float deg_angle);
+    Transform(const QPointF& rotCenter, float deg_angle);
     QPointF operator()(const QPointF& point);
 
 private:
-    QPoint m_rotCenter;
+    QPointF m_rotCenter;
     float m_angle;
 };
 

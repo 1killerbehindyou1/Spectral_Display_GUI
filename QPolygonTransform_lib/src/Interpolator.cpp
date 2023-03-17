@@ -44,12 +44,11 @@ QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
                          << transform(rect.bottomLeft())
                          << transform(rect.bottomRight())
                          << transform(rect.topRight());
-
         QPoint curr_point{};
         QColor led_color{};
         QRectF rect_f{transformed_poly.boundingRect()};
         QImage image{inerpolator_pixmap->toImage()};
-
+        qDebug() << rect_f;
         int count{};
 
         for (int y = 0; y < rect_f.height(); y++)
@@ -69,7 +68,9 @@ QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
                 }
             }
         }
-        return led_color / count;
+        QColor col = led_color / count;
+        qDebug() << col;
+        return col;
     }
     else
         return QColor{};
@@ -79,20 +80,21 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
                                     int number_of_leds)
 {
 
-    QPoint pixel{0, 0};
-    QPoint rot_centr(inerpolator_pixmap->width() / 2,
-                     inerpolator_pixmap->height() / 2);
+    QPointF rot_centr(inerpolator_pixmap->width() / 2,
+                      inerpolator_pixmap->height() / 2);
 
     QRect rect{QPoint{static_cast<int>(led_size * 0.5),
                       static_cast<int>(led_size * (-0.5))},
                QSize{led_size, led_size}};
-    int width = static_cast<int>(360 / deg_angle) + 1;
+    int width = static_cast<int>(360 / deg_angle);
 
     QImage output_image{number_of_leds, width, QImage::Format_RGB32};
 
+    QPoint pixel{0, 0};
     int k = 0;
-    for (int rot = 0; rot < 360; rot += deg_angle)
+    for (int rot = 0; rot <= 360; rot += deg_angle)
     {
+        Transform transformator{rot_centr, rot};
         pixel.setY(k++);
 
         for (int i = 0; i < number_of_leds; i++)
@@ -100,7 +102,7 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
             pixel.setX(i);
             rect.moveTo(rect.topLeft() + QPoint{rect.width(), 0});
 
-            QColor color = interpolateColor(Transform{rot_centr, rot}, rect);
+            QColor color = interpolateColor(transformator, rect);
             if (color.isValid())
                 output_image.setPixelColor(pixel, color);
             else
