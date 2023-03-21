@@ -12,7 +12,10 @@ Transform::Transform(const QPointF& rotCenter, float deg_angle)
 QPointF Transform::operator()(const QPointF& point)
 {
     float a_angle = atan2(point.y(), point.x()); // calculation angle
-    float a_module = point.x() / cosf(a_angle);  // calculation module
+    float a_module =
+        (point.x() - m_rotCenter.x()) / cosf(a_angle); // calculation module
+    qDebug() << a_module;
+
     m_angle += a_angle;
 
     QPointF a_point{a_module * cos(m_angle) + m_rotCenter.x(), // calc new point

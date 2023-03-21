@@ -38,6 +38,7 @@ void LedRuler::paint(QPainter* painter)
     m_output_image = new QImage(m_number_of_leds, width, QImage::Format_RGB32);
 
     int k = 0;
+
     for (int rot = 0; rot < 360; rot += m_rotation)
     {
         pixel.setY(k++);
@@ -45,6 +46,7 @@ void LedRuler::paint(QPainter* painter)
         painter->save();
         painter->rotate(rot);
         QRect rect{offset, QSize{m_size, m_size}};
+        Transform transformation{m_point, rot};
 
         for (int i = 0; i < m_number_of_leds; i++)
         {
@@ -52,7 +54,7 @@ void LedRuler::paint(QPainter* painter)
             rect.moveTo(rect.topLeft() + QPoint{m_size, 0});
 
             QColor color =
-                m_interpolator.interpolateColor(Transform{m_point, rot}, rect);
+                m_interpolator.interpolateColor(transformation, rect);
             if (color.isValid())
                 m_output_image->setPixelColor(pixel, color);
             else
