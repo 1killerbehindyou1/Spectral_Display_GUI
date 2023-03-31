@@ -2,6 +2,7 @@
 #include "Transformation.h"
 #include <QDebug>
 #include <cmath>
+#include <complex>
 #include <iostream>
 
 Transform::Transform(const QPointF& rotCenter, float deg_angle)
@@ -11,14 +12,19 @@ Transform::Transform(const QPointF& rotCenter, float deg_angle)
 
 QPointF Transform::operator()(const QPointF& point)
 {
-    float a_angle = atan2(point.y(), point.x()); // calculation angle
-    float a_module =
-        (point.x() - m_rotCenter.x()) / cosf(a_angle); // calculation module
-    qDebug() << a_module;
 
-    m_angle += a_angle;
+    QPointF new_point = point - m_rotCenter;
+    std::complex<float> new_point_cpl(new_point.x(), new_point.y());
 
-    QPointF a_point{a_module * cos(m_angle) + m_rotCenter.x(), // calc new point
-                    a_module * sin(m_angle) + m_rotCenter.y()};
-    return a_point;
+    float angle = std::arg(new_point_cpl);
+    if (new_point.y() < 0)
+    {
+        angle += 6.283;
+    }
+    float module = std::abs(new_point_cpl);
+    m_angle += angle;
+
+    QPointF out_point{module * cos(m_angle), module * sin(m_angle)};
+    out_point += m_rotCenter;
+    return out_point;
 }
