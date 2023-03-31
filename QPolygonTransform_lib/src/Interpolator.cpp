@@ -35,7 +35,7 @@ Interpolator::Interpolator(QObject* parent)
 }
 void Interpolator::setPixmap(QPixmap* pixmap) { inerpolator_pixmap = pixmap; }
 
-QColor Interpolator::interpolateColor(Transform transform, const QRect& rect)
+QColor Interpolator::interpolateColor(Transform transform, const QRectF& rect)
 {
     if (inerpolator_pixmap != nullptr)
     {
@@ -85,9 +85,9 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
     QPointF rot_centr(inerpolator_pixmap->width() / 2,
                       inerpolator_pixmap->height() / 2);
 
-    QRect rect{QPoint{static_cast<int>(led_size * 0.5),
-                      static_cast<int>(led_size * (-0.5))},
-               QSize{led_size, led_size}};
+    QRectF rect{QPoint{static_cast<int>(led_size * 0.5),
+                       static_cast<int>(led_size * (-0.5))},
+                QSize{led_size, led_size}};
     int width = static_cast<int>(360 / deg_angle);
 
     QImage output_image{number_of_leds, width, QImage::Format_RGB32};
@@ -102,7 +102,7 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
         for (int i = 0; i < number_of_leds; i++)
         {
             pixel.setX(i);
-            rect.moveTo(rect.topLeft() + QPoint{rect.width(), 0});
+            rect.moveTo(rect.topLeft() + QPointF{rect.width(), 0});
 
             QColor color = interpolateColor(transformator, rect);
             if (color.isValid())
