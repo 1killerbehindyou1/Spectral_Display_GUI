@@ -23,8 +23,8 @@ QPointF Transform::operator()(const QPointF& point)
     }
     float module = std::abs(new_point_cpl);
     m_angle += angle;
-
     QPointF out_point{module * cos(m_angle), module * sin(m_angle)};
     out_point += m_rotCenter;
+    m_angle -= angle;
     return out_point;
 }

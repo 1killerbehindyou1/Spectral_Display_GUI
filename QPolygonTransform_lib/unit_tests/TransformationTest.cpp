@@ -4,7 +4,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-/*
 void PrintTo(const QPointF& point, std::ostream* out)
 {
     *out << "QPointF(" << std::to_string(point.x()) << ","
@@ -61,6 +60,7 @@ struct TransformationParams
     float rotationAngle;
     QPointF inputPoint;
     QPointF expectedResult;
+    double precision = 1e-5;
 
     friend void PrintTo(const TransformationParams& params, std::ostream* out)
     {
@@ -81,20 +81,42 @@ class TransformationTestWithParams
     // To access the test parameter, call GetParam() from class
     // TestWithParam<T>.
 };
-/*
-TEST_P(TransformationTestWithParams, properlyTranformPoint)
+class TransformationTestWithParamsCyclic
+    : public testing::TestWithParam<TransformationParams>
+{
+    // You can implement all the usual fixture class members here.
+    // To access the test parameter, call GetParam() from class
+    // TestWithParam<T>.
+};
+//////////////////////////////////////////////////////
+
+TEST_P(TransformationTestWithParams, properlyTransformPoint)
+{
+
+    const auto& params = GetParam();
+
+    Transform transform{params.rotationCenter, params.rotationAngle};
+    QPointF point_out = transform(params.inputPoint);
+
+    EXPECT_NEAR(params.expectedResult.x(), point_out.x(), params.precision);
+    EXPECT_NEAR(params.expectedResult.y(), point_out.y(), params.precision);
+}
+
+TEST_P(TransformationTestWithParamsCyclic, verifyCyclicTransforamtion)
 {
     const auto& params = GetParam();
 
     Transform transform{params.rotationCenter, params.rotationAngle};
+    QPointF point_in{params.inputPoint};
 
-    auto result = transform(params.inputPoint);
-    EXPECT_NEAR(result.x(), params.expectedResult.x(), 1e-5);
-    EXPECT_NEAR(result.y(), params.expectedResult.y(), 1e-5);
+    for (int i = 0; i <= 360 - params.rotationAngle; i += params.rotationAngle)
+    {
+        point_in = transform(point_in);
+    }
+    EXPECT_NEAR(params.expectedResult.x(), point_in.x(), params.precision);
+    EXPECT_NEAR(params.expectedResult.y(), point_in.y(), params.precision);
 }
-*/
-/*
-TEST_P(TransformationTestWithParams, properlyTranformPoint_v2)
+/*TEST_P(TransformationTestWithParams, properlyTranformPoint_v2)
 {
     const auto& params = GetParam();
 
@@ -102,76 +124,39 @@ TEST_P(TransformationTestWithParams, properlyTranformPoint_v2)
 
     EXPECT_THAT(transform(params.inputPoint),
                 EQUAL_TO_POINT(params.expectedResult, 1e-5));
-}
+}*/
+std::vector<TransformationParams> transformationParams_cyclic{
+    {{0, 0}, 90, {1, 1}, {1, 1}, 1e-3},
+    {{0, 0}, 30, {1, 1}, {1, 1}, 1e-2},
+    {{0, 0}, 10, {1, 1}, {1, 1}, 1e-2},
+    {{0, 0}, 1, {1, 1}, {1, 1}, 0.1},
+    //
+    {{0, 0}, 90, {5, 5}, {5, 5}, 0.1},
+    {{0, 0}, 30, {5, 5}, {5, 5}, 0.1},
+    {{0, 0}, 10, {5, 5}, {5, 5}, 0.1},
+    {{0, 0}, 1, {5, 5}, {5, 5}, 0.2},
+    {{10, 10}, 90, {5, 5}, {5, 5}, 0.1},
+    {{10, 10}, 30, {5, 5}, {5, 5}, 0.1},
+    {{10, 10}, 10, {5, 5}, {5, 5}, 0.1},
+    {{10, 10}, 1, {5, 5}, {5, 5}, 0.2},
+};
 
 std::vector<TransformationParams> transformationParams{
-    {{0, 0}, 0, {1, 0}, {1, 0}},     {{0, 0}, 90, {1, 0}, {0, 1}},
-    {{0, 0}, 180, {1, 0}, {-1, 0}},  {{0, 0}, 270, {1, 0}, {0, -1}},
-    {{0, 0}, -180, {1, 0}, {-1, 0}}, {{0, 0}, 187, {0, 0}, {0, 0}},
-    /*{{0, 0}, 30, {1, 0}, {std::sqrt(3) * 0.5, 0.5}},
-    {{0, 0}, 90 + 30, {1, 0}, {-0.5, std::sqrt(3) * 0.5}},
-    {{1, 1}, 270, {1, 0}, {2, 1}},
-    {{1, 1}, 90, {1, 0}, {0, 1}},
-    {{1, 1}, 180, {1, 0}, {1, 2}},
-    {{1, 1}, 0, {1, 0}, {1, 0}},
-}
-;
+    {{0, 0}, 0, {4, 4}, {4, 4}, 1e-5},
+    {{0, 0}, 90, {4, 4}, {-4, 4}, 1e-5},
+    {{0, 0}, 180, {4, 4}, {-4, -4}, 1e-5},
+    {{0, 0}, 270, {4, 4}, {4, -4}, 1e-4},
+    {{0, 0}, 360, {4, 4}, {4, 4}, 1e-4},
+    {{5, 5}, 0, {4, 4}, {4, 4}, 1e-3},
+    {{5, 5}, 90, {4, 4}, {6, 4}, 1e-3},
+    {{5, 5}, 180, {4, 4}, {6, 6}, 1e-3},
+    {{5, 5}, 270, {4, 4}, {4, 6}, 1e-3},
+    {{5, 5}, 360, {4, 4}, {4, 4}, 1e-3}
+
+};
 
 INSTANTIATE_TEST_SUITE_P(StandardTransformations, TransformationTestWithParams,
                          testing::ValuesIn(transformationParams));
-*/
-
-TEST(TransformTest, delta_fi_90_st)
-{
-
-    QPointF point_0{4, 4};
-    QPointF point_out{point_0};
-    for (int i = 0; i < 4; i++)
-    {
-        Transform transform_1{QPointF{2, 6}, 90};
-        point_out = transform_1(point_out);
-    }
-
-    qDebug() << "point_0" << point_0;
-    qDebug() << "point_out" << point_out;
-    EXPECT_NEAR(point_0.x(), point_out.x(), 1e-2);
-    EXPECT_NEAR(point_0.y(), point_out.y(), 1e-2);
-}
-TEST(TransformTest, delta_fi_60_st)
-{
-
-    QPointF point_0{-2, 4};
-    QPointF point_out{point_0};
-    for (int i = 0; i < 6; i++)
-    {
-        Transform transform_1{QPointF{2, 6}, 60};
-        point_out = transform_1(point_out);
-    }
-
-    qDebug() << "point_0" << point_0;
-    qDebug() << "point_out" << point_out;
-    EXPECT_NEAR(point_0.x(), point_out.x(), 1e-2);
-    EXPECT_NEAR(point_0.y(), point_out.y(), 1e-2);
-}
-/*
-TEST(TransformTest, kat_2)
-{
-    Transform transform{QPointF{2, 1}, 90};
-    qDebug() << transform(QPointF{5, 5});
-    EXPECT_EQ(true, true);
-}
-
-TEST(TransformTest, kat_3)
-{
-    Transform transform{QPointF{-2, -3}, 90};
-    qDebug() << transform(QPointF{5, 5});
-    EXPECT_EQ(true, true);
-}
-
-TEST(TransformTest, kat_120)
-{
-    Transform transform{QPointF{0, 0}, 300};
-    qDebug() << transform(QPointF{5, 0});
-    EXPECT_EQ(true, true);
-}
-*/
+INSTANTIATE_TEST_SUITE_P(StandardTransformations,
+                         TransformationTestWithParamsCyclic,
+                         testing::ValuesIn(transformationParams_cyclic));
