@@ -68,10 +68,6 @@ QColor Interpolator::interpolateColor(Transform transform, const QRectF& rect)
                 }
             }
         }
-        // qDebug() << rect;
-        // Debug() << transformed_poly;
-        // qDebug() << bounding_rect;
-        // qDebug() << count;
         return led_color / count;
     }
     else
