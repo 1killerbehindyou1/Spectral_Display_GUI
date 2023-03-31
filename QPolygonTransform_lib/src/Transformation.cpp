@@ -28,9 +28,9 @@ QPointF Transform::operator()(const QPointF& point)
     return out_point;
 }
 
-QRectF Transform::operator()(const QRectF& rect)
+QRect Transform::operator()(const QRectF& rect)
 {
-    QRectF rect2{this->operator()(rect.topLeft()),
-                 this->operator()(rect.bottomRight())};
-    return rect2;
-}
+    QPointF top_left = this->operator()(rect.topLeft());
+    QPointF bottom_right = this->operator()(rect.bottomRight());
+    return {top_left.toPoint(), bottom_right.toPoint()};
+};

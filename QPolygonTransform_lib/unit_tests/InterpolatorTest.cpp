@@ -59,9 +59,10 @@ MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
 //////////////////////////////////////////////////////
 struct Parameters
 {
-    int led_number;
+    // int led_number;
     int led_size;
     int angle;
+    QPoint offset;
 };
 
 class InterpolationTestWithParams : public testing::TestWithParam<Parameters>
@@ -79,8 +80,7 @@ public:
     }
     ~InterpolationTestWithParams() { delete app; }
 
-    QFileInfo output_path{
-        "C:\\Users\\mplesniak\\Pictures\\BITMAPA_transformed.png"};
+    QFileInfo output_path{"C:\\Users\\mplesniak\\Pictures\\results\\"};
     QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
     QPixmap* pix_map;
     QGuiApplication* app;
@@ -88,11 +88,13 @@ public:
 };
 
 ///////////////////////////////////////////////////////////////
-std::vector<Parameters> param_1{{
-    100,
-    10,
-    1,
-}};
+std::vector<Parameters> param_1{
+    {1, 30, {0, 50}},   {2, 30, {0, 50}},   {3, 30, {0, 50}},
+    {5, 30, {0, 50}},   {10, 30, {0, 50}},  {15, 30, {0, 50}},
+    {20, 30, {0, 50}},  {25, 30, {0, 50}},  {1, 30, {0, 100}},
+    {2, 30, {0, 100}},  {3, 30, {0, 100}},  {5, 30, {0, 100}},
+    {10, 30, {0, 100}}, {15, 30, {0, 100}}, {20, 30, {0, 100}},
+    {25, 30, {0, 100}}};
 
 TEST_P(InterpolationTestWithParams, initial_test)
 {
@@ -102,21 +104,25 @@ TEST_P(InterpolationTestWithParams, initial_test)
     QImage output_image{pix_map->size(), QImage::Format_RGB32};
     output_image.fill("white");
 
-    QPoint offset{40, 0};
-
     QRect rect{rot_centr, QSize{params.led_size, params.led_size}};
-    rect.moveTo(rot_centr + offset);
-    qDebug() << rect;
+    rect.moveTo(rot_centr + params.offset);
+
+    Transform transform{rot_centr, params.angle};
     output_image.setPixelColor(rot_centr, "black");
-    output_image.setPixelColor(rect.topLeft(), "red");
-    output_image.setPixelColor(rect.topRight(), "red");
-    output_image.setPixelColor(rect.bottomLeft(), "red");
-    output_image.setPixelColor(rect.bottomRight(), "red");
-    // QColor result = interpolator->interpolateColor(transform, rect);
 
-    Transform transform{rot_centr, 90};
+    for (int i = 0; i <= 360 - params.angle; i += params.angle)
+    {
+        output_image.setPixelColor(rect.topLeft(), "green");
+        output_image.setPixelColor(rect.topRight(), "red");
+        output_image.setPixelColor(rect.bottomLeft(), "blue");
+        output_image.setPixelColor(rect.bottomRight(), "purple");
+        rect = transform(rect);
+    }
 
-    output_image.save(output_path.absoluteFilePath());
+    output_image.save(output_path.absoluteFilePath() + "BITMAPA_transformed_" +
+                      QString::number(params.angle) + "_st_" +
+                      QString::number(params.led_size) + "_led_size_" +
+                      QString::number(params.offset.y()) + "_offset_" + ".png");
 
     EXPECT_EQ(true, true);
 }
