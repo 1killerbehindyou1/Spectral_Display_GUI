@@ -6,7 +6,10 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
   DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
 
 add_custom_target(build-time-make-directory ALL
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture)
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture/test_polygon_ruler_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture/test_bounding_rect_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture/test_polygon_contains_point
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture/test_library)
 
 add_executable(InterpolatorTest
   InterpolatorTest.cpp
@@ -29,7 +32,7 @@ target_link_libraries(InterpolatorTest
   Qt${QT_VERSION_MAJOR}::Gui
 )
 
-# ######################################################################
+# ############################TRANSFORMATION TEST##############################
 add_executable(TransformationTest
   TransformationTest.cpp
 )
@@ -42,6 +45,28 @@ target_compile_definitions(TransformationTest
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(TransformationTest
+  PRIVATE
+  gtest_main
+  gmock
+  QPolygonTransform
+
+  Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
+)
+
+# #############################LIBRARY TEST#################################
+add_executable(QPolygonTransform_libTest
+  QPolygonTransform_libTest.cpp
+)
+
+target_include_directories(QPolygonTransform_libTest
+  PUBLIC ../src
+)
+
+target_compile_definitions(QPolygonTransform_libTest
+  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+target_link_libraries(QPolygonTransform_libTest
   PRIVATE
   gtest_main
   gmock

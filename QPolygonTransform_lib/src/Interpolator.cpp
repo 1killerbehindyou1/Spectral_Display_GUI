@@ -35,29 +35,24 @@ Interpolator::Interpolator(QObject* parent)
 }
 void Interpolator::setPixmap(QPixmap* pixmap) { inerpolator_pixmap = pixmap; }
 
-QColor Interpolator::interpolateColor(Transform transform, const QRectF& rect)
+QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
 {
     if (inerpolator_pixmap != nullptr)
     {
-        QPolygonF transformed_poly; // poligon with transformed points
-        transformed_poly << transform(rect.topLeft())
-                         << transform(rect.bottomLeft())
-                         << transform(rect.bottomRight())
-                         << transform(rect.topRight());
         QPoint curr_point{};
         QColor led_color{};
-        QRectF bounding_rect{transformed_poly.boundingRect()};
+
         QImage image{inerpolator_pixmap->toImage()};
 
         int count{};
-
-        for (int y = 0; y < bounding_rect.height(); y++)
+        QRectF rect_boundig_f = transformed_poly.boundingRect();
+        for (int y = 0; y < rect_boundig_f.height(); y++)
         {
-            curr_point.setY(bounding_rect.topLeft().y() + y);
+            curr_point.setY(rect_boundig_f.topLeft().y() + y);
 
-            for (int x = 0; x < bounding_rect.width(); x++)
+            for (int x = 0; x < rect_boundig_f.width(); x++)
             {
-                curr_point.setX(bounding_rect.topLeft().x() + x);
+                curr_point.setX(rect_boundig_f.topLeft().x() + x);
 
                 if (image.valid(curr_point) &&
                     (transformed_poly.containsPoint(curr_point,
@@ -78,31 +73,33 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
                                     int number_of_leds)
 {
 
-    QPointF rot_centr(inerpolator_pixmap->width() / 2,
-                      inerpolator_pixmap->height() / 2);
+    QPoint rot_centr(inerpolator_pixmap->width() / 2,
+                     inerpolator_pixmap->height() / 2);
 
-    QRectF rect{QPoint{static_cast<int>(led_size * 0.5),
-                       static_cast<int>(led_size * (-0.5))},
-                QSize{led_size, led_size}};
     int width = static_cast<int>(360 / deg_angle);
-
     QImage output_image{number_of_leds, width, QImage::Format_RGB32};
 
-    QPoint pixel{0, 0};
-    int k = 0;
-    for (int rot = 0; rot <= 360; rot += deg_angle)
+    QPoint curr_rect_corner = rot_centr;
+
+    for (int led_idx = 1; led_idx < number_of_leds; led_idx++)
     {
-        Transform transformator{rot_centr, rot};
-        pixel.setY(k++);
+        curr_rect_corner.setX(curr_rect_corner.x() + led_size);
+        auto temp_point = QPointF(curr_rect_corner);
+        QRectF rect_f{temp_point, QSize{led_size, led_size}};
+        rect_f.moveCenter(curr_rect_corner);
 
-        for (int i = 0; i < number_of_leds; i++)
+        for (int ang_idx = 0; ang_idx <= 360 - deg_angle; ang_idx += deg_angle)
         {
-            pixel.setX(i);
-            rect.moveTo(rect.topLeft() + QPointF{rect.width(), 0});
+            Transform transform{rot_centr, ang_idx};
+            QPointF transformed_curr_rect_corner = transform(curr_rect_corner);
 
-            QColor color = interpolateColor(transformator, rect);
-            if (color.isValid())
-                output_image.setPixelColor(pixel, color);
+            auto transformed_poly_f = transform(QPolygonF(rect_f));
+            QPoint pixel{led_idx, ang_idx};
+
+            QColor color_r = interpolateColor(transformed_poly_f);
+
+            if (color_r.isValid())
+                output_image.setPixelColor(pixel, color_r);
             else
                 break;
         }
