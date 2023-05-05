@@ -19,7 +19,8 @@ class Transform
 public:
     Transform(const QPointF& rotCenter, float deg_angle);
     QPointF operator()(const QPointF& point);
-    QRect operator()(const QRectF& point);
+    QRect operator()(const QRectF& rect);
+    QPolygonF operator()(const QPolygonF& poly);
 
 private:
     QPointF m_rotCenter;

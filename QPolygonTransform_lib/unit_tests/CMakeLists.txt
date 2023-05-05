@@ -1,5 +1,12 @@
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
+  DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
+
+add_custom_target(build-time-make-directory ALL
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/GeneratedPicture)
 
 add_executable(InterpolatorTest
   InterpolatorTest.cpp

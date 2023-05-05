@@ -61,7 +61,6 @@ struct Parameters
 {
     int led_size;
     int angle;
-    QPoint offset;
     int led_number;
 };
 
@@ -87,6 +86,16 @@ public:
         img.setPixelColor(rect.bottomLeft(), "blue");
         img.setPixelColor(rect.bottomRight(), "purple");
     }
+    void printRect(QImage& img, QPolygonF& poly)
+    {
+        QStringList colors{"green", "red", "blue", "purple"};
+
+        std::size_t idx = 0;
+        for (QPointF& p : poly)
+        {
+            img.setPixelColor(p.toPoint(), colors[(idx++) % colors.size()]);
+        }
+    }
 
     void saveImg(QImage& output_image, Parameters params)
     {
@@ -94,11 +103,15 @@ public:
             output_path.absoluteFilePath() + "BITMAPA_transformed_" +
             QString::number(params.angle) + "_st_" +
             QString::number(params.led_size) + "_led_size_" +
-            QString::number(params.offset.y()) + "_offset_" + ".png");
+            QString::number(params.led_number) + "_led_number.png");
     }
 
-    QFileInfo output_path{"C:\\Users\\mplesniak\\Pictures\\results\\"};
-    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
+    QFileInfo output_path{"C:\\Users\\mplesniak\\Desktop\\1. "
+                          "Mentoring_QT_project\\Spectral_Display_"
+                          "GUI\\build\\bin\\UnitTests\\GeneratedPicture\\"};
+    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Desktop\\1. "
+                          "Mentoring_QT_project\\Spectral_Display_"
+                          "GUI\\build\\bin\\UnitTests\\Pictures\\BITMAPA.png"};
     QPixmap* pix_map;
     QGuiApplication* app;
     Interpolator* interpolator;
@@ -106,41 +119,38 @@ public:
 
 ///////////////////////////////////////////////////////////////
 std::vector<Parameters> param_1{
-    {1, 30, {0, 50}, 10},   {2, 30, {0, 50}, 10},   {3, 30, {0, 50}, 10},
-    {5, 30, {0, 50}, 10},   {10, 30, {0, 50}, 10},  {15, 30, {0, 50}, 10},
-    {20, 30, {0, 50}, 10},  {25, 30, {0, 50}, 10},  {1, 30, {0, 100}, 10},
-    {2, 30, {0, 100}, 10},  {3, 10, {0, 100}, 10},  {5, 10, {0, 100}, 10},
-    {10, 10, {0, 100}, 10}, {15, 10, {0, 100}, 10}, {20, 30, {0, 100}, 10},
-    {25, 30, {0, 100}, 10}};
+    {2, 30, 7},  {3, 30, 7},  {5, 30, 7},  {10, 30, 7}, {15, 30, 7},
+    {20, 30, 7}, {25, 30, 7}, {1, 30, 5},  {2, 30, 5},  {3, 10, 5},
+    {5, 30, 5},  {10, 30, 5}, {15, 30, 5}, {20, 30, 5}, {25, 30, 5}};
 
-TEST_P(InterpolationTestWithParams, initial_test)
+TEST_P(InterpolationTestWithParams, polygon_ruler_print)
 {
-    const auto& params = GetParam();
+    auto& params = GetParam();
 
     QPoint rot_centr(pix_map->width() / 2, pix_map->height() / 2);
     QImage output_image{pix_map->size(), QImage::Format_RGB32};
     output_image.fill("white");
-
-    QPointF p{};
-    p += rot_centr + params.offset;
-    // rect.moveTo(rot_centr + params.offset);
-
     output_image.setPixelColor(rot_centr, "black");
-    QRect rect{rot_centr, QSize{params.led_size, params.led_size}};
 
-    for (int i = 0; i <= 360 - params.angle; i += params.angle)
+    QPoint curr_rect_corner = rot_centr;
+    for (int i = 1; i < params.led_number; i++)
     {
-        Transform transform{rot_centr, params.angle};
+        curr_rect_corner.setX(curr_rect_corner.x() + params.led_size * 2);
 
-        for (int s = 0; s <= params.led_number; s++)
+        auto temp_point = QPointF(curr_rect_corner);
+        QRectF rect{temp_point, QSize{params.led_size, params.led_size}};
+
+        auto rectF = QRectF(rect);
+        rectF.moveCenter(curr_rect_corner);
+
+        for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            p = transform(p);
-            QPointF pp = p;
-            pp.setX(pp.x() + params.led_size);
-            pp.setY(pp.y() + params.led_size);
+            Transform transform{rot_centr, i};
+            QPointF pp = transform(curr_rect_corner);
+
             output_image.setPixelColor(pp.toPoint(), "green");
-            rect.moveCenter(pp.toPoint());
-            printRect(output_image, rect);
+            auto poly = transform(QPolygonF(rectF));
+            printRect(output_image, poly);
         }
     }
 

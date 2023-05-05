@@ -34,3 +34,13 @@ QRect Transform::operator()(const QRectF& rect)
     QPointF bottom_right = this->operator()(rect.bottomRight());
     return {top_left.toPoint(), bottom_right.toPoint()};
 };
+
+QPolygonF Transform::operator()(const QPolygonF& poly)
+{
+    QPolygonF result;
+    for (const QPointF& p : poly)
+    {
+        result << Transform::operator()(p);
+    }
+    return result;
+}
