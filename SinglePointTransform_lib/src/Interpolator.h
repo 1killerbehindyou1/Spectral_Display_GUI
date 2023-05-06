@@ -9,21 +9,16 @@
 #include <QVector>
 #include <cmath>
 
-/**
- * @brief Instance of ColorColmponent Class represent single color component
- * in RGB image format.
- */
-
 class Interpolator : public QObject
 {
     Q_OBJECT
 
 public:
-    Interpolator(QObject* parent = nullptr);
-
-    QColor interpolatorSetLedColor(QVector<QPointF> vector_points);
-    QVector<QPointF> interpolatorTransform(Transform transform, QRect rect);
+    Interpolator(QObject* parent = 0);
     void setPixmap(QPixmap* pixmap);
+
+    QColor interpolateColor(const QPolygonF& transformed_poly);
+    QImage transformImage(int deg_angle, int led_size, int number_of_leds);
 
 private:
     QPixmap* inerpolator_pixmap;
