@@ -1,5 +1,5 @@
-#include "../../SinglePointTransform_lib/Interpolator.h"
 #include "BenchmarkMeasuredTask.hpp"
+#include <Interpolator.h>
 
 QImage interpolatorMeasurement(int led_number, int led_size, int angle,
                                const std::string& pixmap_path)
@@ -10,30 +10,8 @@ QImage interpolatorMeasurement(int led_number, int led_size, int angle,
 
     interpolator_obj.setPixmap(&pix_map);
 
-    QPoint rot_centr(pix_map.width() / 2, pix_map.height() / 2);
-
-    QRect rect{QPoint{static_cast<int>(led_size * 0.5),
-                      static_cast<int>(led_size * (-0.5))},
-               QSize{led_size, led_size}};
-
-    int rows = 360 / angle;
-    int cols = led_number;
-
-    QImage output_image{QSize{cols, rows}, QImage::Format_RGB32};
-
-    int rotCount = 0;
-    for (int rot = 0; rot < 360; rot += angle, ++rotCount)
-    {
-        for (int i = 0; i < led_number; i++)
-        {
-            rect.moveTo(rect.topLeft() + QPoint{led_size, 0});
-
-            QColor color = interpolator_obj.interpolatorSetLedColor(
-                interpolator_obj.interpolatorTransform(
-                    Transform{rot_centr, angle}, rect));
-            output_image.setPixelColor(QPoint{i, rotCount}, color);
-        }
-    }
+    QImage output_image =
+        interpolator_obj.transformImage(angle, led_size, led_number);
 
     return output_image;
 }

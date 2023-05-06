@@ -1,7 +1,14 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/Benchmark)
 
 find_package(QT NAMES Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../Pictures/BITMAPA.png
+    DESTINATION ${CMAKE_BINARY_DIR}/bin/Benchmark/Pictures/)
+
+add_custom_target(build-time-make-directory-bench ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/Benchmark)
 
 # ////////////////////////// Create library witch function main()
 add_library(LibraryBenchmark STATIC
@@ -35,6 +42,10 @@ target_link_libraries(SinglePointBenchmark
     LibraryBenchmark
 )
 
+target_include_directories(SinglePointBenchmark
+    PUBLIC ../SinglePointTransform_lib/src
+)
+
 # /////////////// Create executable to benchmark QPolygonTransform library
 add_executable(QPolygonBenchmark
     QPolygonBenchmark/QPolygonTask.cpp
@@ -49,6 +60,9 @@ target_link_libraries(QPolygonBenchmark
     Qt${QT_VERSION_MAJOR}::Gui
     QPolygonTransform
     LibraryBenchmark
+)
+target_include_directories(QPolygonBenchmark
+    PUBLIC ../QPolygonTransform_lib/src
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

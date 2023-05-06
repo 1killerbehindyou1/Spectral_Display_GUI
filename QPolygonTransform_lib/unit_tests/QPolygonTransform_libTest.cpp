@@ -93,8 +93,9 @@ public:
                           "Mentoring_QT_project\\Spectral_Display_"
                           "GUI\\build\\bin\\UnitTests\\Pictures\\BITMAPA.png"};
 
-    QFileInfo output_path{pixmap_path.absoluteFilePath() +
-                          "\\..\\..\\GeneratedPicture\\"};
+    QFileInfo output_path{
+        pixmap_path.absoluteFilePath() +
+        "\\..\\..\\TestQPolygonTransformLibibrary\\GeneratedPicture\\"};
 
     QPixmap* pix_map;
     QGuiApplication* app;
@@ -103,8 +104,8 @@ public:
 
 ///////////////////////////////////////////////////////////////
 std::vector<Parameters> param_1{
-    {1, 1, 50},  {2, 1, 50},  {3, 1, 50},  {5, 1, 50},  {10, 1, 50},
-    {15, 1, 50}, {20, 1, 50}, {25, 1, 50}, {30, 1, 50}, {35, 1, 50}};
+    {1, 1, 240}, {2, 1, 120}, {3, 1, 80},  {5, 1, 40},  {10, 1, 24},
+    {15, 1, 10}, {20, 1, 50}, {25, 1, 50}, {30, 1, 50}, {35, 1, 50}};
 
 TEST_P(InterpolationTestWithParams, test_library)
 {

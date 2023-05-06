@@ -11,13 +11,15 @@
 
 struct Parameters
 {
-    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Pictures\\BITMAPA.png"};
+    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Desktop\\1. "
+                          "Mentoring_QT_project\\Spectral_Display_"
+                          "GUI\\build\\bin\\Benchmark\\Pictures\\BITMAPA.png"};
     int led_number{100};
     int led_size{5};
     int angle{1};
     int iteration{100};
-    QFileInfo output_path{
-        "C:\\Users\\mplesniak\\Pictures\\BITMAPA_transformed.png"};
+    QFileInfo output_path{pixmap_path.absoluteFilePath() +
+                          "\\..\\BITMAPA_transformed.png"};
 };
 namespace benchmark
 {

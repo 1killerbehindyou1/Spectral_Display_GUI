@@ -118,8 +118,9 @@ public:
                           "Mentoring_QT_project\\Spectral_Display_"
                           "GUI\\build\\bin\\UnitTests\\Pictures\\BITMAPA.png"};
 
-    QFileInfo output_path{pixmap_path.absoluteFilePath() +
-                          "\\..\\..\\GeneratedPicture\\"};
+    QFileInfo output_path{
+        pixmap_path.absoluteFilePath() +
+        "\\..\\..\\TestQPolygonTransformLibibrary\\GeneratedPicture\\"};
 
     QPixmap* pix_map;
     QGuiApplication* app;
