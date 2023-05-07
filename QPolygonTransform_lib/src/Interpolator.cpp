@@ -90,11 +90,14 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
 
         for (int ang_idx = 0; ang_idx <= 360 - deg_angle; ang_idx += deg_angle)
         {
-            Transform transform{rot_centr, ang_idx};
+            Transform transform{
+                rot_centr,
+                (led_idx == 0 ? ang_idx : (int)(ang_idx / deg_angle))};
             QPointF transformed_curr_rect_corner = transform(curr_rect_corner);
 
             auto transformed_poly_f = transform(QPolygonF(rect_f));
-            QPoint pixel{led_idx, ang_idx};
+            QPoint pixel{led_idx,
+                         (led_idx == 0 ? ang_idx : (int)(ang_idx / deg_angle))};
 
             QColor color_r = interpolateColor(transformed_poly_f);
 
