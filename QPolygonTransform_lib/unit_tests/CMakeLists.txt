@@ -9,7 +9,8 @@ add_custom_target(build-time-make-directory-qpoly ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_ruler_print
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_bounding_rect_print
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_contains_point
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library)
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_color)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
   DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
@@ -81,4 +82,35 @@ target_link_libraries(QPolygonTransform_libTest_qpoly
 
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
+)
+target_compile_definitions(QPolygonTransform_libTest_qpoly PRIVATE
+  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
+  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
+)
+
+# ############################COLORINTERPOLTEST TEST##############################
+add_executable(ColorInterpolationTest
+  ColorInterpolationTest.cpp
+)
+
+target_include_directories(ColorInterpolationTest
+  PUBLIC ../src
+)
+
+target_compile_definitions(ColorInterpolationTest
+  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+target_link_libraries(ColorInterpolationTest
+  PRIVATE
+  gtest_main
+  gmock
+  QPolygonTransform
+
+  Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
+)
+
+target_compile_definitions(ColorInterpolationTest PRIVATE
+  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
+  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
 )

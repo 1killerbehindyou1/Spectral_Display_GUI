@@ -8,11 +8,15 @@
 #include <QPoint>
 #include <QVector>
 #include <cmath>
+namespace QPolyLib
+{
+namespace color
+{
 
-/**
- * @brief Instance of ColorColmponent Class represent single color component
- * in RGB image format.
- */
+QColor operator/(const QColor& total_intensivity, int sample_amount);
+QColor operator+=(QColor& color_a, const QColor& color_b);
+
+} // namespace color
 
 class Interpolator : public QObject
 {
@@ -28,5 +32,5 @@ public:
 private:
     QPixmap* inerpolator_pixmap;
 };
-
+} // namespace QPolyLib
 #endif

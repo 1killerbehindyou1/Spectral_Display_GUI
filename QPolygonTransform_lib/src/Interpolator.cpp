@@ -1,10 +1,14 @@
 
 #include "Interpolator.h"
+#include <QColor>
 #include <QDebug>
 #include <cmath>
 #include <iostream>
 
-namespace
+namespace QPolyLib
+{
+
+namespace color
 {
 
 QColor operator+=(QColor& color_a, const QColor& color_b)
@@ -27,7 +31,7 @@ QColor operator/(const QColor& total_intensivity, int sample_amount)
     }
     return color;
 }
-} // namespace
+} // namespace color
 
 Interpolator::Interpolator(QObject* parent)
     : QObject(parent), inerpolator_pixmap(nullptr)
@@ -37,6 +41,7 @@ void Interpolator::setPixmap(QPixmap* pixmap) { inerpolator_pixmap = pixmap; }
 
 QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
 {
+    using namespace QPolyLib::color;
     if (inerpolator_pixmap != nullptr)
     {
         QPoint curr_point{};
@@ -60,9 +65,14 @@ QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
                 {
                     count++;
                     led_color += image.pixelColor(curr_point);
+
+                    qDebug()
+                        << led_color << "+" << image.pixelColor(curr_point);
+                    qDebug() << count;
                 }
             }
         }
+        qDebug() << "led_color / count" << led_color / count;
         return led_color / count;
     }
     else
@@ -109,3 +119,4 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
     }
     return output_image;
 }
+} // namespace QPolyLib

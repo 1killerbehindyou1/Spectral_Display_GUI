@@ -5,6 +5,8 @@
 #include <complex>
 #include <iostream>
 
+namespace QPolyLib
+{
 Transform::Transform(const QPointF& rotCenter, float deg_angle)
     : m_rotCenter(rotCenter), m_angle(degToRad(deg_angle))
 {
@@ -44,3 +46,4 @@ QPolygonF Transform::operator()(const QPolygonF& poly)
     }
     return result;
 }
+} // namespace QPolyLib

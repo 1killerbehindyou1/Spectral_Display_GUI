@@ -77,16 +77,10 @@ struct TransformationParams
 class TransformationTestWithParams
     : public testing::TestWithParam<TransformationParams>
 {
-    // You can implement all the usual fixture class members here.
-    // To access the test parameter, call GetParam() from class
-    // TestWithParam<T>.
 };
 class TransformationTestWithParamsCyclic
     : public testing::TestWithParam<TransformationParams>
 {
-    // You can implement all the usual fixture class members here.
-    // To access the test parameter, call GetParam() from class
-    // TestWithParam<T>.
 };
 //////////////////////////////////////////////////////
 
@@ -95,7 +89,7 @@ TEST_P(TransformationTestWithParams, properlyTransformPoint)
 
     const auto& params = GetParam();
 
-    Transform transform{params.rotationCenter, params.rotationAngle};
+    QPolyLib::Transform transform{params.rotationCenter, params.rotationAngle};
     QPointF point_out = transform(params.inputPoint);
 
     EXPECT_NEAR(params.expectedResult.x(), point_out.x(), params.precision);
@@ -106,7 +100,7 @@ TEST_P(TransformationTestWithParamsCyclic, verifyCyclicTransforamtion)
 {
     const auto& params = GetParam();
 
-    Transform transform{params.rotationCenter, params.rotationAngle};
+    QPolyLib::Transform transform{params.rotationCenter, params.rotationAngle};
     QPointF point_in{params.inputPoint};
 
     for (int i = 0; i <= 360 - params.rotationAngle; i += params.rotationAngle)
@@ -116,15 +110,7 @@ TEST_P(TransformationTestWithParamsCyclic, verifyCyclicTransforamtion)
     EXPECT_NEAR(params.expectedResult.x(), point_in.x(), params.precision);
     EXPECT_NEAR(params.expectedResult.y(), point_in.y(), params.precision);
 }
-/*TEST_P(TransformationTestWithParams, properlyTranformPoint_v2)
-{
-    const auto& params = GetParam();
 
-    Transform transform{params.rotationCenter, params.rotationAngle};
-
-    EXPECT_THAT(transform(params.inputPoint),
-                EQUAL_TO_POINT(params.expectedResult, 1e-5));
-}*/
 std::vector<TransformationParams> transformationParams_cyclic{
     {{0, 0}, 90, {1, 1}, {1, 1}, 1e-3},
     {{0, 0}, 30, {1, 1}, {1, 1}, 1e-2},
