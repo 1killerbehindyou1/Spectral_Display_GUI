@@ -83,19 +83,14 @@ public:
     void saveImg(QImage& output_image, Parameters params, QString path)
     {
         output_image.save(
-            output_path.absoluteFilePath() + path + "BITMAPA_transformed_" +
+            QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
             QString::number(params.angle) + "_st_" +
             QString::number(params.led_size) + "_led_size_" +
             QString::number(params.led_number) + "_led_number.png");
     }
 
-    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Desktop\\1. "
-                          "Mentoring_QT_project\\Spectral_Display_"
-                          "GUI\\build\\bin\\UnitTests\\Pictures\\BITMAPA.png"};
-
-    QFileInfo output_path{
-        pixmap_path.absoluteFilePath() +
-        "\\..\\..\\TestSinglePointTransformLibibrary\\GeneratedPicture\\"};
+    QFileInfo pixmap_path{QString{INPUT_IMG_PATH}};
+    QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
 
     QPixmap* pix_map;
     QGuiApplication* app;
@@ -113,8 +108,8 @@ TEST_P(InterpolationTestWithParams, test_library)
 
     QImage output_image = interpolator->transformImage(
         params.angle, params.led_size, params.led_number);
-    saveImg(output_image, params, "test_library\\");
-
+    saveImg(output_image, params, "test_library");
+    std::cout << pixmap_path.absoluteFilePath().toStdString() << std::endl;
     EXPECT_EQ(true, true);
 }
 

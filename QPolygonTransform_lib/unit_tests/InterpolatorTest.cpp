@@ -108,19 +108,14 @@ public:
     void saveImg(QImage& output_image, Parameters params, QString path)
     {
         output_image.save(
-            output_path.absoluteFilePath() + path + "BITMAPA_transformed_" +
+            QString{OUTPUT_IMG_PATH} + "/" + path + "BITMAPA_transformed_" +
             QString::number(params.angle) + "_st_" +
             QString::number(params.led_size) + "_led_size_" +
             QString::number(params.led_number) + "_led_number.png");
     }
 
-    QFileInfo pixmap_path{"C:\\Users\\mplesniak\\Desktop\\1. "
-                          "Mentoring_QT_project\\Spectral_Display_"
-                          "GUI\\build\\bin\\UnitTests\\Pictures\\BITMAPA.png"};
-
-    QFileInfo output_path{
-        pixmap_path.absoluteFilePath() +
-        "\\..\\..\\TestQPolygonTransformLibibrary\\GeneratedPicture\\"};
+    QFileInfo pixmap_path{QString{INPUT_IMG_PATH}};
+    QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
 
     QPixmap* pix_map;
     QGuiApplication* app;
@@ -164,7 +159,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_ruler_print)
         }
     }
 
-    saveImg(output_image, params, "test_polygon_ruler_print\\");
+    saveImg(output_image, params, "test_polygon_ruler_print/");
 
     EXPECT_EQ(true, true);
 }
@@ -203,7 +198,7 @@ TEST_P(InterpolationTestWithParams, test_bounding_rect_print)
         }
     }
 
-    saveImg(output_image, params, "test_bounding_rect_print\\");
+    saveImg(output_image, params, "test_bounding_rect_print/");
 
     EXPECT_EQ(true, true);
 }
@@ -257,7 +252,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point)
         }
     }
 
-    saveImg(output_image, params, "test_polygon_contains_point\\");
+    saveImg(output_image, params, "test_polygon_contains_point/");
 
     EXPECT_EQ(true, true);
 }
@@ -311,7 +306,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_WindingFill)
     }
 
     saveImg(output_image, params,
-            "test_polygon_contains_point\\Qt_WindingFill_");
+            "test_polygon_contains_point/Qt_WindingFill_");
 
     EXPECT_EQ(true, true);
 }
@@ -365,7 +360,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_OddEvenFill)
     }
 
     saveImg(output_image, params,
-            "test_polygon_contains_point\\Qt_OddEvenFill_");
+            "test_polygon_contains_point/Qt_OddEvenFill_");
 
     EXPECT_EQ(true, true);
 }

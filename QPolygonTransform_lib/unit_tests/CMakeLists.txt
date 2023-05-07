@@ -1,13 +1,20 @@
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibibrary)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary)
+set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
+set(OUTPUT_IMG_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GeneratedPicture)
 
 add_custom_target(build-time-make-directory-qpoly ALL
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibibrary/GeneratedPicture/test_polygon_ruler_print
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibibrary/GeneratedPicture/test_bounding_rect_print
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibibrary/GeneratedPicture/test_polygon_contains_point
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibibrary/GeneratedPicture/test_library)
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_ruler_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_bounding_rect_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_contains_point
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
+  DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
+
+# ///////////////////////////////INTERPOLATOR TEST////////////////////////////////
 add_executable(InterpolatorTest_qpoly
   InterpolatorTest.cpp
 )
@@ -18,7 +25,6 @@ target_include_directories(InterpolatorTest_qpoly
 
 target_compile_definitions(InterpolatorTest_qpoly
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-
 target_link_libraries(InterpolatorTest_qpoly
   PRIVATE
   gtest_main
@@ -27,6 +33,10 @@ target_link_libraries(InterpolatorTest_qpoly
 
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
+)
+target_compile_definitions(InterpolatorTest_qpoly PRIVATE
+  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
+  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
 )
 
 # ############################TRANSFORMATION TEST##############################

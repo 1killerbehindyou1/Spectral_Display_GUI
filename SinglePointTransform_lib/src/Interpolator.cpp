@@ -57,7 +57,7 @@ QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
         return QColor{};
 }
 
-////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
 QImage Interpolator::transformImage(int deg_angle, int led_size,
                                     int number_of_leds)
