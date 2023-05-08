@@ -49,8 +49,9 @@ target_link_libraries(BasicGUI
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
 
-  # SinglePointTransform
-  QPolygonTransform
+  SinglePointTransform
+
+  # QPolygonTransform
 )
 
 set_target_properties(BasicGUI PROPERTIES

@@ -55,7 +55,6 @@ void LedRuler::paint(QPainter* painter)
                 painter->setPen(Qt::transparent);
                 painter->setBrush(color);
                 painter->drawRect(current_led_rect);
-                qDebug() << curr_rot;
             }
             painter->restore();
         }

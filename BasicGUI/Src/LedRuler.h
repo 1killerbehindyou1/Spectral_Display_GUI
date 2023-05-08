@@ -38,7 +38,7 @@ private:
     QImage* m_current_transformed_image = nullptr;
     QImage* m_output_image = nullptr;
     QPoint m_point; // środek odrysowywania
-    QPolyLib::Interpolator m_interpolator;
+    Interpolator m_interpolator;
     int m_number_of_leds;
     int m_rotation;
     int m_size;

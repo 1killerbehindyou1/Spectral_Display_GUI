@@ -65,14 +65,9 @@ QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
                 {
                     count++;
                     led_color += image.pixelColor(curr_point);
-
-                    qDebug()
-                        << led_color << "+" << image.pixelColor(curr_point);
-                    qDebug() << count;
                 }
             }
         }
-        qDebug() << "led_color / count" << led_color / count;
         return led_color / count;
     }
     else
