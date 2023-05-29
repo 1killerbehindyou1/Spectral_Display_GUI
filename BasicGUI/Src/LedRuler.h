@@ -35,6 +35,7 @@ public:
 
 private:
     QPixmap* m_pixmap = nullptr;
+    QImage* m_current_transformed_image = nullptr;
     QImage* m_output_image = nullptr;
     QPoint m_point; // środek odrysowywania
     Interpolator m_interpolator;

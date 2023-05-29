@@ -19,7 +19,7 @@ Control
 
     function getOutImage()
     {
-        return led.getRenderedImage();
+       // return led.getRenderedImage();
     }
     function checkRenderedPreview(state: bool)
     { 
