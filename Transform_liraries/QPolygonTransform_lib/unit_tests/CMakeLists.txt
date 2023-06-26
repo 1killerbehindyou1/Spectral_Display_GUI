@@ -20,8 +20,9 @@ add_executable(InterpolatorTest_qpoly
   InterpolatorTest.cpp
 )
 
-target_include_directories(InterpolatorTest_qpoly
-  PUBLIC ../src
+target_include_directories(InterpolatorTest_qpoly PUBLIC
+  ../include
+  ../../common_includes
 )
 
 target_compile_definitions(InterpolatorTest_qpoly

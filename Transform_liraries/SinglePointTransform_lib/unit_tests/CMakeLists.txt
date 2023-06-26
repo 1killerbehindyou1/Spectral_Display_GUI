@@ -24,7 +24,7 @@ target_compile_definitions(SinglePointTransform_libTest PRIVATE
 )
 
 target_include_directories(SinglePointTransform_libTest
-  PUBLIC ../src
+  PUBLIC ../include
 )
 
 target_compile_definitions(SinglePointTransform_libTest

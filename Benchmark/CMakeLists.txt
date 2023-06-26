@@ -43,7 +43,9 @@ target_link_libraries(SinglePointBenchmark
 )
 
 target_include_directories(SinglePointBenchmark
-    PUBLIC ../SinglePointTransform_lib/src
+    PUBLIC
+    ../Transform_libraries/QPolygonTransform_lib/include
+    ../Transform_libraries/common_includes
 )
 
 # /////////////// Create executable to benchmark QPolygonTransform library
@@ -61,8 +63,9 @@ target_link_libraries(QPolygonBenchmark
     QPolygonTransform
     LibraryBenchmark
 )
-target_include_directories(QPolygonBenchmark
-    PUBLIC ../QPolygonTransform_lib/src
+target_include_directories(QPolygonBenchmark PUBLIC
+    ../Transform_libraries/QPolygonTransform_lib/include
+    ../Transform_libraries/common_includes
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

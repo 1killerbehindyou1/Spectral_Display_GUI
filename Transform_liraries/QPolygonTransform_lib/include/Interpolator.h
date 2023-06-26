@@ -2,22 +2,12 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-#include "Transformation.h"
-#include <Constants.hpp>
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>
 #include <QVector>
+#include <Transformation.h>
 #include <cmath>
-namespace QPolyLib
-{
-namespace color
-{
-
-QColor operator/(const QColor& total_intensivity, int sample_amount);
-QColor operator+=(QColor& color_a, const QColor& color_b);
-
-} // namespace color
 
 class Interpolator : public QObject
 {
@@ -33,5 +23,5 @@ public:
 private:
     QPixmap* inerpolator_pixmap;
 };
-} // namespace QPolyLib
+
 #endif

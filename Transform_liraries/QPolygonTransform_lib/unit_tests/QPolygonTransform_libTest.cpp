@@ -1,66 +1,6 @@
+#include "TestUtils.hpp"
 #include <Interpolator.h>
-#include <QDebug>
-#include <QDir>
-#include <QFileInfo>
-#include <QGuiApplication>
-#include <QImage>
-#include <QString>
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <iostream>
 
-/*void PrintTo(const QPointF& point, std::ostream* out)
-{
-    *out << "QPointF(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-void PrintTo(const QPoint& point, std::ostream* out)
-{
-    *out << "QPoint(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}*/
-
-template <typename PointType>
-void PrintTo(PointType&& point, std::ostream* out)
-{
-    *out << "Point(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-/*std::ostream& operator<<(std::ostream& out, const QPointF& point)
-{
-    return out << "QPointF(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPoint& point)
-{
-    return out << "QPoint(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}*/
-
-template <typename PointType,
-          typename = decltype(std::declval<PointType>().x() +
-                              std::declval<PointType>().y())>
-std::ostream& operator<<(std::ostream& out,
-                         PointType&& point) // universal reference
-{
-    return out << "Point(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-//////////////////////////////////////////////////////
-
-template <typename T>
-std::string to_string(const T& val)
-{
-    std::ostringstream out;
-    out << val;
-    return out.str();
-}
-
-//////////////////////////////////////////////////////
 
 MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
            QString("%1 equeal to %2 with delta %3")

@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-namespace constants_lib
+namespace constants
 {
 
 constexpr double pi = 3.141592653589793238462643383279502884197169399375L;
@@ -9,6 +9,31 @@ constexpr double two_pi = 2 * pi;
 constexpr double inv_pi = 1 / pi;
 constexpr inline double degToRad(float deg) { return deg * pi / 180; }
 
-} // namespace constants_lib
+} // namespace constants
+
+namespace color
+{
+
+QColor operator+=(QColor& color_a, const QColor& color_b)
+{
+    color_a.setRedF(color_a.redF() + color_b.redF());
+    color_a.setGreenF(color_a.greenF() + color_b.greenF());
+    color_a.setBlueF(color_a.blueF() + color_b.blueF());
+
+    return color_a;
+}
+
+QColor operator/(const QColor& total_intensivity, int sample_amount)
+{
+    QColor color;
+    if (sample_amount > 0)
+    {
+        color.setRedF(total_intensivity.redF() / sample_amount);
+        color.setGreenF(total_intensivity.greenF() / sample_amount);
+        color.setBlueF(total_intensivity.blueF() / sample_amount);
+    }
+    return color;
+}
+} // namespace color
 
 #endif

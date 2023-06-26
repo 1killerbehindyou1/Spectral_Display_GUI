@@ -1,49 +1,5 @@
+#include "TestUtils.hpp"
 #include <Interpolator.h>
-#include <QDebug>
-#include <QDir>
-#include <QFileInfo>
-#include <QGuiApplication>
-#include <QImage>
-#include <QString>
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <iostream>
-
-void PrintTo(const QPointF& point, std::ostream* out)
-{
-    *out << "QPointF(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-void PrintTo(const QPoint& point, std::ostream* out)
-{
-    *out << "QPoint(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPointF& point)
-{
-    return out << "QPointF(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPoint& point)
-{
-    return out << "QPoint(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-//////////////////////////////////////////////////////
-
-template <typename T>
-std::string to_string(const T& val)
-{
-    std::ostringstream out;
-    out << val;
-    return out.str();
-}
-
-//////////////////////////////////////////////////////
 
 MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
            QString("%1 equeal to %2 with delta %3")
@@ -75,7 +31,7 @@ public:
         app = new QGuiApplication{argc, argv};
         pix_map = new QPixmap{};
         pix_map->load(pixmap_path.absoluteFilePath());
-        interpolator = new QPolyLib::Interpolator{app};
+        interpolator = new Interpolator{app};
         interpolator->setPixmap(pix_map);
     }
     ~InterpolationTestWithParams() { delete app; }
@@ -119,7 +75,7 @@ public:
 
     QPixmap* pix_map;
     QGuiApplication* app;
-    QPolyLib::Interpolator* interpolator;
+    Interpolator* interpolator;
 };
 
 ///////////////////////////////////////////////////////////////
@@ -150,7 +106,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_ruler_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -186,7 +142,7 @@ TEST_P(InterpolationTestWithParams, test_bounding_rect_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -224,7 +180,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -279,7 +235,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_WindingFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(QPolygonF(rectF));
@@ -333,7 +289,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_OddEvenFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(QPolygonF(rectF));

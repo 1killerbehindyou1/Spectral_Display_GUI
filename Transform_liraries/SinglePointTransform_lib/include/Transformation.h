@@ -2,6 +2,7 @@
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 
+#include <Constants.hpp>
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>
@@ -9,8 +10,6 @@
 #include <QVector>
 #include <cmath>
 
-namespace QPolyLib
-{
 
 class Transform
 {
@@ -24,5 +23,5 @@ private:
     QPointF m_rotCenter;
     float m_angle;
 };
-} // namespace QPolyLib
+
 #endif
