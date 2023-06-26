@@ -1,10 +1,6 @@
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary)
-set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
-set(OUTPUT_IMG_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GeneratedPicture)
-
 add_custom_target(build-time-make-directory-qpoly ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_ruler_print
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_bounding_rect_print
@@ -12,7 +8,7 @@ add_custom_target(build-time-make-directory-qpoly ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_color)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
+file(COPY ${TEST_BITMAP_LOCATION}
   DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
 
 # ///////////////////////////////INTERPOLATOR TEST////////////////////////////////

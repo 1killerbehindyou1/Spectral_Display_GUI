@@ -3,6 +3,7 @@
 #define INTERPOLATION_H
 
 #include "Transformation.h"
+#include <Constants.hpp>
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>
