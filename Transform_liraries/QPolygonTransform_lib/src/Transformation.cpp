@@ -3,7 +3,9 @@
 #include <QDebug>
 #include <cmath>
 #include <complex>
+#include <constants.h>
 #include <iostream>
+
 
 namespace QPolyLib
 {

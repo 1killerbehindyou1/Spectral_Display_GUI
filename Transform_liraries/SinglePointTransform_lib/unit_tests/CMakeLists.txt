@@ -3,7 +3,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestSinglePointTransformLibrary)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../Pictures/BITMAPA.png
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../../../Pictures/BITMAPA.png
   DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
 
 set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
