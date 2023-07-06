@@ -4,15 +4,13 @@ project(BasicGui VERSION 0.1 LANGUAGES CXX)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
-set(SOURCE_DIR Src)
+set(SOURCE_DIR src)
 
 set(PROJECT_SOURCES
   ${SOURCE_DIR}/Main.cpp
   QMLSources/qml.qrc
   ${SOURCE_DIR}/LedRuler.cpp
-  ${SOURCE_DIR}/LedRuler.h
   ${SOURCE_DIR}/FileManager.cpp
-  ${SOURCE_DIR}/FileManager.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -40,8 +38,19 @@ else()
   endif()
 endif()
 
+target_include_directories(BasicGUI PRIVATE
+  includes
+)
 target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+# set(USED_TRANSFORM_LIBRARY "")
+
+# if(${TRANSFORM_LIB} EQUAL "single")
+# set(USED_TRANSFORM_LIBRARY SinglePointTransform)
+# elseif(${TRANSFORM_LIB} EQUAL "QPolygon")
+# set(USED_TRANSFORM_LIBRARY QPolygonTransform)
+# endif()
 target_link_libraries(BasicGUI
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
@@ -49,20 +58,8 @@ target_link_libraries(BasicGUI
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
 
-  SinglePointTransform
-
-  # QPolygonTransform
+  # ${USED_TRANSFORM_LIBRARY}
+  QPolygonTransform
 )
 
-set_target_properties(BasicGUI PROPERTIES
-  MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-  MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-  MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-  MACOSX_BUNDLE TRUE
-  WIN32_EXECUTABLE TRUE
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-  qt_import_qml_plugins(BasicGUI)
-  qt_finalize_executable(BasicGUI)
-endif()
+set_target_properties(BasicGUI PROPERTIES WIN32_EXECUTABLE TRUE)

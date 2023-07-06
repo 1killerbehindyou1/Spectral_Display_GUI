@@ -1,10 +1,10 @@
 
-#include "LedRuler.h"
-#include "FileManager.h"
-#include "Interpolator.h"
-#include "Transformation.h"
+#include <FileManager.h>
+#include <Interpolator.h>
+#include <LedRuler.h>
 #include <QDebug>
 #include <QPen>
+#include <Transformation.h>
 #include <iostream>
 
 LedRuler::LedRuler(QQuickItem* parent)

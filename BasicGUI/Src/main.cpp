@@ -1,6 +1,6 @@
-#include "FileManager.h"
-#include "Interpolator.h"
-#include "LedRuler.h"
+#include <FileManager.h>
+#include <Interpolator.h>
+#include <LedRuler.h>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>

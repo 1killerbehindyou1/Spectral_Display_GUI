@@ -19,5 +19,5 @@ target_link_libraries(SinglePointBenchmark
 )
 
 target_include_directories(SinglePointBenchmark
-    PUBLIC ${QPOLYGON_INCLUDE_DIR}
+    PUBLIC ${SINGLE_POINT_INCLUDE_DIR}
 )

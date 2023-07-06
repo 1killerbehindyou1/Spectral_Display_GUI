@@ -2,7 +2,7 @@
 #ifndef LED_RULER_H
 #define LED_RULER_H
 
-#include "Interpolator.h"
+#include <Interpolator.h>
 #include <QColor>
 #include <QDebug>
 #include <QObject>
@@ -38,7 +38,7 @@ private:
     QImage* m_current_transformed_image = nullptr;
     QImage* m_output_image = nullptr;
     QPoint m_point; // środek odrysowywania
-    Interpolator m_interpolator;
+    QPolyLib::Interpolator m_interpolator;
     int m_number_of_leds;
     int m_rotation;
     int m_size;

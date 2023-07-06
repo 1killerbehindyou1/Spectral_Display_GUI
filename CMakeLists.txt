@@ -6,21 +6,29 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 5)
-set(ROOT_PROJECT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary)
 
-set(TEST_BITMAP_LOCATION ${ROOT_PROJECT_PATH}/Pictures/BITMAPA.png)
-
+# ######################################################
+# VARIABLES DEFINITION
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib_static)
 
+set(IMAGES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Pictures)
+set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
+
+set(QPOLYGON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Transform_algorythms/QPolygonTransform/includes)
+set(SINGLE_POINT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Transform_algorythms/SinglePointTransform/src)
+
+set(COMMON_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/Transform_algorythms/common_includes)
+
+# set(TRANSFORM_LIB "QPolygon")
 add_subdirectory(googletest)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+add_subdirectory(Pictures)
 add_subdirectory(BasicGUI)
 add_subdirectory(Benchmark)
-add_subdirectory(Transform_liraries)
+add_subdirectory(Transform_algorythms)

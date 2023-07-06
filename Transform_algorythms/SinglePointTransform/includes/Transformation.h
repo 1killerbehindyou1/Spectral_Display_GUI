@@ -2,14 +2,13 @@
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 
-#include <Constants.hpp>
+#include <Constants.h>
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>
 #include <QRect>
 #include <QVector>
 #include <cmath>
-
 
 class Transform
 {
