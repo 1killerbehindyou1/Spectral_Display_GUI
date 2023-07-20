@@ -1,0 +1,4 @@
+
+add_subdirectory(CommonPart)
+add_subdirectory(SinglePintTransform)
+add_subdirectory(QPolygonTransform)
