@@ -1,7 +1,4 @@
-
 #include <FileManager.h>
-#include <QDebug>
-#include <iostream>
 
 FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
@@ -12,6 +9,7 @@ void FileManager::savePixMap(QUrl path, QImage* output_image)
     QString qstr = path.toLocalFile();
     output_image->save(qstr);
 }
+
 bool FileManager::loadPixMap(QUrl path)
 {
     if (!path.isLocalFile())
@@ -42,7 +40,7 @@ bool FileManager::loadPixMap(QUrl path)
         return false;
     }
     m_path = qstr;
-    // emit FileManager::setImageOnGui();
+    // emit setImageOnGui();
 
     return true;
 }

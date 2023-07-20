@@ -18,8 +18,8 @@
 
 class LedRuler : public QQuickPaintedItem
 {
-    Q_OBJECT
-    QML_ELEMENT
+    // Q_OBJECT
+    // QML_ELEMENT
     Q_PROPERTY(QPixmap* pixmap WRITE setPixmap)
 
 public:
