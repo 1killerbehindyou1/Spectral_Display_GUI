@@ -11,7 +11,7 @@ add_executable(SinglePointTransform_libTest
 target_compile_definitions(SinglePointTransform_libTest PRIVATE
   $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
   -DBINARY_BUILD_PATH="${CMAKE_BINARY_DIR}/bin"
-  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH_SINGLE_TEST}"
+  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
   -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
 )
 

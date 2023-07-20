@@ -1,6 +1,6 @@
 
-#ifndef IMAGE_VIEWER_H
-#define IMAGE_VIEWER_H
+#ifndef FILE_MANAGER_H
+#define FILE_MANAGER_H
 
 #include <QColor>
 #include <QDebug>

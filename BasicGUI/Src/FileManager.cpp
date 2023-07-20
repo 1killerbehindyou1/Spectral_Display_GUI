@@ -16,10 +16,10 @@ bool FileManager::loadPixMap(QUrl path)
 {
     if (!path.isLocalFile())
     {
-        emit fileErrLoad(
-            "Loaded file failed",
-            "Ouch! This is remote file. We don't have handling for that "
-            "right now");
+        // emit fileErrLoad(
+        //     "Loaded file failed",
+        //     "Ouch! This is remote file. We don't have handling for that "
+        //     "right now");
         return false;
     }
 
@@ -29,8 +29,8 @@ bool FileManager::loadPixMap(QUrl path)
 
     if (!img.load(qstr))
     {
-        emit fileErrLoad("Loaded file failed",
-                         "File is corrupted or isn't graphic file");
+        // emit fileErrLoad("Loaded file failed",
+        //                  "File is corrupted or isn't graphic file");
         return false;
     }
 
@@ -38,11 +38,11 @@ bool FileManager::loadPixMap(QUrl path)
 
     if (m_pixmap.isNull())
     {
-        emit fileErrLoad("Loaded file failed", "Loaded file is null");
+        // emit fileErrLoad("Loaded file failed", "Loaded file is null");
         return false;
     }
     m_path = qstr;
-    emit setImageOnGui();
+    // emit FileManager::setImageOnGui();
 
     return true;
 }

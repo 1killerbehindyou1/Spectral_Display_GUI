@@ -4,6 +4,10 @@ project(BasicGui VERSION 0.1 LANGUAGES CXX)
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
 set(SOURCE_DIR src)
 
 set(PROJECT_SOURCES
@@ -44,13 +48,6 @@ target_include_directories(BasicGUI PRIVATE
 target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-# set(USED_TRANSFORM_LIBRARY "")
-
-# if(${TRANSFORM_LIB} EQUAL "single")
-# set(USED_TRANSFORM_LIBRARY SinglePointTransform)
-# elseif(${TRANSFORM_LIB} EQUAL "QPolygon")
-# set(USED_TRANSFORM_LIBRARY QPolygonTransform)
-# endif()
 target_link_libraries(BasicGUI
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
@@ -58,7 +55,6 @@ target_link_libraries(BasicGUI
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
 
-  # ${USED_TRANSFORM_LIBRARY}
   QPolygonTransform
 )
 

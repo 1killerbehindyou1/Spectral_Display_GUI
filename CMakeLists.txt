@@ -21,7 +21,6 @@ set(SINGLE_POINT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Transform_algorythms/Si
 
 set(COMMON_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/Transform_algorythms/common_includes)
 
-# set(TRANSFORM_LIB "QPolygon")
 add_subdirectory(googletest)
 
 set(CMAKE_AUTOUIC ON)
