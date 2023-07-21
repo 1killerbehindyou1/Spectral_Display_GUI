@@ -1,44 +1,7 @@
+#include "CommonTests.hpp"
 #include <QDebug>
 #include <QString>
 #include <Transformation.hpp>
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
-void PrintTo(const QPointF& point, std::ostream* out)
-{
-    *out << "QPointF(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-void PrintTo(const QPoint& point, std::ostream* out)
-{
-    *out << "QPoint(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPointF& point)
-{
-    return out << "QPointF(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPoint& point)
-{
-    return out << "QPoint(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-//////////////////////////////////////////////////////
-
-template <typename T>
-std::string to_string(const T& val)
-{
-    std::ostringstream out;
-    out << val;
-    return out.str();
-}
-
-//////////////////////////////////////////////////////
 
 MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
            QString("%1 equeal to %2 with delta %3")
@@ -51,8 +14,6 @@ MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
 
     return abs(diff.x()) < delta || abs(diff.y()) < delta;
 }
-
-//////////////////////////////////////////////////////
 
 struct TransformationParams
 {
