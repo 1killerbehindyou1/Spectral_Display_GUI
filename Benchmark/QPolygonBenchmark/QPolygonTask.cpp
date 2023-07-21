@@ -1,4 +1,4 @@
-#include "BenchmarkMeasuredTask.hpp"
+#include <BenchmarkMeasuredTask.hpp>
 #include <Interpolator.h>
 #include <QDebug>
 #include <string>

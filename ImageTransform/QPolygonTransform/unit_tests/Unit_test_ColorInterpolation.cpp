@@ -1,3 +1,4 @@
+#include <ColorCalc.h>
 #include <Interpolator.h>
 #include <QDebug>
 #include <QDir>
@@ -128,7 +129,7 @@ std::vector<Parameters> param_1{{1, 7},  {2, 7},  {3, 7},  {5, 7}, {10, 5},
 
 TEST_P(ColorInterpolationTestWithParams, color_test)
 {
-    using namespace QPolyLib::color;
+    using namespace common;
     auto& params = GetParam();
     QRectF rect{QPointF{100, 100}, QSizeF{20, 20}};
     QImage output_image{pix_map->size(), QImage::Format_RGB32};

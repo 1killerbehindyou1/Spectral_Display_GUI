@@ -89,7 +89,7 @@ TEST_P(TransformationTestWithParams, properlyTransformPoint)
 
     const auto& params = GetParam();
 
-    QPolyLib::Transform transform{params.rotationCenter, params.rotationAngle};
+    common::Transform transform{params.rotationCenter, params.rotationAngle};
     QPointF point_out = transform(params.inputPoint);
 
     EXPECT_NEAR(params.expectedResult.x(), point_out.x(), params.precision);
@@ -100,7 +100,7 @@ TEST_P(TransformationTestWithParamsCyclic, verifyCyclicTransforamtion)
 {
     const auto& params = GetParam();
 
-    QPolyLib::Transform transform{params.rotationCenter, params.rotationAngle};
+    common::Transform transform{params.rotationCenter, params.rotationAngle};
     QPointF point_in{params.inputPoint};
 
     for (int i = 0; i <= 360 - params.rotationAngle; i += params.rotationAngle)

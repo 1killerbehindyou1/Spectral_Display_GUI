@@ -11,10 +11,9 @@
 #include <cmath>
 #include <iostream>
 
-using namespace common;
-
 namespace QPolyLib
 {
+using namespace common;
 
 class Interpolator : public QObject
 {

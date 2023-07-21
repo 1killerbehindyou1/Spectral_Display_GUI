@@ -5,6 +5,7 @@
 #include <QGuiApplication>
 #include <QImage>
 #include <QString>
+#include <Transformation.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <iostream>
@@ -150,7 +151,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_ruler_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -186,7 +187,7 @@ TEST_P(InterpolationTestWithParams, test_bounding_rect_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -224,7 +225,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
@@ -279,7 +280,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_WindingFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(QPolygonF(rectF));
@@ -333,7 +334,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_OddEvenFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            QPolyLib::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(QPolygonF(rectF));

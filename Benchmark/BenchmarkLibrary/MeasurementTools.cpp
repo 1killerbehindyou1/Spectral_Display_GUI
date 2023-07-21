@@ -1,5 +1,5 @@
-#include "MeasurementTools.hpp"
-#include "BenchmarkMeasuredTask.hpp"
+#include <BenchmarkMeasuredTask.hpp>
+#include <MeasurementTools.hpp>
 
 void benchmark::myMessageOutput(
     QtMsgType type, [[maybe_unused]] const QMessageLogContext& context,

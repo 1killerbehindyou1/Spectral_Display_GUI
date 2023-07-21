@@ -7,7 +7,6 @@
 #include <QString>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <iostream>
 
 void PrintTo(const QPointF& point, std::ostream* out)
 {
@@ -61,55 +60,30 @@ MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
 struct Parameters
 {
     int led_size;
+    int angle;
     int led_number;
 };
 
-class ColorInterpolationTestWithParams
-    : public testing::TestWithParam<Parameters>
+class InterpolationTestWithParams : public testing::TestWithParam<Parameters>
 {
-
 public:
-    ColorInterpolationTestWithParams()
+    InterpolationTestWithParams()
     {
         int argc{};
         char* argv[]{};
         app = new QGuiApplication{argc, argv};
         pix_map = new QPixmap{};
         pix_map->load(pixmap_path.absoluteFilePath());
-        interpolator = new QPolyLib::Interpolator{app};
+        interpolator = new SniglePointlib::Interpolator{app};
         interpolator->setPixmap(pix_map);
     }
-    ~ColorInterpolationTestWithParams() { delete app; }
-
-    void printRect(QImage& img, QRect& rect)
-    {
-        img.setPixelColor(rect.topLeft(), "green");
-        img.setPixelColor(rect.topRight(), "red");
-        img.setPixelColor(rect.bottomLeft(), "blue");
-        img.setPixelColor(rect.bottomRight(), "purple");
-    }
-    void printRect(QImage& img, QPolygonF& poly)
-    {
-        QStringList colors{"green", "red", "blue", "purple"};
-
-        std::size_t idx = 0;
-        for (QPointF& p : poly)
-        {
-            img.setPixelColor(p.toPoint(), colors[(idx++) % colors.size()]);
-        }
-    }
-    void printRect(QImage& img, QRectF& rect_f)
-    {
-        img.setPixelColor(rect_f.topLeft().toPoint(), "orange");
-        img.setPixelColor(rect_f.topRight().toPoint(), "orange");
-        img.setPixelColor(rect_f.bottomLeft().toPoint(), "orange");
-        img.setPixelColor(rect_f.bottomRight().toPoint(), "orange");
-    }
+    ~InterpolationTestWithParams() { delete app; }
 
     void saveImg(QImage& output_image, Parameters params, QString path)
     {
         output_image.save(
             QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
+            QString::number(params.angle) + "_st_" +
             QString::number(params.led_size) + "_led_size_" +
             QString::number(params.led_number) + "_led_number.png");
     }
@@ -119,28 +93,24 @@ public:
 
     QPixmap* pix_map;
     QGuiApplication* app;
-    QPolyLib::Interpolator* interpolator;
+    SniglePointlib::Interpolator* interpolator;
 };
 
 ///////////////////////////////////////////////////////////////
-std::vector<Parameters> param_1{{1, 7},  {2, 7},  {3, 7},  {5, 7}, {10, 5},
-                                {15, 5}, {20, 4}, {25, 4}, {35, 4}};
+std::vector<Parameters> param_1{
+    {1, 1, 240}, {2, 1, 120}, {3, 1, 80},  {5, 1, 40},  {10, 1, 24},
+    {15, 1, 10}, {20, 1, 50}, {25, 1, 50}, {30, 1, 50}, {35, 1, 50}};
 
-TEST_P(ColorInterpolationTestWithParams, color_test)
+TEST_P(InterpolationTestWithParams, test_library)
 {
-    using namespace QPolyLib::color;
     auto& params = GetParam();
-    QRectF rect{QPointF{100, 100}, QSizeF{20, 20}};
-    QImage output_image{pix_map->size(), QImage::Format_RGB32};
-    QPoint curr_point{};
-    QPolygon poly{};
 
-    output_image.fill(interpolator->interpolateColor(QPolygonF{rect}));
-    saveImg(output_image, params, "test_color");
-
+    QImage output_image = interpolator->transformImage(
+        params.angle, params.led_size, params.led_number);
+    saveImg(output_image, params, "test_library");
+    std::cout << pixmap_path.absoluteFilePath().toStdString() << std::endl;
     EXPECT_EQ(true, true);
 }
 
-INSTANTIATE_TEST_SUITE_P(StandardTransformations,
-                         ColorInterpolationTestWithParams,
+INSTANTIATE_TEST_SUITE_P(StandardTransformations, InterpolationTestWithParams,
                          testing::ValuesIn(param_1));

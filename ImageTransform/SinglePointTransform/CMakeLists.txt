@@ -1,7 +1,7 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(PROJECT_SOURCES
   src/Interpolator.cpp
@@ -22,3 +22,5 @@ target_link_libraries(SinglePointTransform
 target_include_directories(SinglePointTransform PUBLIC
   includes
 )
+
+# add_subdirectory(unit_tests)

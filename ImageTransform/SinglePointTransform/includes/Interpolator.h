@@ -1,14 +1,13 @@
 
-#ifndef INTERPOLATION_H
-#define INTERPOLATION_H
+#ifndef SINGLE_INTERPOLATION_H
+#define SINGLE_INTERPOLATION_H
 
 #include <QColor>
-#include <QPixmap>
-#include <QPoint>
-#include <QVector>
 #include <Transformation.h>
-#include <cmath>
-#include <iostream>
+
+namespace SniglePointlib
+{
+using namespace common;
 
 class Interpolator : public QObject
 {
@@ -24,5 +23,5 @@ public:
 private:
     QPixmap* inerpolator_pixmap;
 };
-
+} // namespace SniglePointlib
 #endif

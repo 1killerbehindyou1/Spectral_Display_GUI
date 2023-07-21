@@ -1,6 +1,8 @@
 #include <ColorCalc.h>
 #include <Interpolator.h>
 
+namespace SniglePointlib
+{
 using namespace common;
 
 Interpolator::Interpolator(QObject* parent)
@@ -72,3 +74,4 @@ QImage Interpolator::transformImage(int deg_angle, int led_size,
     }
     return output_image;
 }
+} // namespace SniglePointlib
