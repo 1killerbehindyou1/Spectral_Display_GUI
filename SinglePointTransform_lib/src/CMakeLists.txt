@@ -8,19 +8,19 @@ set(PROJECT_SOURCES
   Transformation.cpp
 )
 
-add_library(SinglePointTransform STATIC
-  ${PROJECT_SOURCES})
+# add_library(SinglePointTransform STATIC
+# ${PROJECT_SOURCES})
 
-target_compile_definitions(SinglePointTransform
-  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+# target_compile_definitions(SinglePointTransform
+# PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(SinglePointTransform
-  PRIVATE
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Quick
-  Qt${QT_VERSION_MAJOR}::Gui
-  Qt${QT_VERSION_MAJOR}::QuickControls2
-)
-target_include_directories(SinglePointTransform
-  PUBLIC .
-)
+# target_link_libraries(SinglePointTransform
+# PRIVATE
+# Qt${QT_VERSION_MAJOR}::Core
+# Qt${QT_VERSION_MAJOR}::Quick
+# Qt${QT_VERSION_MAJOR}::Gui
+# Qt${QT_VERSION_MAJOR}::QuickControls2
+# )
+# target_include_directories(SinglePointTransform
+# PUBLIC .
+# )

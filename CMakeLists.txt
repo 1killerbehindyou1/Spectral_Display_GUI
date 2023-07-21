@@ -19,5 +19,7 @@ set(CMAKE_AUTORCC ON)
 
 add_subdirectory(BasicGUI)
 add_subdirectory(Benchmark)
-add_subdirectory(SinglePointTransform_lib)
-add_subdirectory(QPolygonTransform_lib)
+
+# add_subdirectory(SinglePointTransform_lib)
+# add_subdirectory(QPolygonTransform_lib)
+add_subdirectory(ImageTransform)

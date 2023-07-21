@@ -1,8 +1,7 @@
+#include <Constants.h>
 #include <Transformation.h>
 
 namespace common
-{
-namespace transform
 {
 Transform::Transform(const QPointF& rotCenter, float deg_angle)
     : m_rotCenter(rotCenter), m_angle(constants::degToRad(deg_angle))
@@ -43,5 +42,4 @@ QPolygonF Transform::operator()(const QPolygonF& poly)
     }
     return result;
 }
-} // namespace transform
 } // namespace common
