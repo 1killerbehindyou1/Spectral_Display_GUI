@@ -1,22 +1,19 @@
 
-#include "LedRuler.h"
-#include "FileManager.h"
-#include "Interpolator.h"
-#include "Transformation.h"
-#include <QDebug>
+#include <FileManager.h>
+#include <LedRuler.h>
 #include <QPen>
-#include <iostream>
+#include <Transformation.h>
 
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
       m_rotation(1), m_size(1), m_rendered_preview(false)
 {
 }
-/////////////////////////////////////////////////////////
+
 void LedRuler::setPixmap(QPixmap* pixmap) { m_interpolator.setPixmap(pixmap); }
-////////////////////////////////////////////////////////
+
 QImage* LedRuler::getRenderedImage() { return m_output_image; }
-////////////////////////////////////////////////////////
+
 void LedRuler::paint(QPainter* painter)
 {
     if (m_current_transformed_image != nullptr)

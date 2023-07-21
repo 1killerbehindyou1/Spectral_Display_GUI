@@ -1,22 +1,17 @@
 
-#ifndef IMAGE_VIEWER_H
-#define IMAGE_VIEWER_H
+#ifndef FILE_MANAGER_H
+#define FILE_MANAGER_H
 
-#include <QColor>
 #include <QDebug>
 #include <QObject>
-#include <QPainter>
 #include <QPixmap>
-#include <QPoint>
 #include <QString>
 #include <QUrl>
-#include <QtQuick/QQuickPaintedItem>
-#include <cmath>
 #include <iostream>
 
 class FileManager : public QObject
 {
-    Q_OBJECT
+    // Q_OBJECT
     Q_PROPERTY(QString path MEMBER m_path)
     Q_PROPERTY(QPixmap* pixmap_pointer READ getPixmapPointer)
 

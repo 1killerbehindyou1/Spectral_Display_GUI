@@ -9,27 +9,20 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-void PrintTo(const QPointF& point, std::ostream* out)
+template <typename PointType>
+void PrintTo(PointType&& point, std::ostream* out)
 {
-    *out << "QPointF(" << std::to_string(point.x()) << ","
+    *out << "Point(" << std::to_string(point.x()) << ","
          << std::to_string(point.y()) << ")";
 }
 
-void PrintTo(const QPoint& point, std::ostream* out)
+template <typename PointType,
+          typename = decltype(std::declval<PointType>().x() +
+                              std::declval<PointType>().y())>
+std::ostream& operator<<(std::ostream& out,
+                         PointType&& point) // universal reference
 {
-    *out << "QPoint(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPointF& point)
-{
-    return out << "QPointF(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPoint& point)
-{
-    return out << "QPoint(" << std::to_string(point.x()) << ","
+    return out << "Point(" << std::to_string(point.x()) << ","
                << std::to_string(point.y()) << ")";
 }
 

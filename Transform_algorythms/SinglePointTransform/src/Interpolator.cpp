@@ -1,5 +1,5 @@
 
-#include "Interpolator.h"
+#include <Interpolator.h>
 #include <QDebug>
 #include <cmath>
 #include <iostream>
