@@ -1,5 +1,5 @@
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary)
 set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
@@ -67,8 +67,7 @@ target_link_libraries(Unit_test_QPolygonTransform_lib_qpoly
   gtest_main
   gmock
   QPolygonTransform
-
-  # ImageTransformCommon
+  ImageTransformCommon
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
 )

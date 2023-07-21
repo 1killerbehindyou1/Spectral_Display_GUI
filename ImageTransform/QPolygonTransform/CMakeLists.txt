@@ -24,4 +24,4 @@ target_include_directories(QPolygonTransform PUBLIC
   includes
 )
 
-# add_subdirectory(unit_tests)
+add_subdirectory(unit_tests)
