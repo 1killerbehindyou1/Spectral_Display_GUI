@@ -1,4 +1,4 @@
-#include <Interpolator.h>
+#include <InterpolatorQPoly.h>
 #include <Transformation.h>
 
 namespace QPolyLib

@@ -2,7 +2,7 @@
 #ifndef LED_RULER_H
 #define LED_RULER_H
 
-#include <Interpolator.h>
+#include <InterpolatorQPoly.h>
 #include <QColor>
 #include <QDebug>
 #include <QObject>

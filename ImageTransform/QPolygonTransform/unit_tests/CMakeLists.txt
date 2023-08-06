@@ -85,7 +85,7 @@ target_compile_definitions(Unit_test_ColorInterpolation
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(Unit_test_ColorInterpolation
-  PRIVATE
+  PUBLIC
   gtest_main
   gmock
   QPolygonTransform

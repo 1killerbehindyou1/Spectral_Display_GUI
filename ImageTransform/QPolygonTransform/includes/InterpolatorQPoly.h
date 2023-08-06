@@ -1,11 +1,15 @@
+#pragma once
 
-#ifndef SINGLE_INTERPOLATION_H
-#define SINGLE_INTERPOLATION_H
-
+#include <ColorCalc.h>
 #include <QColor>
-#include <Transformation.h>
+#include <QDebug>
+#include <QPixmap>
+#include <QPoint>
+#include <QVector>
+#include <cmath>
+#include <iostream>
 
-namespace SniglePointlib
+namespace QPolyLib
 {
 using namespace common;
 
@@ -23,5 +27,5 @@ public:
 private:
     QPixmap* inerpolator_pixmap;
 };
-} // namespace SniglePointlib
-#endif
+}; // namespace QPolyLib
+

@@ -1,5 +1,4 @@
-#ifndef TRANSFORMATION_H
-#define TRANSFORMATION_H
+#pragma once
 
 #include <QDebug>
 #include <QPixmap>
@@ -26,4 +25,4 @@ private:
     float m_angle;
 };
 } // namespace common
-#endif
+

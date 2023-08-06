@@ -23,4 +23,4 @@ QColor operator/(const QColor& total_intensivity, int sample_amount)
     }
     return color;
 }
-} // namespace common
+}; // namespace common

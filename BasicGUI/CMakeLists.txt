@@ -29,7 +29,8 @@ target_link_libraries(BasicGUI
 
   SinglePointTransform
   QPolygonTransform
-  ImageTransformCommon
+
+  # ImageTransformCommon
 )
 
 set_target_properties(BasicGUI PROPERTIES

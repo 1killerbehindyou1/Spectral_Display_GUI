@@ -1,7 +1,7 @@
 
 #include <LedRuler.h>
 #include <FileManager.h>
-#include <Interpolator.h>
+#include <InterpolatorQPoly.h>
 #include <Transformation.h>
 #include <QDebug>
 #include <QPen>

@@ -1,4 +1,4 @@
-#include <Interpolator.h>
+#include <InterpolatorQPoly.h>
 #include <ColorCalc.h>
 #include <QDebug>
 #include <QDir>

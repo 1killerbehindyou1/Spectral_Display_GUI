@@ -1,4 +1,4 @@
-#include <Interpolator.h>
+#include <InterpolatorSingle.h>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>

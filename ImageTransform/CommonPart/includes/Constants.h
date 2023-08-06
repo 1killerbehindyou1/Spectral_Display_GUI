@@ -1,5 +1,4 @@
-#ifndef CONSTANTS
-#define CONSTANTS
+#pragma once
 
 namespace common
 {
@@ -14,4 +13,3 @@ constexpr inline double degToRad(float deg) { return deg * pi / 180; }
 } // namespace constants
 } // namespace common
 
-#endif

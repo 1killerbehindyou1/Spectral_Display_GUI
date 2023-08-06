@@ -13,7 +13,7 @@ add_library(QPolygonTransform STATIC
 target_compile_definitions(QPolygonTransform
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(QPolygonTransform PRIVATE
+target_link_libraries(QPolygonTransform PUBLIC
 
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
