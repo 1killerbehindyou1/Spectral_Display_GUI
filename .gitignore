@@ -7,7 +7,7 @@
 local.properties
 /.vscode
 /x_build*
-/build*
+/.build*
 *.txt.user
 vscode_qt.bat
 GIT komendy.txt
