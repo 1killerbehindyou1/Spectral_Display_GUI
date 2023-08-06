@@ -1,11 +1,9 @@
 
-#include <LedRuler.h>
 #include <FileManager.h>
-#include <InterpolatorQPoly.h>
-#include <Transformation.h>
-#include <QDebug>
+#include <LedRuler.h>
 #include <QPen>
-#include <iostream>
+#include <Transformation.h>
+
 
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),

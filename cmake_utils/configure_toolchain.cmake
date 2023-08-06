@@ -1,0 +1,8 @@
+set(QT_DIR "C:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5" CACHE PATH "" FORCE)
+set(Qt5_DIR "C:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5" CACHE PATH "" FORCE)
+set(CMAKE_C_COMPILER "C:/Qt/Tools/mingw810_64/bin/gcc.exe" CACHE FILEPATH "" FORCE)
+set(CMAKE_CXX_COMPILER "C:/Qt/Tools/mingw810_64/bin/g++.exe" CACHE FILEPATH "" FORCE)
+set(CMAKE_COMMAND "C:/Qt/Tools/CMake_64/bin/cmake.exe" CACHE FILEPATH "" FORCE)
+set(CMAKE_INSTALL_PREFIX "C:/Users/mplesniak/Desktop/1. Mentoring_QT_project/1.Install_location" CACHE PATH "" FORCE)
+set(CMAKE_GENERATOR "MinGW Makefiles" CACHE STRING "" FORCE)
+set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)

@@ -1,13 +1,11 @@
 #include <FileManager.h>
 #include <InterpolatorQPoly.h>
 #include <LedRuler.h>
-#include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQmlContext>
 #include <QtQuick>
-#include <iostream>
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,

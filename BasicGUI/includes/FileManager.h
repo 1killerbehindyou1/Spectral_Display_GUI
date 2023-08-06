@@ -1,6 +1,4 @@
-
-#ifndef IMAGE_VIEWER_H
-#define IMAGE_VIEWER_H
+#pragma once
 
 #include <QColor>
 #include <QDebug>
@@ -37,4 +35,3 @@ private:
     QPixmap m_transformed;
     QString m_path;
 };
-#endif

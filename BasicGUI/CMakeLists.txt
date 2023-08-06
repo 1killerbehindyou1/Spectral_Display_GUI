@@ -21,16 +21,15 @@ target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(BasicGUI
-  PRIVATE
+  PUBLIC
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
 
-  SinglePointTransform
+  # SinglePointTransform
   QPolygonTransform
-
-  # ImageTransformCommon
+  ImageTransformCommon
 )
 
 set_target_properties(BasicGUI PROPERTIES

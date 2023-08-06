@@ -1,6 +1,4 @@
-
-#ifndef LED_RULER_H
-#define LED_RULER_H
+#pragma once
 
 #include <InterpolatorQPoly.h>
 #include <QColor>
@@ -44,4 +42,3 @@ private:
     int m_size;
     bool m_rendered_preview;
 };
-#endif
