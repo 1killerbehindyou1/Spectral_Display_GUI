@@ -1,9 +1,7 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(BasicGui VERSION 0.1 LANGUAGES CXX)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-
 set(SOURCE_DIR src)
 
 set(PROJECT_SOURCES
@@ -21,7 +19,8 @@ target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(BasicGUI
-  PUBLIC
+  PRIVATE
+
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick
   Qt${QT_VERSION_MAJOR}::Gui
@@ -31,7 +30,6 @@ target_link_libraries(BasicGUI
   QPolygonTransform
   ImageTransformCommon
 )
-
 set_target_properties(BasicGUI PROPERTIES
   WIN32_EXECUTABLE TRUE
 )
