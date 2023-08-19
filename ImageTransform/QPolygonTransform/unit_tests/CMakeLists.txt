@@ -1,4 +1,3 @@
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY})
@@ -22,13 +21,10 @@ target_link_libraries(Unit_test_Interpolator_qpoly
   gtest_main
   gmock
   QPolygonTransform
-  ImageTransformCommon
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
 )
 target_compile_definitions(Unit_test_Interpolator_qpoly PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
-  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
 )
 
 # ############################TRANSFORMATION TEST##############################
@@ -40,12 +36,10 @@ target_compile_definitions(Unit_test_Transformation_qpoly
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(Unit_test_Transformation_qpoly
-  PUBLIC
+  PRIVATE
   gtest_main
   gmock
   ImageTransformCommon
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
 )
 
 # #############################LIBRARY TEST#################################
@@ -61,13 +55,10 @@ target_link_libraries(Unit_test_QPolygonTransform_lib_qpoly
   gtest_main
   gmock
   QPolygonTransform
-  ImageTransformCommon
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
 )
 target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
-  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
 )
 
 # ############################COLORINTERPOLTEST TEST##############################
@@ -79,17 +70,13 @@ target_compile_definitions(Unit_test_ColorInterpolation
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(Unit_test_ColorInterpolation
-  PUBLIC
+  PRIVATE
   gtest_main
   gmock
   QPolygonTransform
-  ImageTransformCommon
-
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
 )
 
 target_compile_definitions(Unit_test_ColorInterpolation PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
-  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
 )

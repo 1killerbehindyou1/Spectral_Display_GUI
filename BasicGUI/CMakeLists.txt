@@ -1,9 +1,7 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(BasicGui VERSION 0.1 LANGUAGES CXX)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Quick QuickControls2)
 set(SOURCE_DIR src)
 
 set(PROJECT_SOURCES
@@ -21,15 +19,10 @@ target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(BasicGUI
-  PUBLIC
-  Qt${QT_VERSION_MAJOR}::Core
+  PRIVATE
   Qt${QT_VERSION_MAJOR}::Quick
-  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::QuickControls2
-
-  # SinglePointTransform
   QPolygonTransform
-  ImageTransformCommon
 )
 
 set_target_properties(BasicGUI PROPERTIES
