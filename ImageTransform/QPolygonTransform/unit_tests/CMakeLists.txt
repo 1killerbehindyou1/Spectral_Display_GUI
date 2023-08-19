@@ -1,19 +1,14 @@
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary)
-set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/BITMAPA.png)
-set(OUTPUT_IMG_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/GeneratedPicture)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY})
 
 add_custom_target(build-time-make-directory-qpoly ALL
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_ruler_print
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_bounding_rect_print
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_polygon_contains_point
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_color)
-
-file(COPY ${IMAGE_TESTED_SRC_PATH}
-  DESTINATION ${CMAKE_BINARY_DIR}/bin/UnitTests/Pictures/)
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_polygon_ruler_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_bounding_rect_print
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_polygon_contains_point
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_library
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_color)
 
 # ///////////////////////////////INTERPOLATOR TEST////////////////////////////////
 add_executable(Unit_test_Interpolator_qpoly
@@ -32,8 +27,8 @@ target_link_libraries(Unit_test_Interpolator_qpoly
   Qt${QT_VERSION_MAJOR}::Gui
 )
 target_compile_definitions(Unit_test_Interpolator_qpoly PRIVATE
-  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
-  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
+  -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
 )
 
 # ############################TRANSFORMATION TEST##############################
@@ -71,8 +66,8 @@ target_link_libraries(Unit_test_QPolygonTransform_lib_qpoly
   Qt${QT_VERSION_MAJOR}::Gui
 )
 target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly PRIVATE
-  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
-  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
+  -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
 )
 
 # ############################COLORINTERPOLTEST TEST##############################
@@ -95,6 +90,6 @@ target_link_libraries(Unit_test_ColorInterpolation
 )
 
 target_compile_definitions(Unit_test_ColorInterpolation PRIVATE
-  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
-  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
+  -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG}"
 )
