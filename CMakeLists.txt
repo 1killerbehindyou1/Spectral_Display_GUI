@@ -4,7 +4,7 @@ project(SpectralDisplay VERSION 0.1 DESCRIPTION "General project SPRCTRAL DISPLA
 
 set(CMAKE_UTILS ${CMAKE_CURRENT_SOURCE_DIR}/cmake_utils)
 
-include(${CMAKE_UTILS}/configure_toolchain.cmake)
+# include(${CMAKE_UTILS}/configure_toolchain.cmake)
 include(${CMAKE_UTILS}/configure_project_variables.cmake)
 add_subdirectory(${CMAKE_UTILS})
 
