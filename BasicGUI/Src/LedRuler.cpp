@@ -1,8 +1,8 @@
 
-#include <FileManager.h>
-#include <LedRuler.h>
+#include "LedRuler.hpp"
+#include "FileManager.hpp"
 #include <QPen>
-#include <Transformation.h>
+#include <Transformation.hpp>
 
 
 LedRuler::LedRuler(QQuickItem* parent)

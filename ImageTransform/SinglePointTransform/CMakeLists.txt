@@ -4,7 +4,7 @@ find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(PROJECT_SOURCES
-  src/Interpolator.cpp
+  src/InterpolatorSingle.cpp
 )
 
 add_library(SinglePointTransform STATIC
@@ -20,7 +20,7 @@ target_link_libraries(SinglePointTransform
   ImageTransformCommon
 )
 target_include_directories(SinglePointTransform PUBLIC
-  includes
+  src
 )
 
 add_subdirectory(unit_tests)

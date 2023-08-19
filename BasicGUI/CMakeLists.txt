@@ -15,7 +15,7 @@ set(PROJECT_SOURCES
 
 add_executable(BasicGUI ${PROJECT_SOURCES})
 
-target_include_directories(BasicGUI PUBLIC includes)
+target_include_directories(BasicGUI PUBLIC src)
 
 target_compile_definitions(BasicGUI
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

@@ -25,4 +25,3 @@ private:
     float m_angle;
 };
 } // namespace common
-

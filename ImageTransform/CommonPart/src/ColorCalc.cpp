@@ -1,4 +1,4 @@
-#include <ColorCalc.h>
+#include <ColorCalc.hpp>
 
 namespace common
 {

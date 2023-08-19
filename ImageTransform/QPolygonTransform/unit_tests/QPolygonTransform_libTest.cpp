@@ -1,5 +1,5 @@
-#include <InterpolatorQPoly.h>
-#include <ColorCalc.h>
+#include <ColorCalc.hpp>
+#include <InterpolatorQPoly.hpp>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>

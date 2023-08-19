@@ -1,5 +1,5 @@
-#include <InterpolatorQPoly.h>
-#include <Transformation.h>
+#include "InterpolatorQPoly.hpp"
+#include <Transformation.hpp>
 
 namespace QPolyLib
 {
@@ -24,7 +24,6 @@ QColor Interpolator::interpolateColor(const QPolygonF& transformed_poly)
         for (int y = 0; y < rect_boundig_f.height(); y++)
         {
             curr_point.setY(rect_boundig_f.topLeft().y() + y);
-
             for (int x = 0; x < rect_boundig_f.width(); x++)
             {
                 curr_point.setX(rect_boundig_f.topLeft().x() + x);

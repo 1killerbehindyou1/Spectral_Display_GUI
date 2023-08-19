@@ -1,5 +1,5 @@
-#include <Constants.h>
-#include <Transformation.h>
+#include <Constants.hpp>
+#include <Transformation.hpp>
 
 namespace common
 {

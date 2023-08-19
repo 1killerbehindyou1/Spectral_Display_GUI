@@ -1,11 +1,11 @@
-#include <InterpolatorQPoly.h>
+#include <InterpolatorQPoly.hpp>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QImage>
 #include <QString>
-#include <Transformation.h>
+#include <Transformation.hpp>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <iostream>

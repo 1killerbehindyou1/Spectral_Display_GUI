@@ -1,6 +1,6 @@
 #pragma once
 
-#include <InterpolatorQPoly.h>
+#include <InterpolatorQPoly.hpp>
 #include <QColor>
 #include <QDebug>
 #include <QObject>

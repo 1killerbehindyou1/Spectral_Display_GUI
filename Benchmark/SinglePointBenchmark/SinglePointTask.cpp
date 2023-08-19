@@ -1,5 +1,5 @@
 #include "BenchmarkMeasuredTask.hpp"
-#include <InterpolatorSingle.h>
+#include <InterpolatorSingle.hpp>
 
 QImage interpolatorMeasurement(int led_number, int led_size, int angle,
                                const std::string& pixmap_path)

@@ -1,5 +1,5 @@
-#include <ColorCalc.h>
-#include <InterpolatorSingle.h>
+#include "InterpolatorSingle.hpp"
+#include <ColorCalc.hpp>
 
 namespace SniglePointlib
 {

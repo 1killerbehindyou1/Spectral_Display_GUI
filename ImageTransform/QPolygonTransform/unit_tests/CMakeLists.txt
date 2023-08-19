@@ -28,7 +28,6 @@ target_link_libraries(Unit_test_Interpolator_qpoly
   gmock
   QPolygonTransform
   ImageTransformCommon
-
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
 )

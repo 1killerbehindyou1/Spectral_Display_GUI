@@ -19,5 +19,5 @@ target_link_libraries(ImageTransformCommon PRIVATE
 )
 
 target_include_directories(ImageTransformCommon PUBLIC
-  includes
+  src
 )

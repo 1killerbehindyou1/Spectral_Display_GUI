@@ -32,8 +32,7 @@ target_link_libraries(Unit_Test_SinglePointTransform_lib
   gmock
 
   SinglePointTransform
-
-  # ImageTransformCommon
+  ImageTransformCommon
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
 )

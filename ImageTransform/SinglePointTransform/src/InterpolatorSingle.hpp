@@ -1,15 +1,9 @@
 #pragma once
 
-#include <ColorCalc.h>
 #include <QColor>
-#include <QDebug>
-#include <QPixmap>
-#include <QPoint>
-#include <QVector>
-#include <cmath>
-#include <iostream>
+#include <Transformation.hpp>
 
-namespace QPolyLib
+namespace SniglePointlib
 {
 using namespace common;
 
@@ -27,5 +21,4 @@ public:
 private:
     QPixmap* inerpolator_pixmap;
 };
-}; // namespace QPolyLib
-
+} // namespace SniglePointlib
