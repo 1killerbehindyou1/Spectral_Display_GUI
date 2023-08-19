@@ -1,3 +1,5 @@
+#pragma once
+
 #include "BenchmarkMeasuredTask.hpp"
 #include <QDebug>
 #include <QDir>

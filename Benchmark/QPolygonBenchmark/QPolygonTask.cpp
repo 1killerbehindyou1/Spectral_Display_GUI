@@ -1,5 +1,5 @@
-#include "BenchmarkMeasuredTask.hpp"
-#include <Interpolator.h>
+#include <BenchmarkMeasuredTask.hpp>
+#include <InterpolatorQPoly.hpp>
 #include <QDebug>
 #include <string>
 
