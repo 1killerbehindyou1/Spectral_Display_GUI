@@ -17,8 +17,21 @@ void print_something(std::size_t count)
     };
 }
 
+struct S
+{
+    void print_something(std::size_t count) { ::print_something(count); }
+};
+
 int main()
 {
+    std::thread t{print_something, 10};
+
+    S s;
+    std::thread t2{&S::print_something, &s, 10};
+
     print_something(10);
+
+    t.join();
+    t2.join();
     return 0;
 }
