@@ -23,6 +23,7 @@ set(CMAKE_AUTORCC ON)
 
 add_subdirectory(BasicGUI)
 add_subdirectory(ImageTransform)
+add_subdirectory(threading_basics)
 
 if(BUILD_UT)
     include(CTest)
