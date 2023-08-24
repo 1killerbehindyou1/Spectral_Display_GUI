@@ -8,7 +8,11 @@ local.properties
 /.vscode
 /x_build*
 /.build*
-*.txt.user
+/build*
+*.txt.user*
 vscode_qt.bat
 GIT komendy.txt
 /.grandle
+
+# VSCode
+/.cache
