@@ -26,3 +26,5 @@ set(CMAKE_AUTORCC ON)
 add_subdirectory(BasicGUI)
 add_subdirectory(Benchmark)
 add_subdirectory(ImageTransform)
+
+add_subdirectory(gui_with_threading)
