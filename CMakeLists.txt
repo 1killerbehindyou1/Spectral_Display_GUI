@@ -19,6 +19,8 @@ set(QT_VERSION_MAJOR 5)
 
 add_subdirectory(googletest)
 
+add_subdirectory(threading_basics)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
