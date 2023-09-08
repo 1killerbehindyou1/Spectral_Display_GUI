@@ -6,6 +6,7 @@ set(SOURCE_DIR src)
 
 set(PROJECT_SOURCES
   ${SOURCE_DIR}/main.cpp
+  ${SOURCE_DIR}/Controller.cpp
   QMLSources/qml.qrc
 )
 

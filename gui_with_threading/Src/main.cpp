@@ -7,6 +7,8 @@
 #include <iostream>
 #include <thread>
 
+#include "Controller.h"
+
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
                      const QString& msg)
@@ -48,8 +50,12 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
+    Controller controller;
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+
+    engine.rootContext()->setContextProperty("controller", &controller);
 
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");

@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
-import Main 1.0
+// import Main 1.0
 
 ApplicationWindow 
 {
@@ -14,79 +14,75 @@ ApplicationWindow
     title: qsTr("Threaded Gui")
     color: "lightgrey"
 
-    property bool imageSelected: false
-    property bool previewIsActive: showSelectedImage.checked
-    property bool renderedPreviewIsActive: showRenderedPreview.checked
-    property string file_operation: ""
-
-    onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
-    onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
-    
-    menuBar: MenuBar 
-    {     
-        contentWidth: parent.width
-        Menu 
-        {
-            title: qsTr("&File")
-            Action 
-            {
-                text: qsTr("&Load Image...")
-                onTriggered:
-                {
-                    // file_operation = "load";
-                    // fileDialog.title = "Please choose a file";
-                    // fileDialog.nameFilters = [ "Image files (*.jpg *.png)", "All files (*)" ];
-                    // fileDialog.selectExisting = true;
-                    // fileDialog.open();      
-                }
-            }
-            MenuSeparator { }
-            Action 
-            {
-                text: qsTr("&Save Transformated Image...")
-                onTriggered:
-                {
-                    // file_operation = "save";
-                    // fileDialog.title = "Save to file";
-                    // fileDialog.nameFilters = [ "Image files (*.jpg *.png)" ];
-                    // fileDialog.selectExisting = false;
-                    // fileDialog.open();
-                }
-            }
-        }
-        Menu 
-        {
-            title: qsTr("&View")
-            delegate: CheckBox{}
-
-            Action
-            {
-                id: showSelectedImage
-                checked: false
-                checkable: true
-                text: "Preview selected image..."
-            }
-
-            Action
-            {
-                id: showRenderedPreview
-                text: "Preview rendered image..."
-                checked: false
-                checkable: true
-            }
-        }
+    ListModel{
+        id: logModel
     }
 
-    SplitView 
-    { 
+    // Label {
+    //     anchors.left: outputArea.left
+    //     anchors.top: outputArea.top
+    //     text: "<Application output>"
+    //     color: "gray"
+    //     visible: !logModel.count
+    // }
+
+    RowLayout
+    {
         anchors.fill: parent
-        id: splitView
-        Image
-        {
-            anchors.fill: parents
-            id: loadedImage
-            visible: false
-            fillMode: Image.PreserveAspectFit
+
+        ScrollView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            Control {
+                contentItem: ColumnLayout{
+                    id: outputArea
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    Repeater {
+                        Layout.fillWidth: true
+                        model: logModel
+                        delegate: Label {
+                            text: msg
+                        }
+                    }
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
+            }
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: "white"
+            }
+        }
+
+        
+        ColumnLayout {
+            Layout.fillHeight: true
+            Layout.maximumWidth: 250
+
+            Button {
+                id: first_btn
+                Layout.fillWidth: true
+    
+                text: qsTr("Start via thread object")
+                onClicked: controller.startViaThreadObject()
+            }
+
+            Button {
+                id: second_btn
+                Layout.fillWidth: true
+
+                text: qsTr("Start via signals")
+                onClicked: controller.startViaSignals()
+            }
+
+            Item {
+                Layout.fillHeight: true
+            }
         }
     }
 
@@ -105,6 +101,15 @@ ApplicationWindow
             messageDialog.text = message
             messageDialog.title = title
             messageDialog.open()  
+        }
+    }
+
+    Connections {
+        target: controller
+
+        function onNewLog(msg) {
+            console.log(`new message: ${msg}`)
+            logModel.append({'msg': msg})
         }
     }
 
