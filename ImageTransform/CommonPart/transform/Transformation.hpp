@@ -54,7 +54,7 @@ public:
     T_poly operator()(const T_poly& poly)
     {
         T_poly result;
-        for (const T_poly& p : poly)
+        for (const T_point& p : poly)
         {
             result << Transform::operator()(p);
         }
@@ -66,5 +66,5 @@ private:
     T_dig m_angle;
 };
 
-using Trans_standard = Transform<int, QPointF, QRectF, QPolygonF>;
+using Trans_standard = Transform<float, QPointF, QRectF, QPolygonF>;
 }; // namespace common
