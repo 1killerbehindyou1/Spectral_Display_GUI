@@ -18,6 +18,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_VERSION_MAJOR 5)
 
 add_subdirectory(googletest)
+add_subdirectory(googletest_utils)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

@@ -1,19 +1,7 @@
-#include "CommonTests.hpp"
+#include <CommonTests.hpp>
 #include <QDebug>
 #include <QString>
 #include <Transformation.hpp>
-
-MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
-           QString("%1 equeal to %2 with delta %3")
-               .arg(negation ? "isn't" : "is")
-               .arg(to_string(expectedPoint).c_str())
-               .arg(delta)
-               .toStdString())
-{
-    auto diff = arg - expectedPoint;
-
-    return abs(diff.x()) < delta || abs(diff.y()) < delta;
-}
 
 struct TransformationParams
 {
@@ -23,16 +11,17 @@ struct TransformationParams
     QPointF expectedResult;
     double precision = 1e-5;
 
-    friend void PrintTo(const TransformationParams& params, std::ostream* out)
-    {
-        *out << "rotP:";
-        PrintTo(params.rotationCenter, out);
-        *out << " rotAng:" << params.rotationAngle << "st.";
-        *out << " inP:";
-        PrintTo(params.inputPoint, out);
-        *out << " res:";
-        PrintTo(params.expectedResult, out);
-    }
+    // friend void PrintTo(const TransformationParams& params, std::ostream*
+    // out)
+    // {
+    //     *out << "rotP:";
+    //     PrintTo(params.rotationCenter, out);
+    //     *out << " rotAng:" << params.rotationAngle << "st.";
+    //     *out << " inP:";
+    //     PrintTo(params.inputPoint, out);
+    //     *out << " res:";
+    //     PrintTo(params.expectedResult, out);
+    // }
 };
 
 class TransformationTestWithParams
@@ -50,7 +39,8 @@ TEST_P(TransformationTestWithParams, properlyTransformPoint)
 
     const auto& params = GetParam();
 
-    common::Transform transform{params.rotationCenter, params.rotationAngle};
+    common::Trans_standard transform{params.rotationCenter,
+                                     params.rotationAngle};
     QPointF point_out = transform(params.inputPoint);
 
     EXPECT_NEAR(params.expectedResult.x(), point_out.x(), params.precision);
@@ -61,7 +51,8 @@ TEST_P(TransformationTestWithParamsCyclic, verifyCyclicTransforamtion)
 {
     const auto& params = GetParam();
 
-    common::Transform transform{params.rotationCenter, params.rotationAngle};
+    common::Trans_standard transform{params.rotationCenter,
+                                     params.rotationAngle};
     QPointF point_in{params.inputPoint};
 
     for (int i = 0; i <= 360 - params.rotationAngle; i += params.rotationAngle)

@@ -1,3 +1,4 @@
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY})
@@ -11,15 +12,14 @@ add_custom_target(build-time-make-directory-qpoly ALL
 
 # ///////////////////////////////INTERPOLATOR TEST////////////////////////////////
 add_executable(Unit_test_Interpolator_qpoly
-  InterpolatorTest.cpp
+  Unit_test_Interpolator.cpp
 )
 target_compile_definitions(Unit_test_Interpolator_qpoly
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(Unit_test_Interpolator_qpoly
-  PRIVATE
-  gtest_main
-  gmock
+  PUBLIC
+  googletest_utils
   QPolygonTransform
 )
 target_compile_definitions(Unit_test_Interpolator_qpoly PRIVATE
@@ -29,7 +29,7 @@ target_compile_definitions(Unit_test_Interpolator_qpoly PRIVATE
 
 # ############################TRANSFORMATION TEST##############################
 add_executable(Unit_test_Transformation_qpoly
-  TransformationTest.cpp
+  Unit_test_Transformation.cpp
 )
 
 target_compile_definitions(Unit_test_Transformation_qpoly
@@ -37,14 +37,13 @@ target_compile_definitions(Unit_test_Transformation_qpoly
 
 target_link_libraries(Unit_test_Transformation_qpoly
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   ImageTransformCommon
 )
 
 # #############################LIBRARY TEST#################################
 add_executable(Unit_test_QPolygonTransform_lib_qpoly
-  QPolygonTransform_libTest.cpp
+  Unit_test_QPolygonTransform.cpp
 )
 
 target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly
@@ -52,8 +51,7 @@ target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly
 
 target_link_libraries(Unit_test_QPolygonTransform_lib_qpoly
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   QPolygonTransform
 )
 target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly PRIVATE
@@ -71,8 +69,7 @@ target_compile_definitions(Unit_test_ColorInterpolation
 
 target_link_libraries(Unit_test_ColorInterpolation
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   QPolygonTransform
 )
 

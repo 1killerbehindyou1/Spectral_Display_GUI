@@ -20,7 +20,6 @@ target_compile_definitions(Unit_Test_SinglePointTransform_lib
 
 target_link_libraries(Unit_Test_SinglePointTransform_lib
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   SinglePointTransform
 )

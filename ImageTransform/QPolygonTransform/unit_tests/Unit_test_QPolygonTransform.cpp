@@ -8,18 +8,6 @@
 #include <QImage>
 #include <QString>
 
-MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
-           QString("%1 equeal to %2 with delta %3")
-               .arg(negation ? "isn't" : "is")
-               .arg(to_string(expectedPoint).c_str())
-               .arg(delta)
-               .toStdString())
-{
-    auto diff = arg - expectedPoint;
-
-    return abs(diff.x()) < delta || abs(diff.y()) < delta;
-}
-
 struct Parameters
 {
     int led_size;
@@ -32,9 +20,6 @@ class InterpolationTestWithParams : public testing::TestWithParam<Parameters>
 public:
     InterpolationTestWithParams()
     {
-        int argc{};
-        char* argv[]{};
-        app = new QGuiApplication{argc, argv};
         pix_map = new QPixmap{};
         pix_map->load(pixmap_path.absoluteFilePath());
         interpolator = new QPolyLib::Interpolator{app};
@@ -56,7 +41,6 @@ public:
     QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
 
     QPixmap* pix_map;
-    QGuiApplication* app;
     QPolyLib::Interpolator* interpolator;
 };
 

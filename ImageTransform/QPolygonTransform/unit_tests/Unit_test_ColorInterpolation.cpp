@@ -1,24 +1,6 @@
 #include "CommonTests.hpp"
 #include <ColorCalc.hpp>
 #include <InterpolatorQPoly.hpp>
-#include <QDebug>
-#include <QDir>
-#include <QFileInfo>
-#include <QGuiApplication>
-#include <QImage>
-#include <QString>
-
-MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
-           QString("%1 equeal to %2 with delta %3")
-               .arg(negation ? "isn't" : "is")
-               .arg(to_string(expectedPoint).c_str())
-               .arg(delta)
-               .toStdString())
-{
-    auto diff = arg - expectedPoint;
-
-    return abs(diff.x()) < delta || abs(diff.y()) < delta;
-}
 
 struct Parameters
 {
@@ -27,61 +9,19 @@ struct Parameters
 };
 
 class ColorInterpolationTestWithParams
-    : public testing::TestWithParam<Parameters>
+    : public test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>
 {
 
 public:
-    ColorInterpolationTestWithParams()
-    {
-        int argc{};
-        char* argv[]{};
-        app = new QGuiApplication{argc, argv};
-        pix_map = new QPixmap{};
-        pix_map->load(pixmap_path.absoluteFilePath());
-        interpolator = new QPolyLib::Interpolator{app};
-        interpolator->setPixmap(pix_map);
-    }
-    ~ColorInterpolationTestWithParams() { delete app; }
-
-    void printRect(QImage& img, QRect& rect)
-    {
-        img.setPixelColor(rect.topLeft(), "green");
-        img.setPixelColor(rect.topRight(), "red");
-        img.setPixelColor(rect.bottomLeft(), "blue");
-        img.setPixelColor(rect.bottomRight(), "purple");
-    }
-    void printRect(QImage& img, QPolygonF& poly)
-    {
-        QStringList colors{"green", "red", "blue", "purple"};
-
-        std::size_t idx = 0;
-        for (QPointF& p : poly)
-        {
-            img.setPixelColor(p.toPoint(), colors[(idx++) % colors.size()]);
-        }
-    }
-    void printRect(QImage& img, QRectF& rect_f)
+    ColorInterpolationTestWithParams(QString inp{INPUT_IMG_PATH},
+                                     QString out{OUTPUT_IMG_PATH})
+        : test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>(inp, out)
     {
         img.setPixelColor(rect_f.topLeft().toPoint(), "orange");
         img.setPixelColor(rect_f.topRight().toPoint(), "orange");
         img.setPixelColor(rect_f.bottomLeft().toPoint(), "orange");
         img.setPixelColor(rect_f.bottomRight().toPoint(), "orange");
     }
-
-    void saveImg(QImage& output_image, Parameters params, QString path)
-    {
-        output_image.save(
-            QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
-            QString::number(params.led_size) + "_led_size_" +
-            QString::number(params.led_number) + "_led_number.png");
-    }
-
-    QFileInfo pixmap_path{QString{INPUT_IMG_PATH}};
-    QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
-
-    QPixmap* pix_map;
-    QGuiApplication* app;
-    QPolyLib::Interpolator* interpolator;
 };
 
 ///////////////////////////////////////////////////////////////
