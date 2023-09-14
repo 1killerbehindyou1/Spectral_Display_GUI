@@ -7,10 +7,20 @@
 #include <QImage>
 #include <QString>
 
-class InterpolationTestWithParams : public test_utils::TestFixture<Params>
+struct Parameters
+{
+    int led_size;
+    int angle;
+    int led_number;
+};
+
+class InterpolationTestWithParams
+    : public test_utils::TestFixture<Parameters, single::InterpolatorSingle>
 {
 public:
-    InterpolationTestWithParams()
+    InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
+                                const char* out = INPUT_IMG_PATH)
+        : TestFixture(inp, out)
     {
         pix_map = new QPixmap{};
         pix_map->load(pixmap_path.absoluteFilePath());
@@ -18,7 +28,7 @@ public:
         interpolator->setPixmap(pix_map);
     }
 
-    void saveImg(QImage& output_image, Params params, QString path)
+    void saveImg(QImage& output_image, Parameters params, QString path)
     {
         output_image.save(
             QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
@@ -34,16 +44,9 @@ public:
     single::InterpolatorSingle* interpolator;
 };
 
-struct Params
-{
-    int led_size;
-    int angle;
-    int led_number;
-};
-
-std::vector<Params> param_1{{1, 1, 240}, {2, 1, 120}, {3, 1, 80},  {5, 1, 40},
-                            {10, 1, 24}, {15, 1, 10}, {20, 1, 50}, {25, 1, 50},
-                            {30, 1, 50}, {35, 1, 50}};
+std::vector<Parameters> param_1{
+    {1, 1, 240}, {2, 1, 120}, {3, 1, 80},  {5, 1, 40},  {10, 1, 24},
+    {15, 1, 10}, {20, 1, 50}, {25, 1, 50}, {30, 1, 50}, {35, 1, 50}};
 
 TEST_P(InterpolationTestWithParams, test_library)
 {

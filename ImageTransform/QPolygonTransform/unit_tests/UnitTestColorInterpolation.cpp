@@ -13,14 +13,10 @@ class ColorInterpolationTestWithParams
 {
 
 public:
-    ColorInterpolationTestWithParams(QString inp{INPUT_IMG_PATH},
-                                     QString out{OUTPUT_IMG_PATH})
-        : test_utils::TestFixture(inp, out)
+    ColorInterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
+                                     const char* out = INPUT_IMG_PATH)
+        : TestFixture(inp, out)
     {
-        img.setPixelColor(rect_f.topLeft().toPoint(), "orange");
-        img.setPixelColor(rect_f.topRight().toPoint(), "orange");
-        img.setPixelColor(rect_f.bottomLeft().toPoint(), "orange");
-        img.setPixelColor(rect_f.bottomRight().toPoint(), "orange");
     }
 };
 

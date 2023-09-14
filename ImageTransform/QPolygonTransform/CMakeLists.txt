@@ -10,7 +10,7 @@ target_compile_definitions(QPolygonTransform
 
 target_link_libraries(QPolygonTransform
   PUBLIC
-  BaseInterpolation
+  InterpolationCore
 )
 
 target_include_directories(QPolygonTransform PUBLIC

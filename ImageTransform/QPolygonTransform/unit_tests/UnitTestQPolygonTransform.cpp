@@ -1,5 +1,4 @@
 #include "CommonTests.hpp"
-#include <ColorCalc.hpp>
 #include <InterpolatorQPoly.hpp>
 #include <QDebug>
 #include <QDir>
@@ -15,12 +14,13 @@ struct Parameters
     int led_number;
 };
 
-class InterpolationTestWithParams : public test_utils::TestFixture<Parameters>
+class InterpolationTestWithParams
+    : public test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>
 {
 public:
-    InterpolationTestWithParams(QString inp{INPUT_IMG_PATH},
-                                QString out{OUTPUT_IMG_PATH})
-        : test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>(inp, out)
+    InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
+                                const char* out = INPUT_IMG_PATH)
+        : TestFixture(inp, out)
     {
     }
 };

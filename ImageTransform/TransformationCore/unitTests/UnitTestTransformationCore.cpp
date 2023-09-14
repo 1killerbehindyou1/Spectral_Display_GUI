@@ -1,5 +1,36 @@
-#include <CommonTests.hpp>
+
+// #include <QDebug>
+// #include <Transformation.hpp>
+
+// TEST_P(InterpolationTestWithParams, transform_test_float)
+// {
+//     Transform_float f_transform{QPointF{45.6, 46.7}, 56.8};
+
+//     QDebug() << f_transform(QPointF{34.56, 67.55}) << std::endl;
+//     std::cout << f_transform(QPointF{4.56, 6.55}) << std::endl;
+//     std::cout << f_transform(QPointF{3.5, 7.5}) << std::endl;
+
+//     EXPECT_EQ(true, true);
+// }
+
+// TEST_P(InterpolationTestWithParams, transform_test_int)
+// {
+//     Transform_int i_transform{QPoint{30, 60}, 45};
+
+//     std::cout << i_transform(QPoint{34, 67}) << std::endl;
+//     std::cout << i_transform(QPoint{6, 51}) << std::endl;
+//     std::cout << i_transform(QPoint{67, 12}) << std::endl;
+
+//     EXPECT_EQ(true, true);
+// }
+
+// INSTANTIATE_TEST_SUITE_P(StandardTransformations,
+// InterpolationTestWithParams,
+//                          testing::ValuesIn(std::vector<params>{true}));
+
 #include <Transformation.hpp>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 struct TransformationParams
 {
@@ -8,18 +39,6 @@ struct TransformationParams
     QPointF inputPoint;
     QPointF expectedResult;
     double precision = 1e-5;
-
-    // friend void PrintTo(const TransformationParams& params, std::ostream*
-    // out)
-    // {
-    //     *out << "rotP:";
-    //     PrintTo(params.rotationCenter, out);
-    //     *out << " rotAng:" << params.rotationAngle << "st.";
-    //     *out << " inP:";
-    //     PrintTo(params.inputPoint, out);
-    //     *out << " res:";
-    //     PrintTo(params.expectedResult, out);
-    // }
 };
 
 class TransformationTestWithParams
@@ -30,7 +49,6 @@ class TransformationTestWithParamsCyclic
     : public testing::TestWithParam<TransformationParams>
 {
 };
-//////////////////////////////////////////////////////
 
 TEST_P(TransformationTestWithParams, properlyTransformPoint)
 {

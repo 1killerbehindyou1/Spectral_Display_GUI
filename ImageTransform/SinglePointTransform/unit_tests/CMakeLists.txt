@@ -6,7 +6,7 @@ add_custom_target(make_directory_for_singlePointTest ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_IMG_PATH}/test_library)
 
 add_executable(Unit_Test_SinglePointTransform_lib
-  Unit_Test_SinglePointTransform_lib.cpp
+  UnitTestSinglePointTransform.cpp
 )
 
 target_compile_definitions(Unit_Test_SinglePointTransform_lib PRIVATE

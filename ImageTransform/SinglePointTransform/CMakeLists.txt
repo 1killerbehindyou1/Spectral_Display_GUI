@@ -10,7 +10,7 @@ target_compile_definitions(SinglePointTransform
 
 target_link_libraries(SinglePointTransform
   PUBLIC
-  BaseInterpolation
+  InterpolationCore
 )
 target_include_directories(SinglePointTransform PUBLIC
   src

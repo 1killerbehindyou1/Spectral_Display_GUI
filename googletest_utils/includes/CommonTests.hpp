@@ -17,8 +17,9 @@ template <typename Parameters, typename Interpolator>
 class TestFixture : public testing::TestWithParam<Parameters>
 {
 public:
-    TestFixture(QString input, QString output)
-        : pixmap_path{QFileInfo{input}}, output_path{QFileInfo{output}}
+    TestFixture(const char* input, const char* output)
+        : pixmap_path{QFileInfo{QString{input}}}, output_path{QFileInfo{
+                                                      QString{output}}}
     {
         pix_map = std::make_unique<QPixmap>();
         pix_map->load(pixmap_path.absoluteFilePath());
