@@ -1,4 +1,5 @@
 #pragma once
+#include <InterpolatorBase.hpp>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
@@ -21,10 +22,9 @@ public:
         : pixmap_path{QFileInfo{QString{input}}}, output_path{QFileInfo{
                                                       QString{output}}}
     {
-        pix_map = std::make_unique<QPixmap>();
         pix_map->load(pixmap_path.absoluteFilePath());
         interpolator = std::make_unique<Interpolator>();
-        interpolator->setPixmap(*pix_map);
+        interpolator->setPixmap(pix_map);
     }
     ~TestFixture() {}
 
@@ -39,7 +39,7 @@ public:
 
     QFileInfo pixmap_path;
     QFileInfo output_path;
-    std::unique_ptr<QPixmap> pix_map;
+    QPixmap* pix_map;
     std::unique_ptr<Interpolator> interpolator;
 };
 
