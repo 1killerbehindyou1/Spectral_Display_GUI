@@ -40,7 +40,6 @@ public:
         T_point out_point{module * cos(m_angle), module * sin(m_angle)};
         out_point += m_rotCenter;
 
-        angle -= m_angle;
         return out_point;
     }
 

@@ -1,3 +1,3 @@
 add_subdirectory(transform)
-add_subdirectory(base_interpol)
-add_subdirectory(unit_tests)
+add_subdirectory(InterpolationCore)
+add_subdirectory(unitTests)

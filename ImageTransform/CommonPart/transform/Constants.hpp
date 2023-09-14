@@ -12,7 +12,7 @@ constexpr double inv_pi = 1 / pi;
 template <typename T>
 constexpr inline double degToRad(T deg)
 {
-    return deg * pi / 180;
+    return deg * pi / 180.0;
 }
 
 } // namespace constants
