@@ -15,7 +15,7 @@ class ColorInterpolationTestWithParams
 public:
     ColorInterpolationTestWithParams(QString inp{INPUT_IMG_PATH},
                                      QString out{OUTPUT_IMG_PATH})
-        : test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>(inp, out)
+        : test_utils::TestFixture(inp, out)
     {
         img.setPixelColor(rect_f.topLeft().toPoint(), "orange");
         img.setPixelColor(rect_f.topRight().toPoint(), "orange");

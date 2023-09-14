@@ -34,7 +34,9 @@ TEST_P(InterpolationTestWithParams, test_polygon_ruler_print)
     auto& params = GetParam();
 
     std::cout << output_path.absoluteFilePath().toStdString() << std::endl;
+
     QPoint rot_centr(pix_map->width() / 2, pix_map->height() / 2);
+
     QImage output_image{pix_map->size(), QImage::Format_RGB32};
     output_image.fill("white");
     output_image.setPixelColor(rot_centr, "black");

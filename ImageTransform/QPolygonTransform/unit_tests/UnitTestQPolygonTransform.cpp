@@ -15,33 +15,14 @@ struct Parameters
     int led_number;
 };
 
-class InterpolationTestWithParams : public testing::TestWithParam<Parameters>
+class InterpolationTestWithParams : public test_utils::TestFixture<Parameters>
 {
 public:
-    InterpolationTestWithParams()
+    InterpolationTestWithParams(QString inp{INPUT_IMG_PATH},
+                                QString out{OUTPUT_IMG_PATH})
+        : test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>(inp, out)
     {
-        pix_map = new QPixmap{};
-        pix_map->load(pixmap_path.absoluteFilePath());
-        interpolator = new QPolyLib::Interpolator{app};
-        interpolator->setPixmap(pix_map);
     }
-    ~InterpolationTestWithParams() { delete app; }
-
-    void saveImg(QImage& output_image, Parameters params, QString path)
-    {
-        output_image.save(
-            QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
-            QString::number(params.angle) + "_st_" +
-            QString::number(params.led_size) + "_led_size_" +
-            QString::number(params.led_number) + "_led_number.png");
-    }
-
-    QFileInfo pixmap_path{QString{INPUT_IMG_PATH}};
-
-    QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
-
-    QPixmap* pix_map;
-    QPolyLib::Interpolator* interpolator;
 };
 
 ///////////////////////////////////////////////////////////////

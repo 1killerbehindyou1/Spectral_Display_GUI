@@ -15,32 +15,32 @@
 namespace common
 {
 
-template <typename T_dig, typename T_point, typename T_rect, typename T_poly>
+template <typename T_angle, typename T_point, typename T_rect, typename T_poly>
 class Transform
 {
 
 public:
-    Transform(const T_point& rotCenter, T_dig deg_angle)
+    Transform(const T_point& rotCenter, T_angle deg_angle)
         : m_rotCenter{rotCenter}, m_angle{deg_angle}
     {
     }
 
-    T_point operator()(const T_point& point)
+    T_point operator()(const T_point& point) const
     {
-
         T_point new_point = point - m_rotCenter;
-        std::complex<T_dig> new_point_cpl(new_point.x(), new_point.y());
+        std::complex<T_angle> new_point_cpl(new_point.x(), new_point.y());
 
-        T_dig angle = std::arg(new_point_cpl);
+        T_angle angle = std::arg(new_point_cpl);
 
         angle += new_point.y() < 0 ? constants::two_pi : 0;
 
-        T_dig module = std::abs(new_point_cpl);
-        m_angle += angle;
+        T_angle module = std::abs(new_point_cpl);
+        angle += m_angle;
 
         T_point out_point{module * cos(m_angle), module * sin(m_angle)};
         out_point += m_rotCenter;
-        m_angle -= angle;
+
+        angle -= m_angle;
         return out_point;
     }
 
@@ -63,8 +63,10 @@ public:
 
 private:
     T_point m_rotCenter;
-    T_dig m_angle;
+    T_angle m_angle;
 };
 
-using Trans_standard = Transform<float, QPointF, QRectF, QPolygonF>;
+using Transform_float = common::Transform<float, QPointF, QRectF, QPolygonF>;
+using Transform_int = common::Transform<int, QPoint, QRect, QPolygon>;
+
 }; // namespace common

@@ -2,7 +2,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_library(googletest_utils
-    src/test_body.cpp
+    src/mainTests.cpp
 )
 target_compile_definitions(googletest_utils
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

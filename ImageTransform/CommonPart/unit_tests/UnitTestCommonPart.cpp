@@ -16,9 +16,6 @@ class InterpolationTestWithParams : public testing::TestWithParam<params>
 {
 
 public:
-    using Transform_float =
-        common::Transform<float, QPointF, QRectF, QPolygonF>;
-    using Transform_int = common::Transform<int, QPoint, QRect, QPolygon>;
 };
 
 TEST_P(InterpolationTestWithParams, transform_test_float)
