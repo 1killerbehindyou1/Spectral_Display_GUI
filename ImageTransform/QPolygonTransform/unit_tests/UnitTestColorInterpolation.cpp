@@ -33,7 +33,7 @@ TEST_P(ColorInterpolationTestWithParams, color_test)
     QPoint curr_point{};
     QPolygon poly{};
 
-    output_image.fill(interpolator->interpolateColor(QPolygonF{rect}));
+    output_image.fill(interpolator->interpolateColor(QPolygonF{rect}, pix_map));
     saveImg(output_image, params, "test_color");
 
     EXPECT_EQ(true, true);

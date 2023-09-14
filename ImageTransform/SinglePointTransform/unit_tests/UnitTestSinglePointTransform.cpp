@@ -22,26 +22,7 @@ public:
                                 const char* out = INPUT_IMG_PATH)
         : TestFixture(inp, out)
     {
-        pix_map = new QPixmap{};
-        pix_map->load(pixmap_path.absoluteFilePath());
-        interpolator = new single::InterpolatorSingle{};
-        interpolator->setPixmap(pix_map);
     }
-
-    void saveImg(QImage& output_image, Parameters params, QString path)
-    {
-        output_image.save(
-            QString{OUTPUT_IMG_PATH} + "/" + path + "/BITMAPA_transformed_" +
-            QString::number(params.angle) + "_st_" +
-            QString::number(params.led_size) + "_led_size_" +
-            QString::number(params.led_number) + "_led_number.png");
-    }
-
-    QFileInfo pixmap_path{QString{INPUT_IMG_PATH}};
-    QFileInfo output_path{QString{OUTPUT_IMG_PATH}};
-
-    QPixmap* pix_map;
-    single::InterpolatorSingle* interpolator;
 };
 
 std::vector<Parameters> param_1{
@@ -53,7 +34,7 @@ TEST_P(InterpolationTestWithParams, test_library)
     auto& params = GetParam();
 
     QImage output_image = interpolator->transformImage(
-        params.angle, params.led_size, params.led_number);
+        params.angle, params.led_size, params.led_number, pix_map);
     saveImg(output_image, params, "test_library");
     std::cout << pixmap_path.absoluteFilePath().toStdString() << std::endl;
     EXPECT_EQ(true, true);

@@ -5,7 +5,8 @@ namespace poly
 
 using namespace common;
 
-QColor InterpolatorQPoly::interpolateColor(const QPolygonF& transformed_poly)
+QColor InterpolatorQPoly::interpolateColor(const QPolygonF& transformed_poly,
+                                           const QPixmap* interpolator_pixmap)
 {
     if (interpolator_pixmap != nullptr)
     {

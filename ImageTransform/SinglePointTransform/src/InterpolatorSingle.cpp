@@ -4,7 +4,8 @@ namespace single
 {
 using namespace common;
 
-QColor InterpolatorSingle::interpolateColor(const QPolygonF& transformed_poly)
+QColor InterpolatorSingle::interpolateColor(const QPolygonF& transformed_poly,
+                                            const QPixmap* interpolator_pixmap)
 {
     if (interpolator_pixmap != nullptr)
     {

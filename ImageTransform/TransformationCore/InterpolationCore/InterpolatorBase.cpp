@@ -4,11 +4,11 @@ namespace common
 {
 
 QImage InterpolatorBase::transformImage(int deg_angle, int led_size,
-                                        int number_of_leds)
+                                        int number_of_leds,
+                                        const QPixmap* pix_map)
 {
 
-    QPoint rot_centr(interpolator_pixmap->width() / 2,
-                     interpolator_pixmap->height() / 2);
+    QPoint rot_centr(pix_map->width() / 2, pix_map->height() / 2);
 
     int width = static_cast<int>(360 / deg_angle);
     QImage output_image{number_of_leds, width, QImage::Format_RGB32};
@@ -33,7 +33,7 @@ QImage InterpolatorBase::transformImage(int deg_angle, int led_size,
             auto transformed_poly_f = transform(QPolygonF(rect_f));
             QPoint pixel{led_idx, ang_idx};
 
-            QColor color_r = interpolateColor(transformed_poly_f);
+            QColor color_r = interpolateColor(transformed_poly_f, pix_map);
 
             if (color_r.isValid())
                 output_image.setPixelColor(pixel, color_r);

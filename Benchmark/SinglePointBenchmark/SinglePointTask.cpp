@@ -8,10 +8,8 @@ QImage interpolatorMeasurement(int led_number, int led_size, int angle,
     pix_map.load(QString::fromStdString(pixmap_path));
     single::InterpolatorSingle interpolator_obj{};
 
-    interpolator_obj.setPixmap(&pix_map);
-
     QImage output_image =
-        interpolator_obj.transformImage(angle, led_size, led_number);
+        interpolator_obj.transformImage(angle, led_size, led_number, &pix_map);
 
     return output_image;
 }

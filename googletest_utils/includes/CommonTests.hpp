@@ -24,7 +24,6 @@ public:
     {
         pix_map->load(pixmap_path.absoluteFilePath());
         interpolator = std::make_unique<Interpolator>();
-        interpolator->setPixmap(pix_map);
     }
     ~TestFixture() {}
 
