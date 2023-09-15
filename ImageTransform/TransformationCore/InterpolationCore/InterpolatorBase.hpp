@@ -9,6 +9,8 @@ class InterpolatorBase
 {
 
 public:
+    virtual ~InterpolatorBase();
+
     virtual QColor interpolateColor(const QPolygonF& transformed_poly,
                                     const QPixmap* pix_map) = 0;
 
