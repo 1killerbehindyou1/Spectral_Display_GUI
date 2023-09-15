@@ -4,7 +4,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 # ############################INTERPOLATION CORE TEST##############################
 add_executable(UnitTestInterpolatorCore
-  UnitTestTransformationCore.cpp
+  UnitTestInterpolatorCore.cpp
 )
 target_compile_definitions(UnitTestInterpolatorCore
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

@@ -22,15 +22,14 @@ QImage InterpolatorBase::transformImage(int deg_angle, int led_size,
         QRectF rect_f{temp_point, QSize{led_size, led_size}};
         rect_f.moveCenter(curr_rect_corner);
 
-        float angle = 0;
+        double angle = 0;
         for (int ang_idx = 0; angle < 360.0;
              ++ang_idx, angle = deg_angle * ang_idx)
         {
-            common::Transform<float, QPointF, QRectF, QPolygonF> transform{
-                rot_centr, angle};
+            Transform_float transform{rot_centr, angle};
             QPointF transformed_curr_rect_corner = transform(curr_rect_corner);
 
-            auto transformed_poly_f = transform(QPolygonF(rect_f));
+            auto transformed_poly_f = transform(rect_f);
             QPoint pixel{led_idx, ang_idx};
 
             QColor color_r = interpolateColor(transformed_poly_f, pix_map);
