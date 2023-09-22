@@ -36,7 +36,7 @@ TEST_P(InterpolationTestWithParams, test_library)
 
     QImage output_image = interpolator->transformImage(
         params.angle, params.led_size, params.led_number, pix_map);
-    saveImg(output_image, params, "test_library");
+    saveImg<Parameters>(output_image, params, "test_library");
     std::cout << pixmap_path.absoluteFilePath().toStdString() << std::endl;
     EXPECT_EQ(true, true);
 }

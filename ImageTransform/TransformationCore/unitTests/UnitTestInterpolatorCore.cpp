@@ -97,8 +97,9 @@ TEST_P(InterpolationTestWithParams, test_bounding_rect_print)
             auto poly = transform(rectF);
 
             test_utils::printRect(output_image, poly);
-            QRectF rect_boundig_f = poly.boundingRect();
-            test_utils::printRect(output_image, rect_boundig_f);
+            QRectF rect_f = poly.boundingRect();
+            QPolygonF qpoly_f{rect_f};
+            test_utils::printRect(output_image, qpoly_f);
         }
     }
 
@@ -128,14 +129,15 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, static_cast<double>(i)};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
             auto poly = transform(rectF);
 
             QRectF rect_boundig_f = poly.boundingRect();
-            test_utils::printRect(output_image, rect_boundig_f);
+            QPolygonF qpoly_f{rect_boundig_f};
+            test_utils::printRect(output_image, qpoly_f);
 
             QPointF curr_point{};
             for (float y = 0; y < rect_boundig_f.height(); y++)
@@ -183,7 +185,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_WindingFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, static_cast<double>(i)};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(rectF);
@@ -237,7 +239,7 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_OddEvenFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform transform{rot_centr, i};
+            common::Transform transform{rot_centr, static_cast<double>(i)};
             QPointF pp = transform(curr_rect_corner);
 
             auto poly = transform(rectF);

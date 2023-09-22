@@ -28,6 +28,10 @@ target_compile_definitions(UnitTestQPolygonTransformLib PRIVATE
   -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
 )
 
+add_test(NAME UnitTestQPolygonTransformLib
+  COMMAND $<TARGET_FILE:UnitTestQPolygonTransformLib>
+)
+
 # ############################COLORINTERPOLTEST TEST##############################
 add_executable(UnitTestColorInterpolation
   UnitTestColorInterpolation.cpp
@@ -45,4 +49,8 @@ target_link_libraries(UnitTestColorInterpolation
 target_compile_definitions(UnitTestColorInterpolation PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
   -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
+)
+
+add_test(NAME UnitTestColorInterpolation
+  COMMAND $<TARGET_FILE:UnitTestColorInterpolation>
 )

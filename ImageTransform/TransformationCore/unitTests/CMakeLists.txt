@@ -19,6 +19,10 @@ target_compile_definitions(UnitTestInterpolatorCore PRIVATE
   -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
 )
 
+add_test(NAME UnitTestInterpolatorCore
+  COMMAND $<TARGET_FILE:UnitTestInterpolatorCore>
+)
+
 # ############################TRANSFORMATION CORE TEST##############################
 add_executable(UnitTestTransformationCore
   UnitTestTransformationCore.cpp
@@ -33,5 +37,6 @@ target_link_libraries(UnitTestTransformationCore
   googletest_utils
 )
 
-add_test(NAME UnitTestTransformationCore COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/UnitTestTransformationCore
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/UnitTestTransformationCore)
+add_test(NAME UnitTestTransformationCore
+  COMMAND $<TARGET_FILE:UnitTestTransformationCore>
+)

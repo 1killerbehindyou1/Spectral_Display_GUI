@@ -54,13 +54,6 @@ void PrintTo(PointType&& point, std::ostream* out)
          << std::to_string(point.y()) << ")";
 }
 
-void printRect(QImage& img, QRect& rect)
-{
-    img.setPixelColor(rect.topLeft(), "green");
-    img.setPixelColor(rect.topRight(), "red");
-    img.setPixelColor(rect.bottomLeft(), "blue");
-    img.setPixelColor(rect.bottomRight(), "purple");
-}
 void printRect(QImage& img, QPolygonF& poly)
 {
     QStringList colors{"green", "red", "blue", "purple"};
@@ -71,13 +64,7 @@ void printRect(QImage& img, QPolygonF& poly)
         img.setPixelColor(p.toPoint(), colors[(idx++) % colors.size()]);
     }
 }
-void printRect(QImage& img, QRectF& rect_f)
-{
-    img.setPixelColor(rect_f.topLeft().toPoint(), "orange");
-    img.setPixelColor(rect_f.topRight().toPoint(), "orange");
-    img.setPixelColor(rect_f.bottomLeft().toPoint(), "orange");
-    img.setPixelColor(rect_f.bottomRight().toPoint(), "orange");
-}
+
 }; // namespace test_utils
 
 MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,

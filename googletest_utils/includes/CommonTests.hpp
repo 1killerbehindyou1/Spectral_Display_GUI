@@ -1,5 +1,5 @@
 #pragma once
-#include <InterpolatorBase.hpp>
+// #include <InterpolatorBase.hpp>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
@@ -50,4 +50,4 @@ std::ostream& operator<<(std::ostream& out,
 template <typename PointType>
 void PrintTo(PointType&& point, std::ostream* out);
 
-}; // namespace test_utils
+} // namespace test_utils

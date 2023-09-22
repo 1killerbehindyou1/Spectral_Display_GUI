@@ -23,3 +23,7 @@ target_link_libraries(Unit_Test_SinglePointTransform_lib
   googletest_utils
   SinglePointTransform
 )
+
+add_test(NAME Unit_Test_SinglePointTransform_lib
+  COMMAND $<TARGET_FILE:Unit_Test_SinglePointTransform_lib>
+)
