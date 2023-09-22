@@ -3,6 +3,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_library(googletest_utils
     src/mainTests.cpp
+    includes/CommonTestsImpl.hpp
 )
 target_compile_definitions(googletest_utils
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

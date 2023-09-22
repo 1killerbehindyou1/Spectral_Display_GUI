@@ -19,6 +19,7 @@ class InterpolationTestWithParams
       public test_utils::InterpolatorInstanceFixture<poly::InterpolatorQPoly>
 {
 public:
+    ~InterpolationTestWithParams(){};
     InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
                                 const char* out = INPUT_IMG_PATH)
         : SaveLoadFixture(inp, out)

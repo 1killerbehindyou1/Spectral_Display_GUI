@@ -19,7 +19,7 @@ class SaveLoadFixture : public testing::TestWithParam<Parameters>
 {
 public:
     SaveLoadFixture(const char* input, const char* output);
-    ~SaveLoadFixture(){};
+    ~SaveLoadFixture() override = default;
 
     void saveImg(QImage& output_image, Parameters params, QString path);
 
@@ -33,7 +33,7 @@ class InterpolatorInstanceFixture
 {
 public:
     InterpolatorInstanceFixture();
-    ~InterpolatorInstanceFixture(){};
+    ~InterpolatorInstanceFixture() = default;
 
     std::unique_ptr<Interpolator> interpolator;
 };
