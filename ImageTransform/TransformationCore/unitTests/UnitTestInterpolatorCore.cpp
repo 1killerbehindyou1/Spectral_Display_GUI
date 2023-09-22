@@ -1,4 +1,4 @@
-#include <CommonTests.hpp>
+#include <CommonTestsImpl.hpp>
 #include <InterpolatorBase.hpp>
 #include <QDebug>
 #include <QDir>
@@ -19,12 +19,12 @@ std::vector<Parameters> param_1{
     {15, 30, 5}, {20, 30, 4}, {25, 30, 4}, {30, 30, 4}, {35, 30, 4}};
 
 class InterpolationTestWithParams
-    : public test_utils::TestFixture<Parameters, common::InterpolatorBase>
+    : public test_utils::SaveLoadFixture<Parameters>
 {
 public:
     InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
                                 const char* out = INPUT_IMG_PATH)
-        : TestFixture(inp, out)
+        : SaveLoadFixture(inp, out)
     {
     }
 };
@@ -54,11 +54,11 @@ TEST_P(InterpolationTestWithParams, test_polygon_ruler_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform<int, QPoint, QPolygonF> transform{rot_centr, i};
+            common::Transform transform{rot_centr, static_cast<double>(i)};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
-            auto poly = transform(QPolygonF(rectF));
+            auto poly = transform(rectF);
             test_utils::printRect(output_image, poly);
         }
     }
@@ -90,11 +90,11 @@ TEST_P(InterpolationTestWithParams, test_bounding_rect_print)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform<int, QPoint, QPolygonF> transform{rot_centr, i};
+            common::Transform transform{rot_centr, static_cast<double>(i)};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
-            auto poly = transform(QPolygonF(rectF));
+            auto poly = transform(rectF);
 
             test_utils::printRect(output_image, poly);
             QRectF rect_boundig_f = poly.boundingRect();
@@ -128,11 +128,11 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform<int, QPoint, QPolygonF> transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
             output_image.setPixelColor(pp.toPoint(), "green");
-            auto poly = transform(QPolygonF(rectF));
+            auto poly = transform(rectF);
 
             QRectF rect_boundig_f = poly.boundingRect();
             test_utils::printRect(output_image, rect_boundig_f);
@@ -183,10 +183,10 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_WindingFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform<int, QPoint, QPolygonF> transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
-            auto poly = transform(QPolygonF(rectF));
+            auto poly = transform(rectF);
 
             QRectF rect_boundig_f = poly.boundingRect();
 
@@ -237,10 +237,10 @@ TEST_P(InterpolationTestWithParams, test_polygon_contains_point_Qt_OddEvenFill)
 
         for (int i = 0; i <= 360 - params.angle; i += params.angle)
         {
-            common::Transform<int, QPoint, QPolygonF> transform{rot_centr, i};
+            common::Transform transform{rot_centr, i};
             QPointF pp = transform(curr_rect_corner);
 
-            auto poly = transform(QPolygonF(rectF));
+            auto poly = transform(rectF);
 
             QRectF rect_boundig_f = poly.boundingRect();
 

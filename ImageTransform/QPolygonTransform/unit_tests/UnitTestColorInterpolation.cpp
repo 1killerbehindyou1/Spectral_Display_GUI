@@ -1,4 +1,4 @@
-#include "CommonTests.hpp"
+#include "CommonTestsImpl.hpp"
 #include <ColorCalc.hpp>
 #include <InterpolatorQPoly.hpp>
 
@@ -9,18 +9,18 @@ struct Parameters
 };
 
 class ColorInterpolationTestWithParams
-    : public test_utils::TestFixture<Parameters, poly::InterpolatorQPoly>
+    : public test_utils::SaveLoadFixture<Parameters>,
+      public test_utils::InterpolatorInstanceFixture<poly::InterpolatorQPoly>
 {
 
 public:
     ColorInterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
                                      const char* out = INPUT_IMG_PATH)
-        : TestFixture(inp, out)
+        : SaveLoadFixture(inp, out)
     {
     }
 };
 
-///////////////////////////////////////////////////////////////
 std::vector<Parameters> param_1{{1, 7},  {2, 7},  {3, 7},  {5, 7}, {10, 5},
                                 {15, 5}, {20, 4}, {25, 4}, {35, 4}};
 

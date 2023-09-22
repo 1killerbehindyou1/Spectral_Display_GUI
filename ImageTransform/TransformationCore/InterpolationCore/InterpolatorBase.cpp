@@ -26,7 +26,7 @@ QImage InterpolatorBase::transformImage(int deg_angle, int led_size,
         for (int ang_idx = 0; angle < 360.0;
              ++ang_idx, angle = deg_angle * ang_idx)
         {
-            Transform_float transform{rot_centr, angle};
+            Transform transform{rot_centr, angle};
             QPointF transformed_curr_rect_corner = transform(curr_rect_corner);
 
             auto transformed_poly_f = transform(rect_f);

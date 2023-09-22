@@ -1,4 +1,4 @@
-#include <CommonTests.hpp>
+#include <CommonTestsImpl.hpp>
 #include <InterpolatorSingle.hpp>
 #include <QDebug>
 #include <QDir>
@@ -15,12 +15,13 @@ struct Parameters
 };
 
 class InterpolationTestWithParams
-    : public test_utils::TestFixture<Parameters, single::InterpolatorSingle>
+    : public test_utils::SaveLoadFixture<Parameters>,
+      public test_utils::InterpolatorInstanceFixture<single::InterpolatorSingle>
 {
 public:
     InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
                                 const char* out = INPUT_IMG_PATH)
-        : TestFixture(inp, out)
+        : SaveLoadFixture(inp, out)
     {
     }
 };
