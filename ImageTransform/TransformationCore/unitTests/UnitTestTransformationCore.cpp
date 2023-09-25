@@ -1,58 +1,6 @@
-#include <QDebug>
-#include <QString>
 #include <Transformation.hpp>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-void PrintTo(const QPointF& point, std::ostream* out)
-{
-    *out << "QPointF(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-void PrintTo(const QPoint& point, std::ostream* out)
-{
-    *out << "QPoint(" << std::to_string(point.x()) << ","
-         << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPointF& point)
-{
-    return out << "QPointF(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const QPoint& point)
-{
-    return out << "QPoint(" << std::to_string(point.x()) << ","
-               << std::to_string(point.y()) << ")";
-}
-
-//////////////////////////////////////////////////////
-
-template <typename T>
-std::string to_string(const T& val)
-{
-    std::ostringstream out;
-    out << val;
-    return out.str();
-}
-
-//////////////////////////////////////////////////////
-
-MATCHER_P2(EQUAL_TO_POINT, expectedPoint, delta,
-           QString("%1 equeal to %2 with delta %3")
-               .arg(negation ? "isn't" : "is")
-               .arg(to_string(expectedPoint).c_str())
-               .arg(delta)
-               .toStdString())
-{
-    auto diff = arg - expectedPoint;
-
-    return abs(diff.x()) < delta || abs(diff.y()) < delta;
-}
-
-//////////////////////////////////////////////////////
 
 struct TransformationParams
 {
@@ -61,17 +9,6 @@ struct TransformationParams
     QPointF inputPoint;
     QPointF expectedResult;
     double precision = 1e-5;
-
-    friend void PrintTo(const TransformationParams& params, std::ostream* out)
-    {
-        *out << "rotP:";
-        PrintTo(params.rotationCenter, out);
-        *out << " rotAng:" << params.rotationAngle << "st.";
-        *out << " inP:";
-        PrintTo(params.inputPoint, out);
-        *out << " res:";
-        PrintTo(params.expectedResult, out);
-    }
 };
 
 class TransformationTestWithParams
@@ -82,7 +19,6 @@ class TransformationTestWithParamsCyclic
     : public testing::TestWithParam<TransformationParams>
 {
 };
-//////////////////////////////////////////////////////
 
 TEST_P(TransformationTestWithParams, properlyTransformPoint)
 {

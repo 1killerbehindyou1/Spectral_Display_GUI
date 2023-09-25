@@ -1,3 +1,4 @@
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY})
@@ -9,74 +10,47 @@ add_custom_target(build-time-make-directory-qpoly ALL
   COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_library
   COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}/test_color)
 
-# ///////////////////////////////INTERPOLATOR TEST////////////////////////////////
-add_executable(Unit_test_Interpolator_qpoly
-  InterpolatorTest.cpp
-)
-target_compile_definitions(Unit_test_Interpolator_qpoly
-  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-
-target_link_libraries(Unit_test_Interpolator_qpoly
-  PRIVATE
-  gtest_main
-  gmock
-  QPolygonTransform
-)
-target_compile_definitions(Unit_test_Interpolator_qpoly PRIVATE
-  -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
-  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
-)
-
-# ############################TRANSFORMATION TEST##############################
-add_executable(Unit_test_Transformation_qpoly
-  TransformationTest.cpp
-)
-
-target_compile_definitions(Unit_test_Transformation_qpoly
-  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-
-target_link_libraries(Unit_test_Transformation_qpoly
-  PRIVATE
-  gtest_main
-  gmock
-  ImageTransformCommon
-)
-
 # #############################LIBRARY TEST#################################
-add_executable(Unit_test_QPolygonTransform_lib_qpoly
-  QPolygonTransform_libTest.cpp
+add_executable(UnitTestQPolygonTransformLib
+  UnitTestQPolygonTransform.cpp
 )
 
-target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly
+target_compile_definitions(UnitTestQPolygonTransformLib
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(Unit_test_QPolygonTransform_lib_qpoly
+target_link_libraries(UnitTestQPolygonTransformLib
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   QPolygonTransform
 )
-target_compile_definitions(Unit_test_QPolygonTransform_lib_qpoly PRIVATE
+target_compile_definitions(UnitTestQPolygonTransformLib PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
   -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
+)
+
+add_test(NAME UnitTestQPolygonTransformLib
+  COMMAND $<TARGET_FILE:UnitTestQPolygonTransformLib>
 )
 
 # ############################COLORINTERPOLTEST TEST##############################
-add_executable(Unit_test_ColorInterpolation
-  Unit_test_ColorInterpolation.cpp
+add_executable(UnitTestColorInterpolation
+  UnitTestColorInterpolation.cpp
 )
 
-target_compile_definitions(Unit_test_ColorInterpolation
+target_compile_definitions(UnitTestColorInterpolation
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(Unit_test_ColorInterpolation
+target_link_libraries(UnitTestColorInterpolation
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   QPolygonTransform
 )
 
-target_compile_definitions(Unit_test_ColorInterpolation PRIVATE
+target_compile_definitions(UnitTestColorInterpolation PRIVATE
   -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY}"
   -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_QPOLY}"
+)
+
+add_test(NAME UnitTestColorInterpolation
+  COMMAND $<TARGET_FILE:UnitTestColorInterpolation>
 )

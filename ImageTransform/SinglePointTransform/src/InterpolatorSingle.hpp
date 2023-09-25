@@ -1,24 +1,14 @@
 #pragma once
+#include <InterpolatorBase.hpp>
 
-#include <QColor>
-#include <Transformation.hpp>
-
-namespace SniglePointlib
+namespace single
 {
-using namespace common;
-
-class Interpolator : public QObject
+class InterpolatorSingle : public common::InterpolatorBase
 {
-    Q_OBJECT
-
 public:
-    Interpolator(QObject* parent = 0);
-    void setPixmap(QPixmap* pixmap);
+    ~InterpolatorSingle() override = default;
 
-    QColor interpolateColor(const QPolygonF& transformed_poly);
-    QImage transformImage(int deg_angle, int led_size, int number_of_leds);
-
-private:
-    QPixmap* inerpolator_pixmap;
+    QColor interpolateColor(const QPolygonF& transformed_poly,
+                            const QPixmap* pix_map) override;
 };
-} // namespace SniglePointlib
+} // namespace single

@@ -4,6 +4,10 @@
 set(GUI_SAMPLE_IMAGES_PATH ${CMAKE_SOURCE_DIR}/Pictures CACHE PATH "" FORCE)
 
 # #####################################################################################
+# VARIABLES FOR COMMON PART TEST
+set(GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_COMMON ${CMAKE_BINARY_DIR}/bin/UnitTests/)
+
+# #####################################################################################
 # VARIABLES FOR POLY TEST
 set(GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY ${CMAKE_BINARY_DIR}/bin/UnitTests/TestQPolygonTransformLibrary CACHE PATH "" FORCE)
 set(GUI_OUTPUT_GENERATED_IMG_PATH_TEST_QPOLY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_QPOLY}/GeneratedPicture CACHE PATH "" FORCE)

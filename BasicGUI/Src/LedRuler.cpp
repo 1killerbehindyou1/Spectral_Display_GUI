@@ -4,14 +4,13 @@
 #include <QPen>
 #include <Transformation.hpp>
 
-
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
       m_rotation(1), m_size(1), m_rendered_preview(false)
 {
 }
 
-void LedRuler::setPixmap(QPixmap* pixmap) { m_interpolator.setPixmap(pixmap); }
+void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
 
 QImage* LedRuler::getRenderedImage() { return m_output_image; }
 
@@ -65,8 +64,8 @@ void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
     m_number_of_leds = number_of_leds;
     m_rotation = rotation;
     m_size = size;
-    m_current_transformed_image = new QImage{
-        m_interpolator.transformImage(rotation, size, number_of_leds)};
+    m_current_transformed_image = new QImage{m_interpolator.transformImage(
+        rotation, size, number_of_leds, m_pixmap)};
     update();
 }
 
