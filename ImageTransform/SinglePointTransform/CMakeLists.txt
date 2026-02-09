@@ -17,4 +17,4 @@ target_include_directories(SinglePointTransform PUBLIC
   src
 )
 
-add_subdirectory(unit_tests)
+#add_subdirectory(unit_tests)

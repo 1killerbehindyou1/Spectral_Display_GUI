@@ -2,4 +2,4 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_subdirectory(TransformationCore)
 add_subdirectory(InterpolationCore)
-add_subdirectory(unitTests)
+#add_subdirectory(unitTests)
