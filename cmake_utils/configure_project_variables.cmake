@@ -1,7 +1,7 @@
 # #####################################################################################
 # VARIABLES GENERAL
 
-set(GUI_SAMPLE_IMAGES_PATH ${CMAKE_SOURCE_DIR}/Pictures CACHE PATH "" FORCE)
+set(GUI_SAMPLE_IMAGES_PATH ${CMAKE_SOURCE_DIR}/pictures CACHE PATH "" FORCE)
 
 # #####################################################################################
 # VARIABLES FOR COMMON PART TEST
