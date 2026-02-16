@@ -1,10 +1,7 @@
 #pragma once
 
-#ifndef TRANSFORMATION_H
-#define TRANSFORMATION_H
-
-#include <Constants.hpp>
 #include <QDebug>
+#include <Constants.hpp>
 #include <QColor>
 #include <QPixmap>
 #include <QPoint>

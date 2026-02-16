@@ -1,10 +1,6 @@
 #pragma once
 
-#ifndef LED_RULER_H
-#define LED_RULER_H
-
-#include <Interpolator.h>
-
+#include <InterpolatorQPoly.hpp>
 #include <QColor>
 #include <QDebug>
 #include <QObject>
@@ -17,6 +13,9 @@
 #include <QtQuick/QQuickPaintedItem>
 #include <cmath>
 #include <iostream>
+
+// Convenience alias for the interpolator type
+using Interpolator = poly::InterpolatorQPoly;
 
 class LedRuler : public QQuickPaintedItem
 {

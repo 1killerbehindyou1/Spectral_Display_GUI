@@ -1,9 +1,5 @@
 #pragma once
 
-#ifndef FILE_MANAGER_H
-#define FILE_MANAGER_H
-
-
 #include <QDebug>
 #include <QObject>
 #include <QPixmap>
@@ -13,7 +9,7 @@
 
 class FileManager : public QObject
 {
-    // Q_OBJECT
+    Q_OBJECT
     Q_PROPERTY(QString path MEMBER m_path)
     Q_PROPERTY(QPixmap* pixmap_pointer READ getPixmapPointer)
 

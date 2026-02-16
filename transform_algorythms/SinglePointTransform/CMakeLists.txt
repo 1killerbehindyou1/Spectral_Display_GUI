@@ -1,29 +1,20 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
-
-set(PROJECT_SOURCES
-  src/Interpolator.cpp
-  src/Transformation.cpp
-)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
 add_library(SinglePointTransform STATIC
-  ${PROJECT_SOURCES})
+  src/InterpolatorSingle.cpp
+)
 
 target_compile_definitions(SinglePointTransform
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
 target_link_libraries(SinglePointTransform
-  PRIVATE
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Quick
-  Qt${QT_VERSION_MAJOR}::Gui
-  Qt${QT_VERSION_MAJOR}::QuickControls2
+  PUBLIC
+  InterpolationCore
 )
 target_include_directories(SinglePointTransform PUBLIC
-  ${COMMON_HEADERS}
-  includes
+  src
 )
 
 if(BUILD_UT)

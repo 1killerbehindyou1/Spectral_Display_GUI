@@ -1,31 +1,29 @@
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
 
-# #############################LIBRARY TEST#################################
-preparing_singlePoint_tests(SinglePoint_test)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GUI_CMAKE_RUNTIME_OUTPUT_DIR_TEST_SINGLE})
 
-add_executable(SinglePointTransform_libTest
-  SinglePointTransform_libTest.cpp
+add_custom_target(make_directory_for_singlePointTest ALL
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_SINGLE}/test_library)
+
+add_executable(UnitTestSinglePointTransform
+  UnitTestSinglePointTransform.cpp
 )
 
-target_compile_definitions(SinglePointTransform_libTest PRIVATE
-  $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
-  -DBINARY_BUILD_PATH="${CMAKE_BINARY_DIR}/bin"
-  -DOUTPUT_IMG_PATH="${OUTPUT_IMG_PATH}"
-  -DINPUT_IMG_PATH="${INPUT_IMG_PATH}"
+target_compile_definitions(UnitTestSinglePointTransform PRIVATE
+  -DBINARY_BUILD_PATH="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}"
+  -DOUTPUT_IMG_PATH="${GUI_OUTPUT_GENERATED_IMG_PATH_TEST_SINGLE}"
+  -DINPUT_IMG_PATH="${GUI_SAMPLE_IMAGES_PATH}/${GUI_TESTING_IMG_SINGLE}"
 )
 
-target_include_directories(SinglePointTransform_libTest PUBLIC
-  ${SINGLE_POINT_INCLUDE_DIR}
-  ${COMMON_HEADERS}
-)
+target_compile_definitions(UnitTestSinglePointTransform
+  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(SinglePointTransform_libTest
+target_link_libraries(UnitTestSinglePointTransform
   PRIVATE
-  gtest_main
-  gmock
+  googletest_utils
   SinglePointTransform
+)
 
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
+add_test(NAME UnitTestSinglePointTransform
+  COMMAND $<TARGET_FILE:UnitTestSinglePointTransform>
 )

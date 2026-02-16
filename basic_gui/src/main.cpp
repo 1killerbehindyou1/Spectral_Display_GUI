@@ -1,5 +1,4 @@
 #include "FileManager.hpp"
-#include "Interpolator.hpp"
 #include "LedRuler.hpp"
 #include "RenderSelector.hpp"
 #include <QDebug>

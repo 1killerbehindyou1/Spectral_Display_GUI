@@ -17,25 +17,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 5)
 
-# ######################################################
-# VARIABLES DEFINITION
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib_static)
-
-set(IMAGES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pictures)
-set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/pictures/BITMAPA.png)
-
-set(QPOLYGON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/QPolygonTransform/includes)
-set(SINGLE_POINT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/SinglePointTransform/src)
-
-set(COMMON_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/common_includes)
-
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_subdirectory(ImageTransform)
 add_subdirectory(transform_algorythms)
 add_subdirectory(pictures)
 add_subdirectory(basic_gui)

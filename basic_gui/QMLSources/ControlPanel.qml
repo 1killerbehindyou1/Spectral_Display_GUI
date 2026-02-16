@@ -18,126 +18,79 @@ Control
 
     implicitWidth: 500
     implicitHeight: 500
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 16-splitview-does-not-display-the-controlpanel-correctly
     padding: 10
     background: Rectangle
     {
         color: "#c8d6e8"
     }
-<<<<<<< HEAD
-   
-    /*contentItem: ColumnLayout
-    { 
-        spacing: 10; 
-=======
 
-    /*contentItem: ColumnLayout
+    contentItem: ColumnLayout
     {
-        spacing: 10;
->>>>>>> 16-splitview-does-not-display-the-controlpanel-correctly
-        ScrollView
-        {
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            clip: true*/
-<<<<<<< HEAD
- 
-            contentItem:ColumnLayout
-            {
-                spacing: 20
-                Text{text: "Spectral display hardware"; font.bold: true; font.pixelSize: 18 }         
-                DataInput{ id: l_num; label: "led number";init_value: 25;  max: 200; min: 1}
-                DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1} 
-                RowLayout
-                {
-                    Text{text: "Spectral display resolution: "; font.pixelSize: 18 } 
-=======
+        anchors.fill: parent
+        spacing: 0
 
-            contentItem:ColumnLayout
-            {
+        GroupBox
+        {
+             title: "Parameters"
+             Layout.fillWidth: true
+             Layout.preferredHeight: parent.height
+             Layout.preferredWidth: parent.width
+             Layout.alignment: Qt.AlignTop
+
+             contentItem: ColumnLayout
+             {
                 spacing: 20
                 Text{text: "Spectral display hardware"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_num; label: "led number";init_value: 25;  max: 200; min: 1}
-                DataInput{ id: l_rotation; label:"led angle";init_value: 5;  max: 360; min: 1}
-                RowLayout
+                DataInput{ id: l_num; label: "led number"; init_value: 25;  max: 200; min: 1}
+                DataInput{ id: l_rotation; label:"led angle"; init_value: 5;  max: 360; min: 1}
+                ColumnLayout
                 {
                     Text{text: "Spectral display resolution: "; font.pixelSize: 18 }
->>>>>>> 16-splitview-does-not-display-the-controlpanel-correctly
                     TextField
                     {
                         readOnly: true
                         text: parseInt(360/l_rotation.value) + " x " + l_num.value + " pixels";
-                        color: "#243956"
+                        color: "black"
                         font.pixelSize: 20
                         activeFocusOnTab: false
                         background: Rectangle {color: "transparent"}
                     }
                 }
-<<<<<<< HEAD
-                  
-                Rectangle
-                {
-                    height: 1 
-                    border.width: 2
-                    color: "black"
-                    Layout.fillWidth: true
-                }
-
-                Text{text: "Selector Diameter"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_size; label: "Size [pixels]: "; init_value: 10;  max: 1000; min: 1}     
-                RowLayout
-                {
-                    Text{text: "selector in pixels: "; font.pixelSize: 18 } 
-                    TextField
-                    {
-                        readOnly: true
-                        text: l_num.value * l_size.value * 2 + " pixels";
-                        color: "#243956"
-                        font.pixelSize: 20
-                        activeFocusOnTab: false
-                        background: Rectangle {color: "transparent"}
-                    }
-                }
-            }
-              
-       // }                        
-   // }
-=======
->>>>>>> 16-splitview-does-not-display-the-controlpanel-correctly
 
                 Rectangle
                 {
                     height: 1
                     border.width: 2
-                    color: "black"
+                    color: "#b1b9c5"
                     Layout.fillWidth: true
                 }
 
-                Text{text: "Selector Diameter"; font.bold: true; font.pixelSize: 18 }
+                Text{text: "Selector diameter"; font.bold: true; font.pixelSize: 18 }
                 DataInput{ id: l_size; label: "Size [pixels]: "; init_value: 10;  max: 1000; min: 1}
-                RowLayout
+                ColumnLayout
                 {
                     Text{text: "selector in pixels: "; font.pixelSize: 18 }
                     TextField
                     {
                         readOnly: true
                         text: l_num.value * l_size.value * 2 + " pixels";
-                        color: "#243956"
+                        color: "black"
                         font.pixelSize: 20
                         activeFocusOnTab: false
                         background: Rectangle {color: "transparent"}
                     }
                 }
+                Rectangle
+                {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    color: "transparent"
+                    border.width: 0
+                    border.color: "transparent"
+                }
             }
-
-       // }
-   // }
+        }
+    }
 
     Component.onCompleted:
     {
@@ -147,11 +100,6 @@ Control
     }
 }
 
-<<<<<<< HEAD
-      
-    
-   
-=======
 
 
->>>>>>> 16-splitview-does-not-display-the-controlpanel-correctly
+

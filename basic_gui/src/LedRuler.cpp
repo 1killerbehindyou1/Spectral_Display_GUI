@@ -6,7 +6,7 @@
 
 LedRuler::LedRuler(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
-      m_rotation(1), m_size(1), m_rendered_preview(false), m_center(300, 300)
+      m_rotation(1), m_size(1), m_rendered_preview(true), m_center(400, 400)
 {
 }
 
@@ -20,7 +20,7 @@ void LedRuler::paint(QPainter* painter)
 {
     if (m_current_transformed_image != nullptr)
     {
-        painter->drawImage(QPoint{0, 0}, *m_current_transformed_image);
+        painter->drawImage(QPoint{0, 700}, *m_current_transformed_image);
     // from merged code
     //     painter->save();
     //     painter->translate(400, 400);

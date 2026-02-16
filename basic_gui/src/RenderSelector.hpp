@@ -1,8 +1,5 @@
+#pragma once
 
-#ifndef SELECTOR_H
-#define SELECTOR_H
-
-#include "RenderSelector.h"
 #include <QColor>
 #include <QDebug>
 #include <QObject>
@@ -33,4 +30,4 @@ private:
     int m_number_of_leds;
     int m_size;
 };
-#endif
+

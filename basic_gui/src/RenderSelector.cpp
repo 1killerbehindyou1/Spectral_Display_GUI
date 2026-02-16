@@ -1,16 +1,15 @@
 
-#include "RenderSelector.h"
+#include "RenderSelector.hpp"
 #include <QDebug>
 #include <QPen>
 #include <iostream>
 
 RenderSelector::RenderSelector(QQuickItem* parent)
-    : QQuickPaintedItem(parent), m_point(300, 300), m_number_of_leds(30),
+    : QQuickPaintedItem(parent), m_point(400, 400), m_number_of_leds(25),
       m_size(1)
 {
 }
 
-////////////////////////////////////////////////////////
 void RenderSelector::paint(QPainter* painter)
 {
     int radius = m_number_of_leds * m_size;
