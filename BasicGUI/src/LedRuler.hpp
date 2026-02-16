@@ -18,11 +18,12 @@ class LedRuler : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QPixmap* pixmap WRITE setPixmap)
+    Q_PROPERTY(QPixmap* pixmap READ pixmap WRITE setPixmap)
 
 public:
     LedRuler(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
+    QPixmap* pixmap() const;
     void setPixmap(QPixmap* pixmap);
 
     Q_INVOKABLE void setPoint(QPoint point);

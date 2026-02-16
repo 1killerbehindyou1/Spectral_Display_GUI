@@ -25,6 +25,6 @@ target_link_libraries(BasicGUI
   QPolygonTransform
 )
 
-set_target_properties(BasicGUI PROPERTIES
-  WIN32_EXECUTABLE TRUE
-)
+# set_target_properties(BasicGUI PROPERTIES
+#   WIN32_EXECUTABLE TRUE
+# )

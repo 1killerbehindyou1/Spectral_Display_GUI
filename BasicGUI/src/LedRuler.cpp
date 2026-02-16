@@ -12,6 +12,8 @@ LedRuler::LedRuler(QQuickItem* parent)
 
 void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
 
+QPixmap* LedRuler::pixmap() const { return m_pixmap; }
+
 QImage* LedRuler::getRenderedImage() { return m_output_image; }
 
 void LedRuler::paint(QPainter* painter)

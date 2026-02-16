@@ -19,13 +19,13 @@ class SaveLoadFixture : public testing::TestWithParam<Parameters>
 {
 public:
     SaveLoadFixture(const char* input, const char* output);
-    ~SaveLoadFixture() override = default;
+    ~SaveLoadFixture() override;
 
     void saveImg(QImage& output_image, Parameters params, QString path);
 
     QFileInfo pixmap_path;
     QFileInfo output_path;
-    QPixmap* pix_map;
+    QPixmap* pix_map = nullptr;
 };
 
 template <typename Interpolator>

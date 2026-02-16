@@ -14,8 +14,8 @@ class ColorInterpolationTestWithParams
 {
 
 public:
-    ColorInterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
-                                     const char* out = INPUT_IMG_PATH)
+    ColorInterpolationTestWithParams(const char* inp = INPUT_IMG_PATH,
+                                     const char* out = OUTPUT_IMG_PATH)
         : SaveLoadFixture(inp, out)
     {
     }

@@ -1,5 +1,6 @@
 #pragma once
 #include <CommonTests.hpp>
+#include <QDebug>
 
 namespace test_utils
 {
@@ -10,7 +11,19 @@ SaveLoadFixture<Parameters>::SaveLoadFixture(const char* input,
     : pixmap_path{QFileInfo{QString{input}}}, output_path{
                                                   QFileInfo{QString{output}}}
 {
-    pix_map->load(pixmap_path.absoluteFilePath());
+    pix_map = new QPixmap();
+    if (!pix_map->load(pixmap_path.absoluteFilePath()))
+    {
+        qWarning() << "Failed to load pixmap:"
+                   << pixmap_path.absoluteFilePath();
+    }
+}
+
+template <typename Parameters>
+SaveLoadFixture<Parameters>::~SaveLoadFixture()
+{
+    delete pix_map;
+    pix_map = nullptr;
 }
 
 template <typename Parameters>
@@ -37,9 +50,7 @@ std::string to_string(const T& val)
     return out.str();
 }
 
-template <typename PointType,
-          typename = decltype(std::declval<PointType>().x() +
-                              std::declval<PointType>().y())>
+template <typename PointType, typename>
 std::ostream& operator<<(std::ostream& out,
                          PointType&& point) // universal reference
 {

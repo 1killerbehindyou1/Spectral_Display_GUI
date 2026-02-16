@@ -13,8 +13,10 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": "",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
+                "Qt5_DIR": "/usr/lib/x86_64-linux-gnu/cmake/Qt5",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+                "BUILD_UT": "OFF",
+                "BUILD_BENCHMARK_TESTS": "OFF"
             }
         },
         {
@@ -31,6 +33,25 @@
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "ut",
+            "displayName": "Unit Test configure",
+            "inherits": "debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_UT": "ON"
+            }
+        },
+        {
+            "name": "benchmark",
+            "displayName": "Benchmark configure",
+            "inherits": "debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_BENCHMARK_TESTS": "ON",
+                "BUILD_UT": "ON"
             }
         }
     ],
@@ -49,6 +70,16 @@
             "name": "release",
             "inherits": "base",
             "configurePreset": "release"
+        },
+        {
+            "name": "benchmark",
+            "inherits": "base",
+            "configurePreset": "benchmark"
+        },
+        {
+            "name": "ut",
+            "inherits": "base",
+            "configurePreset": "ut"
         }
     ]
 }
