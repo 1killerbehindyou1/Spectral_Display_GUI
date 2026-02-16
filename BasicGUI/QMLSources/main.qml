@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
 import Main 1.0
 
-ApplicationWindow 
+ApplicationWindow
 {
     id: root
     width: 900
@@ -21,14 +21,14 @@ ApplicationWindow
 
     onPreviewIsActiveChanged: loadedImage.visible = imageSelected && previewIsActive;
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
-    
-    menuBar: MenuBar 
-    {     
+
+    menuBar: MenuBar
+    {
         contentWidth: parent.width
-        Menu 
+        Menu
         {
             title: qsTr("&File")
-            Action 
+            Action
             {
                 text: qsTr("&Load Image...")
                 onTriggered:
@@ -37,11 +37,11 @@ ApplicationWindow
                     fileDialog.title = "Please choose a file";
                     fileDialog.nameFilters = [ "Image files (*.jpg *.png)", "All files (*)" ];
                     fileDialog.selectExisting = true;
-                    fileDialog.open();      
+                    fileDialog.open();
                 }
             }
             MenuSeparator { }
-            Action 
+            Action
             {
                 text: qsTr("&Save Transformated Image...")
                 onTriggered:
@@ -54,7 +54,7 @@ ApplicationWindow
                 }
             }
         }
-        Menu 
+        Menu
         {
             title: qsTr("&View")
             delegate: CheckBox{}
@@ -77,33 +77,33 @@ ApplicationWindow
         }
     }
 
-    SplitView 
-    { 
+    SplitView
+    {
         anchors.fill: parent
         id: splitView
         Image
         {
-            anchors.fill: parents
+            anchors.fill: parent
             id: loadedImage
             visible: false
             fillMode: Image.PreserveAspectFit
         }
-        
+
         RenderPanel
-        { 
+        {
             id: drawing
         }
 
         ControlPanel
         {
             id: parameters
-           
+
             SplitView.minimumWidth: 400
             SplitView.maximumWidth: 400
         }
     }
-    
-    FileDialog 
+
+    FileDialog
     {
         signal pixmapLoaded()
 
@@ -122,38 +122,38 @@ ApplicationWindow
            {
                  file_manager.savePixMap(fileDialog.fileUrl, drawing.getOutImage());
            }
-         
+
         }
-        onRejected: 
+        onRejected:
         {
            fileDialog.close()
         }
         Component.onCompleted: visible = false
     }
-   
-    
-    MessageDialog 
+
+
+    MessageDialog
     {
         id: messageDialog
         title: ""
         text: ""
-        onAccepted: 
+        onAccepted:
         {
-            messageDialog.close()  
+            messageDialog.close()
         }
-        
+
         function showMessageBox(title: string, message: string)
         {
             messageDialog.text = message
             messageDialog.title = title
-            messageDialog.open()  
+            messageDialog.open()
         }
     }
-    Component.onCompleted: 
+    Component.onCompleted:
     {
         parameters.parameterChanged.connect(drawing.updateLedParameters);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
     }
 }
-     
+
 

@@ -58,6 +58,7 @@ void LedRuler::paint(QPainter* painter)
             painter->restore();
         }
         delete m_current_transformed_image;
+        m_current_transformed_image = nullptr;
     }
 }
 
@@ -66,6 +67,15 @@ void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
     m_number_of_leds = number_of_leds;
     m_rotation = rotation;
     m_size = size;
+    if (m_pixmap == nullptr || m_pixmap->isNull())
+    {
+        return;
+    }
+    if (m_current_transformed_image != nullptr)
+    {
+        delete m_current_transformed_image;
+        m_current_transformed_image = nullptr;
+    }
     m_current_transformed_image = new QImage{m_interpolator.transformImage(
         rotation, size, number_of_leds, m_pixmap)};
     update();
