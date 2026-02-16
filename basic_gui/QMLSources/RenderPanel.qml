@@ -6,12 +6,12 @@ import QtQuick.Dialogs 1.3
 import Main 1.0
 
 Control
-{ 
+{
     id: root
 
     function updateLedParameters(size: int, angle: int, num: int)
     {
-        return led.onParameterChanged(num, angle, size);  
+        return led.onParameterChanged(num, angle, size);
     }
     function setPixmap()
     {
@@ -23,7 +23,7 @@ Control
        // return led.getRenderedImage();
     }
     function checkRenderedPreview(state: bool)
-    { 
+    {
         return led.showOutputPreview(state);
     }
 
@@ -32,15 +32,14 @@ Control
         return led.setPoint(Qt.point(mouseX, mouseY));
     }
 
-    
     implicitWidth: 720
     implicitHeight: 500
 
     background: Rectangle{ color: "white" }
-    
+
     contentItem: LedRuler
     {
-        id: led 
+        id: led
         anchors.fill: parent
-    }                             
+    }
 }

@@ -84,20 +84,29 @@ ApplicationWindow
 
         Image
         {
-<<<<<<< HEAD
+
             anchors.fill: parent
             id: loadedImage
             visible: false
             fillMode: Image.PreserveAspectFit
+            id: selector
+            width: (parent.width - parameters.width)/2
+        }
+
+
+        handle: Rectangle
+        {
+            implicitWidth: 4
+            implicitHeight: 4
+            color: SplitHandle.pressed ? "#243956"
+                : (SplitHandle.hovered ? Qt.lighter("#243956", 1.5) : Qt.lighter("#243956", 2))
         }
 
         RenderPanel
         {
             id: drawing
-=======
             id: selector
             width: (parent.width - parameters.width)/2
->>>>>>> 52fce8c (circle drawing impl)
         }
 
 
@@ -117,15 +126,19 @@ ApplicationWindow
             ControlPanel
         {
             id: parameters
-<<<<<<< HEAD
-
-            SplitView.minimumWidth: 400
-            SplitView.maximumWidth: 400
-=======
             //implicitWidth: 300
             //SplitView.minimumWidth: 250
             //SplitView.preferredWidth: 300
->>>>>>> 52fce8c (circle drawing impl)
+
+            width: (parent.width - parameters.width)/2
+        }
+            ControlPanel
+        {
+            id: parameters
+            //implicitWidth: 300
+            //SplitView.minimumWidth: 250
+            //SplitView.preferredWidth: 300
+            // width: (parent.width - parameters.width)/2
         }
 
         Component.onCompleted: parameters.width = 250
@@ -174,11 +187,7 @@ ApplicationWindow
         function showMessageBox(title: string, message: string)
         {
             messageDialog.text = message
-<<<<<<< HEAD
             messageDialog.title = title
-=======
-            messageDialog.title = titlegit
->>>>>>> 52fce8c (circle drawing impl)
             messageDialog.open()
         }
     }
