@@ -1,6 +1,7 @@
 #include "FileManager.hpp"
 #include "LedRuler.hpp"
 #include "RenderSelector.hpp"
+#include "TransformedPreview.hpp"
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -58,6 +59,7 @@ int main(int argc, char* argv[])
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
+    qmlRegisterType<TransformedPreview>("Main", 1, 0, "TransformedPreview");
     qRegisterMetaType<QPixmap*>("QPixmap*");
     qRegisterMetaType<QImage*>("QImage*");
 

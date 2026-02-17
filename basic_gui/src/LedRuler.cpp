@@ -14,24 +14,10 @@ void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
 
 QPixmap* LedRuler::pixmap() const { return m_pixmap; }
 
-QImage* LedRuler::getRenderedImage() { return m_output_image; }
-
 void LedRuler::paint(QPainter* painter)
 {
     if (m_current_transformed_image != nullptr)
     {
-        painter->drawImage(QPoint{0, 700}, *m_current_transformed_image);
-    // from merged code
-    //     painter->save();
-    //     painter->translate(400, 400);
-    //     painter->rotate(90);
-    //     painter->drawImage(QPoint{0, 0}, *m_output_image);
-    //     painter->restore();
-    // }
-    // painter->translate(m_center);
-    // QPoint offset(m_size * 0.5, m_size * (-0.5));
-    // QPoint pixel{0, 0};
-
         int lp_width = m_current_transformed_image->width();
         int lp_hight = m_current_transformed_image->height();
 
@@ -95,10 +81,4 @@ void LedRuler::setPoint(QPoint point)
 {
     m_point = point;
     this->onParameterChanged(m_number_of_leds, m_rotation, m_size);
-}
-
-void LedRuler::showOutputPreview(bool show)
-{
-    m_rendered_preview = show;
-    update();
 }

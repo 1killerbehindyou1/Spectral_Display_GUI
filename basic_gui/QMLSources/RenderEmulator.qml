@@ -18,15 +18,6 @@ Control
         led.pixmap = file_manager.pixmap_pointer
     }
 
-    function getOutImage()
-    {
-       // return led.getRenderedImage();
-    }
-    function checkRenderedPreview(state: bool)
-    {
-        return led.showOutputPreview(state);
-    }
-
     function updatePoint(mouseX: real, mouseY: real)
     {
         return led.setPoint(Qt.point(mouseX, mouseY));

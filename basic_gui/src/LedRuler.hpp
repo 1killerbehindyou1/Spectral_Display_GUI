@@ -30,8 +30,6 @@ public:
     void setPixmap(QPixmap* pixmap);
 
     Q_INVOKABLE void setPoint(QPoint point);
-    Q_INVOKABLE void showOutputPreview(bool show);
-    Q_INVOKABLE QImage* getRenderedImage();
     Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
                                         int size);
 

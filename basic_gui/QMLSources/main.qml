@@ -144,15 +144,40 @@ ApplicationWindow
             visible: true
         }
 
-        RenderPanel
+        ColumnLayout
         {
-            id: drawing
             Layout.fillWidth: true
-            Layout.preferredWidth: 400
+            Layout.preferredWidth: 200
             Layout.preferredHeight: parent.height
-            visible: true
-        }
+            spacing: 0
 
+
+            RenderEmulator
+            {
+                id: drawing
+                Layout.fillWidth: true
+                Layout.preferredWidth: 400
+                Layout.preferredHeight: parent.height/2
+                visible: true
+            }
+
+            Rectangle
+            {
+                height: 1
+                border.width: 2
+                color: "#b1b9c5"
+                Layout.fillWidth: true
+            }
+
+            TransformedPreview
+            {
+                id: preview
+                Layout.fillWidth: true
+                Layout.preferredWidth: 400
+                Layout.preferredHeight: parent.height/2
+                visible: true
+            }
+        }
         ControlPanel
         {
             id: parameters

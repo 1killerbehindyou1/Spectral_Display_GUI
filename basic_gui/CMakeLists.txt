@@ -9,6 +9,7 @@ set(PROJECT_SOURCES
   src/LedRuler.cpp
   src/FileManager.cpp
   src/RenderSelector.cpp
+  src/TransformedPreview.cpp
   QMLSources/qml.qrc)
 
 add_executable(BasicGUI
