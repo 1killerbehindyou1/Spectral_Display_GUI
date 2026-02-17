@@ -1,15 +1,10 @@
 #pragma once
 
-#include <QColor>
 #include <QDebug>
 #include <QObject>
-#include <QPainter>
 #include <QPixmap>
-#include <QPoint>
 #include <QString>
 #include <QUrl>
-#include <QtQuick/QQuickPaintedItem>
-#include <cmath>
 #include <iostream>
 
 class FileManager : public QObject

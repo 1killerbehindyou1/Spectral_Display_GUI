@@ -21,8 +21,9 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+add_subdirectory(transform_algorythms)
+add_subdirectory(pictures)
 add_subdirectory(basic_gui)
-add_subdirectory(image_transformation)
 
 if(BUILD_UT)
     include(CTest)
@@ -43,3 +44,5 @@ endif()
 if(BUILD_BENCHMARK_TESTS)
     add_subdirectory(benchmark_tests)
 endif()
+
+
