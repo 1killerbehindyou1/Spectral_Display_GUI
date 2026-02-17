@@ -7,11 +7,11 @@ import Main 1.0
 
 Control
 {
-    signal pointUpdate(real xPosition, real yPosition)
+    signal pointUpdate(point point)
 
-    function selectorParameterChanged(l_size: int, angle: int, number_of_leds: int)
+    function selectorSizeChanged(radius: int)
     {
-        return selector_local.selectorUpdate(number_of_leds, l_size);
+        return selector_local.selectorUpdate(radius);
     }
 
     property alias img_visible: loaded_image.visible
@@ -27,12 +27,12 @@ Control
     id: root
     implicitWidth: 500
     implicitHeight: 500
-   
+
 
     background: Image
     {
         id: loaded_image
-        visible: false
+        visible: true
         fillMode: Image.PreserveAspectCrop
     }
     Selector
@@ -45,7 +45,7 @@ Control
             onClicked:
             {
                 selector_local.setPoint(Qt.point(mouseX, mouseY));
-                root.pointUpdate(mouseX, mouseY);
+                root.pointUpdate(Qt.point(mouseX, mouseY));
             }
         }
     }

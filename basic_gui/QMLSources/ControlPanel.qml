@@ -41,7 +41,7 @@ Control
              {
                 spacing: 20
                 Text{text: "Spectral display hardware"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_num; label: "led number"; init_value: 25;  max: 200; min: 1}
+                DataInput{ id: l_num; label: "led number"; init_value: 25;  max: 70; min: 1}
                 DataInput{ id: l_rotation; label:"led angle"; init_value: 5;  max: 360; min: 1}
                 ColumnLayout
                 {
@@ -66,14 +66,14 @@ Control
                 }
 
                 Text{text: "Selector diameter"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_size; label: "Size [pixels]: "; init_value: 10;  max: 1000; min: 1}
+                DataInput{ id: l_size; label: "Size [pixels]: "; init_value: 10;  max: 50; min: 1}
                 ColumnLayout
                 {
                     Text{text: "selector in pixels: "; font.pixelSize: 18 }
                     TextField
                     {
                         readOnly: true
-                        text: l_num.value * l_size.value * 2 + " pixels";
+                        text: l_size.value + " pixels";
                         color: "black"
                         font.pixelSize: 20
                         activeFocusOnTab: false

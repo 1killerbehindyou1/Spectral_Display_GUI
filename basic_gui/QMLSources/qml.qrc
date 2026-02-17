@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>RenderPanel.qml</file>
+        <file>DisplayRender.qml</file>
         <file>ControlPanel.qml</file>
         <file>DataInput.qml</file>
         <file>RenderSelector.qml</file>

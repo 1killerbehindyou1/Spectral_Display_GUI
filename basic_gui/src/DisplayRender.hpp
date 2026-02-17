@@ -17,14 +17,14 @@
 // Convenience alias for the interpolator type
 using Interpolator = poly::InterpolatorQPoly;
 
-class LedRuler : public QQuickPaintedItem
+class DisplayRender : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_ELEMENT
     Q_PROPERTY(QPixmap* pixmap READ pixmap WRITE setPixmap)
 
 public:
-    LedRuler(QQuickItem* parent = 0);
+    DisplayRender(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
     QPixmap* pixmap() const;
     void setPixmap(QPixmap* pixmap);

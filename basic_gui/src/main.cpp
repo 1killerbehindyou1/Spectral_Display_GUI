@@ -1,5 +1,5 @@
+#include "DisplayRender.hpp"
 #include "FileManager.hpp"
-#include "LedRuler.hpp"
 #include "RenderSelector.hpp"
 #include <QDebug>
 #include <QGuiApplication>
@@ -56,8 +56,9 @@ int main(int argc, char* argv[])
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
 
-    qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<DisplayRender>("Main", 1, 0, "DisplayRender");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
+
     qRegisterMetaType<QPixmap*>("QPixmap*");
     qRegisterMetaType<QImage*>("QImage*");
 

@@ -1,22 +1,22 @@
 
-#include "LedRuler.hpp"
+#include "DisplayRender.hpp"
 #include "FileManager.hpp"
 #include <QPen>
 #include <Transformation.hpp>
 
-LedRuler::LedRuler(QQuickItem* parent)
+DisplayRender::DisplayRender(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
       m_rotation(1), m_size(1), m_rendered_preview(true), m_center(400, 400)
 {
 }
 
-void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
+void DisplayRender::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
 
-QPixmap* LedRuler::pixmap() const { return m_pixmap; }
+QPixmap* DisplayRender::pixmap() const { return m_pixmap; }
 
-QImage* LedRuler::getRenderedImage() { return m_output_image; }
+QImage* DisplayRender::getRenderedImage() { return m_output_image; }
 
-void LedRuler::paint(QPainter* painter)
+void DisplayRender::paint(QPainter* painter)
 {
     if (m_current_transformed_image != nullptr)
     {
@@ -72,7 +72,7 @@ void LedRuler::paint(QPainter* painter)
     }
 }
 
-void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
+void DisplayRender::onParameterChanged(int number_of_leds, int rotation, int size)
 {
     m_number_of_leds = number_of_leds;
     m_rotation = rotation;
@@ -91,13 +91,13 @@ void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
     update();
 }
 
-void LedRuler::setPoint(QPoint point)
+void DisplayRender::setPoint(QPoint point)
 {
     m_point = point;
     this->onParameterChanged(m_number_of_leds, m_rotation, m_size);
 }
 
-void LedRuler::showOutputPreview(bool show)
+void DisplayRender::showOutputPreview(bool show)
 {
     m_rendered_preview = show;
     update();

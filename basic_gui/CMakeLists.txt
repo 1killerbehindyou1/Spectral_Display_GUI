@@ -6,7 +6,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 
 set(PROJECT_SOURCES
   src/main.cpp
-  src/LedRuler.cpp
+  src/DisplayRender.cpp
   src/FileManager.cpp
   src/RenderSelector.cpp
   QMLSources/qml.qrc)

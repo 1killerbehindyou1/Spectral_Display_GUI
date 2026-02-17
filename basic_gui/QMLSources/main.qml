@@ -20,7 +20,7 @@ ApplicationWindow
     property string file_operation: ""
 
     onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
-    onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
+    onRenderedPreviewIsActiveChanged: drawing.showOutputPreview(renderedPreviewIsActive);
 
     menuBar: MenuBar
     {
@@ -77,92 +77,84 @@ ApplicationWindow
         }
     }
 
-    // SplitView
-    // {
-    //     anchors.fill: parent
-    //     orientation: Qt.Horizontal
-    //     id: splitView
-
-    //     // Image
-    //     // {
-    //     //     anchors.fill: parent
-    //     //     id: loadedImage
-    //     //     visible: false
-    //     //     fillMode: Image.PreserveAspectFit
-    //     //     onVisibleChanged: console.log("Image visibility changed: " + visible)
-    //     // }
-
-    //     RenderSelector
-    //     {
-    //         id: selector
-    //         anchors.fill: parent
-    //         visible: true
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //         //fillMode: Image.PreserveAspectFit
-    //         // width: (parent.width - parameters.width)/2
-    //     }
-
-    //     RenderPanel
-    //     {
-    //         id: drawing
-    //         anchors.fill: parent
-    //         visible: true
-    //         //fillMode: Image.PreserveAspectFit
-    //        // width: (parent.width - parameters.width)/2
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //     }
-    //     handle: Rectangle
-    //     {
-    //         implicitWidth: 4
-    //         implicitHeight: 4
-    //         color: SplitHandle.pressed ? "#243956"
-    //             : (SplitHandle.hovered ? Qt.lighter("#243956", 1.5) : Qt.lighter("#243956", 2))
-    //     }
-
-    //     ControlPanel
-    //     {
-    //         id: parameters
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //         width: 250
-    //     }
-    // }
-
     RowLayout
     {
         anchors.fill: parent
-        spacing: 0
+        id: splitView
+
+        Image
+        {
+            anchors.fill: parent
+            id: loadedImage
+            visible: true
+            fillMode: Image.PreserveAspectFit
+            onVisibleChanged: console.log("Image visibility changed: " + visible)
+        }
 
         RenderSelector
         {
             id: selector
-            Layout.fillWidth: true
-            Layout.preferredWidth: 400
-            Layout.preferredHeight: parent.height
+            anchors.fill: parent
             visible: true
+            SplitView.minimumWidth: 400
+            SplitView.maximumWidth: 400
+            //fillMode: Image.PreserveAspectFit
+            width: (parent.width - parameters.width)/2
         }
 
-        RenderPanel
+        DisplayRender
         {
-            id: drawing
-            Layout.fillWidth: true
-            Layout.preferredWidth: 400
-            Layout.preferredHeight: parent.height
-            visible: true
+             id: drawing
+             anchors.fill: parent
+             visible: true
+             //fillMode: Image.PreserveAspectFit
+            width: (parent.width - parameters.width)/2
+            SplitView.minimumWidth: 400
+            SplitView.maximumWidth: 400
         }
 
         ControlPanel
         {
             id: parameters
-            Layout.fillWidth: true
-            Layout.preferredHeight: parent.height
-            Layout.preferredWidth: 350
-            Layout.maximumWidth: 350
-            visible: true
+            SplitView.minimumWidth: 400
+            SplitView.maximumWidth: 400
+            width: 250
         }
     }
+
+    // RowLayout
+    // {
+    //     anchors.fill: parent
+    //     spacing: 0
+
+    //     RenderSelector
+    //     {
+    //         id: selector
+    //         Layout.fillWidth: true
+    //         Layout.preferredWidth: 400
+    //         Layout.preferredHeight: parent.height
+    //         visible: true
+    //     }
+
+    //     RenderPanel
+    //     {
+    //         id: drawing
+    //         Layout.fillWidth: true
+    //         Layout.preferredWidth: 400
+    //         Layout.preferredHeight: parent.height
+    //         visible: true
+    //     }
+
+    //     ControlPanel
+    //     {
+    //         id: parameters
+    //         Layout.fillWidth: true
+    //         Layout.preferredHeight: parent.height
+    //         Layout.preferredWidth: 350
+    //         Layout.maximumWidth: 350
+    //         visible: true
+    //     }
+    // }
     FileDialog
     {
         signal pixmapLoaded()
@@ -180,7 +172,7 @@ ApplicationWindow
            }
            if(file_operation == "save")
            {
-                 file_manager.savePixMap(fileDialog.fileUrl, drawing.getOutImage());
+                 file_manager.savePixMap(fileDialog.fileUrl, drawing.getRenderedImage());
            }
 
         }
@@ -212,9 +204,9 @@ ApplicationWindow
     Component.onCompleted:
     {
         parameters.parameterChanged.connect(selector.selectorParameterChanged);
-        parameters.parameterChanged.connect(drawing.updateLedParameters);
+        parameters.parameterChanged.connect(drawing.onParameterChanged);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
-        selector.pointUpdate.connect(drawing.updatePoint);
+        selector.pointUpdate.connect(drawing.setPoint);
     }
 }
 

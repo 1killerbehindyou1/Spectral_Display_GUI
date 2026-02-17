@@ -11,25 +11,21 @@ Control
 
     function updateLedParameters(size: int, angle: int, num: int)
     {
-        return led.onParameterChanged(num, angle, size);
+        return render.onParameterChanged(num, angle, size);
     }
     function setPixmap()
     {
-        led.pixmap = file_manager.pixmap_pointer
+        render.pixmap = file_manager.pixmap_pointer
     }
 
-    function getOutImage()
-    {
-       // return led.getRenderedImage();
-    }
     function checkRenderedPreview(state: bool)
     {
-        return led.showOutputPreview(state);
+        return render.showOutputPreview(state);
     }
 
     function updatePoint(mouseX: real, mouseY: real)
     {
-        return led.setPoint(Qt.point(mouseX, mouseY));
+        return render.setPoint(Qt.point(mouseX, mouseY));
     }
 
     implicitWidth: 720
@@ -37,9 +33,9 @@ Control
 
     background: Rectangle{ color: "white" }
 
-    contentItem: LedRuler
+    contentItem: DisplayRender
     {
-        id: led
+        id: render
         anchors.fill: parent
     }
 }
