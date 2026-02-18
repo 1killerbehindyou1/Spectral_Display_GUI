@@ -19,8 +19,8 @@ class InterpolationTestWithParams
       public test_utils::InterpolatorInstanceFixture<single::InterpolatorSingle>
 {
 public:
-    InterpolationTestWithParams(const char* inp = OUTPUT_IMG_PATH,
-                                const char* out = INPUT_IMG_PATH)
+    InterpolationTestWithParams(const char* inp = INPUT_IMG_PATH,
+                                const char* out = OUTPUT_IMG_PATH)
         : SaveLoadFixture(inp, out)
     {
     }
