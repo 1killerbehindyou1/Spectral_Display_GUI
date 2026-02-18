@@ -2,11 +2,9 @@ cmake_minimum_required(VERSION 3.23)
 
 project(SpectralDisplay VERSION 0.1 DESCRIPTION "General project SPRCTRAL DISPLAY" LANGUAGES CXX)
 
-set(CMAKE_UTILS ${CMAKE_CURRENT_SOURCE_DIR}/cmake_utils)
+set(CMAKE_UTILS ${CMAKE_CURRENT_SOURCE_DIR}/utils/cmake_utils)
 
-#include(${CMAKE_UTILS}/configure_toolchain.cmake)
 include(${CMAKE_UTILS}/configure_project_variables.cmake)
-add_subdirectory(${CMAKE_UTILS})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -17,32 +15,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(QT_VERSION_MAJOR 5)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-add_subdirectory(transform_algorythms)
-add_subdirectory(pictures)
-add_subdirectory(basic_gui)
+option(BUILD_UT "Build unit tests" OFF)
+option(BUILD_BENCHMARK_TESTS "Build benchmark tests" OFF)
 
 if(BUILD_UT)
     include(CTest)
     enable_testing()
-    set(_saved_autouic ${CMAKE_AUTOUIC})
-    set(_saved_automoc ${CMAKE_AUTOMOC})
-    set(_saved_autorcc ${CMAKE_AUTORCC})
-    set(CMAKE_AUTOUIC OFF)
-    set(CMAKE_AUTOMOC OFF)
-    set(CMAKE_AUTORCC OFF)
     add_subdirectory(depend/googletest)
-    add_subdirectory(googletest_utils)
-    set(CMAKE_AUTOUIC ${_saved_autouic})
-    set(CMAKE_AUTOMOC ${_saved_automoc})
-    set(CMAKE_AUTORCC ${_saved_autorcc})
+    add_subdirectory(utils/googletest_utils)
+    add_subdirectory(tests)
 endif()
 
-if(BUILD_BENCHMARK_TESTS)
-    add_subdirectory(benchmark_tests)
-endif()
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+add_subdirectory(main)
+
+
+
 
 

@@ -1,0 +1,5 @@
+project(SpectralDisplay VERSION 0.1 LANGUAGES CXX)
+
+add_subdirectory(QPoligonTransform_test)
+add_subdirectory(SinglePointTransform_test)
+add_subdirectory(TransformationCore_test)

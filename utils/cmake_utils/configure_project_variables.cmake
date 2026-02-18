@@ -1,14 +1,15 @@
 # #####################################################################################
 # VARIABLES GENERAL
-
-set(IMAGES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pictures)
+set(CMAKE_ROOT_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "" FORCE)
+set(IMAGES_DIR ${CMAKE_SOURCE_DIR}/tests/pictures_for_tests)
 set(INPUT_IMG_PATH ${CMAKE_BINARY_DIR}/bin/UnitTests/pictures/BITMAPA.png)
 
-set(QPOLYGON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/QPolygonTransform/includes)
-set(SINGLE_POINT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/SinglePointTransform/src)
+set(QPOLYGON_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/main/transform_algorythms/QPolygonTransform/src)
+set(SINGLE_POINT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/main/transform_algorythms/SinglePointTransform/src)
 
-set(COMMON_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/transform_algorythms/common_includes)
-set(GUI_SAMPLE_IMAGES_PATH ${CMAKE_SOURCE_DIR}/pictures CACHE PATH "" FORCE)
+set(COMMON_HEADERS ${CMAKE_SOURCE_DIR}/main/transform_algorythms/TransformationCore/TransformationCore)
+set(GUI_SAMPLE_IMAGES_PATH ${CMAKE_SOURCE_DIR}/tests/pictures_for_tests CACHE PATH "" FORCE)
+set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR} CACHE PATH "" FORCE)
 
 # #####################################################################################
 # VARIABLES FOR COMMON PART TEST

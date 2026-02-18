@@ -9,7 +9,7 @@ set(PROJECT_SOURCES
   src/LedRuler.cpp
   src/FileManager.cpp
   src/RenderSelector.cpp
-  QMLSources/qml.qrc)
+  qml/qml.qrc)
 
 add_executable(BasicGUI
   ${PROJECT_SOURCES})
@@ -27,7 +27,3 @@ target_link_libraries(BasicGUI
   Qt${QT_VERSION_MAJOR}::QuickControls2
   QPolygonTransform
 )
-
-# set_target_properties(BasicGUI PROPERTIES
-#   WIN32_EXECUTABLE TRUE
-# )
