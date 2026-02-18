@@ -19,9 +19,9 @@ QPointF Transform::operator()(const QPointF& point) const
     angle += new_point.y() < 0 ? constants::two_pi : 0;
 
     double module = std::abs(new_point_cpl);
-    angle += m_angle;
+    angle += static_cast<double>(constants::degToRad(m_angle));
 
-    QPointF out_point{module * cos(m_angle), module * sin(m_angle)};
+    QPointF out_point{module * cos(angle), module * sin(angle)};
     out_point += m_rotCenter;
 
     return out_point;
