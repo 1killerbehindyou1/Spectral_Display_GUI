@@ -1,6 +1,9 @@
 #include "FileManager.hpp"
 #include "LedRuler.hpp"
 #include "RenderSelector.hpp"
+#include "TransformEngine.hpp"
+#include "OutputPreview.hpp"
+
 #include <QDebug>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -58,12 +61,24 @@ int main(int argc, char* argv[])
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
+    qmlRegisterType<TransformEngine>("Main", 1, 0, "TransformEngine");
+    qmlRegisterType<OutputPreview>("Main", 1, 0, "OutputPreviewItem");
+
     qRegisterMetaType<QPixmap*>("QPixmap*");
     qRegisterMetaType<QImage*>("QImage*");
 
     FileManager file_manager(&app);
-
     engine.rootContext()->setContextProperty("file_manager", &file_manager);
+
+    TransformEngine transform_engine(&app);
+    engine.rootContext()->setContextProperty("transform_engine", &transform_engine);
+
+    QObject::connect(&file_manager, &FileManager::fileReadyToTransform, &transform_engine,
+                     [&transform_engine](QPixmap pixmap)
+                     {
+                         auto shared_pixmap = std::make_shared<QPixmap>(std::move(pixmap));
+                         transform_engine.setPixmap(shared_pixmap);
+                         transform_engine.transformImage(30, 1, 3, QPoint(0, 0));});
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,

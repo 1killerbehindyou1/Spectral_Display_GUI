@@ -24,6 +24,7 @@ public slots:
 signals:
     void fileErrLoad(QString title, QString name);
     void setImageOnGui();
+    void fileReadyToTransform(QPixmap pixmap);
 
 private:
     QPixmap m_pixmap;

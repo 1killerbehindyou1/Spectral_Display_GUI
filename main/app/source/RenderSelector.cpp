@@ -14,11 +14,11 @@ void RenderSelector::paint(QPainter* painter)
 {
     int radius = m_number_of_leds * m_size;
 
-    // painter->translate(m_point);
     QPen pen = painter->pen();
     pen.setColor(Qt::transparent);
     painter->setPen(pen);
     painter->setBrush(QColor{255, 0, 0, 100});
+
     painter->drawEllipse(m_point, radius, radius);
 }
 

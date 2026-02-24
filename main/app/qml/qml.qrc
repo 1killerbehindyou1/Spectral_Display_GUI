@@ -5,5 +5,6 @@
         <file>ControlPanel.qml</file>
         <file>DataInput.qml</file>
         <file>RenderSelector.qml</file>
+        <file>OutputPreview.qml</file>
     </qresource>
 </RCC>

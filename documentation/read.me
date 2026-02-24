@@ -9,3 +9,33 @@
                            qml-module-qtquick-dialogs \
                            qml-module-qtquick-layouts
       ```
+
+2. How to generate coverage report (UT preset):
+    - Run the coverage script from project root:
+      ```
+      ./scripts/coverage.sh
+      ```
+    - The report is generated at:
+      ```
+      build/coverage/coverage.html
+      ```
+    - Note: the coverage config excludes `main/app/source/main.cpp`.
+
+3. How to format C/C++ code with clang-format:
+    - Install clang-format (Ubuntu):
+      ```
+      sudo apt-get update
+      sudo apt-get install clang-format
+      ```
+    - Format all project C/C++ files (main, tests, utils):
+      ```
+      ./scripts/format.sh
+      ```
+    - Check formatting without modifying files:
+      ```
+      ./scripts/format.sh --check
+      ```
+    - Format only selected paths:
+      ```
+      ./scripts/format.sh --apply main/app tests/unit_tests
+      ```

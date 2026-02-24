@@ -42,7 +42,9 @@ bool FileManager::loadPixMap(QUrl path)
         return false;
     }
     m_path = qstr;
+
     emit setImageOnGui();
+    emit fileReadyToTransform(m_pixmap);
 
     return true;
 }

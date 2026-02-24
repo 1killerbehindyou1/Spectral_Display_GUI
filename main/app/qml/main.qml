@@ -22,6 +22,7 @@ ApplicationWindow
     onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
 
+    /* Menu Bar */
     menuBar: MenuBar
     {
         contentWidth: parent.width
@@ -76,93 +77,58 @@ ApplicationWindow
             }
         }
     }
-
-    // SplitView
-    // {
-    //     anchors.fill: parent
-    //     orientation: Qt.Horizontal
-    //     id: splitView
-
-    //     // Image
-    //     // {
-    //     //     anchors.fill: parent
-    //     //     id: loadedImage
-    //     //     visible: false
-    //     //     fillMode: Image.PreserveAspectFit
-    //     //     onVisibleChanged: console.log("Image visibility changed: " + visible)
-    //     // }
-
-    //     RenderSelector
-    //     {
-    //         id: selector
-    //         anchors.fill: parent
-    //         visible: true
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //         //fillMode: Image.PreserveAspectFit
-    //         // width: (parent.width - parameters.width)/2
-    //     }
-
-    //     RenderPanel
-    //     {
-    //         id: drawing
-    //         anchors.fill: parent
-    //         visible: true
-    //         //fillMode: Image.PreserveAspectFit
-    //        // width: (parent.width - parameters.width)/2
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //     }
-    //     handle: Rectangle
-    //     {
-    //         implicitWidth: 4
-    //         implicitHeight: 4
-    //         color: SplitHandle.pressed ? "#243956"
-    //             : (SplitHandle.hovered ? Qt.lighter("#243956", 1.5) : Qt.lighter("#243956", 2))
-    //     }
-
-    //     ControlPanel
-    //     {
-    //         id: parameters
-    //         SplitView.minimumWidth: 400
-    //         SplitView.maximumWidth: 400
-    //         width: 250
-    //     }
-    // }
-
     RowLayout
     {
+        spacing: 5
         anchors.fill: parent
-        spacing: 0
 
-        RenderSelector
+        /* Parameter adjustment section */
+        ColumnLayout
         {
-            id: selector
-            Layout.fillWidth: true
-            Layout.preferredWidth: 400
-            Layout.preferredHeight: parent.height
-            visible: true
-        }
+            spacing: 5
+            anchors.fill: parent
 
-        RenderPanel
-        {
-            id: drawing
-            Layout.fillWidth: true
-            Layout.preferredWidth: 400
-            Layout.preferredHeight: parent.height
-            visible: true
-        }
+            RowLayout
+            {
+                spacing: 5
+                anchors.fill: parent
 
+                RenderSelector
+                {
+                    id: selector
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    visible: true
+                }
+
+                RenderPanel
+                {
+                    id: drawing
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    visible: true
+                }
+            }
+
+            OutputPreview
+            {
+                id: output_preview
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignBottom
+                Layout.preferredHeight: 200
+                visible: true
+            }
+        }
         ControlPanel
         {
             id: parameters
-            Layout.fillWidth: true
-            Layout.preferredHeight: parent.height
+            Layout.fillHeight: true
             Layout.preferredWidth: 350
             Layout.maximumWidth: 350
             visible: true
         }
     }
+
     FileDialog
     {
         signal pixmapLoaded()
@@ -190,7 +156,6 @@ ApplicationWindow
         }
         Component.onCompleted: visible = false
     }
-
 
     MessageDialog
     {

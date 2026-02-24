@@ -27,7 +27,6 @@ Control
     id: root
     implicitWidth: 500
     implicitHeight: 500
-   
 
     background: Image
     {
