@@ -93,14 +93,14 @@ TEST(TransformEngineTest, transformImageWithoutPixmapDoesNotEmitSignal)
     int emittedCount = 0;
 
     QObject::connect(&transformEngine, &TransformEngine::transformReady,
-                     [&](std::shared_ptr<QPixmap>) { ++emittedCount; });
+                     [&](std::shared_ptr<QImage>) { ++emittedCount; });
 
     transformEngine.transformImage(6, 30, 2, QPoint{5, 5});
 
     EXPECT_EQ(emittedCount, 0);
 }
 
-TEST(TransformEngineTest, transformImageWithPixmapEmitsSignalWithPixmap)
+TEST(TransformEngineTest, transformImageWithPixmapEmitsSignalWithImage)
 {
     TransformEngine transformEngine;
 
@@ -110,20 +110,20 @@ TEST(TransformEngineTest, transformImageWithPixmapEmitsSignalWithPixmap)
     transformEngine.setPixmap(pixmap);
 
     int emittedCount = 0;
-    std::shared_ptr<QPixmap> transformedPixmap;
+    std::shared_ptr<QImage> transformedImage;
 
     QObject::connect(&transformEngine, &TransformEngine::transformReady,
-                     [&](std::shared_ptr<QPixmap> pix)
+                     [&](std::shared_ptr<QImage> image)
                      {
                          ++emittedCount;
-                         transformedPixmap = std::move(pix);
+                         transformedImage = std::move(image);
                      });
 
     transformEngine.transformImage(8, 45, 2, QPoint{16, 16});
 
     EXPECT_EQ(emittedCount, 1);
-    ASSERT_NE(transformedPixmap, nullptr);
-    EXPECT_FALSE(transformedPixmap->isNull());
+    ASSERT_NE(transformedImage, nullptr);
+    EXPECT_FALSE(transformedImage->isNull());
 }
 
 } // namespace

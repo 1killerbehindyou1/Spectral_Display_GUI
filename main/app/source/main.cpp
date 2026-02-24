@@ -2,7 +2,7 @@
 #include "LedRuler.hpp"
 #include "RenderSelector.hpp"
 #include "TransformEngine.hpp"
-#include "OutputPreview.hpp"
+#include "LiveImageProvider.hpp"
 
 #include <QDebug>
 #include <QGuiApplication>
@@ -61,8 +61,6 @@ int main(int argc, char* argv[])
 
     qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
-    qmlRegisterType<TransformEngine>("Main", 1, 0, "TransformEngine");
-    qmlRegisterType<OutputPreview>("Main", 1, 0, "OutputPreviewItem");
 
     qRegisterMetaType<QPixmap*>("QPixmap*");
     qRegisterMetaType<QImage*>("QImage*");
@@ -73,12 +71,21 @@ int main(int argc, char* argv[])
     TransformEngine transform_engine(&app);
     engine.rootContext()->setContextProperty("transform_engine", &transform_engine);
 
+    auto provider = new LiveImageProvider();
+    engine.addImageProvider("live", provider);
+
     QObject::connect(&file_manager, &FileManager::fileReadyToTransform, &transform_engine,
                      [&transform_engine](QPixmap pixmap)
                      {
                          auto shared_pixmap = std::make_shared<QPixmap>(std::move(pixmap));
                          transform_engine.setPixmap(shared_pixmap);
                          transform_engine.transformImage(30, 1, 3, QPoint(0, 0));});
+
+    QObject::connect(&transform_engine, &TransformEngine::transformReady,
+                     [provider](std::shared_ptr<QImage> image)
+                     {
+                        provider->setImage(*image);
+                     });
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,

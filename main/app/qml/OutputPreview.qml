@@ -8,15 +8,26 @@ import Main 1.0
 Control
 {
     id: root
-    background: Rectangle{ color: "white" }
 
-     function drawPreview(last_image)
-     {
-         return output_preview_item.drawPreview(last_image);
-     }
-    contentItem: OutputPreviewItem
+    function updatePreview()
     {
-        id: output_preview_item
-        anchors.fill: parent
+        preview_image.source = "image://live/frame?t=" + Date.now();
+    }
+
+    background: Image
+    {
+        id: preview_image
+        visible: true
+        fillMode: Image.PreserveAspectCrop
+        cache: false
+    }
+
+    Connections
+    {
+        target: transform_engine
+        function onTransformReadyForQml()
+        {
+            root.updatePreview()
+        }
     }
 }

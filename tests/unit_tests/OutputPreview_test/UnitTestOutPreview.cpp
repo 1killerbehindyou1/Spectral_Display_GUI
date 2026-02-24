@@ -1,4 +1,4 @@
-#include <OutputPreview.hpp>
+#include <LiveImageProvider.hpp>
 
 #include <gtest/gtest.h>
 
@@ -14,50 +14,45 @@ bool hasPixelColor(const QImage& image, int x, int y, const QColor& color)
 
 TEST(OutputPreviewTest, defaultImageIsNull)
 {
-    OutputPreview preview;
+    LiveImageProvider preview;
 
-    EXPECT_EQ(preview.getImage(), nullptr);
+    EXPECT_TRUE(preview.image().isNull());
 }
 
 TEST(OutputPreviewTest, setImageStoresCopy)
 {
-    OutputPreview preview;
+    LiveImageProvider preview;
 
     QImage input(6, 6, QImage::Format_RGB32);
     input.fill(Qt::black);
 
-    preview.setImage(&input);
-    QImage* stored = preview.getImage();
+    preview.setImage(input);
+    const QImage& stored = preview.image();
 
-    ASSERT_NE(stored, nullptr);
-    EXPECT_NE(stored, &input);
-    EXPECT_TRUE(hasPixelColor(*stored, 0, 0, Qt::black));
+    EXPECT_NE(&stored, &input);
+    EXPECT_TRUE(hasPixelColor(stored, 0, 0, Qt::black));
 
     input.fill(Qt::white);
-    EXPECT_TRUE(hasPixelColor(*stored, 0, 0, Qt::black));
+    EXPECT_TRUE(hasPixelColor(stored, 0, 0, Qt::black));
 }
 
 TEST(OutputPreviewTest, drawPreviewSetsImageFromSharedPtr)
 {
-    OutputPreview preview;
+    LiveImageProvider preview;
 
-    auto transformed = std::make_shared<QImage>(6, 6, QImage::Format_RGB32);
-    transformed->fill(Qt::black);
+    QImage transformed(6, 6, QImage::Format_RGB32);
+    transformed.fill(Qt::black);
+    preview.setImage(transformed);
 
-    preview.drawPreview(transformed);
-
-    QImage* stored = preview.getImage();
-    ASSERT_NE(stored, nullptr);
-    EXPECT_TRUE(hasPixelColor(*stored, 0, 0, Qt::black));
+    const QImage& stored = preview.image();
+    EXPECT_TRUE(hasPixelColor(stored, 0, 0, Qt::black));
 }
 
 TEST(OutputPreviewTest, drawPreviewIgnoresNullImage)
 {
-    OutputPreview preview;
+    LiveImageProvider preview;
 
-    preview.drawPreview(nullptr);
-
-    EXPECT_EQ(preview.getImage(), nullptr);
+    EXPECT_TRUE(preview.image().isNull());
 }
 
 } // namespace

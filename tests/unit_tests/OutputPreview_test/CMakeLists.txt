@@ -3,8 +3,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 add_executable(UnitTestOutPreview
   UnitTestOutPreview.cpp
-  ${CMAKE_SOURCE_DIR}/main/app/include/OutputPreview.hpp
-  ${CMAKE_SOURCE_DIR}/main/app/source/OutputPreview.cpp
+  ${CMAKE_SOURCE_DIR}/main/app/include/LiveImageProvider.hpp
+  ${CMAKE_SOURCE_DIR}/main/app/source/LiveImageProvider.cpp
 )
 
 target_compile_definitions(UnitTestOutPreview

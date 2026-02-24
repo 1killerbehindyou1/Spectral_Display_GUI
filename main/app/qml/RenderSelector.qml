@@ -31,7 +31,7 @@ Control
     background: Image
     {
         id: loaded_image
-        visible: false
+        visible: true
         fillMode: Image.PreserveAspectCrop
     }
     Selector

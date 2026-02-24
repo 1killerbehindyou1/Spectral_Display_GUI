@@ -8,13 +8,13 @@ set(PROJECT_SOURCES
   include/LedRuler.hpp
   include/FileManager.hpp
   include/RenderSelector.hpp
-  include/OutputPreview.hpp
+  include/LiveImageProvider.hpp
   include/TransformEngine.hpp
   source/main.cpp
   source/LedRuler.cpp
   source/FileManager.cpp
   source/RenderSelector.cpp
-  source/OutputPreview.cpp
+  source/LiveImageProvider.cpp
   source/TransformEngine.cpp
   qml/qml.qrc)
 

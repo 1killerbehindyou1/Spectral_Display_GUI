@@ -23,9 +23,11 @@ public slots:
     void setPixmap(std::shared_ptr<QPixmap> pixmap) { m_pixmap = pixmap; }
 
 signals:
-    void transformReady(std::shared_ptr<QPixmap> pixmap);
+    void transformReady(std::shared_ptr<QImage> image);
+    void transformReadyForQml();
 
 private:
     Interpolator m_interpolator;
     std::shared_ptr<QPixmap> m_pixmap = nullptr;
+    std::shared_ptr<QImage> m_transformed_image = nullptr;
 };
