@@ -41,7 +41,9 @@
             "inherits": "debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_UT": "ON"
+                "BUILD_UT": "ON",
+                "CMAKE_CXX_FLAGS": "--coverage",
+                "CMAKE_C_FLAGS": "--coverage"
             }
         },
         {
@@ -50,8 +52,7 @@
             "inherits": "debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_BENCHMARK_TESTS": "ON",
-                "BUILD_UT": "ON"
+                "BUILD_BENCHMARK_TESTS": "ON"
             }
         }
     ],
