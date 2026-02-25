@@ -39,7 +39,6 @@ Control
                 onValueModified:
                 {
                     slider.value = control.value;
-                    console.log("line: 43 , file: DataInput.qml " + "spinbox value: " + control.value);
                     root.update();
                 }
                 contentItem:TextField
@@ -117,7 +116,6 @@ Control
 
             onMoved:
             {
-                console.log("line: 119 , file: DataInput.qml " + "slider value: " + slider.value);
                 control.value = slider.value;
                 root.update();
             }

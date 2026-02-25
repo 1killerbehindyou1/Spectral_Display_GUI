@@ -78,11 +78,4 @@ TEST(LedRulerTest, setPointTriggersTransformationWhenPixmapIsPresent)
     EXPECT_FALSE(isWhite(image.pixelColor(250, 250)));
 }
 
-TEST(LedRulerTest, getRenderedImageDefaultsToNullptr)
-{
-    LedRuler ruler;
-
-    EXPECT_EQ(ruler.getRenderedImage(), nullptr);
-}
-
 } // namespace

@@ -29,7 +29,12 @@ public:
     void transformImage(int number_of_leds, int rotation, int size, QPoint point);
 
 public slots:
-    void setPixmap(std::shared_ptr<QPixmap> pixmap) { m_pixmap = pixmap; }
+    void setPixmap(std::shared_ptr<QPixmap> pixmap)
+    {
+         m_pixmap = pixmap;
+         qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
+                  << "Pixmap set in TransformEngine with size:" << m_pixmap->size();
+    }
     void updatePoint(QPoint point);
     void updateTransformParameters(int number_of_leds, int rotation, int size, QPoint point);
     void updateTransformParameters(int number_of_leds, int rotation, int size);
