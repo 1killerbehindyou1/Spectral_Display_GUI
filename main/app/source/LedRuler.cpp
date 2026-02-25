@@ -14,6 +14,8 @@ void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
 
 QPixmap* LedRuler::pixmap() const { return m_pixmap; }
 
+QImage* LedRuler::getRenderedImage() { return m_current_transformed_image; }
+
 void LedRuler::paint(QPainter* painter)
 {
     if (m_current_transformed_image != nullptr)
@@ -23,7 +25,9 @@ void LedRuler::paint(QPainter* painter)
 
         int diff_angle = int(360 / lp_hight);
 
-        painter->translate(width() / 2.0, height() / 2.0);
+        const qreal center_x = width() > 0 ? width() / 2.0 : 250.0;
+        const qreal center_y = height() > 0 ? height() / 2.0 : 250.0;
+        painter->translate(center_x, center_y);
 
         for (int curr_rot = 0; curr_rot < lp_hight; curr_rot++)
         {
@@ -53,8 +57,6 @@ void LedRuler::paint(QPainter* painter)
             }
             painter->restore();
         }
-        delete m_current_transformed_image;
-        m_current_transformed_image = nullptr;
     }
 }
 

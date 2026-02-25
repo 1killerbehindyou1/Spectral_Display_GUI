@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>RenderPanel.qml</file>
-        <file>ControlPanel.qml</file>
+        <file>RenderPanelStatic.qml</file>
+        <file>RenderPanelDynamic.qml</file>
+        <file>TransformControl.qml</file>
         <file>DataInput.qml</file>
         <file>RenderSelector.qml</file>
+        <file>RenderControl.qml</file>
         <file>OutputPreview.qml</file>
     </qresource>
 </RCC>

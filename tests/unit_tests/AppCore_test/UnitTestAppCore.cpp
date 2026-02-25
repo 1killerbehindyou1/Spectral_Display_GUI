@@ -126,4 +126,50 @@ TEST(TransformEngineTest, transformImageWithPixmapEmitsSignalWithImage)
     EXPECT_FALSE(transformedImage->isNull());
 }
 
+TEST(IntegrationFlowTest, loadTransformAndSaveProducesOutputFile)
+{
+    QTemporaryDir tempDir;
+    ASSERT_TRUE(tempDir.isValid());
+
+    const QString inputPath = tempDir.path() + "/input.png";
+    const QString outputBasePath = tempDir.path() + "/transformed_output";
+
+    QImage inputImage(64, 64, QImage::Format_RGB32);
+    inputImage.fill(Qt::blue);
+    ASSERT_TRUE(inputImage.save(inputPath));
+
+    FileManager fileManager;
+    TransformEngine transformEngine;
+
+    QObject::connect(&fileManager, &FileManager::fileReadyToTransform,
+                     [&](QPixmap pixmap)
+                     {
+                         transformEngine.setPixmap(
+                             std::make_shared<QPixmap>(std::move(pixmap)));
+                     });
+
+    std::shared_ptr<QImage> transformedImage;
+    QObject::connect(&transformEngine, &TransformEngine::transformReady,
+                     [&](std::shared_ptr<QImage> image)
+                     {
+                         transformedImage = std::move(image);
+                     });
+
+    ASSERT_TRUE(fileManager.loadPixMap(QUrl::fromLocalFile(inputPath)));
+
+    transformEngine.transformImage(8, 45, 2, QPoint{32, 32});
+
+    ASSERT_NE(transformedImage, nullptr);
+    ASSERT_FALSE(transformedImage->isNull());
+
+    fileManager.savePixMap(QUrl::fromLocalFile(outputBasePath), transformedImage.get());
+
+    const QString outputPath = outputBasePath + ".png";
+    EXPECT_TRUE(QFileInfo::exists(outputPath));
+
+    QImage loadedOutput;
+    ASSERT_TRUE(loadedOutput.load(outputPath));
+    EXPECT_FALSE(loadedOutput.isNull());
+}
+
 } // namespace

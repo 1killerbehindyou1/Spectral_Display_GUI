@@ -1,6 +1,7 @@
 
 #include "FileManager.hpp"
 #include <QDebug>
+#include <QFileInfo>
 #include <iostream>
 
 FileManager::FileManager(QObject* parent) : QObject(parent) {}
@@ -10,7 +11,33 @@ QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
 void FileManager::savePixMap(QUrl path, QImage* output_image)
 {
     QString qstr = path.toLocalFile();
-    output_image->save(qstr);
+
+    if (!path.isLocalFile() || qstr.isEmpty())
+    {
+        emit fileErrLoad("Save file failed",
+                         "Invalid output path. Please select local file path.");
+        return;
+    }
+
+    if (output_image == nullptr || output_image->isNull())
+    {
+        emit fileErrLoad("Save file failed",
+                         "Output image is empty. Render image before saving.");
+        return;
+    }
+
+    QFileInfo output_info(qstr);
+    if (output_info.suffix().isEmpty())
+    {
+        qstr += ".png";
+    }
+
+    if (!output_image->save(qstr))
+    {
+        emit fileErrLoad("Save file failed",
+                         "Could not write image to selected path.");
+        return;
+    }
 }
 
 bool FileManager::loadPixMap(QUrl path)

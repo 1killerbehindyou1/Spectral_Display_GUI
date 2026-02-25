@@ -83,6 +83,14 @@ ApplicationWindow
         spacing: 5
         anchors.fill: parent
 
+        TransformControl
+        {
+            id: transform_parameters
+            Layout.fillHeight: true
+            Layout.preferredWidth: 350
+            Layout.maximumWidth: 350
+            visible: true
+        }
         /* Parameter adjustment section */
         ColumnLayout
         {
@@ -104,7 +112,7 @@ ApplicationWindow
                     visible: true
                 }
 
-                RenderPanel
+                RenderPanelDynamic
                 {
                     id: drawing
                     Layout.fillHeight: true
@@ -122,9 +130,9 @@ ApplicationWindow
                 visible: true
             }
         }
-        ControlPanel
+        RenderControl
         {
-            id: parameters
+            id: render_parameters
             Layout.fillHeight: true
             Layout.preferredWidth: 350
             Layout.maximumWidth: 350
@@ -179,9 +187,9 @@ ApplicationWindow
     }
     Component.onCompleted:
     {
-        parameters.parameterChanged.connect(selector.selectorParameterChanged);
-        parameters.parameterChanged.connect(drawing.updateLedParameters);
-        parameters.zoomChanged.connect(function(zoomFactor)
+        transform_parameters.parameterChanged.connect(selector.selectorParameterChanged);
+        transform_parameters.parameterChanged.connect(drawing.updateLedParameters);
+        transform_parameters.zoomChanged.connect(function(zoomFactor)
         {
             output_preview.zoomFactor = zoomFactor;
         });

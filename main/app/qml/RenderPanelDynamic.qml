@@ -28,6 +28,11 @@ Control
         return led.setPoint(Qt.point(mouseX, mouseY));
     }
 
+    function getOutImage()
+    {
+        return led.getRenderedImage();
+    }
+
     implicitWidth: 720
     implicitHeight: 500
 
