@@ -157,7 +157,7 @@ ApplicationWindow
         {
            fileDialog.close()
         }
-        Component.onCompleted: visible = false
+          Component.onCompleted: visible = false
     }
 
     MessageDialog
@@ -181,6 +181,10 @@ ApplicationWindow
     {
         parameters.parameterChanged.connect(selector.selectorParameterChanged);
         parameters.parameterChanged.connect(drawing.updateLedParameters);
+        parameters.zoomChanged.connect(function(zoomFactor)
+        {
+            output_preview.zoomFactor = zoomFactor;
+        });
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
         selector.pointUpdate.connect(drawing.updatePoint);
         selector.pointUpdate.connect(output_preview.onSelectorClicked);

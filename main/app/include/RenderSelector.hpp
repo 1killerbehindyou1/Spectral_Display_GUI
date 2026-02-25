@@ -24,9 +24,9 @@ public:
 
     Q_INVOKABLE void setPoint(QPoint point);
     Q_INVOKABLE void selectorUpdate(int number_of_leds, int size);
+    Q_INVOKABLE void selectorResize(int newSize);
 
 private:
     QPoint m_point; // środek odrysowywania
-    int m_number_of_leds;
-    int m_size;
+    int m_radius;
 };

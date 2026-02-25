@@ -5,28 +5,30 @@
 #include <iostream>
 
 RenderSelector::RenderSelector(QQuickItem* parent)
-    : QQuickPaintedItem(parent), m_point(400, 400), m_number_of_leds(25),
-      m_size(1)
+    : QQuickPaintedItem(parent), m_point(400, 400), m_radius(100)
 {
 }
 
 void RenderSelector::paint(QPainter* painter)
 {
-    int radius = m_number_of_leds * m_size;
 
     QPen pen = painter->pen();
     pen.setColor(Qt::transparent);
     painter->setPen(pen);
     painter->setBrush(QColor{255, 0, 0, 100});
 
-    painter->drawEllipse(m_point, radius, radius);
+    painter->drawEllipse(m_point, m_radius, m_radius);
+}
+
+void RenderSelector::selectorResize(int new_size)
+{
+    m_radius = new_size;
+    update();
 }
 
 void RenderSelector::selectorUpdate(int number_of_leds, int size)
 {
-    m_number_of_leds = number_of_leds;
-    m_size = size;
-    update();
+    selectorResize(number_of_leds * size);
 }
 
 void RenderSelector::setPoint(QPoint point)

@@ -55,6 +55,8 @@ void TransformEngine::transformImage(const TransformParameters& params)
         params.rotation, params.size, params.number_of_leds, params.point, m_pixmap.get());
 
     m_transformed_image = std::make_shared<QImage>(std::move(transformed_image));
+    m_transformed_width = m_transformed_image->width();
+    m_transformed_height = m_transformed_image->height();
 
     // Emit signal to notify that transformation is ready
     emit transformReady(m_transformed_image);
