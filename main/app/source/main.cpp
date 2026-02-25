@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
                      {
                          auto shared_pixmap = std::make_shared<QPixmap>(std::move(pixmap));
                          transform_engine.setPixmap(shared_pixmap);
-                         transform_engine.transformImage(30, 1, 3, QPoint(0, 0));});
+                         transform_engine.transformImage();});
 
     QObject::connect(&transform_engine, &TransformEngine::transformReady,
                      [provider](std::shared_ptr<QImage> image)

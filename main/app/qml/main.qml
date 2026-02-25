@@ -86,12 +86,14 @@ ApplicationWindow
         ColumnLayout
         {
             spacing: 5
-            anchors.fill: parent
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
             RowLayout
             {
                 spacing: 5
-                anchors.fill: parent
+                Layout.fillWidth: true
+                Layout.fillHeight: true
 
                 RenderSelector
                 {
@@ -180,6 +182,7 @@ ApplicationWindow
         parameters.parameterChanged.connect(drawing.updateLedParameters);
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
         selector.pointUpdate.connect(drawing.updatePoint);
+        selector.pointUpdate.connect(output_preview.onSelectorClicked);
     }
 }
 

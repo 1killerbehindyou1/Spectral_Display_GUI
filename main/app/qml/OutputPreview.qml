@@ -9,8 +9,15 @@ Control
 {
     id: root
 
+    function onSelectorClicked(xPosition, yPosition)
+    {
+        transform_engine.updatePoint(Qt.point(xPosition, yPosition));
+        console.log("line: 15 , file: OutputPreview.qml " + "x: " + xPosition + ", y: " + yPosition);
+    }
+
     function updatePreview()
     {
+        console.log("line: 20 , file: OutputPreview.qml " + "updating preview");
         preview_image.source = "image://live/frame?t=" + Date.now();
     }
 
@@ -18,7 +25,7 @@ Control
     {
         id: preview_image
         visible: true
-        fillMode: Image.PreserveAspectCrop
+        fillMode: Image.PreserveAspectFit
         cache: false
     }
 

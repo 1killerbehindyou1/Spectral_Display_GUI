@@ -11,6 +11,7 @@ Control
 
     function selectorParameterChanged(l_size: int, angle: int, number_of_leds: int)
     {
+        console.log("line: 15 , file: RenderSelector.qml " + "size: " + l_size + ", angle: " + angle + ", number_of_leds: " + number_of_leds);
         return selector_local.selectorUpdate(number_of_leds, l_size);
     }
 
@@ -19,7 +20,7 @@ Control
 
     onImg_sourceChanged:
     {
-        console.log(loaded_image.width, loaded_image.height)
+        console.log("line: 22 , file: RenderSelector.qml ", loaded_image.width, loaded_image.height)
         root.width = loaded_image.width;
         root.height= loaded_image.height;
     }
@@ -43,6 +44,7 @@ Control
             anchors.fill: parent
             onClicked:
             {
+                console.log("line: 40 , file: RenderSelector.qml " + "x: " + mouseX + ", y: " + mouseY);
                 selector_local.setPoint(Qt.point(mouseX, mouseY));
                 root.pointUpdate(mouseX, mouseY);
             }

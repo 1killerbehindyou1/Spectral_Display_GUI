@@ -10,23 +10,23 @@ Control
     property int max
     property int min
     property int init_value
-    
+
     signal update()
-    
+
     implicitWidth: 270
-         
+
     contentItem: ColumnLayout
     {
         RowLayout
-        {       
+        {
             Text
-            { 
+            {
                 font.pixelSize: 20
-                id: label 
-            }    
+                id: label
+            }
             Item{Layout.fillWidth: true}
 
-            SpinBox 
+            SpinBox
             {
                 id: control
                 implicitHeight: 48
@@ -39,8 +39,9 @@ Control
                 onValueModified:
                 {
                     slider.value = control.value;
+                    console.log("line: 43 , file: DataInput.qml " + "spinbox value: " + control.value);
                     root.update();
-                }   
+                }
                 contentItem:TextField
                 {
                     id: textInp
@@ -54,21 +55,21 @@ Control
                     activeFocusOnTab: true
                     validator: IntValidator {bottom: min; top: max;}
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
-                    background: Rectangle 
+                    background: Rectangle
                     {
                         id: rect
                         color: "transparent"
                     }
                 }
 
-                up.indicator: Rectangle 
+                up.indicator: Rectangle
                 {
                     radius: 8
                     implicitHeight: control.height
                     color: "#7799c6"
                     x: parent.width - width
                     implicitWidth: 40
-                    Text 
+                    Text
                     {
                        text: "+"
                        color: "#243956"
@@ -80,15 +81,15 @@ Control
                        verticalAlignment: Text.AlignVCenter
                     }
                 }
-                
-                down.indicator: Rectangle 
+
+                down.indicator: Rectangle
                 {
                     x: 0
                     implicitWidth: 40
                     implicitHeight: control.height
                     radius: 8
                     color: "#7799c6"
-                    Text 
+                    Text
                     {
                         text: "-"
                         color: "#243956"
@@ -101,30 +102,31 @@ Control
                     }
                 }
             }
-        }  
+        }
         Item{Layout.fillHeight: true}
-        Slider 
+        Slider
         {
-            id: slider 
+            id: slider
             stepSize: 1
             Layout.fillWidth: true
             from: min
             to: max
-            height: 17 
+            height: 17
             snapMode: Slider.SnapAlways
             activeFocusOnTab: false
-            
-            onMoved: 
+
+            onMoved:
             {
+                console.log("line: 119 , file: DataInput.qml " + "slider value: " + slider.value);
                 control.value = slider.value;
                 root.update();
             }
-        }            
-    }    
-        
+        }
+    }
+
     Component.onCompleted:
     {
         control.value = init_value;
         slider.value  = init_value;
-    }  
-}       
+    }
+}

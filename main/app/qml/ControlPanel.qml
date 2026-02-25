@@ -13,6 +13,8 @@ Control
 
     function onUpdate()
     {
+       console.log("line: 15 , file: ControlPanel.qml " + "size: " + l_size.value + ", rotation: " + l_rotation.value + ", number_of_leds: " + l_num.value);
+       transform_engine.updateTransformParameters(l_num.value, l_rotation.value, l_size.value);
        return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )
     }
 
