@@ -2,11 +2,13 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Controls/DataInput.qml</file>
+        <file>Utils/Separator.qml</file>
+        <file>Utils/FillingRect.qml</file>
         <file>RenderPart/RenderPreview.qml</file>
         <file>RenderPart/RenderControl.qml</file>
-        <file>TransforPart/TransformPreview.qml</file>
-        <file>TransforPart/TransformControl.qml</file>
-        <file>TransforPart/TransformSelector.qml</file>
+        <file>TransformPart/TransformPreview.qml</file>
+        <file>TransformPart/TransformControl.qml</file>
+        <file>TransformPart/TransformSelector.qml</file>
         <file>MainMenu/MainMenu.qml</file>
         <file>Dialogs/FileDialog.qml</file>
         <file>Dialogs/MessageDialog.qml</file>

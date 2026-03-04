@@ -4,7 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import Main 1.0
 import "RenderPart"
-import "TransforPart"
+import "TransformPart"
 import "MainMenu"
 import "Dialogs" as AppDialogs
 
