@@ -35,9 +35,9 @@ Control
 
         GroupBox
         {
-            title: qsTr("Rendering Parameters")
-
-             font.pixelSize: 15
+            title: "Spectral display parameters"
+             font.pixelSize: 18
+             font.bold: true
              Layout.fillWidth: true
              Layout.preferredHeight: parent.height
              Layout.preferredWidth: parent.width
@@ -52,7 +52,7 @@ Control
                 DataInput{ id: l_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
                 DataInput{ id: l_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
 
-                Text{text: "Spectral display resolution: "; font.pixelSize: 18 }
+                Text{text: "Spectral display resolution: "; font.bold: true; font.pixelSize: 18 }
                 TextField
                 {
                     readOnly: true
@@ -79,7 +79,7 @@ Control
                 activeFocusOnTab: false
                 background: Rectangle {color: "transparent"}
             }
-            FillingRect{fillerHeight: 100}
+            FillingRect{fillerHeight: 30}
         }
     }
 

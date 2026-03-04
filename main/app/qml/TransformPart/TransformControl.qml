@@ -44,8 +44,9 @@ Control
 
         GroupBox
         {
-             title: qsTr("Transformation Parameters")
-             font.pixelSize: 15
+             title: "Selector radius"
+             font.pixelSize: 18
+             font.bold: true
              Layout.fillWidth: true
              Layout.preferredHeight: parent.height
              Layout.preferredWidth: parent.width
@@ -55,10 +56,7 @@ Control
             contentItem: ColumnLayout
             {
                 spacing: 20
-                FillingRect{Layout.fillWidth: true; fillerHeight: 20}
-                Text{text: "Selector radius [in pixels]"; font.bold: true; font.pixelSize: 18 }
-                Separator{Layout.fillWidth: true}
-                DataInput{ id: l_radius; label: "Radius: "; init_value: 100;  max: 240; min: 1}
+                DataInput{ id: l_radius; label: "Radius in pixels:"; init_value: 100;  max: 240; min: 1}
 
                 FillingRect{Layout.fillHeight: true}
                 Text{text: "Size of loaded img [pixels]: "; font.bold: true; font.pixelSize: 18 }
