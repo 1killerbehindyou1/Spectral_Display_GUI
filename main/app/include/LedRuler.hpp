@@ -1,6 +1,6 @@
 #pragma once
 
-#include <InterpolatorQPoly.hpp>
+#include <InterpolatorBase.hpp>
 #include <QColor>
 #include <QDebug>
 #include <QObject>
@@ -15,13 +15,12 @@
 #include <iostream>
 
 // Convenience alias for the interpolator type
-using Interpolator = poly::InterpolatorQPoly;
+using LedInterpolatorBase = common::InterpolatorBase;
 
 struct RenderParameters
 {
-    int number_of_leds;
-    int rotation;
-    QSize led_size; // Size of each LED in the ruler
+    int no_pixels;
+    int arc_resolution;
     QPoint point;
 };
 

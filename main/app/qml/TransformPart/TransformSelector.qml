@@ -9,25 +9,29 @@ Control
 {
     signal pointUpdate(real xPosition, real yPosition)
     property int defaultSelectorRadius: 100
+    property real zoomFactor: 3.0
 
     function mapToSourcePoint(mouseX: real, mouseY: real)
     {
         const srcW = loaded_image.sourceSize.width > 0 ? loaded_image.sourceSize.width : loaded_image.width;
         const srcH = loaded_image.sourceSize.height > 0 ? loaded_image.sourceSize.height : loaded_image.height;
+        const viewW = loaded_image.width;
+        const viewH = loaded_image.height;
 
-        if (srcW <= 0 || srcH <= 0 || root.width <= 0 || root.height <= 0)
+        if (srcW <= 0 || srcH <= 0 || viewW <= 0 || viewH <= 0)
         {
             return Qt.point(mouseX, mouseY);
         }
 
-        const scale = Math.max(root.width / srcW, root.height / srcH);
-        const paintedW = srcW * scale;
-        const paintedH = srcH * scale;
-        const offsetX = (root.width - paintedW) / 2.0;
-        const offsetY = (root.height - paintedH) / 2.0;
+        const baseScale = Math.max(viewW / srcW, viewH / srcH);
+        const effectiveScale = baseScale * root.zoomFactor;
+        const paintedW = srcW * effectiveScale;
+        const paintedH = srcH * effectiveScale;
+        const offsetX = (viewW - paintedW) / 2.0;
+        const offsetY = (viewH - paintedH) / 2.0;
 
-        let mappedX = (mouseX - offsetX) / scale;
-        let mappedY = (mouseY - offsetY) / scale;
+        let mappedX = (mouseX - offsetX) / effectiveScale;
+        let mappedY = (mouseY - offsetY) / effectiveScale;
 
         mappedX = Math.max(0, Math.min(srcW - 1, mappedX));
         mappedY = Math.max(0, Math.min(srcH - 1, mappedY));
@@ -36,9 +40,15 @@ Control
         return Qt.point(Math.round(mappedX), Math.round(mappedY));
     }
 
-    function onRadiusChanged(radius: int)
+    function onRadiusChanged(no_pixels)
     {
-        return selector_local.selectorResize(radius);
+        console.log("onRadiusChanged: " + no_pixels);
+        return selector_local.selectorResize(no_pixels);
+    }
+
+    function onAngResChanged(angRes)
+    {
+        return;
     }
 
     property alias img_visible: loaded_image.visible
@@ -56,6 +66,7 @@ Control
     contentItem: Image
     {
         id: loaded_image
+        scale: root.zoomFactor
         visible: true
         fillMode: Image.PreserveAspectCrop
     }
@@ -70,7 +81,7 @@ Control
             onClicked:
             {
                 const mappedPoint = root.mapToSourcePoint(mouseX, mouseY);
-                console.log("line: 73 , file: RenderSelector.qml " + "mappedX: " + mappedPoint.x + ", mappedY: " + mappedPoint.y);
+                console.log("line: 73 , file: TransformSelector.qml " + "mappedX: " + mappedPoint.x + ", mappedY: " + mappedPoint.y);
                 selector_local.setPoint(Qt.point(mouseX, mouseY));
                 root.pointUpdate(mappedPoint.x, mappedPoint.y);
             }

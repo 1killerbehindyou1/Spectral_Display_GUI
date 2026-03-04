@@ -23,9 +23,9 @@ public:
     void paint(QPainter* painter) override;
 
     Q_INVOKABLE void setPoint(QPoint point);
-    Q_INVOKABLE void selectorResize(int newSize);
+    Q_INVOKABLE void selectorResize(int no_pixels);
 
 private:
     QPoint m_point; // środek odrysowywania
-    int m_radius;
+    int m_radius; // promień zaznaczenia
 };

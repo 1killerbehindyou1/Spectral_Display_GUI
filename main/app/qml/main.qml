@@ -41,8 +41,8 @@ ApplicationWindow
         {
             id: transform_parameters
             Layout.fillHeight: true
-            Layout.preferredWidth: 350
-            Layout.maximumWidth: 350
+            Layout.preferredWidth: 450
+            Layout.maximumWidth: 450
             visible: true
         }
         /* Parameter adjustment section */
@@ -108,15 +108,26 @@ ApplicationWindow
     {
 
         transform_parameters.radiusChanged.connect(selector.onRadiusChanged);
-        render_parameters.parameterChanged.connect(drawing.updateLedParameters);
-        transform_parameters.zoomChanged.connect(function(zoomFactor)
+        transform_parameters.radiusChanged.connect(transform_engine.updateNoOfPixels);
+        transform_parameters.angResChanged.connect(transform_engine.updateAngularResolution);
+        // render_parameters.parameterChanged.connect(drawing.updateLedParameters);
+        transform_parameters.zoomChangedLoad.connect(function(zoomFactor)
+        {
+            selector.zoomFactor = zoomFactor;
+        });
+        transform_parameters.zoomChangedOut.connect(function(zoomFactor)
         {
             output_preview.zoomFactor = zoomFactor;
         });
-        fileDialog.pixmapLoaded.connect(drawing.setPixmap);
+        // fileDialog.pixmapLoaded.connect(drawing.setPixmap);
         file_manager.fileLoadedSize.connect(transform_parameters.onImgLoad);
-        selector.pointUpdate.connect(drawing.updatePoint);
+        // selector.pointUpdate.connect(drawing.updatePoint);
         selector.pointUpdate.connect(output_preview.onSelectorClicked);
+
+        transform_parameters.onRadiusUpdate();
+        transform_parameters.onAngResUpdate();
+        transform_parameters.onZoomLoadUpdate();
+        transform_parameters.onZoomOutUpdate();
     }
 }
 

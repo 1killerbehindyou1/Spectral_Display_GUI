@@ -11,16 +11,16 @@ Control
 {
     id: root
 
-    signal parameterChanged(int size, int rotation , int number_of_leds)
+    // signal parameterChanged(int size, int rotation , int number_of_leds)
 
-    function onUpdate()
-    {
-        if (transform_engine)
-        {
-            transform_engine.updateTransformParameters(l_num.value, l_rotation.value, l_size.value);
-        }
-        return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )
-    }
+    // function onUpdate()
+    // {
+    //     if (transform_engine)
+    //     {
+    //         transform_engine.updateTransformParameters(l_num.value, l_rotation.value, l_size.value);
+    //     }
+    //     return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )
+    // }
 
     implicitWidth: 500
     implicitHeight: 500
@@ -64,37 +64,22 @@ Control
                 }
             }
             FillingRect{Layout.fillHeight: true}
-
-
-            Text{text: "Transformed image size: "; font.bold: true; font.pixelSize: 18 }
-            Separator{Layout.fillWidth: true}
-            TextField
-            {
-                readOnly: true
-                text: transform_engine && transform_engine.transformedWidth > 0 && transform_engine.transformedHeight > 0
-                        ? transform_engine.transformedWidth + " x " + transform_engine.transformedHeight + " pixels"
-                        : "-"
-                color: "black"
-                font.pixelSize: 20
-                activeFocusOnTab: false
-                background: Rectangle {color: "transparent"}
-            }
             FillingRect{fillerHeight: 30}
         }
     }
 
 
-    Component.onCompleted:
-    {
-        l_num.update.connect(onUpdate);
-        l_rotation.update.connect(onUpdate);
-        l_size.update.connect(onUpdate);
-        root.parameterChanged(l_size.init_value, l_rotation.init_value, l_num.init_value);
-        if (transform_engine)
-        {
-            transform_engine.updateTransformParameters(l_num.init_value, l_rotation.init_value, l_size.init_value);
-        }
-    }
+    // Component.onCompleted:
+    // {
+    //     l_num.update.connect(onUpdate);
+    //     l_rotation.update.connect(onUpdate);
+    //     l_size.update.connect(onUpdate);
+    //     root.parameterChanged(l_size.init_value, l_rotation.init_value, l_num.init_value);
+    //     if (transform_engine)
+    //     {
+    //         transform_engine.updateTransformParameters(l_num.init_value, l_rotation.init_value, l_size.init_value);
+    //     }
+    // }
 }
 
 

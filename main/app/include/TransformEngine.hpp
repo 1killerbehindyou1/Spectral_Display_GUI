@@ -6,16 +6,15 @@
 #include <QImage>
 #include <memory>
 
-#include <InterpolatorQPoly.hpp>
+#include <InterpolatorSingle.hpp>
 
 // Convenience alias for the interpolator type
-using Interpolator = poly::InterpolatorQPoly;
+using TransformInterpolator = single::InterpolatorSingle;
 
 struct TransformParameters
 {
-    int number_of_leds;
-    int rotation;
-    int size;
+    int ang_resolution;
+    int no_pixels;
     QPoint point;
 };
 
@@ -29,7 +28,7 @@ class TransformEngine : public QObject
 public:
     TransformEngine(QObject* parent = 0);
     void transformImage();
-    void transformImage(int number_of_leds, int rotation, int size, QPoint point);
+    void transformImage(int ang_resolution, int no_pixels, QPoint point);
     QImage* transformedImage() const { return m_transformed_image.get(); }
     int transformedWidth() const { return m_transformed_width; }
     int transformedHeight() const { return m_transformed_height; }
@@ -43,8 +42,8 @@ public slots:
                   << "Pixmap set in TransformEngine with size:" << m_pixmap->size();
     }
     void updatePoint(QPoint point);
-    void updateTransformParameters(int number_of_leds, int rotation, int size, QPoint point);
-    void updateTransformParameters(int number_of_leds, int rotation, int size);
+    void updateNoOfPixels(int pixels);
+    void updateAngularResolution(int ang_res);
 
 signals:
     void transformReady(std::shared_ptr<QImage> image);
@@ -55,7 +54,7 @@ private:
     bool warnNoPixmapIfNeeded();
 
     TransformParameters m_params;
-    Interpolator m_interpolator;
+    TransformInterpolator m_interpolator;
     std::shared_ptr<QPixmap> m_pixmap = nullptr;
     bool m_has_logged_missing_pixmap = false;
     std::shared_ptr<QImage> m_transformed_image = nullptr;

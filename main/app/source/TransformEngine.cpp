@@ -12,8 +12,6 @@ bool TransformEngine::warnNoPixmapIfNeeded()
 
     if (!m_has_logged_missing_pixmap)
     {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "No pixmap set for transformation.";
         m_has_logged_missing_pixmap = true;
     }
 
@@ -36,13 +34,12 @@ void TransformEngine::transformImage(const TransformParameters& params)
         return;
     }
 
-    if (params.number_of_leds <= 0 || params.rotation <= 0 || params.size <= 0)
+    if (params.no_pixels <= 0 || params.ang_resolution <= 0 || params.point.isNull())
     {
         qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
                  << "Invalid transformation parameters:"
-                 << "Number of LEDs:" << params.number_of_leds
-                 << "Rotation:" << params.rotation
-                 << "Size:" << params.size;
+                 << "Number of LEDs:" << params.no_pixels
+                 << "ang_resolution:" << params.ang_resolution;
         return;
     }
 
@@ -59,14 +56,13 @@ void TransformEngine::transformImage(const TransformParameters& params)
 
     qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
              << "Transforming image with parameters:"
-             << "Number of LEDs:" << params.number_of_leds
-             << "Rotation:" << params.rotation
-             << "Size:" << params.size
+             << "Number of LEDs:" << params.no_pixels
+             << "ang_resolution:" << params.ang_resolution
              << "Point:" << params.point;
 
     // Perform the transformation using the interpolator
     auto transformed_image = m_interpolator.transformImage(
-        params.rotation, params.size, params.number_of_leds, params.point, m_pixmap.get());
+        params.ang_resolution, params.no_pixels, params.point, m_pixmap.get());
 
     m_transformed_image = std::make_shared<QImage>(std::move(transformed_image));
     m_transformed_width = m_transformed_image->width();
@@ -77,9 +73,9 @@ void TransformEngine::transformImage(const TransformParameters& params)
     emit transformReadyForQml();
 }
 
-void TransformEngine::transformImage(int number_of_leds, int rotation, int size, QPoint point)
+void TransformEngine::transformImage(int no_pixels, int ang_resolution, QPoint point)
 {
-    transformImage(TransformParameters{number_of_leds, rotation, size, point});
+    transformImage(TransformParameters{ang_resolution, no_pixels, point});
 }
 
 void TransformEngine::updatePoint(QPoint point)
@@ -88,16 +84,14 @@ void TransformEngine::updatePoint(QPoint point)
     transformImage(m_params);
 }
 
-void TransformEngine::updateTransformParameters(int number_of_leds, int rotation, int size, QPoint point)
+void TransformEngine::updateNoOfPixels(int pixels)
 {
-    m_params = TransformParameters{number_of_leds, rotation, size, point};
+    m_params.no_pixels = pixels;
     transformImage(m_params);
 }
 
-void TransformEngine::updateTransformParameters(int number_of_leds, int rotation, int size)
+void TransformEngine::updateAngularResolution(int ang_res)
 {
-    m_params.number_of_leds = number_of_leds;
-    m_params.rotation = rotation;
-    m_params.size = size;
+    m_params.ang_resolution = ang_res;
     transformImage(m_params);
 }

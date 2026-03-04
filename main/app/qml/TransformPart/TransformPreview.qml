@@ -9,6 +9,7 @@ Control
 {
     id: root
     property real zoomFactor: 3.0
+    property int previewRotation: 180
 
     function onSelectorClicked(xPosition, yPosition)
     {
@@ -25,15 +26,29 @@ Control
         color: "white"
     }
 
-    contentItem: Image
+    contentItem: Item
     {
-        id: preview_image
         anchors.fill: parent
-        scale: root.zoomFactor
-        transformOrigin: Item.Center
-        fillMode: Image.PreserveAspectFit
-        rotation: 90
-        cache: false
+
+        Image
+        {
+            id: preview_image
+            anchors.fill: parent
+            scale: root.zoomFactor
+            transformOrigin: Item.Center
+            fillMode: Image.PreserveAspectFit
+            rotation: root.previewRotation
+            cache: false
+        }
+
+        Button
+        {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: 8
+            text: "Obróć 90°"
+            onClicked: root.previewRotation = (root.previewRotation + 90) % 360
+        }
     }
 
     Connections

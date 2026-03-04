@@ -3,25 +3,25 @@
 namespace common
 {
 
-QImage InterpolatorBase::transformImage(int deg_angle, int led_size,
-                                        int number_of_leds, QPoint transform_center,
+QImage InterpolatorBase::transformImage(int ang_resolution, int no_pixels,
+                                        QPoint transform_center,
                                         const QPixmap* pix_map)
 {
-    int width = static_cast<int>(360 / deg_angle);
-    QImage output_image{number_of_leds, width, QImage::Format_RGB32};
+    int width = static_cast<int>(360 / ang_resolution);
+    QImage output_image{no_pixels, width, QImage::Format_RGB32};
 
     QPoint curr_rect_corner = transform_center;
 
-    for (int led_idx = 1; led_idx < number_of_leds; led_idx++)
+    for (int led_idx = 1; led_idx < no_pixels; led_idx++)
     {
-        curr_rect_corner.setX(curr_rect_corner.x() + led_size);
+        curr_rect_corner.setX(curr_rect_corner.x() + 1);
         auto temp_point = QPointF(curr_rect_corner);
-        QRectF rect_f{temp_point, QSize{led_size, led_size}};
+        QRectF rect_f{temp_point, QSize{1, 1}};
         rect_f.moveCenter(curr_rect_corner);
 
         double angle = 0;
         for (int ang_idx = 0; angle < 360.0;
-             ++ang_idx, angle = deg_angle * ang_idx)
+             ++ang_idx, angle = ang_resolution * ang_idx)
         {
             Transform transform{transform_center, angle};
             QPointF transformed_curr_rect_corner = transform(curr_rect_corner);

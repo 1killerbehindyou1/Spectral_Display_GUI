@@ -18,7 +18,10 @@ QtDialogs.FileDialog
         }
         if(file_operation == "save")
         {
-            file_manager.savePixMap(fileDialog.fileUrl, drawing.getOutImage());
+            const outImage = (drawing && typeof drawing.getOutImage === "function")
+                             ? drawing.getOutImage()
+                             : (transform_engine ? transform_engine.transformedImage : null);
+            file_manager.savePixMap(fileDialog.fileUrl, outImage);
         }
     }
 

@@ -7,7 +7,7 @@
 #include <chrono>
 
 LedRuler::LedRuler(QQuickItem* parent)
-    : QQuickPaintedItem(parent), m_render_params{30, 1, QSize{5, 5}, QPoint{0, 0}}
+    : QQuickPaintedItem(parent), m_render_params{30, 1, QPoint{0, 0}}
 {
 }
 
@@ -53,11 +53,12 @@ void LedRuler::paint(QPainter* painter)
             painter->save();
             painter->rotate(curr_rot * m_diff_angle);
 
-            QRect current_led_rect{QPoint{0, 0}, m_render_params.led_size};
+            const QSize led_size{1, 1};
+            QRect current_led_rect{QPoint{0, 0}, led_size};
 
             for (int led_idx = 0; led_idx < m_image->size().width(); led_idx++)
             {
-                current_led_rect.moveLeft(led_idx * m_render_params.led_size.width());
+                current_led_rect.moveLeft(led_idx * led_size.width());
 
                 QColor color{};
                 if (m_image->valid({led_idx, curr_rot}))
