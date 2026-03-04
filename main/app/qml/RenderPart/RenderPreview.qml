@@ -9,6 +9,11 @@ Control
 {
     id: root
 
+    function checkRenderedPreview(state)
+    {
+        return;
+    }
+
     function getOutImage()
     {
         return transform_engine ? transform_engine.transformedImage : null;

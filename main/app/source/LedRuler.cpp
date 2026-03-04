@@ -1,6 +1,7 @@
 
 #include "LedRuler.hpp"
 #include "FileManager.hpp"
+#include <QPainter>
 #include <QPen>
 #include <Transformation.hpp>
 #include <thread>

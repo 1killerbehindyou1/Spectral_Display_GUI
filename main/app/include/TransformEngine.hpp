@@ -1,11 +1,8 @@
 #pragma once
-#include <QDebug>
 #include <QObject>
 #include <QPixmap>
-#include <QUrl>
 #include <QImage>
 #include <memory>
-
 #include <InterpolatorSingle.hpp>
 
 // Convenience alias for the interpolator type
@@ -29,18 +26,12 @@ public:
     TransformEngine(QObject* parent = 0);
     void transformImage();
     void transformImage(int ang_resolution, int no_pixels, QPoint point);
-    QImage* transformedImage() const { return m_transformed_image.get(); }
-    int transformedWidth() const { return m_transformed_width; }
-    int transformedHeight() const { return m_transformed_height; }
+    QImage* transformedImage() const;
+    int transformedWidth() const;
+    int transformedHeight() const;
 
 public slots:
-    void setPixmap(std::shared_ptr<QPixmap> pixmap)
-    {
-         m_pixmap = pixmap;
-            m_has_logged_missing_pixmap = false;
-         qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                  << "Pixmap set in TransformEngine with size:" << m_pixmap->size();
-    }
+    void setPixmap(std::shared_ptr<QPixmap> pixmap);
     void updatePoint(QPoint point);
     void updateNoOfPixels(int pixels);
     void updateAngularResolution(int ang_res);

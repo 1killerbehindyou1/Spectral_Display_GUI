@@ -1,21 +1,12 @@
 #pragma once
 
-#include <InterpolatorBase.hpp>
-#include <QColor>
-#include <QDebug>
 #include <QObject>
-#include <QPainter>
 #include <QImage>
 #include <QPoint>
-#include <QString>
-#include <QUrl>
-#include <QVector>
+#include <QPointF>
 #include <QtQuick/QQuickPaintedItem>
-#include <cmath>
-#include <iostream>
 
-// Convenience alias for the interpolator type
-using LedInterpolatorBase = common::InterpolatorBase;
+class QPainter;
 
 struct RenderParameters
 {

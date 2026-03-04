@@ -19,24 +19,24 @@ Control
     function onRadiusUpdate()
     {
         console.log("radius changed: " + l_radius.value);
-        return root.radiusChanged(l_radius.value);
+        root.radiusChanged(l_radius.value);
     }
     function onZoomOutUpdate()
     {
         console.log("zoom changed: " + l_out_zoom.value);
-        return root.zoomChangedOut(l_out_zoom.value);
+        root.zoomChangedOut(l_out_zoom.value);
     }
 
     function onZoomLoadUpdate()
     {
         console.log("zoom changed: " + l_load_zoom.value);
-        return root.zoomChangedLoad(l_load_zoom.value);
+        root.zoomChangedLoad(l_load_zoom.value);
     }
 
     function onAngResUpdate()
     {
         console.log("angular resolution changed: " + ang_res.value);
-        return root.angResChanged(ang_res.value);
+        root.angResChanged(ang_res.value);
     }
 
     function onImgLoad(width, height)

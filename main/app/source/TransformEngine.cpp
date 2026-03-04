@@ -1,7 +1,28 @@
 #include "TransformEngine.hpp"
+#include <QDebug>
 
 TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{} {}
 
+QImage* TransformEngine::transformedImage() const
+{
+    return m_transformed_image.get();
+}
+
+int TransformEngine::transformedWidth() const
+{
+    return m_transformed_width;
+}
+
+int TransformEngine::transformedHeight() const
+{
+    return m_transformed_height;
+}
+
+void TransformEngine::setPixmap(std::shared_ptr<QPixmap> pixmap)
+{
+    m_pixmap = pixmap;
+    m_has_logged_missing_pixmap = false;
+}
 bool TransformEngine::warnNoPixmapIfNeeded()
 {
     if (m_pixmap != nullptr)
@@ -35,30 +56,12 @@ void TransformEngine::transformImage(const TransformParameters& params)
     }
 
     if (params.no_pixels <= 0 || params.ang_resolution <= 0 || params.point.isNull())
-    {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "Invalid transformation parameters:"
-                 << "Number of LEDs:" << params.no_pixels
-                 << "ang_resolution:" << params.ang_resolution;
-        return;
-    }
+    { return;}
 
     if (params.point.x() < 0 || params.point.y() < 0 ||
         params.point.x() >= m_pixmap->width() ||
         params.point.y() >= m_pixmap->height())
-    {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "Invalid point for transformation:" << params.point
-                 << "with pixmap size:" << m_pixmap->size()
-                 << m_pixmap->width() << "x" << m_pixmap->height() << "y";
-        return;
-    }
-
-    qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-             << "Transforming image with parameters:"
-             << "Number of LEDs:" << params.no_pixels
-             << "ang_resolution:" << params.ang_resolution
-             << "Point:" << params.point;
+    { return;}
 
     // Perform the transformation using the interpolator
     auto transformed_image = m_interpolator.transformImage(
