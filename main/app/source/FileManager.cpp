@@ -72,6 +72,7 @@ bool FileManager::loadPixMap(QUrl path)
 
     emit setImageOnGui();
     emit fileReadyToTransform(m_pixmap);
+    emit fileLoadedSize(m_pixmap.width(), m_pixmap.height());
 
     return true;
 }

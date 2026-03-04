@@ -25,6 +25,12 @@ Control
         return root.zoomChanged(l_zoom.value)
     }
 
+    function onImgLoad(width, height)
+    {
+        console.log("size of loaded image: " + width + " x " + height);
+        loadedImgSizeText.text = width + " x " + height;
+    }
+
     implicitWidth: 500
     implicitHeight: 500
     padding: 10
@@ -55,7 +61,8 @@ Control
                 DataInput{ id: l_radius; label: "Radius: "; init_value: 100;  max: 240; min: 1}
 
                 FillingRect{Layout.fillHeight: true}
-
+                Text{text: "Size of loaded img [pixels]: "; font.bold: true; font.pixelSize: 18 }
+                Text{id: loadedImgSizeText; text: "0 x 0"; font.pixelSize: 18 }
                 Text{text: "Output preview zoom"; font.bold: true; font.pixelSize: 18 }
                 Separator{Layout.fillWidth: true}
                 DataInput{ id: l_zoom; label: "Zoom [x]: "; init_value: 3; max: 10; min: 1 }

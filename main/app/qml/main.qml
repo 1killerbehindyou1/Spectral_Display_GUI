@@ -106,13 +106,15 @@ ApplicationWindow
 
     Component.onCompleted:
     {
+
         transform_parameters.radiusChanged.connect(selector.onRadiusChanged);
-        transform_parameters.parameterChanged.connect(drawing.updateLedParameters);
+        render_parameters.parameterChanged.connect(drawing.updateLedParameters);
         transform_parameters.zoomChanged.connect(function(zoomFactor)
         {
             output_preview.zoomFactor = zoomFactor;
         });
         fileDialog.pixmapLoaded.connect(drawing.setPixmap);
+        file_manager.fileLoadedSize.connect(transform_parameters.onImgLoad);
         selector.pointUpdate.connect(drawing.updatePoint);
         selector.pointUpdate.connect(output_preview.onSelectorClicked);
     }

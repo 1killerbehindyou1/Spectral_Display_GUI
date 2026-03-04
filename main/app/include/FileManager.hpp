@@ -25,6 +25,7 @@ signals:
     void fileErrLoad(QString title, QString name);
     void setImageOnGui();
     void fileReadyToTransform(QPixmap pixmap);
+    void fileLoadedSize(int width, int height);
 
 private:
     QPixmap m_pixmap;
