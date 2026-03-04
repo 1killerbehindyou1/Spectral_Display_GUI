@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QImage>
+#include <QPixmap>
 #include <QPoint>
 #include <QPointF>
 #include <QtQuick/QQuickPaintedItem>
@@ -11,8 +12,9 @@ class QPainter;
 struct RenderParameters
 {
     int no_pixels;
-    int arc_resolution;
-    QPoint point;
+    QSize led_size;
+    int led_arc_resolution;
+    int led_distance;
 };
 
 class LedRuler : public QQuickPaintedItem
@@ -27,14 +29,16 @@ public:
 
     QImage* image() const;
     void setImage(QImage* image);
+    Q_INVOKABLE void setPixmap(QPixmap* pixmap);
 
     Q_INVOKABLE void startRendering(bool flag);
     Q_INVOKABLE void requestRepaint();
 
 private:
-    bool m_rendering{true}; // Flag to control rendering
-    int m_diff_angle{0}; // Angle difference between LEDs
+    bool m_rendering{true};
+    qreal m_render_radius{0}; // Radius of the circle on which the LEDs are placed
     QImage* m_image = nullptr; // Pointer to the image to be rendered
+    QImage m_owned_image; // Internal storage when source is provided as QPixmap
     QPointF m_render_center{0, 0}; // Center point for rendering
     RenderParameters m_render_params; // Parameters for rendering
 };

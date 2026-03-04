@@ -11,54 +11,54 @@ Control
 
     function checkRenderedPreview(state)
     {
-        return;
+        render.startRendering(state);
     }
 
     function getOutImage()
     {
-        return transform_engine ? transform_engine.transformedImage : null;
+        return render.image;
     }
 
-    // function setPixmap()
-    // {
-    //     return;
-    // }
+    function setPixmap(pixmapPointer)
+    {
+        render.setPixmap(pixmapPointer);
+        render.requestRepaint();
+    }
 
-    // function updateLedParameters(size: int, angle: int, num: int)
-    // {
-    //     return transform_engine.updateTransformParameters(num, angle, size);
-    // }
-
-
-
-    // function checkRenderedPreview(state: bool)
-    // {
-    //     return render.startRendering(state);
-    // }
-
-    // function updatePoint(mouseX: real, mouseY: real)
-    // {
-    //     return transform_engine.updatePoint(Qt.point(mouseX, mouseY));
-    // }
+    function repaintOnClick()
+    {
+        render.requestRepaint();
+    }
 
     implicitWidth: 720
     implicitHeight: 500
 
     background: Rectangle{ color: "white" }
 
-    // contentItem: LedRuler
-    // {
-    //     id: render
-    //     anchors.fill: parent
-    // }
+    contentItem: Item
+    {
+        anchors.fill: parent
 
-    // Connections
-    // {
-    //     target: transform_engine
-    //     function onTransformReadyForQml()
-    //     {
-    //         render.image = transform_engine.transformedImage
-    //         render.requestRepaint()
-    //     }
-    // }
+        LedRuler
+        {
+            id: render
+            anchors.fill: parent
+        }
+
+        MouseArea
+        {
+            anchors.fill: parent
+            onClicked: root.repaintOnClick()
+        }
+    }
+
+    Connections
+    {
+        target: transform_engine
+        function onTransformReadyForQml()
+        {
+            render.image = transform_engine.transformedImage;
+            render.requestRepaint();
+        }
+    }
 }

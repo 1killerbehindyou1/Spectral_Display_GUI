@@ -11,16 +11,17 @@ Control
 {
     id: root
 
-    // signal parameterChanged(int size, int rotation , int number_of_leds)
+    signal parameterChanged(int size, int rotation , int number_of_leds)
 
-    // function onUpdate()
-    // {
-    //     if (transform_engine)
-    //     {
-    //         transform_engine.updateTransformParameters(l_num.value, l_rotation.value, l_size.value);
-    //     }
-    //     return root.parameterChanged(l_size.value, l_rotation.value, l_num.value )
-    // }
+    function onUpdate()
+    {
+        if (transform_engine)
+        {
+            transform_engine.updateNoOfPixels(led_num.value);
+            transform_engine.updateAngularResolution(led_rotation.value);
+        }
+        return root.parameterChanged(led_size.value, led_rotation.value, led_num.value )
+    }
 
     implicitWidth: 500
     implicitHeight: 500
@@ -48,15 +49,15 @@ Control
                 spacing: 20
                 Layout.alignment: Qt.AlignTop
 
-                DataInput{ id: l_num; label: "number of LEDs"; init_value: 25;  max: 200; min: 1}
-                DataInput{ id: l_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
-                DataInput{ id: l_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
+                DataInput{ id: led_num; label: "number of LEDs"; init_value: 25;  max: 200; min: 1}
+                DataInput{ id: led_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
+                DataInput{ id: led_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
 
                 Text{text: "Spectral display resolution: "; font.bold: true; font.pixelSize: 18 }
                 TextField
                 {
                     readOnly: true
-                    text: parseInt(360/l_rotation.value) + " x " + l_num.value + " pixels";
+                    text: parseInt(360/led_rotation.value) + " x " + led_num.value + " pixels";
                     color: "black"
                     font.pixelSize: 20
                     activeFocusOnTab: false
@@ -69,17 +70,18 @@ Control
     }
 
 
-    // Component.onCompleted:
-    // {
-    //     l_num.update.connect(onUpdate);
-    //     l_rotation.update.connect(onUpdate);
-    //     l_size.update.connect(onUpdate);
-    //     root.parameterChanged(l_size.init_value, l_rotation.init_value, l_num.init_value);
-    //     if (transform_engine)
-    //     {
-    //         transform_engine.updateTransformParameters(l_num.init_value, l_rotation.init_value, l_size.init_value);
-    //     }
-    // }
+    Component.onCompleted:
+    {
+        led_num.update.connect(onUpdate);
+        led_rotation.update.connect(onUpdate);
+        led_size.update.connect(onUpdate);
+        root.parameterChanged(led_size.init_value, led_rotation.init_value, led_num.init_value);
+        if (transform_engine)
+        {
+            transform_engine.updateNoOfPixels(led_num.init_value);
+            transform_engine.updateAngularResolution(led_rotation.init_value);
+        }
+    }
 }
 
 

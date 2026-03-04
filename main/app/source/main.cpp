@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
 
-    //qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
 
     qRegisterMetaType<QPixmap*>("QPixmap*");
