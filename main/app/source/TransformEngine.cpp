@@ -2,12 +2,28 @@
 
 TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{} {}
 
-void TransformEngine::transformImage()
+bool TransformEngine::warnNoPixmapIfNeeded()
 {
-    if (m_pixmap == nullptr)
+    if (m_pixmap != nullptr)
+    {
+        m_has_logged_missing_pixmap = false;
+        return false;
+    }
+
+    if (!m_has_logged_missing_pixmap)
     {
         qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
                  << "No pixmap set for transformation.";
+        m_has_logged_missing_pixmap = true;
+    }
+
+    return true;
+}
+
+void TransformEngine::transformImage()
+{
+    if (warnNoPixmapIfNeeded())
+    {
         return;
     }
     transformImage(m_params);
@@ -15,10 +31,8 @@ void TransformEngine::transformImage()
 
 void TransformEngine::transformImage(const TransformParameters& params)
 {
-    if (m_pixmap == nullptr)
+    if (warnNoPixmapIfNeeded())
     {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "No pixmap set for transformation.";
         return;
     }
 

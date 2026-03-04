@@ -8,6 +8,7 @@ import Main 1.0
 Control
 {
     signal pointUpdate(real xPosition, real yPosition)
+    property int defaultSelectorRadius: 100
 
     function mapToSourcePoint(mouseX: real, mouseY: real)
     {
@@ -31,33 +32,34 @@ Control
         mappedX = Math.max(0, Math.min(srcW - 1, mappedX));
         mappedY = Math.max(0, Math.min(srcH - 1, mappedY));
 
+        console.log("mapToSourcePoint: mouseX: " + mouseX + ", mouseY: " + mouseY + ", mappedX: " + mappedX + ", mappedY: " + mappedY);
         return Qt.point(Math.round(mappedX), Math.round(mappedY));
     }
 
-    function selectorParameterChanged(l_size: int, angle: int, number_of_leds: int)
+    function onRadiusChanged(radius: int)
     {
-        return selector_local.selectorUpdate(number_of_leds, l_size);
+        return selector_local.selectorResize(radius);
     }
 
     property alias img_visible: loaded_image.visible
     property alias img_source:  loaded_image.source
 
-    onImg_sourceChanged:
-    {
-        root.width = loaded_image.width;
-        root.height= loaded_image.height;
-    }
-
     id: root
     implicitWidth: 500
     implicitHeight: 500
 
-    background: Image
+    background: Rectangle
+    {
+        color: "white"
+    }
+
+    contentItem: Image
     {
         id: loaded_image
         visible: true
         fillMode: Image.PreserveAspectCrop
     }
+
     Selector
     {
         id: selector_local
@@ -74,5 +76,12 @@ Control
             }
         }
     }
+
+    Component.onCompleted:
+    {
+        console.log("Component completed, setting default selector radius: " + defaultSelectorRadius);
+        selector_local.selectorResize(defaultSelectorRadius);
+    }
+
 }
 

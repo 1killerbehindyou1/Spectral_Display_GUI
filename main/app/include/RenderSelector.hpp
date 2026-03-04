@@ -23,7 +23,6 @@ public:
     void paint(QPainter* painter) override;
 
     Q_INVOKABLE void setPoint(QPoint point);
-    Q_INVOKABLE void selectorUpdate(int number_of_leds, int size);
     Q_INVOKABLE void selectorResize(int newSize);
 
 private:

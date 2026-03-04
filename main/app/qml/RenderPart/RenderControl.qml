@@ -23,7 +23,8 @@ Control
 
         GroupBox
         {
-             title: "Parameters"
+            title: qsTr("Transform Controls")
+
              font.pixelSize: 15
              Layout.fillWidth: true
              Layout.preferredHeight: parent.height
@@ -33,7 +34,12 @@ Control
              contentItem: ColumnLayout
              {
                 spacing: 20
-                Text{text: "Spectral display hardware"; font.bold: true; font.pixelSize: 18 }
+                Text
+                {
+                    text: "Spectral display parameters";
+                    font.bold: true;
+                    font.pixelSize: 18
+                }
                 Rectangle
                 {
                     Layout.fillWidth: true

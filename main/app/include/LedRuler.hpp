@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QObject>
 #include <QPainter>
-#include <QPixmap>
+#include <QImage>
 #include <QPoint>
 #include <QString>
 #include <QUrl>
@@ -17,31 +17,34 @@
 // Convenience alias for the interpolator type
 using Interpolator = poly::InterpolatorQPoly;
 
+struct RenderParameters
+{
+    int number_of_leds;
+    int rotation;
+    QSize led_size; // Size of each LED in the ruler
+    QPoint point;
+};
+
 class LedRuler : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QPixmap* pixmap READ pixmap WRITE setPixmap)
+    Q_PROPERTY(QImage* image READ image WRITE setImage)
 
 public:
     LedRuler(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
-    QPixmap* pixmap() const;
-    void setPixmap(QPixmap* pixmap);
 
-    Q_INVOKABLE void setPoint(QPoint point);
-    Q_INVOKABLE void showOutputPreview(bool show);
-    Q_INVOKABLE QImage* getRenderedImage();
-    Q_INVOKABLE void onParameterChanged(int number_of_leds, int rotation,
-                                        int size);
+    QImage* image() const;
+    void setImage(QImage* image);
+
+    Q_INVOKABLE void startRendering(bool flag);
+    Q_INVOKABLE void requestRepaint();
 
 private:
-    QPixmap* m_pixmap = nullptr;
-    QImage* m_current_transformed_image = nullptr;
-    QPoint m_point; // środek odrysowywania
-    Interpolator m_interpolator;
-    int m_number_of_leds;
-    int m_rotation;
-    int m_size;
-    bool m_rendered_preview;
+    bool m_rendering{true}; // Flag to control rendering
+    int m_diff_angle{0}; // Angle difference between LEDs
+    QImage* m_image = nullptr; // Pointer to the image to be rendered
+    QPointF m_render_center{0, 0}; // Center point for rendering
+    RenderParameters m_render_params; // Parameters for rendering
 };

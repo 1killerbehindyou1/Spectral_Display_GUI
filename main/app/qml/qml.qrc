@@ -1,12 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>RenderPanelStatic.qml</file>
-        <file>RenderPanelDynamic.qml</file>
-        <file>TransformControl.qml</file>
-        <file>DataInput.qml</file>
-        <file>RenderSelector.qml</file>
-        <file>RenderControl.qml</file>
-        <file>OutputPreview.qml</file>
+        <file>Controls/DataInput.qml</file>
+        <file>RenderPart/RenderPreview.qml</file>
+        <file>RenderPart/RenderControl.qml</file>
+        <file>TransforPart/TransformPreview.qml</file>
+        <file>TransforPart/TransformControl.qml</file>
+        <file>TransforPart/TransformSelector.qml</file>
+        <file>MainMenu/MainMenu.qml</file>
+        <file>Dialogs/FileDialog.qml</file>
+        <file>Dialogs/MessageDialog.qml</file>
     </qresource>
 </RCC>

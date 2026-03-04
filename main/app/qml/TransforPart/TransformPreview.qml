@@ -20,11 +20,15 @@ Control
         preview_image.source = "image://live/frame?t=" + Date.now();
     }
 
-    background: Image
+    background: Rectangle
+    {
+        color: "white"
+    }
+
+    contentItem: Image
     {
         id: preview_image
         anchors.fill: parent
-        visible: true
         scale: root.zoomFactor
         transformOrigin: Item.Center
         fillMode: Image.PreserveAspectFit

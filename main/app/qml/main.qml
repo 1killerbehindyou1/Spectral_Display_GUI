@@ -2,8 +2,11 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
 import Main 1.0
+import "RenderPart"
+import "TransforPart"
+import "MainMenu"
+import "Dialogs" as AppDialogs
 
 ApplicationWindow
 {
@@ -16,68 +19,19 @@ ApplicationWindow
     color: "lightgrey"
 
     property bool imageSelected: false
-    property bool previewIsActive: showSelectedImage.checked
-    property bool renderedPreviewIsActive: showRenderedPreview.checked
+    property bool previewIsActive: mainMenu.showSelectedImage.checked
+    property bool renderedPreviewIsActive: mainMenu.showRenderedPreview.checked
     property string file_operation: ""
 
     onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
     onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
 
     /* Menu Bar */
-    menuBar: MenuBar
+    menuBar: MainMenu
     {
-        contentWidth: parent.width
-        Menu
-        {
-            title: qsTr("&File")
-            Action
-            {
-                text: qsTr("&Load Image...")
-                onTriggered:
-                {
-                    file_operation = "load";
-                    fileDialog.title = "Please choose a file";
-                    fileDialog.nameFilters = [ "Image files (*.jpg *.png)", "All files (*)" ];
-                    fileDialog.selectExisting = true;
-                    fileDialog.open();
-                }
-            }
-            MenuSeparator { }
-            Action
-            {
-                text: qsTr("&Save Transformated Image...")
-                onTriggered:
-                {
-                    file_operation = "save";
-                    fileDialog.title = "Save to file";
-                    fileDialog.nameFilters = [ "Image files (*.jpg *.png)" ];
-                    fileDialog.selectExisting = false;
-                    fileDialog.open();
-                }
-            }
-        }
-        Menu
-        {
-            title: qsTr("&View")
-            delegate: CheckBox{}
-
-            Action
-            {
-                id: showSelectedImage
-                checked: false
-                checkable: true
-                text: "Preview selected image..."
-            }
-
-            Action
-            {
-                id: showRenderedPreview
-                text: "Preview rendered image..."
-                checked: false
-                checkable: true
-            }
-        }
+        id: mainMenu
     }
+
     RowLayout
     {
         spacing: 5
@@ -104,7 +58,7 @@ ApplicationWindow
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                RenderSelector
+                TransformSelector
                 {
                     id: selector
                     Layout.fillHeight: true
@@ -112,7 +66,7 @@ ApplicationWindow
                     visible: true
                 }
 
-                RenderPanelDynamic
+                RenderPreview
                 {
                     id: drawing
                     Layout.fillHeight: true
@@ -121,7 +75,7 @@ ApplicationWindow
                 }
             }
 
-            OutputPreview
+            TransformPreview
             {
                 id: output_preview
                 Layout.fillWidth: true
@@ -140,54 +94,19 @@ ApplicationWindow
         }
     }
 
-    FileDialog
+    AppDialogs.FileDialog
     {
-        signal pixmapLoaded()
-
         id: fileDialog
-        selectMultiple: false
-        onAccepted:
-        {
-
-           if((file_operation == "load")&&(file_manager.loadPixMap(fileDialog.fileUrl)))
-           {
-                selector.img_source = fileDialog.fileUrl;
-                imageSelected = true;
-                fileDialog.pixmapLoaded();
-           }
-           if(file_operation == "save")
-           {
-                 file_manager.savePixMap(fileDialog.fileUrl, drawing.getOutImage());
-           }
-
-        }
-        onRejected:
-        {
-           fileDialog.close()
-        }
-          Component.onCompleted: visible = false
     }
 
-    MessageDialog
+    AppDialogs.MessageDialog
     {
         id: messageDialog
-        title: ""
-        text: ""
-        onAccepted:
-        {
-            messageDialog.close()
-        }
-
-        function showMessageBox(title: string, message: string)
-        {
-            messageDialog.text = message
-            messageDialog.title = title
-            messageDialog.open()
-        }
     }
+
     Component.onCompleted:
     {
-        transform_parameters.parameterChanged.connect(selector.selectorParameterChanged);
+        transform_parameters.radiusChanged.connect(selector.onRadiusChanged);
         transform_parameters.parameterChanged.connect(drawing.updateLedParameters);
         transform_parameters.zoomChanged.connect(function(zoomFactor)
         {

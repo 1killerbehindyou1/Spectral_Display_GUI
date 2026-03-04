@@ -3,48 +3,66 @@
 #include "FileManager.hpp"
 #include <QPen>
 #include <Transformation.hpp>
+#include <thread>
+#include <chrono>
 
 LedRuler::LedRuler(QQuickItem* parent)
-    : QQuickPaintedItem(parent), m_point(200, 200), m_number_of_leds(30),
-      m_rotation(1), m_size(1), m_rendered_preview(true)
+    : QQuickPaintedItem(parent), m_render_params{30, 1, QSize{5, 5}, QPoint{0, 0}}
 {
 }
 
-void LedRuler::setPixmap(QPixmap* pixmap) { m_pixmap = pixmap; }
-
-QPixmap* LedRuler::pixmap() const { return m_pixmap; }
-
-QImage* LedRuler::getRenderedImage() { return m_current_transformed_image; }
-
-void LedRuler::paint(QPainter* painter)
+QImage* LedRuler::image() const
 {
-    if (m_current_transformed_image != nullptr)
-    {
-        int lp_width = m_current_transformed_image->width();
-        int lp_hight = m_current_transformed_image->height();
+    return m_image;
+}
 
-        int diff_angle = int(360 / lp_hight);
+void LedRuler::setImage(QImage* image)
+{
+    m_image = image;
+    update();
+}
+
+void LedRuler::startRendering(bool flag)
+{
+    m_rendering = flag;
+    update();
+}
+
+void LedRuler::requestRepaint()
+{
+    if (m_image != nullptr)
+    {
+        m_image->size() = QSize{m_image->width(), m_image->height()};
+        m_diff_angle = static_cast<int>(360 /  m_image->size().height());
 
         const qreal center_x = width() > 0 ? width() / 2.0 : 250.0;
         const qreal center_y = height() > 0 ? height() / 2.0 : 250.0;
-        painter->translate(center_x, center_y);
+        m_render_center = QPoint(center_x, center_y);
+        update();
+    }
+}
 
-        for (int curr_rot = 0; curr_rot < lp_hight; curr_rot++)
+void LedRuler::paint(QPainter* painter)
+{
+    if (m_rendering && m_image != nullptr)
+    {
+        painter->translate(m_render_center);
+
+        for (int curr_rot = 0; curr_rot < m_image->size().height(); curr_rot++)
         {
             painter->save();
-            painter->rotate(curr_rot * diff_angle);
+            painter->rotate(curr_rot * m_diff_angle);
 
-            QRect current_led_rect{QPoint{0, 0}, QSize{m_size, m_size}};
+            QRect current_led_rect{QPoint{0, 0}, m_render_params.led_size};
 
-            for (int led_idx = 0; led_idx < lp_width; led_idx++)
+            for (int led_idx = 0; led_idx < m_image->size().width(); led_idx++)
             {
-                current_led_rect.moveLeft(led_idx * m_size);
+                current_led_rect.moveLeft(led_idx * m_render_params.led_size.width());
 
                 QColor color{};
-                if (m_current_transformed_image->valid({led_idx, curr_rot}))
+                if (m_image->valid({led_idx, curr_rot}))
                 {
-                    color = m_current_transformed_image->pixelColor(led_idx,
-                                                                    curr_rot);
+                    color = m_image->pixelColor(led_idx, curr_rot);
                 }
                 else
                 {
@@ -58,35 +76,4 @@ void LedRuler::paint(QPainter* painter)
             painter->restore();
         }
     }
-}
-
-void LedRuler::onParameterChanged(int number_of_leds, int rotation, int size)
-{
-    m_number_of_leds = number_of_leds;
-    m_rotation = rotation;
-    m_size = size;
-    if (m_pixmap == nullptr || m_pixmap->isNull())
-    {
-        return;
-    }
-    if (m_current_transformed_image != nullptr)
-    {
-        delete m_current_transformed_image;
-        m_current_transformed_image = nullptr;
-    }
-    m_current_transformed_image = new QImage{m_interpolator.transformImage(
-        rotation, size, number_of_leds, m_point, m_pixmap)};
-    update();
-}
-
-void LedRuler::setPoint(QPoint point)
-{
-    m_point = point;
-    onParameterChanged(m_number_of_leds, m_rotation, m_size);
-}
-
-void LedRuler::showOutputPreview(bool show)
-{
-    m_rendered_preview = show;
-    update();
 }
