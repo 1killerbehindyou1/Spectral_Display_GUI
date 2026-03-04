@@ -5,9 +5,6 @@
 #include <memory>
 #include <InterpolatorSingle.hpp>
 
-// Convenience alias for the interpolator type
-using TransformInterpolator = single::InterpolatorSingle;
-
 struct TransformParameters
 {
     int ang_resolution;
@@ -23,9 +20,8 @@ class TransformEngine : public QObject
     Q_PROPERTY(int transformedHeight READ transformedHeight NOTIFY transformReadyForQml)
 
 public:
-    TransformEngine(QObject* parent = 0);
+    TransformEngine(QObject* parent = nullptr);
     void transformImage();
-    void transformImage(int ang_resolution, int no_pixels, QPoint point);
     QImage* transformedImage() const;
     int transformedWidth() const;
     int transformedHeight() const;
@@ -42,13 +38,10 @@ signals:
 
 private:
     void transformImage(const TransformParameters& params);
-    bool warnNoPixmapIfNeeded();
+    bool hasValidParams(const TransformParameters& params) const;
 
     TransformParameters m_params;
-    TransformInterpolator m_interpolator;
+    single::InterpolatorSingle m_interpolator;
     std::shared_ptr<QPixmap> m_pixmap = nullptr;
-    bool m_has_logged_missing_pixmap = false;
     std::shared_ptr<QImage> m_transformed_image = nullptr;
-    int m_transformed_width = 0;
-    int m_transformed_height = 0;
 };

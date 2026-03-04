@@ -1,17 +1,9 @@
 #pragma once
 
-#include <QColor>
-#include <QDebug>
-#include <QObject>
-#include <QPainter>
-#include <QPixmap>
 #include <QPoint>
-#include <QString>
-#include <QUrl>
-#include <QVector>
 #include <QtQuick/QQuickPaintedItem>
-#include <cmath>
-#include <iostream>
+
+class QPainter;
 
 class RenderSelector : public QQuickPaintedItem
 {
@@ -19,7 +11,7 @@ class RenderSelector : public QQuickPaintedItem
     QML_ELEMENT
 
 public:
-    RenderSelector(QQuickItem* parent = 0);
+    RenderSelector(QQuickItem* parent = nullptr);
     void paint(QPainter* painter) override;
 
     Q_INVOKABLE void setPoint(QPoint point);

@@ -1,5 +1,4 @@
 #include "TransformEngine.hpp"
-#include <QDebug>
 
 TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{} {}
 
@@ -10,52 +9,32 @@ QImage* TransformEngine::transformedImage() const
 
 int TransformEngine::transformedWidth() const
 {
-    return m_transformed_width;
+    return m_transformed_image ? m_transformed_image->width() : 0;
 }
 
 int TransformEngine::transformedHeight() const
 {
-    return m_transformed_height;
+    return m_transformed_image ? m_transformed_image->height() : 0;
 }
 
 void TransformEngine::setPixmap(std::shared_ptr<QPixmap> pixmap)
 {
     m_pixmap = pixmap;
-    m_has_logged_missing_pixmap = false;
 }
-bool TransformEngine::warnNoPixmapIfNeeded()
+
+bool TransformEngine::hasValidParams(const TransformParameters& params) const
 {
-    if (m_pixmap != nullptr)
-    {
-        m_has_logged_missing_pixmap = false;
-        return false;
-    }
-
-    if (!m_has_logged_missing_pixmap)
-    {
-        m_has_logged_missing_pixmap = true;
-    }
-
-    return true;
+    return params.no_pixels > 0 && params.ang_resolution > 0 && !params.point.isNull();
 }
 
 void TransformEngine::transformImage()
 {
-    if (warnNoPixmapIfNeeded())
-    {
-        return;
-    }
     transformImage(m_params);
 }
 
 void TransformEngine::transformImage(const TransformParameters& params)
 {
-    if (warnNoPixmapIfNeeded())
-    {
-        return;
-    }
-
-    if (params.no_pixels <= 0 || params.ang_resolution <= 0 || params.point.isNull())
+    if (m_pixmap == nullptr || !hasValidParams(params))
     { return;}
 
     if (params.point.x() < 0 || params.point.y() < 0 ||
@@ -68,17 +47,10 @@ void TransformEngine::transformImage(const TransformParameters& params)
         params.ang_resolution, params.no_pixels, params.point, m_pixmap.get());
 
     m_transformed_image = std::make_shared<QImage>(std::move(transformed_image));
-    m_transformed_width = m_transformed_image->width();
-    m_transformed_height = m_transformed_image->height();
 
     // Emit signal to notify that transformation is ready
     emit transformReady(m_transformed_image);
     emit transformReadyForQml();
-}
-
-void TransformEngine::transformImage(int no_pixels, int ang_resolution, QPoint point)
-{
-    transformImage(TransformParameters{ang_resolution, no_pixels, point});
 }
 
 void TransformEngine::updatePoint(QPoint point)

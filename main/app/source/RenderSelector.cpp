@@ -1,8 +1,8 @@
 
 #include "RenderSelector.hpp"
-#include <QDebug>
+#include <QColor>
+#include <QPainter>
 #include <QPen>
-#include <iostream>
 
 RenderSelector::RenderSelector(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_radius(100)
