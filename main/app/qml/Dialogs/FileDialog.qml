@@ -20,6 +20,18 @@ QtDialogs.FileDialog
                              : (transform_engine ? transform_engine.transformedImage : null);
             file_manager.savePixMap(fileDialog.fileUrl, outImage);
         }
+        if(file_operation == "settings_import")
+        {
+            root.importSettingsFromUrl(fileDialog.fileUrl);
+        }
+        if(file_operation == "settings_export")
+        {
+            root.exportSettingsToUrl(fileDialog.fileUrl);
+        }
+        if(file_operation == "create_project")
+        {
+            root.createProjectFromUrl(fileDialog.fileUrl);
+        }
     }
 
     onRejected:

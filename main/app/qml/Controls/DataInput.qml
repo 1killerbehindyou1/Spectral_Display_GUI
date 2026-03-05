@@ -13,6 +13,12 @@ Control
 
     signal update()
 
+    function setCurrentValue(newValue)
+    {
+        control.value = newValue;
+        slider.value = newValue;
+    }
+
     implicitWidth: 270
 
     contentItem: ColumnLayout

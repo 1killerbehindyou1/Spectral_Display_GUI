@@ -22,14 +22,207 @@ ApplicationWindow
     property bool previewIsActive: mainMenu.showSelectedImage.checked
     property bool renderedPreviewIsActive: mainMenu.showRenderedPreview.checked
     property string file_operation: ""
+    property point lastSelectedPoint: Qt.point(0, 0)
+    property bool settingsHydrationInProgress: false
 
-    onPreviewIsActiveChanged: selector.img_visible = imageSelected && previewIsActive;
-    onRenderedPreviewIsActiveChanged: drawing.checkRenderedPreview(renderedPreviewIsActive);
+    function collectCurrentState()
+    {
+        return {
+            controls: {
+                transform: transform_parameters.exportSettings(),
+                render: render_parameters.exportSettings()
+            },
+            view: {
+                showSelectedImage: mainMenu.showSelectedImage.checked,
+                showRenderedPreview: mainMenu.showRenderedPreview.checked,
+                previewRotation: output_preview.previewRotation
+            },
+            selection: {
+                pointX: Math.max(0, Math.round(lastSelectedPoint.x)),
+                pointY: Math.max(0, Math.round(lastSelectedPoint.y))
+            }
+        };
+    }
+
+    function buildSettingsPayload()
+    {
+        const defaults = settings_manager.defaultSettings();
+        return {
+            $schema: settings_manager.schemaPath,
+            version: 1,
+            defaults: defaults.defaults,
+            current: collectCurrentState(),
+            files: {
+                lastLoadedFile: file_manager.lastLoadedPath ? file_manager.lastLoadedPath : "",
+                lastSavedFile: file_manager.lastSavedPath ? file_manager.lastSavedPath : ""
+            }
+        };
+    }
+
+    function persistSettings()
+    {
+        if (settingsHydrationInProgress)
+        {
+            return;
+        }
+
+        const saveOk = settings_manager.saveSettings(buildSettingsPayload());
+        if (!saveOk && settings_manager.lastError)
+        {
+            console.warn("Failed to save settings: " + settings_manager.lastError);
+        }
+    }
+
+    function scheduleSettingsSave()
+    {
+        if (settingsHydrationInProgress)
+        {
+            return;
+        }
+        settingsSaveTimer.restart();
+    }
+
+    function applyLoadedSettings(settings)
+    {
+        if (!settings || !settings.current)
+        {
+            return;
+        }
+
+        settingsHydrationInProgress = true;
+
+        const current = settings.current;
+
+        if (current.controls)
+        {
+            transform_parameters.applySettings(current.controls.transform);
+            render_parameters.applySettings(current.controls.render);
+        }
+
+        if (current.view)
+        {
+            mainMenu.showSelectedImage.checked = !!current.view.showSelectedImage;
+            mainMenu.showRenderedPreview.checked = !!current.view.showRenderedPreview;
+            output_preview.applySettings(current.view);
+        }
+
+        if (current.selection)
+        {
+            const pointX = Math.max(0, Math.round(current.selection.pointX || 0));
+            const pointY = Math.max(0, Math.round(current.selection.pointY || 0));
+            lastSelectedPoint = Qt.point(pointX, pointY);
+        }
+
+        if (settings.files && settings.files.lastLoadedFile)
+        {
+            const lastPath = settings.files.lastLoadedFile;
+            if (file_manager.loadPixMapFromLocalPath(lastPath))
+            {
+                selector.img_source = file_manager.toFileUrl(lastPath);
+                imageSelected = true;
+                output_preview.onSelectorClicked(lastSelectedPoint.x, lastSelectedPoint.y);
+            }
+        }
+
+        settingsHydrationInProgress = false;
+        scheduleSettingsSave();
+    }
+
+    function importSettingsFromUrl(fileUrl)
+    {
+        const imported = settings_manager.loadSettingsFromFile(fileUrl);
+        if (settings_manager.lastError)
+        {
+            messageDialog.showMessageBox("Settings import failed", settings_manager.lastError);
+            return;
+        }
+
+        applyLoadedSettings(imported);
+        persistSettings();
+    }
+
+    function exportSettingsToUrl(fileUrl)
+    {
+        const ok = settings_manager.saveSettingsToFile(fileUrl, buildSettingsPayload());
+        if (!ok)
+        {
+            const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown export error.";
+            messageDialog.showMessageBox("Settings export failed", reason);
+        }
+    }
+
+    function resetSettingsToDefaults()
+    {
+        const defaults = settings_manager.defaultSettings();
+
+        settingsHydrationInProgress = true;
+        imageSelected = false;
+        selector.img_source = "";
+        lastSelectedPoint = Qt.point(0, 0);
+        settingsHydrationInProgress = false;
+
+        applyLoadedSettings(defaults);
+
+        const resetPayload = {
+            $schema: settings_manager.schemaPath,
+            version: 1,
+            defaults: defaults.defaults,
+            current: defaults.current,
+            files: {
+                lastLoadedFile: "",
+                lastSavedFile: ""
+            }
+        };
+
+        const saveOk = settings_manager.saveSettings(resetPayload);
+        if (!saveOk)
+        {
+            const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown reset error.";
+            messageDialog.showMessageBox("Reset settings failed", reason);
+        }
+    }
+
+    function createProjectFromUrl(folderUrl)
+    {
+        const ok = settings_manager.createProject(folderUrl);
+        if (!ok)
+        {
+            const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown project creation error.";
+            messageDialog.showMessageBox("Create project failed", reason);
+            return;
+        }
+
+        imageSelected = false;
+        selector.img_source = "";
+        lastSelectedPoint = Qt.point(0, 0);
+
+        const loadedSettings = settings_manager.loadSettings();
+        applyLoadedSettings(loadedSettings);
+        persistSettings();
+    }
+
+    onPreviewIsActiveChanged:
+    {
+        selector.img_visible = imageSelected && previewIsActive;
+        scheduleSettingsSave();
+    }
+
+    onRenderedPreviewIsActiveChanged:
+    {
+        drawing.checkRenderedPreview(renderedPreviewIsActive);
+        scheduleSettingsSave();
+    }
+
+    onClosing:
+    {
+        persistSettings();
+    }
 
     /* Menu Bar */
     menuBar: MainMenu
     {
         id: mainMenu
+        onResetSettingsRequested: root.resetSettingsToDefaults()
     }
 
     RowLayout
@@ -104,6 +297,14 @@ ApplicationWindow
         id: messageDialog
     }
 
+    Timer
+    {
+        id: settingsSaveTimer
+        interval: 250
+        repeat: false
+        onTriggered: root.persistSettings()
+    }
+
     Component.onCompleted:
     {
         /*
@@ -113,6 +314,7 @@ ApplicationWindow
         transform_parameters.onAngResUpdate();
         transform_parameters.onZoomLoadUpdate();
         transform_parameters.onZoomOutUpdate();
+        drawing.requestRepaint();
 
         /*
         * Connect transform controls with selector and transform engine.
@@ -136,12 +338,38 @@ ApplicationWindow
         * Connect file metadata and selector clicks to preview updates.
         */
         file_manager.fileLoadedSize.connect(transform_parameters.onImgLoad);
-        selector.pointUpdate.connect(output_preview.onSelectorClicked);
+        file_manager.fileErrLoad.connect(messageDialog.showMessageBox);
+
+        selector.pointUpdate.connect(function(xPosition, yPosition)
+        {
+            root.lastSelectedPoint = Qt.point(xPosition, yPosition);
+            output_preview.onSelectorClicked(xPosition, yPosition);
+            root.scheduleSettingsSave();
+        });
 
         render_parameters.ledNumChanged.connect(drawing.onLedNumChanged);
         render_parameters.ledRotationChanged.connect(drawing.onAngularResolutionChanged);
         render_parameters.ledSizeChanged.connect(drawing.onLedSizeChanged);
         render_parameters.ledDistanceChanged.connect(drawing.onLedDistanceChanged);
+
+        transform_parameters.radiusChanged.connect(root.scheduleSettingsSave);
+        transform_parameters.angResChanged.connect(root.scheduleSettingsSave);
+        transform_parameters.zoomChangedLoad.connect(root.scheduleSettingsSave);
+        transform_parameters.zoomChangedOut.connect(root.scheduleSettingsSave);
+        render_parameters.ledNumChanged.connect(root.scheduleSettingsSave);
+        render_parameters.ledRotationChanged.connect(root.scheduleSettingsSave);
+        render_parameters.ledSizeChanged.connect(root.scheduleSettingsSave);
+        render_parameters.ledDistanceChanged.connect(root.scheduleSettingsSave);
+        output_preview.previewRotationChanged.connect(root.scheduleSettingsSave);
+        file_manager.lastLoadedPathChanged.connect(root.scheduleSettingsSave);
+        file_manager.lastSavedPathChanged.connect(root.scheduleSettingsSave);
+
+        const loadedSettings = settings_manager.loadSettings();
+        if (settings_manager.lastError)
+        {
+            console.warn("Settings load issue: " + settings_manager.lastError);
+        }
+        applyLoadedSettings(loadedSettings);
 
     }
 }

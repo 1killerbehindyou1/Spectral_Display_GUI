@@ -2,11 +2,22 @@
 #include "FileManager.hpp"
 #include <QDebug>
 #include <QFileInfo>
+#include <QUrl>
 #include <iostream>
 
 FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
 QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
+
+QString FileManager::lastLoadedPath() const
+{
+    return m_last_loaded_path;
+}
+
+QString FileManager::lastSavedPath() const
+{
+    return m_last_saved_path;
+}
 
 void FileManager::savePixMap(QUrl path, QImage* output_image)
 {
@@ -38,6 +49,9 @@ void FileManager::savePixMap(QUrl path, QImage* output_image)
                          "Could not write image to selected path.");
         return;
     }
+
+    m_last_saved_path = qstr;
+    emit lastSavedPathChanged();
 }
 
 bool FileManager::loadPixMap(QUrl path)
@@ -50,10 +64,31 @@ bool FileManager::loadPixMap(QUrl path)
         return false;
     }
 
-    QString qstr = path.toLocalFile(); // zamiana ścieżki na sciezke do pliku lokanego
+    return loadPixMapInternal(path.toLocalFile());
+}
+
+bool FileManager::loadPixMapFromLocalPath(QString localPath)
+{
+    return loadPixMapInternal(std::move(localPath));
+}
+
+QString FileManager::toFileUrl(QString localPath) const
+{
+    return QUrl::fromLocalFile(localPath).toString();
+}
+
+bool FileManager::loadPixMapInternal(QString localPath)
+{
+    if (localPath.isEmpty())
+    {
+        emit fileErrLoad("Loaded file failed",
+                         "File path is empty.");
+        return false;
+    }
+
     QImage img{};
 
-    if (!img.load(qstr))
+    if (!img.load(localPath))
     {
         emit fileErrLoad("Loaded file failed",
                          "File is corrupted or isn't graphic file");
@@ -68,11 +103,13 @@ bool FileManager::loadPixMap(QUrl path)
                          "File is corrupted or isn't graphic file");
         return false;
     }
-    m_path = qstr;
+    m_path = localPath;
+    m_last_loaded_path = localPath;
 
     emit setImageOnGui();
     emit fileReadyToTransform(m_pixmap);
     emit fileLoadedSize(m_pixmap.width(), m_pixmap.height());
+    emit lastLoadedPathChanged();
 
     return true;
 }

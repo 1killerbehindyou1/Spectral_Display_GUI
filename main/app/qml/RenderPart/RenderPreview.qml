@@ -25,12 +25,10 @@ Control
         render.requestRepaint();
     }
 
-    function repaintOnClick()
+    function requestRepaint()
     {
-        console.log("RenderPreview: repaintOnClick triggered");
         render.requestRepaint();
     }
-
 
     function onLedNumChanged(no_pixels)
     {
@@ -75,11 +73,6 @@ Control
              anchors.fill: parent
          }
 
-         MouseArea
-         {
-             anchors.fill: parent
-             onClicked: root.repaintOnClick()
-         }
      }
 
      Connections
@@ -88,7 +81,13 @@ Control
          function onTransformReadyForQml()
          {
              render.image = transform_engine.transformedImage;
+             console.log(render.image.size());
              render.requestRepaint();
          }
+     }
+
+     Component.onCompleted:
+     {
+         render.requestRepaint();
      }
 }

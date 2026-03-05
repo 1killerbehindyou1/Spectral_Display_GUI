@@ -40,7 +40,6 @@ public:
 
 private:
     bool m_rendering{true};
-    qreal m_render_radius{0}; // Radius of the circle on which the LEDs are placed
     QImage* m_image = nullptr; // Pointer to the image to be rendered
     QImage m_owned_image; // Internal storage when source is provided as QPixmap
     QPointF m_render_center{0, 0}; // Center point for rendering

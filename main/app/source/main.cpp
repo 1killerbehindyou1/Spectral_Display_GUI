@@ -1,14 +1,20 @@
 #include "FileManager.hpp"
 #include "RenderEngine.hpp"
 #include "RenderSelector.hpp"
+#include "SettingsManager.hpp"
 #include "TransformEngine.hpp"
 #include "LiveImageProvider.hpp"
 
 #include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 #include <QGuiApplication>
+#include <QDateTime>
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQmlContext>
+#include <QSettings>
 #include <QtQuick>
 #include <thread>
 
@@ -46,6 +52,32 @@ void myMessageOutput(QtMsgType type,
 int main(int argc, char* argv[])
 {
 
+    const QString current_path = QDir::currentPath();
+    const QString legacy_settings_root = QDir::cleanPath(current_path + QStringLiteral("/.config"));
+    const QString project_settings_root =
+        QDir::cleanPath(current_path + QStringLiteral("/SpectralDisplayPro/.config"));
+
+    const QString legacy_conf_path =
+        QDir::cleanPath(legacy_settings_root + QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
+    const QString project_conf_path =
+        QDir::cleanPath(project_settings_root + QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
+
+    QDir().mkpath(QFileInfo(project_conf_path).path());
+
+    if (QFile::exists(legacy_conf_path) && !QFile::exists(project_conf_path))
+    {
+        if (!QFile::rename(legacy_conf_path, project_conf_path))
+        {
+            if (QFile::copy(legacy_conf_path, project_conf_path))
+            {
+                QFile::remove(legacy_conf_path);
+            }
+        }
+    }
+
+    QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, project_settings_root);
+    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, project_settings_root);
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
 #endif
@@ -53,11 +85,16 @@ int main(int argc, char* argv[])
     qInstallMessageHandler(myMessageOutput);
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
+
+    QSettings startup_settings;
+    startup_settings.setValue(QStringLiteral("runtime/lastLaunchEpochMs"),
+                              QDateTime::currentMSecsSinceEpoch());
+    startup_settings.sync();
+
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
 
     qmlRegisterType<RenderEngine>("Main", 1, 0, "RenderEngine");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
@@ -67,6 +104,9 @@ int main(int argc, char* argv[])
 
     FileManager file_manager(&app);
     engine.rootContext()->setContextProperty("file_manager", &file_manager);
+
+    SettingsManager settings_manager(&app);
+    engine.rootContext()->setContextProperty("settings_manager", &settings_manager);
 
     TransformEngine transform_engine(&app);
     engine.rootContext()->setContextProperty("transform_engine", &transform_engine);

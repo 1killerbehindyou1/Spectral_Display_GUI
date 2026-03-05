@@ -5,3 +5,5 @@
 *.txt.user
 /.cache/
 /*build*
+.config/
+SpectralDisplayPro

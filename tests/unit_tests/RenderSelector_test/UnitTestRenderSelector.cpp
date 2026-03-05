@@ -28,7 +28,7 @@ TEST(RenderSelectorTest, defaultPaintColorsDefaultCenter)
     RenderSelector selector;
 
     const QImage image = paintSelector(selector);
-    const QColor centerColor = image.pixelColor(400, 400);
+    const QColor centerColor = image.pixelColor(200, 200);
 
     EXPECT_FALSE(isWhite(centerColor));
 }

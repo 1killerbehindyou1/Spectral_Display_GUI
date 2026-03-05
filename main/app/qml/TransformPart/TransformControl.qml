@@ -16,6 +16,47 @@ Control
     signal radiusChanged(int radius)
     signal angResChanged(int angRes)
 
+    function clampInt(value, minValue, maxValue)
+    {
+        return Math.max(minValue, Math.min(maxValue, parseInt(value)));
+    }
+
+    function exportSettings()
+    {
+        return {
+            radius: l_radius.value,
+            angularResolution: ang_res.value,
+            loadZoom: l_load_zoom.value,
+            outputZoom: l_out_zoom.value
+        };
+    }
+
+    function applySettings(settings)
+    {
+        if (!settings)
+        {
+            return;
+        }
+
+        l_radius.setCurrentValue(
+            clampInt(settings.radius !== undefined ? settings.radius : l_radius.init_value,
+                     l_radius.min, l_radius.max));
+        ang_res.setCurrentValue(
+            clampInt(settings.angularResolution !== undefined ? settings.angularResolution : ang_res.init_value,
+                     ang_res.min, ang_res.max));
+        l_load_zoom.setCurrentValue(
+            clampInt(settings.loadZoom !== undefined ? settings.loadZoom : l_load_zoom.init_value,
+                     l_load_zoom.min, l_load_zoom.max));
+        l_out_zoom.setCurrentValue(
+            clampInt(settings.outputZoom !== undefined ? settings.outputZoom : l_out_zoom.init_value,
+                     l_out_zoom.min, l_out_zoom.max));
+
+        onRadiusUpdate();
+        onAngResUpdate();
+        onZoomLoadUpdate();
+        onZoomOutUpdate();
+    }
+
     function onRadiusUpdate()
     {
         console.log("radius changed: " + l_radius.value);
@@ -71,7 +112,7 @@ Control
             {
                 spacing: 20
                 DataInput{ id: l_radius; label: "Radius in pixels:"; init_value: 100;  max: 240; min: 1}
-                DataInput{ id: ang_res; label: "Angular resolution [°]: "; init_value: 10;  max: 360; min: 1}
+                DataInput{ id: ang_res; label: "Angular resolution [°]: "; init_value: 1;  max: 360; min: 1}
                 FillingRect{Layout.fillHeight: true}
 
                 Text{text: "Size of loaded img [pixels]: "; font.bold: true; font.pixelSize: 18 }
@@ -81,7 +122,7 @@ Control
                 Separator{Layout.fillWidth: true}
 
                 Text{text: "Output preview zoom"; font.bold: true; font.pixelSize: 18 }
-                DataInput{ id: l_out_zoom; label: "Zoom [x]: "; init_value: 1; max: 10; min: 1 }
+                DataInput{ id: l_out_zoom; label: "Zoom [x]: "; init_value: 3; max: 10; min: 1 }
                 Separator{Layout.fillWidth: true}
 
                 Text{text: "Transformed image size: "; font.bold: true; font.pixelSize: 18 }

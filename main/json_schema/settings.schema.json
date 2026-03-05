@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qrc:/json_schema/settings.schema.json",
+  "title": "Spectral Display GUI Settings",
+  "type": "object",
+  "required": ["$schema", "version", "defaults", "current", "files"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "qrc:/json_schema/settings.schema.json"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "defaults": {
+      "$ref": "#/$defs/state"
+    },
+    "current": {
+      "$ref": "#/$defs/state"
+    },
+    "files": {
+      "type": "object",
+      "required": ["lastLoadedFile", "lastSavedFile"],
+      "properties": {
+        "lastLoadedFile": {
+          "type": "string"
+        },
+        "lastSavedFile": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "state": {
+      "type": "object",
+      "required": ["controls", "view", "selection"],
+      "properties": {
+        "controls": {
+          "type": "object",
+          "required": ["transform", "render"],
+          "properties": {
+            "transform": {
+              "type": "object",
+              "required": ["radius", "angularResolution", "loadZoom", "outputZoom"],
+              "properties": {
+                "radius": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 240
+                },
+                "angularResolution": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 360
+                },
+                "loadZoom": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "outputZoom": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              },
+              "additionalProperties": false
+            },
+            "render": {
+              "type": "object",
+              "required": ["ledCount", "ledAngle", "ledSize", "ledDistance"],
+              "properties": {
+                "ledCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 200
+                },
+                "ledAngle": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 360
+                },
+                "ledSize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 360
+                },
+                "ledDistance": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "view": {
+          "type": "object",
+          "required": ["showSelectedImage", "showRenderedPreview", "previewRotation"],
+          "properties": {
+            "showSelectedImage": {
+              "type": "boolean"
+            },
+            "showRenderedPreview": {
+              "type": "boolean"
+            },
+            "previewRotation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 359
+            }
+          },
+          "additionalProperties": false
+        },
+        "selection": {
+          "type": "object",
+          "required": ["pointX", "pointY"],
+          "properties": {
+            "pointX": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "pointY": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100000
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

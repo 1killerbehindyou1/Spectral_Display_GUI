@@ -7,12 +7,14 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2
 set(PROJECT_SOURCES
   include/RenderEngine.hpp
   include/FileManager.hpp
+  include/SettingsManager.hpp
   include/RenderSelector.hpp
   include/LiveImageProvider.hpp
   include/TransformEngine.hpp
   source/main.cpp
   source/RenderEngine.cpp
   source/FileManager.cpp
+  source/SettingsManager.cpp
   source/RenderSelector.cpp
   source/LiveImageProvider.cpp
   source/TransformEngine.cpp

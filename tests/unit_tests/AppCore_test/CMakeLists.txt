@@ -4,8 +4,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(UnitTestAppCore
   UnitTestAppCore.cpp
   ${CMAKE_SOURCE_DIR}/main/app/include/FileManager.hpp
+  ${CMAKE_SOURCE_DIR}/main/app/include/SettingsManager.hpp
   ${CMAKE_SOURCE_DIR}/main/app/include/TransformEngine.hpp
   ${CMAKE_SOURCE_DIR}/main/app/source/FileManager.cpp
+  ${CMAKE_SOURCE_DIR}/main/app/source/SettingsManager.cpp
   ${CMAKE_SOURCE_DIR}/main/app/source/TransformEngine.cpp
 )
 
@@ -18,11 +20,13 @@ target_link_libraries(UnitTestAppCore
   Qt${QT_VERSION_MAJOR}::Gui
   googletest_utils
   QPolygonTransform
+  SinglePointTransform
 )
 
 target_include_directories(UnitTestAppCore
   PRIVATE
   ${CMAKE_SOURCE_DIR}/main/app/include
+  ${CMAKE_SOURCE_DIR}/main/transform_algorythms/SinglePointTransform
 )
 
 add_test(NAME UnitTestAppCore

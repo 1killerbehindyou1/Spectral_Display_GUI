@@ -15,6 +15,47 @@ Control
     signal ledSizeChanged(int size)
     signal ledDistanceChanged(int distance)
 
+    function clampInt(value, minValue, maxValue)
+    {
+        return Math.max(minValue, Math.min(maxValue, parseInt(value)));
+    }
+
+    function exportSettings()
+    {
+        return {
+            ledCount: led_num.value,
+            ledAngle: led_rotation.value,
+            ledSize: led_size.value,
+            ledDistance: led_distance.value
+        };
+    }
+
+    function applySettings(settings)
+    {
+        if (!settings)
+        {
+            return;
+        }
+
+        led_num.setCurrentValue(
+            clampInt(settings.ledCount !== undefined ? settings.ledCount : led_num.init_value,
+                     led_num.min, led_num.max));
+        led_rotation.setCurrentValue(
+            clampInt(settings.ledAngle !== undefined ? settings.ledAngle : led_rotation.init_value,
+                     led_rotation.min, led_rotation.max));
+        led_size.setCurrentValue(
+            clampInt(settings.ledSize !== undefined ? settings.ledSize : led_size.init_value,
+                     led_size.min, led_size.max));
+        led_distance.setCurrentValue(
+            clampInt(settings.ledDistance !== undefined ? settings.ledDistance : led_distance.init_value,
+                     led_distance.min, led_distance.max));
+
+        root.ledNumChanged(led_num.value);
+        root.ledRotationChanged(led_rotation.value);
+        root.ledSizeChanged(led_size.value);
+        root.ledDistanceChanged(led_distance.value);
+    }
+
     implicitWidth: 500
     implicitHeight: 500
     padding: 10
@@ -44,7 +85,7 @@ Control
                 DataInput{ id: led_num; label: "number of LEDs"; init_value: 25;  max: 200; min: 1}
                 DataInput{ id: led_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
                 DataInput{ id: led_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
-                DataInput{ id: led_distance; label:"LED distance"; init_value: 2;  max: 10; min: 1}
+                DataInput{ id: led_distance; label:"LED distance"; init_value: 2;  max: 10; min: 0}
 
                 Text{text: "Spectral display resolution: "; font.bold: true; font.pixelSize: 18 }
                 TextField

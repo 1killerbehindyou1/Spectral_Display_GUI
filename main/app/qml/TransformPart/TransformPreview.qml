@@ -9,7 +9,25 @@ Control
 {
     id: root
     property real zoomFactor: 3.0
-    property int previewRotation: 180
+    property int previewRotation: 90
+
+    function exportSettings()
+    {
+        return {
+            previewRotation: previewRotation
+        };
+    }
+
+    function applySettings(settings)
+    {
+        if (!settings)
+        {
+            return;
+        }
+
+        const value = settings.previewRotation !== undefined ? settings.previewRotation : 90;
+        previewRotation = ((parseInt(value) % 360) + 360) % 360;
+    }
 
     function onSelectorClicked(xPosition, yPosition)
     {
