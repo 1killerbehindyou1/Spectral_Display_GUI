@@ -10,18 +10,10 @@ import "../Utils"
 Control
 {
     id: root
-
-    signal parameterChanged(int size, int rotation , int number_of_leds)
-
-    function onUpdate()
-    {
-        if (transform_engine)
-        {
-            transform_engine.updateNoOfPixels(led_num.value);
-            transform_engine.updateAngularResolution(led_rotation.value);
-        }
-        return root.parameterChanged(led_size.value, led_rotation.value, led_num.value )
-    }
+    signal ledNumChanged(int num)
+    signal ledRotationChanged(int rotation)
+    signal ledSizeChanged(int size)
+    signal ledDistanceChanged(int distance)
 
     implicitWidth: 500
     implicitHeight: 500
@@ -52,6 +44,7 @@ Control
                 DataInput{ id: led_num; label: "number of LEDs"; init_value: 25;  max: 200; min: 1}
                 DataInput{ id: led_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
                 DataInput{ id: led_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
+                DataInput{ id: led_distance; label:"LED distance"; init_value: 2;  max: 10; min: 1}
 
                 Text{text: "Spectral display resolution: "; font.bold: true; font.pixelSize: 18 }
                 TextField
@@ -69,18 +62,17 @@ Control
         }
     }
 
-
     Component.onCompleted:
     {
-        led_num.update.connect(onUpdate);
-        led_rotation.update.connect(onUpdate);
-        led_size.update.connect(onUpdate);
-        root.parameterChanged(led_size.init_value, led_rotation.init_value, led_num.init_value);
-        if (transform_engine)
-        {
-            transform_engine.updateNoOfPixels(led_num.init_value);
-            transform_engine.updateAngularResolution(led_rotation.init_value);
-        }
+        led_num.update.connect(function() { root.ledNumChanged(led_num.value); });
+        led_rotation.update.connect(function() { root.ledRotationChanged(led_rotation.value); });
+        led_size.update.connect(function() { root.ledSizeChanged(led_size.value); });
+        led_distance.update.connect(function() { root.ledDistanceChanged(led_distance.value); });
+
+        root.ledNumChanged(led_num.init_value);
+        root.ledRotationChanged(led_rotation.init_value);
+        root.ledSizeChanged(led_size.init_value);
+        root.ledDistanceChanged(led_distance.init_value);
     }
 }
 

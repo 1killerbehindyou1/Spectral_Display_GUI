@@ -3,8 +3,6 @@ import QtQuick.Dialogs 1.3 as QtDialogs
 
 QtDialogs.FileDialog
 {
-    signal pixmapLoaded()
-
     id: fileDialog
     selectMultiple: false
 
@@ -14,7 +12,6 @@ QtDialogs.FileDialog
         {
             selector.img_source = fileDialog.fileUrl;
             imageSelected = true;
-            fileDialog.pixmapLoaded();
         }
         if(file_operation == "save")
         {

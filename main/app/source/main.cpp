@@ -1,5 +1,5 @@
 #include "FileManager.hpp"
-#include "LedRuler.hpp"
+#include "RenderEngine.hpp"
 #include "RenderSelector.hpp"
 #include "TransformEngine.hpp"
 #include "LiveImageProvider.hpp"
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     app.setOrganizationName("1killerbehindyou1");
     app.setOrganizationDomain("Education");
 
-    qmlRegisterType<LedRuler>("Main", 1, 0, "LedRuler");
+    qmlRegisterType<RenderEngine>("Main", 1, 0, "RenderEngine");
     qmlRegisterType<RenderSelector>("Main", 1, 0, "Selector");
 
     qRegisterMetaType<QPixmap*>("QPixmap*");

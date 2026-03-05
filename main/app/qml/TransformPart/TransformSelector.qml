@@ -36,19 +36,12 @@ Control
         mappedX = Math.max(0, Math.min(srcW - 1, mappedX));
         mappedY = Math.max(0, Math.min(srcH - 1, mappedY));
 
-        console.log("mapToSourcePoint: mouseX: " + mouseX + ", mouseY: " + mouseY + ", mappedX: " + mappedX + ", mappedY: " + mappedY);
         return Qt.point(Math.round(mappedX), Math.round(mappedY));
     }
 
     function onRadiusChanged(no_pixels)
     {
-        console.log("onRadiusChanged: " + no_pixels);
         return selector_local.selectorResize(no_pixels);
-    }
-
-    function onAngResChanged(angRes)
-    {
-        return;
     }
 
     property alias img_visible: loaded_image.visible
@@ -81,7 +74,6 @@ Control
             onClicked:
             {
                 const mappedPoint = root.mapToSourcePoint(mouseX, mouseY);
-                console.log("line: 73 , file: TransformSelector.qml " + "mappedX: " + mappedPoint.x + ", mappedY: " + mappedPoint.y);
                 selector_local.setPoint(Qt.point(mouseX, mouseY));
                 root.pointUpdate(mappedPoint.x, mappedPoint.y);
             }
@@ -90,7 +82,6 @@ Control
 
     Component.onCompleted:
     {
-        console.log("Component completed, setting default selector radius: " + defaultSelectorRadius);
         selector_local.selectorResize(defaultSelectorRadius);
     }
 

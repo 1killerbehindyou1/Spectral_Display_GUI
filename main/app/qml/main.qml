@@ -106,11 +106,23 @@ ApplicationWindow
 
     Component.onCompleted:
     {
+        /*
+        * Emit initial values so controls and engine are synchronized on startup.
+        */
+        transform_parameters.onRadiusUpdate();
+        transform_parameters.onAngResUpdate();
+        transform_parameters.onZoomLoadUpdate();
+        transform_parameters.onZoomOutUpdate();
 
+        /*
+        * Connect transform controls with selector and transform engine.
+        */
         transform_parameters.radiusChanged.connect(selector.onRadiusChanged);
         transform_parameters.radiusChanged.connect(transform_engine.updateNoOfPixels);
         transform_parameters.angResChanged.connect(transform_engine.updateAngularResolution);
-        // render_parameters.parameterChanged.connect(drawing.updateLedParameters);
+         /*
+        * Connect zoom controls with input and output previews.
+        */
         transform_parameters.zoomChangedLoad.connect(function(zoomFactor)
         {
             selector.zoomFactor = zoomFactor;
@@ -119,15 +131,18 @@ ApplicationWindow
         {
             output_preview.zoomFactor = zoomFactor;
         });
-        // fileDialog.pixmapLoaded.connect(drawing.setPixmap);
+
+        /*
+        * Connect file metadata and selector clicks to preview updates.
+        */
         file_manager.fileLoadedSize.connect(transform_parameters.onImgLoad);
-        // selector.pointUpdate.connect(drawing.updatePoint);
         selector.pointUpdate.connect(output_preview.onSelectorClicked);
 
-        transform_parameters.onRadiusUpdate();
-        transform_parameters.onAngResUpdate();
-        transform_parameters.onZoomLoadUpdate();
-        transform_parameters.onZoomOutUpdate();
+        render_parameters.ledNumChanged.connect(drawing.onLedNumChanged);
+        render_parameters.ledRotationChanged.connect(drawing.onAngularResolutionChanged);
+        render_parameters.ledSizeChanged.connect(drawing.onLedSizeChanged);
+        render_parameters.ledDistanceChanged.connect(drawing.onLedDistanceChanged);
+
     }
 }
 

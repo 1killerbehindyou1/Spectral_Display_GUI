@@ -27,38 +27,68 @@ Control
 
     function repaintOnClick()
     {
+        console.log("RenderPreview: repaintOnClick triggered");
         render.requestRepaint();
     }
 
-    implicitWidth: 720
-    implicitHeight: 500
 
-    background: Rectangle{ color: "white" }
-
-    contentItem: Item
+    function onLedNumChanged(no_pixels)
     {
-        anchors.fill: parent
-
-        LedRuler
-        {
-            id: render
-            anchors.fill: parent
-        }
-
-        MouseArea
-        {
-            anchors.fill: parent
-            onClicked: root.repaintOnClick()
-        }
+        console.log("onLedNumChanged: " + no_pixels);
+        render.updateNoOfPixels(no_pixels);
+        render.requestRepaint();
     }
 
-    Connections
+    function onLedSizeChanged(size)
     {
-        target: transform_engine
-        function onTransformReadyForQml()
-        {
-            render.image = transform_engine.transformedImage;
-            render.requestRepaint();
-        }
+        console.log("onLedSizeChanged: " + size);
+        render.updateLedSize(size);
+        render.requestRepaint();
     }
+
+    function onLedDistanceChanged(distance)
+    {
+        console.log("onLedDistanceChanged: " + distance);
+        render.updateLedDistance(distance);
+        render.requestRepaint();
+    }
+
+     function onAngularResolutionChanged(angRes)
+     {
+        console.log("onAngularResolutionChanged: " + angRes);
+        render.updateAngularResolution(angRes);
+        render.requestRepaint();
+     }
+
+     implicitWidth: 720
+     implicitHeight: 500
+
+     background: Rectangle{ color: "white" }
+
+     contentItem: Item
+     {
+         anchors.fill: parent
+
+         RenderEngine
+         {
+             id: render
+             anchors.fill: parent
+         }
+
+         MouseArea
+         {
+             anchors.fill: parent
+             onClicked: root.repaintOnClick()
+         }
+     }
+
+     Connections
+     {
+         target: transform_engine
+         function onTransformReadyForQml()
+         {
+             render.image = transform_engine.transformedImage;
+             render.requestRepaint();
+         }
+     }
 }

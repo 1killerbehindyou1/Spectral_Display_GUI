@@ -5,13 +5,13 @@ project(BasicGui VERSION 0.1 LANGUAGES CXX)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick QuickControls2 Gui)
 
 set(PROJECT_SOURCES
-  include/LedRuler.hpp
+  include/RenderEngine.hpp
   include/FileManager.hpp
   include/RenderSelector.hpp
   include/LiveImageProvider.hpp
   include/TransformEngine.hpp
   source/main.cpp
-  source/LedRuler.cpp
+  source/RenderEngine.cpp
   source/FileManager.cpp
   source/RenderSelector.cpp
   source/LiveImageProvider.cpp

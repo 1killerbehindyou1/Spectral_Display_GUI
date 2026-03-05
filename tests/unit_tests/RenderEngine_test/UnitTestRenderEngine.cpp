@@ -1,4 +1,4 @@
-#include <LedRuler.hpp>
+#include <RenderEngine.hpp>
 #include <gtest/gtest.h>
 
 #include <QImage>
@@ -7,7 +7,7 @@
 namespace
 {
 
-QImage paintLedRuler(LedRuler& ruler)
+QImage paintRenderEngine(RenderEngine& ruler)
 {
     QImage image(900, 900, QImage::Format_ARGB32);
     image.fill(Qt::white);
@@ -23,9 +23,9 @@ bool isWhite(const QColor& color)
     return color.red() == 255 && color.green() == 255 && color.blue() == 255;
 }
 
-TEST(LedRulerTest, setAndGetPixmapReturnsSamePointer)
+TEST(RenderEngineTest, setAndGetPixmapReturnsSamePointer)
 {
-    LedRuler ruler;
+    RenderEngine ruler;
 
     QPixmap pixmap(16, 16);
     pixmap.fill(Qt::blue);
@@ -35,19 +35,19 @@ TEST(LedRulerTest, setAndGetPixmapReturnsSamePointer)
     EXPECT_EQ(ruler.pixmap(), &pixmap);
 }
 
-TEST(LedRulerTest, paintWithNoTransformedImageKeepsCanvasUntouched)
+TEST(RenderEngineTest, paintWithNoTransformedImageKeepsCanvasUntouched)
 {
-    LedRuler ruler;
+    RenderEngine ruler;
 
-    const QImage image = paintLedRuler(ruler);
+    const QImage image = paintRenderEngine(ruler);
 
     EXPECT_TRUE(isWhite(image.pixelColor(100, 100)));
     EXPECT_TRUE(isWhite(image.pixelColor(500, 500)));
 }
 
-TEST(LedRulerTest, onParameterChangedWithValidPixmapProducesRenderedPaint)
+TEST(RenderEngineTest, onParameterChangedWithValidPixmapProducesRenderedPaint)
 {
-    LedRuler ruler;
+    RenderEngine ruler;
 
     QImage sourceImage(64, 64, QImage::Format_RGB32);
     sourceImage.fill(Qt::red);
@@ -56,14 +56,14 @@ TEST(LedRulerTest, onParameterChangedWithValidPixmapProducesRenderedPaint)
 
     ruler.onParameterChanged(10, 45, 2);
 
-    const QImage image = paintLedRuler(ruler);
+    const QImage image = paintRenderEngine(ruler);
 
     EXPECT_FALSE(isWhite(image.pixelColor(250, 250)));
 }
 
-TEST(LedRulerTest, setPointTriggersTransformationWhenPixmapIsPresent)
+TEST(RenderEngineTest, setPointTriggersTransformationWhenPixmapIsPresent)
 {
-    LedRuler ruler;
+    RenderEngine ruler;
 
     QImage sourceImage(64, 64, QImage::Format_RGB32);
     sourceImage.fill(Qt::green);
@@ -73,7 +73,7 @@ TEST(LedRulerTest, setPointTriggersTransformationWhenPixmapIsPresent)
     ruler.onParameterChanged(8, 30, 2);
     ruler.setPoint(QPoint{30, 30});
 
-    const QImage image = paintLedRuler(ruler);
+    const QImage image = paintRenderEngine(ruler);
 
     EXPECT_FALSE(isWhite(image.pixelColor(250, 250)));
 }

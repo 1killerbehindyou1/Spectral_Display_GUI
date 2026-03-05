@@ -17,22 +17,26 @@ struct RenderParameters
     int led_distance;
 };
 
-class LedRuler : public QQuickPaintedItem
+class RenderEngine : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_ELEMENT
     Q_PROPERTY(QImage* image READ image WRITE setImage)
 
 public:
-    LedRuler(QQuickItem* parent = 0);
+    RenderEngine(QQuickItem* parent = 0);
     void paint(QPainter* painter) override;
 
     QImage* image() const;
     void setImage(QImage* image);
-    Q_INVOKABLE void setPixmap(QPixmap* pixmap);
 
+    Q_INVOKABLE void setPixmap(QPixmap* pixmap);
     Q_INVOKABLE void startRendering(bool flag);
     Q_INVOKABLE void requestRepaint();
+    Q_INVOKABLE void updateNoOfPixels(int pixels);
+    Q_INVOKABLE void updateLedSize(int size);
+    Q_INVOKABLE void updateLedDistance(int distance);
+    Q_INVOKABLE void updateAngularResolution(int ang_res);
 
 private:
     bool m_rendering{true};
