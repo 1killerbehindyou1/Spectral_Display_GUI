@@ -1,19 +1,19 @@
 #pragma once
 
-#include <QDebug>
 #include <QObject>
 #include <QPixmap>
 #include <QString>
 #include <QUrl>
-#include <iostream>
 
 class FileManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString path MEMBER m_path)
     Q_PROPERTY(QPixmap* pixmap_pointer READ getPixmapPointer)
-    Q_PROPERTY(QString lastLoadedPath READ lastLoadedPath NOTIFY lastLoadedPathChanged)
-    Q_PROPERTY(QString lastSavedPath READ lastSavedPath NOTIFY lastSavedPathChanged)
+    Q_PROPERTY(
+        QString lastLoadedPath READ lastLoadedPath NOTIFY lastLoadedPathChanged)
+    Q_PROPERTY(
+        QString lastSavedPath READ lastSavedPath NOTIFY lastSavedPathChanged)
 
 public:
     FileManager(QObject* parent = 0);
@@ -39,7 +39,6 @@ private:
     bool loadPixMapInternal(QString localPath);
 
     QPixmap m_pixmap;
-    QPixmap m_transformed;
     QString m_path;
     QString m_last_loaded_path;
     QString m_last_saved_path;

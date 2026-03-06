@@ -14,7 +14,7 @@ public:
     virtual QColor interpolateColor(const QPolygonF& transformed_poly,
                                     const QPixmap* pix_map) = 0;
 
-    QImage transformImage(int ang_resolution, int no_pixels, QPoint transform_center,
-                          const QPixmap* pix_map);
+    QImage transformImage(int ang_resolution, int no_pixels,
+                          QPoint transform_center, const QPixmap* pix_map);
 };
 }; // namespace common

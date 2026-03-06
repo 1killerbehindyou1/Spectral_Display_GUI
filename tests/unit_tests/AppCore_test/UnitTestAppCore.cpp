@@ -28,7 +28,8 @@ TEST(FileManagerTest, loadPixMapRejectsNonLocalUrl)
                          errorMessage = std::move(message);
                      });
 
-    const bool loaded = fileManager.loadPixMap(QUrl("https://example.com/image.png"));
+    const bool loaded =
+        fileManager.loadPixMap(QUrl("https://example.com/image.png"));
 
     EXPECT_FALSE(loaded);
     EXPECT_EQ(errorCount, 1);
@@ -148,8 +149,7 @@ TEST(IntegrationFlowTest, loadTransformAndSaveProducesOutputFile)
     TransformEngine transformEngine;
 
     QObject::connect(&fileManager, &FileManager::fileReadyToTransform,
-                     [&](QPixmap pixmap)
-                     {
+                     [&](QPixmap pixmap) {
                          transformEngine.setPixmap(
                              std::make_shared<QPixmap>(std::move(pixmap)));
                      });
@@ -157,9 +157,7 @@ TEST(IntegrationFlowTest, loadTransformAndSaveProducesOutputFile)
     std::shared_ptr<QImage> transformedImage;
     QObject::connect(&transformEngine, &TransformEngine::transformReady,
                      [&](std::shared_ptr<QImage> image)
-                     {
-                         transformedImage = std::move(image);
-                     });
+                     { transformedImage = std::move(image); });
 
     ASSERT_TRUE(fileManager.loadPixMap(QUrl::fromLocalFile(inputPath)));
 
@@ -170,7 +168,8 @@ TEST(IntegrationFlowTest, loadTransformAndSaveProducesOutputFile)
     ASSERT_NE(transformedImage, nullptr);
     ASSERT_FALSE(transformedImage->isNull());
 
-    fileManager.savePixMap(QUrl::fromLocalFile(outputBasePath), transformedImage.get());
+    fileManager.savePixMap(QUrl::fromLocalFile(outputBasePath),
+                           transformedImage.get());
 
     const QString outputPath = outputBasePath + ".png";
     EXPECT_TRUE(QFileInfo::exists(outputPath));
@@ -202,13 +201,18 @@ TEST(SettingsManagerTest, saveAndLoadSettingsFromFileRoundTrip)
     ASSERT_TRUE(settingsManager.saveSettingsToFile(settingsUrl, settings));
     ASSERT_TRUE(settingsManager.lastError().isEmpty());
 
-    const QVariantMap loaded = settingsManager.loadSettingsFromFile(settingsUrl);
+    const QVariantMap loaded =
+        settingsManager.loadSettingsFromFile(settingsUrl);
     ASSERT_TRUE(settingsManager.lastError().isEmpty());
 
-    const int loadedLedCount = loaded.value("current").toMap()
-                                   .value("controls").toMap()
-                                   .value("render").toMap()
-                                   .value("ledCount").toInt();
+    const int loadedLedCount = loaded.value("current")
+                                   .toMap()
+                                   .value("controls")
+                                   .toMap()
+                                   .value("render")
+                                   .toMap()
+                                   .value("ledCount")
+                                   .toInt();
     EXPECT_EQ(loadedLedCount, 42);
 }
 
@@ -249,7 +253,8 @@ TEST(SettingsManagerTest, loadSettingsFromFileRejectsInvalidSchemaValue)
     file.close();
 
     SettingsManager settingsManager;
-    const QVariantMap loaded = settingsManager.loadSettingsFromFile(QUrl::fromLocalFile(settingsPath));
+    const QVariantMap loaded =
+        settingsManager.loadSettingsFromFile(QUrl::fromLocalFile(settingsPath));
 
     EXPECT_TRUE(loaded.isEmpty());
     EXPECT_FALSE(settingsManager.lastError().isEmpty());

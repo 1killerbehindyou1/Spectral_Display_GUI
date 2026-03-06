@@ -19,5 +19,5 @@ public:
 
 private:
     QPoint m_point; // środek odrysowywania
-    int m_radius; // promień zaznaczenia
+    int m_radius;   // promień zaznaczenia
 };

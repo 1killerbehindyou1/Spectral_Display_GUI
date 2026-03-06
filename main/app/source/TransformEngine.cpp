@@ -1,6 +1,8 @@
 #include "TransformEngine.hpp"
 
-TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{} {}
+TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{}
+{
+}
 
 QImage* TransformEngine::transformedImage() const
 {
@@ -24,29 +26,32 @@ void TransformEngine::setPixmap(std::shared_ptr<QPixmap> pixmap)
 
 bool TransformEngine::hasValidParams(const TransformParameters& params) const
 {
-    return params.no_pixels > 0 && params.ang_resolution > 0 && !params.point.isNull();
+    return params.no_pixels > 0 && params.ang_resolution > 0 &&
+           !params.point.isNull();
 }
 
-void TransformEngine::transformImage()
-{
-    transformImage(m_params);
-}
+void TransformEngine::transformImage() { transformImage(m_params); }
 
 void TransformEngine::transformImage(const TransformParameters& params)
 {
     if (m_pixmap == nullptr || !hasValidParams(params))
-    { return;}
+    {
+        return;
+    }
 
     if (params.point.x() < 0 || params.point.y() < 0 ||
         params.point.x() >= m_pixmap->width() ||
         params.point.y() >= m_pixmap->height())
-    { return;}
+    {
+        return;
+    }
 
     // Perform the transformation using the interpolator
     auto transformed_image = m_interpolator.transformImage(
         params.ang_resolution, params.no_pixels, params.point, m_pixmap.get());
 
-    m_transformed_image = std::make_shared<QImage>(std::move(transformed_image));
+    m_transformed_image =
+        std::make_shared<QImage>(std::move(transformed_image));
 
     // Emit signal to notify that transformation is ready
     emit transformReady(m_transformed_image);

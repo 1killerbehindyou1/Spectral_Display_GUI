@@ -1,9 +1,9 @@
 #pragma once
+#include <InterpolatorSingle.hpp>
+#include <QImage>
 #include <QObject>
 #include <QPixmap>
-#include <QImage>
 #include <memory>
-#include <InterpolatorSingle.hpp>
 
 struct TransformParameters
 {
@@ -15,9 +15,12 @@ struct TransformParameters
 class TransformEngine : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QImage* transformedImage READ transformedImage NOTIFY transformReadyForQml)
-    Q_PROPERTY(int transformedWidth READ transformedWidth NOTIFY transformReadyForQml)
-    Q_PROPERTY(int transformedHeight READ transformedHeight NOTIFY transformReadyForQml)
+    Q_PROPERTY(QImage* transformedImage READ transformedImage NOTIFY
+                   transformReadyForQml)
+    Q_PROPERTY(
+        int transformedWidth READ transformedWidth NOTIFY transformReadyForQml)
+    Q_PROPERTY(int transformedHeight READ transformedHeight NOTIFY
+                   transformReadyForQml)
 
 public:
     TransformEngine(QObject* parent = nullptr);

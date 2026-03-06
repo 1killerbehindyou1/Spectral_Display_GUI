@@ -1,23 +1,15 @@
 
 #include "FileManager.hpp"
-#include <QDebug>
 #include <QFileInfo>
 #include <QUrl>
-#include <iostream>
 
 FileManager::FileManager(QObject* parent) : QObject(parent) {}
 
 QPixmap* FileManager::getPixmapPointer() { return &m_pixmap; }
 
-QString FileManager::lastLoadedPath() const
-{
-    return m_last_loaded_path;
-}
+QString FileManager::lastLoadedPath() const { return m_last_loaded_path; }
 
-QString FileManager::lastSavedPath() const
-{
-    return m_last_saved_path;
-}
+QString FileManager::lastSavedPath() const { return m_last_saved_path; }
 
 void FileManager::savePixMap(QUrl path, QImage* output_image)
 {
@@ -81,8 +73,7 @@ bool FileManager::loadPixMapInternal(QString localPath)
 {
     if (localPath.isEmpty())
     {
-        emit fileErrLoad("Loaded file failed",
-                         "File path is empty.");
+        emit fileErrLoad("Loaded file failed", "File path is empty.");
         return false;
     }
 

@@ -8,8 +8,8 @@ namespace test_utils
 template <typename Parameters>
 SaveLoadFixture<Parameters>::SaveLoadFixture(const char* input,
                                              const char* output)
-    : pixmap_path{QFileInfo{QString{input}}}, output_path{
-                                                  QFileInfo{QString{output}}}
+    : pixmap_path{QFileInfo{QString{input}}},
+      output_path{QFileInfo{QString{output}}}
 {
     pix_map = new QPixmap();
     if (!pix_map->load(pixmap_path.absoluteFilePath()))

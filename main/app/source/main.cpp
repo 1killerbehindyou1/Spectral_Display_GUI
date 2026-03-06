@@ -1,23 +1,20 @@
 #include "FileManager.hpp"
+#include "LiveImageProvider.hpp"
+#include "ProcessMonitor.hpp"
 #include "RenderEngine.hpp"
 #include "RenderSelector.hpp"
 #include "SettingsManager.hpp"
 #include "TransformEngine.hpp"
-#include "LiveImageProvider.hpp"
-#include "ProcessMonitor.hpp"
 
-#include <QDebug>
+#include <QDateTime>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QGuiApplication>
-#include <QDateTime>
 #include <QQmlApplicationEngine>
-#include <QQmlComponent>
 #include <QQmlContext>
 #include <QSettings>
 #include <QtQuick>
-#include <thread>
 
 void myMessageOutput(QtMsgType type,
                      [[maybe_unused]] const QMessageLogContext& context,
@@ -54,14 +51,17 @@ int main(int argc, char* argv[])
 {
 
     const QString current_path = QDir::currentPath();
-    const QString legacy_settings_root = QDir::cleanPath(current_path + QStringLiteral("/.config"));
-    const QString project_settings_root =
-        QDir::cleanPath(current_path + QStringLiteral("/SpectralDisplayPro/.config"));
+    const QString legacy_settings_root =
+        QDir::cleanPath(current_path + QStringLiteral("/.config"));
+    const QString project_settings_root = QDir::cleanPath(
+        current_path + QStringLiteral("/SpectralDisplayPro/.config"));
 
     const QString legacy_conf_path =
-        QDir::cleanPath(legacy_settings_root + QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
+        QDir::cleanPath(legacy_settings_root +
+                        QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
     const QString project_conf_path =
-        QDir::cleanPath(project_settings_root + QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
+        QDir::cleanPath(project_settings_root +
+                        QStringLiteral("/1killerbehindyou1/BasicGUI.conf"));
 
     QDir().mkpath(QFileInfo(project_conf_path).path());
 
@@ -76,8 +76,10 @@ int main(int argc, char* argv[])
         }
     }
 
-    QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, project_settings_root);
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, project_settings_root);
+    QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,
+                       project_settings_root);
+    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope,
+                       project_settings_root);
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
@@ -107,29 +109,32 @@ int main(int argc, char* argv[])
     engine.rootContext()->setContextProperty("file_manager", &file_manager);
 
     SettingsManager settings_manager(&app);
-    engine.rootContext()->setContextProperty("settings_manager", &settings_manager);
+    engine.rootContext()->setContextProperty("settings_manager",
+                                             &settings_manager);
 
     TransformEngine transform_engine(&app);
-    engine.rootContext()->setContextProperty("transform_engine", &transform_engine);
+    engine.rootContext()->setContextProperty("transform_engine",
+                                             &transform_engine);
 
     ProcessMonitor process_monitor(&app);
-    engine.rootContext()->setContextProperty("process_monitor", &process_monitor);
+    engine.rootContext()->setContextProperty("process_monitor",
+                                             &process_monitor);
 
     auto provider = new LiveImageProvider();
     engine.addImageProvider("live", provider);
 
-    QObject::connect(&file_manager, &FileManager::fileReadyToTransform, &transform_engine,
-                     [&transform_engine](QPixmap pixmap)
-                     {
-                         auto shared_pixmap = std::make_shared<QPixmap>(std::move(pixmap));
-                         transform_engine.setPixmap(shared_pixmap);
-                         transform_engine.transformImage();});
+    QObject::connect(
+        &file_manager, &FileManager::fileReadyToTransform, &transform_engine,
+        [&transform_engine](QPixmap pixmap)
+        {
+            auto shared_pixmap = std::make_shared<QPixmap>(std::move(pixmap));
+            transform_engine.setPixmap(shared_pixmap);
+            transform_engine.transformImage();
+        });
 
     QObject::connect(&transform_engine, &TransformEngine::transformReady,
                      [provider](std::shared_ptr<QImage> image)
-                     {
-                        provider->setImage(*image);
-                     });
+                     { provider->setImage(*image); });
 
     QObject::connect(
         &engine, &QQmlApplicationEngine::objectCreated, &app,

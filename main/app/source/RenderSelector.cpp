@@ -24,7 +24,6 @@ void RenderSelector::selectorResize(int no_pixels)
     update();
 }
 
-
 void RenderSelector::setPoint(QPoint point)
 {
     m_point = point;

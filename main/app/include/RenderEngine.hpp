@@ -1,13 +1,10 @@
 #pragma once
 
-#include <QObject>
 #include <QImage>
-#include <QPixmap>
-#include <QPoint>
-#include <QPointF>
+#include <QObject>
+#include <QSize>
 
-class QPainter;
-class QThread;
+class QPixmap;
 class QTimer;
 class QElapsedTimer;
 
@@ -24,9 +21,9 @@ class RenderEngine : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QImage* image READ image WRITE setImage)
-    Q_PROPERTY(int ledSize READ ledSize NOTIFY renderParamsChanged)
-    Q_PROPERTY(int ledDistance READ ledDistance NOTIFY renderParamsChanged)
-    Q_PROPERTY(int ledCount READ ledCount NOTIFY renderParamsChanged)
+    Q_PROPERTY(int ledSize READ ledSize NOTIFY ledSizeChanged)
+    Q_PROPERTY(int ledDistance READ ledDistance NOTIFY ledDistanceChanged)
+    Q_PROPERTY(int ledCount READ ledCount NOTIFY ledCountChanged)
 
 public:
     RenderEngine(QObject* parent = nullptr);
@@ -48,15 +45,15 @@ public:
     Q_INVOKABLE void updateRotationSpeed(int speed);
 
 signals:
-    void renderParamsChanged();
+    void ledSizeChanged();
+    void ledDistanceChanged();
+    void ledCountChanged();
 
 private:
     bool m_rendering{true};
     QImage* m_image = nullptr; // Pointer to the image to be rendered
     QImage m_owned_image; // Internal storage when source is provided as QPixmap
-    QPointF m_render_center{0, 0}; // Center point for rendering
     RenderParameters m_render_params; // Parameters for rendering
-    QThread* m_repaint_thread{nullptr};
     QTimer* m_repaint_timer{nullptr};
     QElapsedTimer* m_rotation_clock{nullptr};
     qreal m_rotation_degrees{0.0};

@@ -27,11 +27,8 @@ QPointF Transform::operator()(const QPointF& point) const
     /**
      * Rotate local vector and translate it back to global coordinates.
      */
-    return
-    {
-        m_rotCenter.x() + dx * cos_a - dy * sin_a,
-        m_rotCenter.y() + dx * sin_a + dy * cos_a
-    };
+    return {m_rotCenter.x() + dx * cos_a - dy * sin_a,
+            m_rotCenter.y() + dx * sin_a + dy * cos_a};
 }
 
 QPolygonF Transform::operator()(const QRectF& rect) const
@@ -56,18 +53,14 @@ QPolygonF Transform::operator()(const QRectF& rect) const
     {
         const double dx = point.x() - m_rotCenter.x();
         const double dy = point.y() - m_rotCenter.y();
-        return
-        {
-            m_rotCenter.x() + dx * cos_a - dy * sin_a,
-            m_rotCenter.y() + dx * sin_a + dy * cos_a
-        };
+        return {m_rotCenter.x() + dx * cos_a - dy * sin_a,
+                m_rotCenter.y() + dx * sin_a + dy * cos_a};
     };
 
     /**
      * Transform all rectangle corners in clockwise order.
      */
-    result << rotate_point(rect.topLeft())
-           << rotate_point(rect.topRight())
+    result << rotate_point(rect.topLeft()) << rotate_point(rect.topRight())
            << rotate_point(rect.bottomRight())
            << rotate_point(rect.bottomLeft());
 

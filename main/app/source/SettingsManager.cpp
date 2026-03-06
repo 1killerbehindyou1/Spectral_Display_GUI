@@ -12,13 +12,16 @@ namespace
 constexpr int SETTINGS_VERSION = 1;
 const QString kProjectFolderName = QStringLiteral("SpectralDisplayPro");
 const QString kSourceImagesFolderName = QStringLiteral("image_to_transform");
-const QString kTransformedImagesFolderName = QStringLiteral("transformed_image");
-}
+const QString kTransformedImagesFolderName =
+    QStringLiteral("transformed_image");
+} // namespace
 
 SettingsManager::SettingsManager(QObject* parent)
     : QObject(parent),
-      m_project_root_path(QDir::cleanPath(QDir::currentPath() + QStringLiteral("/SpectralDisplayPro")))
-{}
+      m_project_root_path(QDir::cleanPath(
+          QDir::currentPath() + QStringLiteral("/SpectralDisplayPro")))
+{
+}
 
 QVariantMap SettingsManager::loadSettings()
 {
@@ -40,7 +43,8 @@ QVariantMap SettingsManager::loadSettingsFromFile(const QUrl& path)
     return loadSettingsInternal(local_path, false);
 }
 
-bool SettingsManager::saveSettingsToFile(const QUrl& path, const QVariantMap& settings)
+bool SettingsManager::saveSettingsToFile(const QUrl& path,
+                                         const QVariantMap& settings)
 {
     const QString local_path = localPathFromUrl(path);
     if (local_path.isEmpty())
@@ -70,7 +74,8 @@ bool SettingsManager::createProject(const QUrl& parentFolderUrl)
         return false;
     }
 
-    const QString project_path = QDir::cleanPath(parent_dir.filePath(kProjectFolderName));
+    const QString project_path =
+        QDir::cleanPath(parent_dir.filePath(kProjectFolderName));
     QDir project_dir(project_path);
     if (!project_dir.exists() && !parent_dir.mkpath(kProjectFolderName))
     {
@@ -78,9 +83,9 @@ bool SettingsManager::createProject(const QUrl& parentFolderUrl)
         return false;
     }
 
-    if (!project_dir.mkpath(kSourceImagesFolderName)
-        || !project_dir.mkpath(kTransformedImagesFolderName)
-        || !project_dir.mkpath(QStringLiteral(".config")))
+    if (!project_dir.mkpath(kSourceImagesFolderName) ||
+        !project_dir.mkpath(kTransformedImagesFolderName) ||
+        !project_dir.mkpath(QStringLiteral(".config")))
     {
         setLastError(QStringLiteral("Failed to create project subfolders."));
         return false;
@@ -98,10 +103,7 @@ bool SettingsManager::createProject(const QUrl& parentFolderUrl)
     return true;
 }
 
-QString SettingsManager::projectRootPath() const
-{
-    return m_project_root_path;
-}
+QString SettingsManager::projectRootPath() const { return m_project_root_path; }
 
 QString SettingsManager::projectRootUrl() const
 {
@@ -125,7 +127,8 @@ QString SettingsManager::settingsFolderUrl() const
 
 QString SettingsManager::sourceImagesFolderPath() const
 {
-    return QDir::cleanPath(projectRootPath() + QStringLiteral("/") + kSourceImagesFolderName);
+    return QDir::cleanPath(projectRootPath() + QStringLiteral("/") +
+                           kSourceImagesFolderName);
 }
 
 QString SettingsManager::sourceImagesFolderUrl() const
@@ -135,7 +138,8 @@ QString SettingsManager::sourceImagesFolderUrl() const
 
 QString SettingsManager::transformedImagesFolderPath() const
 {
-    return QDir::cleanPath(projectRootPath() + QStringLiteral("/") + kTransformedImagesFolderName);
+    return QDir::cleanPath(projectRootPath() + QStringLiteral("/") +
+                           kTransformedImagesFolderName);
 }
 
 QString SettingsManager::transformedImagesFolderUrl() const
@@ -148,12 +152,10 @@ QString SettingsManager::schemaPath() const
     return QStringLiteral("qrc:/json_schema/settings.schema.json");
 }
 
-QString SettingsManager::lastError() const
-{
-    return m_last_error;
-}
+QString SettingsManager::lastError() const { return m_last_error; }
 
-QVariantMap SettingsManager::loadSettingsInternal(const QString& filePath, bool fallbackToDefault)
+QVariantMap SettingsManager::loadSettingsInternal(const QString& filePath,
+                                                  bool fallbackToDefault)
 {
     if (fallbackToDefault && filePath == settingsPath())
     {
@@ -177,7 +179,8 @@ QVariantMap SettingsManager::loadSettingsInternal(const QString& filePath, bool 
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        setLastError(QStringLiteral("Failed to open settings file for reading."));
+        setLastError(
+            QStringLiteral("Failed to open settings file for reading."));
         return fallbackToDefault ? defaultSettings() : QVariantMap{};
     }
 
@@ -202,7 +205,8 @@ QVariantMap SettingsManager::loadSettingsInternal(const QString& filePath, bool 
     return json.object().toVariantMap();
 }
 
-bool SettingsManager::saveSettingsInternal(const QString& filePath, const QVariantMap& settings)
+bool SettingsManager::saveSettingsInternal(const QString& filePath,
+                                           const QVariantMap& settings)
 {
     const QJsonObject root = QJsonObject::fromVariantMap(settings);
 
@@ -224,7 +228,8 @@ bool SettingsManager::saveSettingsInternal(const QString& filePath, const QVaria
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        setLastError(QStringLiteral("Failed to open settings file for writing."));
+        setLastError(
+            QStringLiteral("Failed to open settings file for writing."));
         return false;
     }
 
@@ -327,22 +332,27 @@ QJsonObject SettingsManager::defaultSettingsJson() const
     return root;
 }
 
-bool SettingsManager::validateSettings(const QJsonObject& root, QString* error) const
+bool SettingsManager::validateSettings(const QJsonObject& root,
+                                       QString* error) const
 {
-    if (!root.contains(QStringLiteral("$schema")) || !root.value(QStringLiteral("$schema")).isString())
+    if (!root.contains(QStringLiteral("$schema")) ||
+        !root.value(QStringLiteral("$schema")).isString())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: '$schema' must be a string.");
+            *error = QStringLiteral(
+                "Settings validation failed: '$schema' must be a string.");
         }
         return false;
     }
 
-    if (!root.contains(QStringLiteral("version")) || !root.value(QStringLiteral("version")).isDouble())
+    if (!root.contains(QStringLiteral("version")) ||
+        !root.value(QStringLiteral("version")).isDouble())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'version' must be an integer.");
+            *error = QStringLiteral(
+                "Settings validation failed: 'version' must be an integer.");
         }
         return false;
     }
@@ -352,78 +362,94 @@ bool SettingsManager::validateSettings(const QJsonObject& root, QString* error) 
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: unsupported 'version'.");
+            *error = QStringLiteral(
+                "Settings validation failed: unsupported 'version'.");
         }
         return false;
     }
 
-    if (!root.contains(QStringLiteral("defaults")) || !root.value(QStringLiteral("defaults")).isObject())
+    if (!root.contains(QStringLiteral("defaults")) ||
+        !root.value(QStringLiteral("defaults")).isObject())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'defaults' must be an object.");
+            *error = QStringLiteral(
+                "Settings validation failed: 'defaults' must be an object.");
         }
         return false;
     }
 
-    if (!root.contains(QStringLiteral("current")) || !root.value(QStringLiteral("current")).isObject())
+    if (!root.contains(QStringLiteral("current")) ||
+        !root.value(QStringLiteral("current")).isObject())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'current' must be an object.");
+            *error = QStringLiteral(
+                "Settings validation failed: 'current' must be an object.");
         }
         return false;
     }
 
-    if (!root.contains(QStringLiteral("files")) || !root.value(QStringLiteral("files")).isObject())
+    if (!root.contains(QStringLiteral("files")) ||
+        !root.value(QStringLiteral("files")).isObject())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'files' must be an object.");
+            *error = QStringLiteral(
+                "Settings validation failed: 'files' must be an object.");
         }
         return false;
     }
 
     const auto validate_state = [this, error](const QJsonObject& state) -> bool
     {
-        if (!state.contains(QStringLiteral("controls")) || !state.value(QStringLiteral("controls")).isObject())
+        if (!state.contains(QStringLiteral("controls")) ||
+            !state.value(QStringLiteral("controls")).isObject())
         {
             if (error != nullptr)
             {
-                *error = QStringLiteral("Settings validation failed: 'controls' must be an object.");
+                *error = QStringLiteral("Settings validation failed: "
+                                        "'controls' must be an object.");
             }
             return false;
         }
 
-        if (!state.contains(QStringLiteral("view")) || !state.value(QStringLiteral("view")).isObject())
+        if (!state.contains(QStringLiteral("view")) ||
+            !state.value(QStringLiteral("view")).isObject())
         {
             if (error != nullptr)
             {
-                *error = QStringLiteral("Settings validation failed: 'view' must be an object.");
+                *error = QStringLiteral(
+                    "Settings validation failed: 'view' must be an object.");
             }
             return false;
         }
 
-        if (!state.contains(QStringLiteral("selection")) || !state.value(QStringLiteral("selection")).isObject())
+        if (!state.contains(QStringLiteral("selection")) ||
+            !state.value(QStringLiteral("selection")).isObject())
         {
             if (error != nullptr)
             {
-                *error = QStringLiteral("Settings validation failed: 'selection' must be an object.");
+                *error = QStringLiteral("Settings validation failed: "
+                                        "'selection' must be an object.");
             }
             return false;
         }
 
-        if (!validateControlSettings(state.value(QStringLiteral("controls")).toObject(), error))
+        if (!validateControlSettings(
+                state.value(QStringLiteral("controls")).toObject(), error))
         {
             return false;
         }
 
-        if (!validateViewSettings(state.value(QStringLiteral("view")).toObject(), error))
+        if (!validateViewSettings(
+                state.value(QStringLiteral("view")).toObject(), error))
         {
             return false;
         }
 
-        if (!validateSelectionSettings(state.value(QStringLiteral("selection")).toObject(), error))
+        if (!validateSelectionSettings(
+                state.value(QStringLiteral("selection")).toObject(), error))
         {
             return false;
         }
@@ -441,71 +467,88 @@ bool SettingsManager::validateSettings(const QJsonObject& root, QString* error) 
         return false;
     }
 
-    return validateFilesSettings(root.value(QStringLiteral("files")).toObject(), error);
+    return validateFilesSettings(root.value(QStringLiteral("files")).toObject(),
+                                 error);
 }
 
-bool SettingsManager::validateControlSettings(const QJsonObject& controls, QString* error) const
+bool SettingsManager::validateControlSettings(const QJsonObject& controls,
+                                              QString* error) const
 {
-    if (!controls.contains(QStringLiteral("transform")) || !controls.value(QStringLiteral("transform")).isObject())
+    if (!controls.contains(QStringLiteral("transform")) ||
+        !controls.value(QStringLiteral("transform")).isObject())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'controls.transform' must be an object.");
+            *error = QStringLiteral("Settings validation failed: "
+                                    "'controls.transform' must be an object.");
         }
         return false;
     }
 
-    if (!controls.contains(QStringLiteral("render")) || !controls.value(QStringLiteral("render")).isObject())
+    if (!controls.contains(QStringLiteral("render")) ||
+        !controls.value(QStringLiteral("render")).isObject())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: 'controls.render' must be an object.");
+            *error = QStringLiteral("Settings validation failed: "
+                                    "'controls.render' must be an object.");
         }
         return false;
     }
 
-    const QJsonObject transform = controls.value(QStringLiteral("transform")).toObject();
-    const QJsonObject render = controls.value(QStringLiteral("render")).toObject();
+    const QJsonObject transform =
+        controls.value(QStringLiteral("transform")).toObject();
+    const QJsonObject render =
+        controls.value(QStringLiteral("render")).toObject();
 
-    return validateRange(transform, QStringLiteral("radius"), 1, 240, error)
-        && validateRange(transform, QStringLiteral("angularResolution"), 1, 360, error)
-        && validateRange(transform, QStringLiteral("loadZoom"), 1, 10, error)
-        && validateRange(transform, QStringLiteral("outputZoom"), 1, 10, error)
-        && validateRange(render, QStringLiteral("ledCount"), 1, 200, error)
-        && validateRange(render, QStringLiteral("ledAngle"), 1, 360, error)
-        && validateRange(render, QStringLiteral("ledSize"), 1, 360, error)
-        && validateRange(render, QStringLiteral("ledDistance"), 1, 10, error)
-        && validateRange(render, QStringLiteral("ledRotationSpeed"), 1, 6000, error);
+    return validateRange(transform, QStringLiteral("radius"), 1, 240, error) &&
+           validateRange(transform, QStringLiteral("angularResolution"), 1, 360,
+                         error) &&
+           validateRange(transform, QStringLiteral("loadZoom"), 1, 10, error) &&
+           validateRange(transform, QStringLiteral("outputZoom"), 1, 10,
+                         error) &&
+           validateRange(render, QStringLiteral("ledCount"), 1, 200, error) &&
+           validateRange(render, QStringLiteral("ledAngle"), 1, 360, error) &&
+           validateRange(render, QStringLiteral("ledSize"), 1, 360, error) &&
+           validateRange(render, QStringLiteral("ledDistance"), 1, 10, error) &&
+           validateRange(render, QStringLiteral("ledRotationSpeed"), 1, 6000,
+                         error);
 }
 
-bool SettingsManager::validateViewSettings(const QJsonObject& view, QString* error) const
+bool SettingsManager::validateViewSettings(const QJsonObject& view,
+                                           QString* error) const
 {
-    return validateBool(view, QStringLiteral("showSelectedImage"), error)
-        && validateBool(view, QStringLiteral("showRenderedPreview"), error)
-        && validateRange(view, QStringLiteral("previewRotation"), 0, 359, error);
+    return validateBool(view, QStringLiteral("showSelectedImage"), error) &&
+           validateBool(view, QStringLiteral("showRenderedPreview"), error) &&
+           validateRange(view, QStringLiteral("previewRotation"), 0, 359,
+                         error);
 }
 
-bool SettingsManager::validateSelectionSettings(const QJsonObject& selection, QString* error) const
+bool SettingsManager::validateSelectionSettings(const QJsonObject& selection,
+                                                QString* error) const
 {
-    return validateRange(selection, QStringLiteral("pointX"), 0, 100000, error)
-        && validateRange(selection, QStringLiteral("pointY"), 0, 100000, error);
+    return validateRange(selection, QStringLiteral("pointX"), 0, 100000,
+                         error) &&
+           validateRange(selection, QStringLiteral("pointY"), 0, 100000, error);
 }
 
-bool SettingsManager::validateFilesSettings(const QJsonObject& files, QString* error) const
+bool SettingsManager::validateFilesSettings(const QJsonObject& files,
+                                            QString* error) const
 {
-    return validateString(files, QStringLiteral("lastLoadedFile"), error)
-        && validateString(files, QStringLiteral("lastSavedFile"), error);
+    return validateString(files, QStringLiteral("lastLoadedFile"), error) &&
+           validateString(files, QStringLiteral("lastSavedFile"), error);
 }
 
-bool SettingsManager::validateRange(const QJsonObject& object, const QString& key,
-                                    int minValue, int maxValue, QString* error) const
+bool SettingsManager::validateRange(const QJsonObject& object,
+                                    const QString& key, int minValue,
+                                    int maxValue, QString* error) const
 {
     if (!object.contains(key) || !object.value(key).isDouble())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: '") + key
-                + QStringLiteral("' must be an integer.");
+            *error = QStringLiteral("Settings validation failed: '") + key +
+                     QStringLiteral("' must be an integer.");
         }
         return false;
     }
@@ -515,8 +558,8 @@ bool SettingsManager::validateRange(const QJsonObject& object, const QString& ke
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: '") + key
-                + QStringLiteral("' is out of allowed range.");
+            *error = QStringLiteral("Settings validation failed: '") + key +
+                     QStringLiteral("' is out of allowed range.");
         }
         return false;
     }
@@ -524,28 +567,30 @@ bool SettingsManager::validateRange(const QJsonObject& object, const QString& ke
     return true;
 }
 
-bool SettingsManager::validateBool(const QJsonObject& object, const QString& key, QString* error) const
+bool SettingsManager::validateBool(const QJsonObject& object,
+                                   const QString& key, QString* error) const
 {
     if (!object.contains(key) || !object.value(key).isBool())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: '") + key
-                + QStringLiteral("' must be boolean.");
+            *error = QStringLiteral("Settings validation failed: '") + key +
+                     QStringLiteral("' must be boolean.");
         }
         return false;
     }
     return true;
 }
 
-bool SettingsManager::validateString(const QJsonObject& object, const QString& key, QString* error) const
+bool SettingsManager::validateString(const QJsonObject& object,
+                                     const QString& key, QString* error) const
 {
     if (!object.contains(key) || !object.value(key).isString())
     {
         if (error != nullptr)
         {
-            *error = QStringLiteral("Settings validation failed: '") + key
-                + QStringLiteral("' must be string.");
+            *error = QStringLiteral("Settings validation failed: '") + key +
+                     QStringLiteral("' must be string.");
         }
         return false;
     }

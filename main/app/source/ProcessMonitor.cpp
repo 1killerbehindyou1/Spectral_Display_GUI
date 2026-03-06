@@ -5,20 +5,11 @@
 #include <QStringList>
 #include <QThread>
 
-ProcessMonitor::ProcessMonitor(QObject* parent)
-    : QObject(parent)
-{
-}
+ProcessMonitor::ProcessMonitor(QObject* parent) : QObject(parent) {}
 
-double ProcessMonitor::cpuPercent() const
-{
-    return m_cpuPercent;
-}
+double ProcessMonitor::cpuPercent() const { return m_cpuPercent; }
 
-double ProcessMonitor::ramMb() const
-{
-    return m_ramMb;
-}
+double ProcessMonitor::ramMb() const { return m_ramMb; }
 
 void ProcessMonitor::refresh()
 {
@@ -34,12 +25,15 @@ void ProcessMonitor::refresh()
     else
     {
         const quint64 totalDelta = totalCpuJiffies - m_prevTotalCpuJiffies;
-        const quint64 processDelta = processCpuJiffies - m_prevProcessCpuJiffies;
+        const quint64 processDelta =
+            processCpuJiffies - m_prevProcessCpuJiffies;
 
         if (totalDelta > 0)
         {
             const int threadCount = qMax(1, QThread::idealThreadCount());
-            const double usage = (static_cast<double>(processDelta) / static_cast<double>(totalDelta)) * 100.0 * threadCount;
+            const double usage = (static_cast<double>(processDelta) /
+                                  static_cast<double>(totalDelta)) *
+                                 100.0 * threadCount;
             m_cpuPercent = qBound(0.0, usage, 100.0 * threadCount);
         }
 
