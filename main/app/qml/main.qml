@@ -7,6 +7,7 @@ import "RenderPart"
 import "TransformPart"
 import "MainMenu"
 import "Dialogs" as AppDialogs
+import "Utils"
 
 ApplicationWindow
 {
@@ -24,6 +25,7 @@ ApplicationWindow
     property string file_operation: ""
     property point lastSelectedPoint: Qt.point(0, 0)
     property bool settingsHydrationInProgress: false
+    property var drawingItem: null
 
     function collectCurrentState()
     {
@@ -209,7 +211,10 @@ ApplicationWindow
 
     onRenderedPreviewIsActiveChanged:
     {
-        drawing.checkRenderedPreview(renderedPreviewIsActive);
+        if (drawingItem)
+        {
+            drawingItem.checkRenderedPreview(renderedPreviewIsActive);
+        }
         scheduleSettingsSave();
     }
 
@@ -261,10 +266,11 @@ ApplicationWindow
 
                 RenderPreview
                 {
-                    id: drawing
+                    id: drawingPreview
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     visible: true
+                    Component.onCompleted: root.drawingItem = drawingPreview
                 }
             }
 
@@ -280,6 +286,7 @@ ApplicationWindow
         RenderControl
         {
             id: render_parameters
+            renderingActive: root.renderedPreviewIsActive
             Layout.fillHeight: true
             Layout.preferredWidth: 350
             Layout.maximumWidth: 350
@@ -314,7 +321,10 @@ ApplicationWindow
         transform_parameters.onAngResUpdate();
         transform_parameters.onZoomLoadUpdate();
         transform_parameters.onZoomOutUpdate();
-        drawing.requestRepaint();
+        if (drawingItem)
+        {
+            drawingItem.requestRepaint();
+        }
 
         /*
         * Connect transform controls with selector and transform engine.
@@ -347,10 +357,14 @@ ApplicationWindow
             root.scheduleSettingsSave();
         });
 
-        render_parameters.ledNumChanged.connect(drawing.onLedNumChanged);
-        render_parameters.ledRotationChanged.connect(drawing.onAngularResolutionChanged);
-        render_parameters.ledSizeChanged.connect(drawing.onLedSizeChanged);
-        render_parameters.ledDistanceChanged.connect(drawing.onLedDistanceChanged);
+        if (drawingItem)
+        {
+            render_parameters.ledNumChanged.connect(drawingItem.onLedNumChanged);
+            render_parameters.ledRotationChanged.connect(drawingItem.onAngularResolutionChanged);
+            render_parameters.ledSizeChanged.connect(drawingItem.onLedSizeChanged);
+            render_parameters.ledDistanceChanged.connect(drawingItem.onLedDistanceChanged);
+            render_parameters.ledRotationSpeedChanged.connect(drawingItem.onRotationSpeedChanged);
+        }
 
         transform_parameters.radiusChanged.connect(root.scheduleSettingsSave);
         transform_parameters.angResChanged.connect(root.scheduleSettingsSave);
@@ -360,6 +374,7 @@ ApplicationWindow
         render_parameters.ledRotationChanged.connect(root.scheduleSettingsSave);
         render_parameters.ledSizeChanged.connect(root.scheduleSettingsSave);
         render_parameters.ledDistanceChanged.connect(root.scheduleSettingsSave);
+        render_parameters.ledRotationSpeedChanged.connect(root.scheduleSettingsSave);
         output_preview.previewRotationChanged.connect(root.scheduleSettingsSave);
         file_manager.lastLoadedPathChanged.connect(root.scheduleSettingsSave);
         file_manager.lastSavedPathChanged.connect(root.scheduleSettingsSave);

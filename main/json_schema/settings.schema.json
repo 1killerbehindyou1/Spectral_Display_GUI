@@ -71,7 +71,7 @@
             },
             "render": {
               "type": "object",
-              "required": ["ledCount", "ledAngle", "ledSize", "ledDistance"],
+              "required": ["ledCount", "ledAngle", "ledSize", "ledDistance", "ledRotationSpeed"],
               "properties": {
                 "ledCount": {
                   "type": "integer",
@@ -92,6 +92,11 @@
                   "type": "integer",
                   "minimum": 1,
                   "maximum": 10
+                },
+                "ledRotationSpeed": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 6000
                 }
               },
               "additionalProperties": false

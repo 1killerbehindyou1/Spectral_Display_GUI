@@ -11,6 +11,7 @@ set(PROJECT_SOURCES
   include/RenderSelector.hpp
   include/LiveImageProvider.hpp
   include/TransformEngine.hpp
+  include/ProcessMonitor.hpp
   source/main.cpp
   source/RenderEngine.cpp
   source/FileManager.cpp
@@ -18,6 +19,7 @@ set(PROJECT_SOURCES
   source/RenderSelector.cpp
   source/LiveImageProvider.cpp
   source/TransformEngine.cpp
+  source/ProcessMonitor.cpp
   qml/qml.qrc)
 
 add_executable(BasicGUI

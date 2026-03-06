@@ -294,6 +294,7 @@ QJsonObject SettingsManager::defaultSettingsJson() const
     render_defaults.insert(QStringLiteral("ledAngle"), 5);
     render_defaults.insert(QStringLiteral("ledSize"), 5);
     render_defaults.insert(QStringLiteral("ledDistance"), 2);
+    render_defaults.insert(QStringLiteral("ledRotationSpeed"), 600);
 
     QJsonObject controls_defaults;
     controls_defaults.insert(QStringLiteral("transform"), transform_defaults);
@@ -473,7 +474,8 @@ bool SettingsManager::validateControlSettings(const QJsonObject& controls, QStri
         && validateRange(render, QStringLiteral("ledCount"), 1, 200, error)
         && validateRange(render, QStringLiteral("ledAngle"), 1, 360, error)
         && validateRange(render, QStringLiteral("ledSize"), 1, 360, error)
-        && validateRange(render, QStringLiteral("ledDistance"), 1, 10, error);
+        && validateRange(render, QStringLiteral("ledDistance"), 1, 10, error)
+        && validateRange(render, QStringLiteral("ledRotationSpeed"), 1, 6000, error);
 }
 
 bool SettingsManager::validateViewSettings(const QJsonObject& view, QString* error) const

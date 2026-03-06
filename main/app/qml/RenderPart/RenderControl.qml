@@ -10,14 +10,42 @@ import "../Utils"
 Control
 {
     id: root
+    property bool renderingActive: false
     signal ledNumChanged(int num)
     signal ledRotationChanged(int rotation)
     signal ledSizeChanged(int size)
     signal ledDistanceChanged(int distance)
+    signal ledRotationSpeedChanged(int speed)
 
     function clampInt(value, minValue, maxValue)
     {
         return Math.max(minValue, Math.min(maxValue, parseInt(value)));
+    }
+
+    function cpuUsageColor(cpuPercent)
+    {
+        if (cpuPercent >= 80)
+        {
+            return "#c0392b";
+        }
+        if (cpuPercent >= 50)
+        {
+            return "#d4ac0d";
+        }
+        return "#1e8449";
+    }
+
+    function ramUsageColor(ramMb)
+    {
+        if (ramMb >= 800)
+        {
+            return "#c0392b";
+        }
+        if (ramMb >= 400)
+        {
+            return "#d4ac0d";
+        }
+        return "#1e8449";
     }
 
     function exportSettings()
@@ -26,7 +54,8 @@ Control
             ledCount: led_num.value,
             ledAngle: led_rotation.value,
             ledSize: led_size.value,
-            ledDistance: led_distance.value
+            ledDistance: led_distance.value,
+            ledRotationSpeed: led_rotation_speed.value
         };
     }
 
@@ -49,11 +78,15 @@ Control
         led_distance.setCurrentValue(
             clampInt(settings.ledDistance !== undefined ? settings.ledDistance : led_distance.init_value,
                      led_distance.min, led_distance.max));
+        led_rotation_speed.setCurrentValue(
+            clampInt(settings.ledRotationSpeed !== undefined ? settings.ledRotationSpeed : led_rotation_speed.init_value,
+                     led_rotation_speed.min, led_rotation_speed.max));
 
         root.ledNumChanged(led_num.value);
         root.ledRotationChanged(led_rotation.value);
         root.ledSizeChanged(led_size.value);
         root.ledDistanceChanged(led_distance.value);
+        root.ledRotationSpeedChanged(led_rotation_speed.value);
     }
 
     implicitWidth: 500
@@ -86,6 +119,7 @@ Control
                 DataInput{ id: led_rotation; label:"LED angle"; init_value: 5;  max: 360; min: 1}
                 DataInput{ id: led_size; label:"LED size"; init_value: 5;  max: 360; min: 1}
                 DataInput{ id: led_distance; label:"LED distance"; init_value: 2;  max: 10; min: 0}
+                DataInput{ id: led_rotation_speed; label:"rotation speed [RPM]"; init_value: 600;  max: 6000; min: 1}
 
                 Text{text: "Spectral display resolution: "; font.bold: true; font.pixelSize: 18 }
                 TextField
@@ -97,9 +131,35 @@ Control
                     activeFocusOnTab: false
                     background: Rectangle {color: "transparent"}
                 }
+
+                Text { text: "Resource usage (during rendering):"; font.bold: true; font.pixelSize: 16 }
+                Text {
+                    text: "CPU: " + (process_monitor ? process_monitor.cpuPercent.toFixed(1) : "0.0") + "%"
+                    font.pixelSize: 14
+                    color: root.cpuUsageColor(process_monitor ? process_monitor.cpuPercent : 0)
+                }
+                Text {
+                    text: "RAM: " + (process_monitor ? process_monitor.ramMb.toFixed(1) : "0.0") + " MB"
+                    font.pixelSize: 14
+                    color: root.ramUsageColor(process_monitor ? process_monitor.ramMb : 0)
+                }
             }
             FillingRect{Layout.fillHeight: true}
             FillingRect{fillerHeight: 30}
+        }
+    }
+
+    Timer
+    {
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered:
+        {
+            if (process_monitor)
+            {
+                process_monitor.refresh();
+            }
         }
     }
 
@@ -109,11 +169,18 @@ Control
         led_rotation.update.connect(function() { root.ledRotationChanged(led_rotation.value); });
         led_size.update.connect(function() { root.ledSizeChanged(led_size.value); });
         led_distance.update.connect(function() { root.ledDistanceChanged(led_distance.value); });
+        led_rotation_speed.update.connect(function() { root.ledRotationSpeedChanged(led_rotation_speed.value); });
 
         root.ledNumChanged(led_num.init_value);
         root.ledRotationChanged(led_rotation.init_value);
         root.ledSizeChanged(led_size.init_value);
         root.ledDistanceChanged(led_distance.init_value);
+        root.ledRotationSpeedChanged(led_rotation_speed.init_value);
+
+        if (process_monitor)
+        {
+            process_monitor.refresh();
+        }
     }
 }
 

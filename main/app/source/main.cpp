@@ -4,6 +4,7 @@
 #include "SettingsManager.hpp"
 #include "TransformEngine.hpp"
 #include "LiveImageProvider.hpp"
+#include "ProcessMonitor.hpp"
 
 #include <QDebug>
 #include <QDir>
@@ -110,6 +111,9 @@ int main(int argc, char* argv[])
 
     TransformEngine transform_engine(&app);
     engine.rootContext()->setContextProperty("transform_engine", &transform_engine);
+
+    ProcessMonitor process_monitor(&app);
+    engine.rootContext()->setContextProperty("process_monitor", &process_monitor);
 
     auto provider = new LiveImageProvider();
     engine.addImageProvider("live", provider);
