@@ -1,0 +1,17 @@
+{
+    "classes": [
+        {
+            "className": "ChartsPlugin",
+            "object": true,
+            "qualifiedClassName": "ChartsPlugin",
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QQmlEngineExtensionPlugin"
+                }
+            ]
+        }
+    ],
+    "inputFile": "chartsplugin.h",
+    "outputRevision": 67
+}

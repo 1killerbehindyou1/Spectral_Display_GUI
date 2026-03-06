@@ -135,7 +135,7 @@ Control {
         spacing: 6
 
         Rectangle {
-            Layout.fillWidth: true
+            Layout.fillWidth:   true
             Layout.fillHeight: true
             color: "transparent"
 

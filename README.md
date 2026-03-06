@@ -61,6 +61,47 @@ cmake --build --preset release
 ./scripts/linux_build.sh release
 ```
 
+### Instalacja do `GUI_portable` w katalogu głównym repozytorium
+
+```bash
+cmake --preset install
+cmake --build --preset install
+cmake --build --preset install --target install
+```
+
+Wariant debug (także do `GUI_portable`):
+
+```bash
+cmake --preset install-debug
+cmake --build --preset install-debug
+cmake --build --preset install-debug --target install
+```
+
+Wynik instalacji:
+
+- `README.md`
+- `GUI_portable/README.md`
+- `GUI_portable/bin/BasicGUI`
+- `GUI_portable/bin/qt.conf` (lokalne ścieżki Qt dla trybu portable)
+- `GUI_portable/lib/` (runtime biblioteki Qt wymagane przez aplikację)
+- `GUI_portable/plugins/` (m.in. `platforms`, `imageformats`, `platformthemes`, `xcbglintegrations`)
+- `GUI_portable/qml/` (moduły QML wymagane przez Qt Quick/Controls)
+- `GUI_portable/skrypts/` (`run_portable.sh`, `run_portable_debug.sh`)
+- `GUI_portable/documentation/` (kopia katalogu dokumentacji)
+- `GUI_portable/spectral_display_portable.tar.gz` (archiwum `tar.gz` tworzone przez `cmake --install`)
+
+Uruchamianie wersji portable:
+
+```bash
+./scripts/run_portable.sh
+```
+
+Uruchamianie wersji portable (debug):
+
+```bash
+./scripts/run_portable_debug.sh
+```
+
 ## 3) Testy jednostkowe
 
 Włączone przez preset `ut`.
