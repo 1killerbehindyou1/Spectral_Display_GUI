@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
 import Main 1.0
 
-Control {
+Control
+{
     id: root
     signal pointUpdate(real xPosition, real yPosition)
     property int defaultSelectorRadius: 100

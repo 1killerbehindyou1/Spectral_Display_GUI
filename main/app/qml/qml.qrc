@@ -2,6 +2,10 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Controls/DataInput.qml</file>
+        <file>Controls/SpinBox.qml</file>
+        <file>Controls/SpixBoxText.qml</file>
+        <file>Controls/Slider.qml</file>
+        <file>Controls/Indicator.qml</file>
         <file>Utils/Separator.qml</file>
         <file>Utils/FillingRect.qml</file>
         <file>RenderPart/RenderPreview.qml</file>

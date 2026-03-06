@@ -7,10 +7,13 @@ import Main 1.0
 import "../Controls"
 import "../Utils"
 
-Control {
+Control
+{
     id: root
 
     property bool renderingActive: false
+    signal startRenderingRequested
+    signal stopRenderingRequested
 
     signal ledDistanceChanged(int distance)
     signal ledNumChanged(int num)
@@ -18,10 +21,13 @@ Control {
     signal ledRotationSpeedChanged(int speed)
     signal ledSizeChanged(int size)
 
-    function applySettings(settings) {
-        if (!settings) {
+    function applySettings(settings)
+    {
+        if (!settings)
+        {
             return;
         }
+
         led_num.setCurrentValue(clampInt(settings.ledCount !== undefined ? settings.ledCount : led_num.init_value, led_num.min, led_num.max));
         led_rotation.setCurrentValue(clampInt(settings.ledAngle !== undefined ? settings.ledAngle : led_rotation.init_value, led_rotation.min, led_rotation.max));
         led_size.setCurrentValue(clampInt(settings.ledSize !== undefined ? settings.ledSize : led_size.init_value, led_size.min, led_size.max));
@@ -33,6 +39,7 @@ Control {
         root.ledDistanceChanged(led_distance.value);
         root.ledRotationSpeedChanged(led_rotation_speed.value);
     }
+
     function clampInt(value, minValue, maxValue) {
         return Math.max(minValue, Math.min(maxValue, parseInt(value)));
     }
@@ -75,20 +82,22 @@ Control {
         anchors.fill: parent
         spacing: 10
 
-        FillingRect {
-            Layout.fillWidth: true
-            fillerHeight: 10
-        }
-        GroupBox {
+        FillingRect { Layout.fillWidth: true; fillerHeight: 10}
+
+        GroupBox
+        {
+            title: "Spectral display parameters"
+            font.bold: true
+            font.pixelSize: 18
+
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             Layout.preferredHeight: parent.height
             Layout.preferredWidth: parent.width
-            font.bold: true
-            font.pixelSize: 18
-            title: "Spectral display parameters"
 
-            contentItem: ColumnLayout {
+
+            contentItem: ColumnLayout
+            {
                 Layout.alignment: Qt.AlignTop
                 spacing: 20
 
@@ -139,11 +148,13 @@ Control {
                     readOnly: true
                     text: parseInt(360 / led_rotation.value) + " x " + led_num.value + " pixels"
 
-                    background: Rectangle {
+                    background: Rectangle
+                    {
                         color: "transparent"
                     }
                 }
-                Text {
+                Text
+                {
                     font.bold: true
                     font.pixelSize: 16
                     text: "Resource usage (during rendering):"
@@ -158,6 +169,36 @@ Control {
                     font.pixelSize: 14
                     text: "RAM: " + (process_monitor ? process_monitor.ramMb.toFixed(1) : "0.0") + " MB"
                 }
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    Button {
+                        id: but_start
+                        Layout.fillWidth: true
+                        enabled: true
+                        text: "Start rendering"
+                        onClicked:
+                        {
+                            but_stop.enabled = true;
+                            but_start.enabled = false;
+                            root.renderingActive = true;
+                        }
+                    }
+
+                    Button {
+                        id: but_stop
+                        Layout.fillWidth: true
+                        enabled: false
+                        text: "Stop rendering"
+                        onClicked:
+                        {
+                            but_start.enabled = true;
+                            but_stop.enabled = false;
+                            root.renderingActive = false;
+                        }
+                    }
+                }
             }
 
             FillingRect {
@@ -169,7 +210,8 @@ Control {
         }
     }
 
-    Component.onCompleted: {
+    Component.onCompleted:
+    {
         led_num.update.connect(function () {
                 root.ledNumChanged(led_num.value);
             });
@@ -185,12 +227,15 @@ Control {
         led_rotation_speed.update.connect(function () {
                 root.ledRotationSpeedChanged(led_rotation_speed.value);
             });
+
         root.ledNumChanged(led_num.init_value);
         root.ledRotationChanged(led_rotation.init_value);
         root.ledSizeChanged(led_size.init_value);
         root.ledDistanceChanged(led_distance.init_value);
         root.ledRotationSpeedChanged(led_rotation_speed.init_value);
-        if (process_monitor) {
+
+        if(process_monitor)
+        {
             process_monitor.refresh();
         }
     }

@@ -9,7 +9,8 @@ import "MainMenu"
 import "Dialogs" as AppDialogs
 import "Utils"
 
-ApplicationWindow {
+ApplicationWindow
+{
     id: root
     width: 1300
     height: 600
@@ -26,9 +27,11 @@ ApplicationWindow {
     property bool settingsHydrationInProgress: false
     property var drawingItem: null
 
-    function collectCurrentState() {
+    function collectCurrentState()
+    {
         return {
-            "controls": {
+            "controls":
+            {
                 "transform": transform_parameters.exportSettings(),
                 "render": render_parameters.exportSettings()
             },
@@ -58,37 +61,50 @@ ApplicationWindow {
         };
     }
 
-    function persistSettings() {
+    function persistSettings()
+    {
         if (settingsHydrationInProgress) {
             return;
         }
         const saveOk = settings_manager.saveSettings(buildSettingsPayload());
-        if (!saveOk && settings_manager.lastError) {
+        if (!saveOk && settings_manager.lastError)
+        {
             console.warn("Failed to save settings: " + settings_manager.lastError);
         }
     }
 
-    function scheduleSettingsSave() {
-        if (settingsHydrationInProgress) {
+    function scheduleSettingsSave()
+    {
+        if (settingsHydrationInProgress)
+        {
             return;
         }
         settingsSaveTimer.restart();
     }
 
-    function applyLoadedSettings(settings) {
-        if (!settings || !settings.current) {
+    function applyLoadedSettings(settings)
+    {
+        if (!settings || !settings.current)
+        {
             return;
         }
         settingsHydrationInProgress = true;
         const current = settings.current;
-        if (current.controls) {
+        if (current.controls)
+        {
             transform_parameters.applySettings(current.controls.transform);
             render_parameters.applySettings(current.controls.render);
         }
-        if (current.view) {
+        if (current.view)
+        {
             mainMenu.showSelectedImage.checked = !!current.view.showSelectedImage;
             mainMenu.showRenderedPreview.checked = !!current.view.showRenderedPreview;
             output_preview.applySettings(current.view);
+        }
+        if (drawingItem)
+        {
+            // Force deterministic animation state even if checkbox value did not change.
+            drawingItem.checkRenderedPreview(mainMenu.showRenderedPreview.checked);
         }
         if (current.selection) {
             const pointX = Math.max(0, Math.round(current.selection.pointX || 0));
@@ -107,7 +123,8 @@ ApplicationWindow {
         scheduleSettingsSave();
     }
 
-    function importSettingsFromUrl(fileUrl) {
+    function importSettingsFromUrl(fileUrl)
+    {
         const imported = settings_manager.loadSettingsFromFile(fileUrl);
         if (settings_manager.lastError) {
             messageDialog.showMessageBox("Settings import failed", settings_manager.lastError);
@@ -117,7 +134,8 @@ ApplicationWindow {
         persistSettings();
     }
 
-    function exportSettingsToUrl(fileUrl) {
+    function exportSettingsToUrl(fileUrl)
+    {
         const ok = settings_manager.saveSettingsToFile(fileUrl, buildSettingsPayload());
         if (!ok) {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown export error.";
@@ -125,7 +143,8 @@ ApplicationWindow {
         }
     }
 
-    function resetSettingsToDefaults() {
+    function resetSettingsToDefaults()
+    {
         const defaults = settings_manager.defaultSettings();
         settingsHydrationInProgress = true;
         imageSelected = false;
@@ -133,26 +152,31 @@ ApplicationWindow {
         lastSelectedPoint = Qt.point(0, 0);
         settingsHydrationInProgress = false;
         applyLoadedSettings(defaults);
+
         const resetPayload = {
             "$schema": settings_manager.schemaPath,
             "version": 1,
             "defaults": defaults.defaults,
             "current": defaults.current,
-            "files": {
+            "files":
+            {
                 "lastLoadedFile": "",
                 "lastSavedFile": ""
             }
         };
         const saveOk = settings_manager.saveSettings(resetPayload);
-        if (!saveOk) {
+        if (!saveOk)
+        {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown reset error.";
             messageDialog.showMessageBox("Reset settings failed", reason);
         }
     }
 
-    function createProjectFromUrl(folderUrl) {
+    function createProjectFromUrl(folderUrl)
+    {
         const ok = settings_manager.createProject(folderUrl);
-        if (!ok) {
+        if (!ok)
+        {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown project creation error.";
             messageDialog.showMessageBox("Create project failed", reason);
             return;
@@ -165,7 +189,8 @@ ApplicationWindow {
         persistSettings();
     }
 
-    onPreviewIsActiveChanged: {
+    onPreviewIsActiveChanged:
+    {
         selector.img_visible = imageSelected && previewIsActive;
         scheduleSettingsSave();
     }
@@ -187,11 +212,13 @@ ApplicationWindow {
         onResetSettingsRequested: root.resetSettingsToDefaults()
     }
 
-    RowLayout {
+    RowLayout
+    {
         spacing: 5
         anchors.fill: parent
 
-        TransformControl {
+        TransformControl
+        {
             id: transform_parameters
             Layout.fillHeight: true
             Layout.preferredWidth: 450
@@ -199,25 +226,30 @@ ApplicationWindow {
             visible: true
         }
         /* Parameter adjustment section */
-        ColumnLayout {
+        ColumnLayout
+        {
             spacing: 5
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            RowLayout {
+            RowLayout
+            {
                 spacing: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                TransformSelector {
+                TransformSelector
+                {
                     id: selector
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     visible: true
                 }
 
-                RenderPreview {
+                RenderPreview
+                {
                     id: drawingPreview
+                    renderingActive: root.renderedPreviewIsActive
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     visible: true
@@ -225,7 +257,8 @@ ApplicationWindow {
                 }
             }
 
-            TransformPreview {
+            TransformPreview
+            {
                 id: output_preview
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
@@ -233,7 +266,8 @@ ApplicationWindow {
                 visible: true
             }
         }
-        RenderControl {
+        RenderControl
+        {
             id: render_parameters
             renderingActive: root.renderedPreviewIsActive
             Layout.fillHeight: true
@@ -251,14 +285,16 @@ ApplicationWindow {
         id: messageDialog
     }
 
-    Timer {
+    Timer
+    {
         id: settingsSaveTimer
         interval: 250
         repeat: false
         onTriggered: root.persistSettings()
     }
 
-    Component.onCompleted: {
+    Component.onCompleted:
+    {
         /*
         * Emit initial values so controls and engine are synchronized on startup.
         */
@@ -266,8 +302,10 @@ ApplicationWindow {
         transform_parameters.onAngResUpdate();
         transform_parameters.onZoomLoadUpdate();
         transform_parameters.onZoomOutUpdate();
-        if (drawingItem) {
+        if (drawingItem)
+        {
             drawingItem.requestRepaint();
+            drawingItem.checkRenderedPreview(root.renderedPreviewIsActive);
         }
 
         /*
@@ -296,13 +334,16 @@ ApplicationWindow {
                 output_preview.onSelectorClicked(xPosition, yPosition);
                 root.scheduleSettingsSave();
             });
-        if (drawingItem) {
+
+        if (drawingItem)
+        {
             render_parameters.ledNumChanged.connect(drawingItem.onLedNumChanged);
             render_parameters.ledRotationChanged.connect(drawingItem.onAngularResolutionChanged);
             render_parameters.ledSizeChanged.connect(drawingItem.onLedSizeChanged);
             render_parameters.ledDistanceChanged.connect(drawingItem.onLedDistanceChanged);
             render_parameters.ledRotationSpeedChanged.connect(drawingItem.onRotationSpeedChanged);
         }
+
         transform_parameters.radiusChanged.connect(root.scheduleSettingsSave);
         transform_parameters.angResChanged.connect(root.scheduleSettingsSave);
         transform_parameters.zoomChangedLoad.connect(root.scheduleSettingsSave);
@@ -312,11 +353,20 @@ ApplicationWindow {
         render_parameters.ledSizeChanged.connect(root.scheduleSettingsSave);
         render_parameters.ledDistanceChanged.connect(root.scheduleSettingsSave);
         render_parameters.ledRotationSpeedChanged.connect(root.scheduleSettingsSave);
+
+        render_parameters.startRenderingRequested.connect(function () {
+                mainMenu.showRenderedPreview.checked = true;
+            });
+        render_parameters.stopRenderingRequested.connect(function () {
+                mainMenu.showRenderedPreview.checked = false;
+            });
         output_preview.previewRotationChanged.connect(root.scheduleSettingsSave);
         file_manager.lastLoadedPathChanged.connect(root.scheduleSettingsSave);
         file_manager.lastSavedPathChanged.connect(root.scheduleSettingsSave);
         const loadedSettings = settings_manager.loadSettings();
-        if (settings_manager.lastError) {
+
+        if (settings_manager.lastError)
+        {
             console.warn("Settings load issue: " + settings_manager.lastError);
         }
         applyLoadedSettings(loadedSettings);
