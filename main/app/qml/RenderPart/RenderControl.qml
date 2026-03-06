@@ -75,10 +75,13 @@ Control
     implicitWidth: 500
     padding: 10
 
-    background: Rectangle {
+    background: Rectangle
+    {
         color: "#c8d6e8"
     }
-    contentItem: ColumnLayout {
+
+    contentItem: ColumnLayout
+    {
         anchors.fill: parent
         spacing: 10
 
@@ -169,11 +172,13 @@ Control
                     font.pixelSize: 14
                     text: "RAM: " + (process_monitor ? process_monitor.ramMb.toFixed(1) : "0.0") + " MB"
                 }
-                RowLayout {
+                RowLayout
+                {
                     Layout.fillWidth: true
                     spacing: 8
 
-                    Button {
+                    Button
+                    {
                         id: but_start
                         Layout.fillWidth: true
                         enabled: true
@@ -186,7 +191,8 @@ Control
                         }
                     }
 
-                    Button {
+                    Button
+                    {
                         id: but_stop
                         Layout.fillWidth: true
                         enabled: false
@@ -206,6 +212,20 @@ Control
             }
             FillingRect {
                 fillerHeight: 30
+            }
+        }
+    }
+
+    Timer
+    {
+        interval: 1000
+        repeat: true
+        running: true
+
+        onTriggered:
+        {
+            if (process_monitor) {
+                process_monitor.refresh();
             }
         }
     }
@@ -237,18 +257,6 @@ Control
         if(process_monitor)
         {
             process_monitor.refresh();
-        }
-    }
-
-    Timer {
-        interval: 1000
-        repeat: true
-        running: true
-
-        onTriggered: {
-            if (process_monitor) {
-                process_monitor.refresh();
-            }
         }
     }
 }

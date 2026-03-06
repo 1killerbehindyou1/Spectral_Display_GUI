@@ -77,16 +77,19 @@ Control
         renderItem.requestRepaint();
     }
 
-    RenderEngine {
+    RenderEngine
+    {
         id: renderItem
     }
 
-    Rectangle {
+    Rectangle
+    {
         anchors.fill: parent
         color: "white"
     }
 
-    Timer {
+    Timer
+    {
         id: rotationTick
         interval: 15
         repeat: true
@@ -98,7 +101,8 @@ Control
         }
     }
 
-    ColumnLayout {
+    ColumnLayout
+    {
         anchors.fill: parent
         spacing: 6
 
@@ -107,10 +111,12 @@ Control
             Layout.fillWidth: true
             color: "transparent"
 
-            Item {
+            Item
+            {
                 anchors.fill: parent
 
-                Item {
+                Item
+                {
                     id: rotatingContent
                     anchors.centerIn: parent
                     height: squaresRow.height
@@ -118,14 +124,17 @@ Control
                     transformOrigin: Item.Center
                     width: squaresRow.width
 
-                    Row {
+                    Row
+                    {
                         id: squaresRow
                         spacing: wrapperLedDistance
 
-                        Repeater {
+                        Repeater
+                        {
                             model: wrapperLedCount
 
-                            Rectangle {
+                            Rectangle
+                            {
                                 height: wrapperLedSize
                                 width: wrapperLedSize
                                 color: "red"
@@ -133,7 +142,8 @@ Control
                         }
                     }
 
-                    ShaderEffectSource {
+                    ShaderEffectSource
+                    {
                         id: renderedSource
                         height: rotatingContent.height
                         hideSource: true
@@ -143,14 +153,16 @@ Control
                         width: rotatingContent.width
                     }
 
-                    FastBlur {
+                    FastBlur
+                    {
                         anchors.fill: parent
                         radius: Math.min(64, root.blurBase + Math.abs(root.currentSpeedDegPerSecond) / 4)
                         source: renderedSource
                         transparentBorder: true
                     }
 
-                    ShaderEffectSource {
+                    ShaderEffectSource
+                    {
                         anchors.fill: parent
                         hideSource: true
                         live: true
@@ -160,7 +172,8 @@ Control
                     }
                 }
             }
-            Row {
+            Row
+            {
                 anchors.bottom: parent.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 30
@@ -172,7 +185,8 @@ Control
                     text: "Blur: " + Math.round(Math.min(64, root.blurBase + Math.abs(root.currentSpeedDegPerSecond) / 4))
                 }
 
-                Slider {
+                Slider
+                {
                     id: speedSlider
                     Layout.fillWidth: true
                     from: 0

@@ -1,3 +1,4 @@
+// Main application window that wires controls, previews, dialogs, and settings persistence.
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
@@ -207,7 +208,8 @@ ApplicationWindow
     }
 
     /* Menu Bar */
-    menuBar: MainMenu {
+    menuBar: MainMenu
+    {
         id: mainMenu
         onResetSettingsRequested: root.resetSettingsToDefaults()
     }
@@ -249,11 +251,13 @@ ApplicationWindow
                 RenderPreview
                 {
                     id: drawingPreview
-                    renderingActive: root.renderedPreviewIsActive
                     Layout.fillHeight: true
                     Layout.fillWidth: true
+                    blurBase: 16
+                    currentSpeedDegPerSecond: 0
+
                     visible: true
-                    Component.onCompleted: root.drawingItem = drawingPreview
+                    renderingActive: root.renderedPreviewIsActive
                 }
             }
 
@@ -269,11 +273,16 @@ ApplicationWindow
         RenderControl
         {
             id: render_parameters
-            renderingActive: root.renderedPreviewIsActive
             Layout.fillHeight: true
             Layout.preferredWidth: 350
             Layout.maximumWidth: 350
             visible: true
+            Component.onCompleted:
+            {
+                root.drawingItem = render_parameters.drawingItem;
+                root.renderedPreviewIsActive = true;
+
+            }
         }
     }
 
