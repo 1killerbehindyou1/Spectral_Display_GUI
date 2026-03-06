@@ -40,7 +40,7 @@ Item {
             dialogInstance.destroy();
             dialogInstance = null;
         }
-        dialogInstance = fileDialogComponent.createObject(null, {
+        dialogInstance = fileDialogComponent.createObject(dialogBridge, {
                 "title": dialogBridge.title,
                 "nameFilters": dialogBridge.nameFilters,
                 "selectExisting": dialogBridge.selectExisting,

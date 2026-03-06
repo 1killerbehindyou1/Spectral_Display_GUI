@@ -12,8 +12,10 @@ struct TransformParameters
 {
     /** @brief Angular resolution in degrees. */
     int ang_resolution;
+
     /** @brief Number of output pixels. */
     int no_pixels;
+
     /** @brief Transformation center point in source image coordinates. */
     QPoint point;
 };
@@ -37,28 +39,36 @@ public:
      * @param parent Optional QObject parent.
      */
     TransformEngine(QObject* parent = nullptr);
+
     /** @brief Executes transformation using currently stored parameters. */
     void transformImage();
+
     /** @brief Returns pointer to transformed image. */
     QImage* transformedImage() const;
+
     /** @brief Returns transformed image width or zero if unavailable. */
     int transformedWidth() const;
+
     /** @brief Returns transformed image height or zero if unavailable. */
     int transformedHeight() const;
 
 public slots:
+
     /** @brief Sets source pixmap used for transformation.
      * @param pixmap Shared pointer to source pixmap.
      */
     void setPixmap(std::shared_ptr<QPixmap> pixmap);
+
     /** @brief Updates transformation center point and triggers transform.
      * @param point New center point.
      */
     void updatePoint(QPoint point);
+
     /** @brief Updates output pixel count and triggers transform.
      * @param pixels New output pixel count.
      */
     void updateNoOfPixels(int pixels);
+
     /** @brief Updates angular resolution and triggers transform.
      * @param ang_res New angular resolution.
      */
@@ -70,6 +80,7 @@ signals:
      * @param image Shared pointer to transformed image.
      */
     void transformReady(std::shared_ptr<QImage> image);
+
     /** @brief Emitted when transformed image data is ready for QML bindings. */
     void transformReadyForQml();
 

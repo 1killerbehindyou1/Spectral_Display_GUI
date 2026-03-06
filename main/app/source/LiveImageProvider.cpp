@@ -5,20 +5,11 @@ LiveImageProvider::LiveImageProvider()
 {
 }
 
-const QImage& LiveImageProvider::image() const
-{
-    qDebug() << "line:" << __LINE__ << ", file: LiveImageProvider.cpp\t"
-             << "Getting image in LiveImageProvider with size:"
-             << m_image_transformed.size();
-    return m_image_transformed;
-}
+const QImage& LiveImageProvider::image() const { return m_image_transformed; }
 
 void LiveImageProvider::setImage(const QImage& img)
 {
     m_image_transformed = img;
-    qDebug() << "line:" << __LINE__ << ", file: LiveImageProvider.cpp\t"
-             << "Setting image in LiveImageProvider with size:"
-             << m_image_transformed.size();
 }
 
 QImage LiveImageProvider::requestImage(const QString& str, QSize* size,

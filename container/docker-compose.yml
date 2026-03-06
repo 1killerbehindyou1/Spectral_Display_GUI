@@ -1,0 +1,30 @@
+services:
+  spectral-display-gui:
+    build:
+      context: ..
+      dockerfile: container/Dockerfile
+    image: spectral-display-gui:dev
+    container_name: spectral-display-gui
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ..:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: host
+
+  spectral-display-install:
+    build:
+      context: ..
+      dockerfile: container/Dockerfile
+    image: spectral-display-gui:dev
+    profiles: ["install"]
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    volumes:
+      - ..:/workspace
+    command: ["bash", "-lc", "./container/run_install_in_container.sh"]

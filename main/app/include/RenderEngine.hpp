@@ -15,12 +15,16 @@ struct RenderParameters
 {
     /** @brief Number of rendered LED samples. */
     int no_pixels;
+
     /** @brief Size of a single LED rectangle in pixels. */
     QSize led_size;
+
     /** @brief Angular resolution used to map image rows to rotation angle. */
     int led_arc_resolution;
+
     /** @brief Gap between rendered LEDs in pixels. */
     int led_distance;
+
     /** @brief Rotation speed in internal units. */
     int rotation_speed;
 };
@@ -42,19 +46,24 @@ public:
      * @param parent Optional QObject parent.
      */
     RenderEngine(QObject* parent = nullptr);
+
     /** @brief Destroys the render engine instance. */
     ~RenderEngine() override;
 
     /** @brief Returns currently rendered image pointer. */
     QImage* image() const;
+
     /** @brief Sets image used as source for rendering.
      * @param image Pointer to source image.
      */
     void setImage(QImage* image);
+
     /** @brief Returns current LED size in pixels. */
     int ledSize() const;
+
     /** @brief Returns current distance between LEDs in pixels. */
     int ledDistance() const;
+
     /** @brief Returns current LED count. */
     int ledCount() const;
 
@@ -62,28 +71,35 @@ public:
      * @param pixmap Source pixmap pointer.
      */
     Q_INVOKABLE void setPixmap(QPixmap* pixmap);
+
     /** @brief Enables or disables render updates.
      * @param flag Rendering active flag.
      */
     Q_INVOKABLE void startRendering(bool flag);
+
     /** @brief Requests render refresh and internal recalculation. */
     Q_INVOKABLE void requestRepaint();
+
     /** @brief Updates number of pixels used by renderer.
      * @param pixels New LED count.
      */
     Q_INVOKABLE void updateNoOfPixels(int pixels);
+
     /** @brief Updates LED size.
      * @param size New LED size in pixels.
      */
     Q_INVOKABLE void updateLedSize(int size);
+
     /** @brief Updates distance between LEDs.
      * @param distance New distance in pixels.
      */
     Q_INVOKABLE void updateLedDistance(int distance);
+
     /** @brief Updates angular resolution used in rendering.
      * @param ang_res Angular resolution value.
      */
     Q_INVOKABLE void updateAngularResolution(int ang_res);
+
     /** @brief Updates rotation speed.
      * @param speed New rotation speed value.
      */

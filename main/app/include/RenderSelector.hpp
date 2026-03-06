@@ -19,6 +19,7 @@ public:
      * @param parent Optional QQuickItem parent.
      */
     RenderSelector(QQuickItem* parent = nullptr);
+
     /**
      * @brief Paints selector overlay.
      * @param painter Active painter used by Qt scene graph.
@@ -30,6 +31,7 @@ public:
      * @param point New selector center in item coordinates.
      */
     Q_INVOKABLE void setPoint(QPoint point);
+
     /**
      * @brief Updates selector radius.
      * @param no_pixels New selector radius.
