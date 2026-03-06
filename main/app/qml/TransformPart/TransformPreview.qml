@@ -5,51 +5,41 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.3
 import Main 1.0
 
-Control
-{
+Control {
     id: root
     property real zoomFactor: 3.0
     property int previewRotation: 90
 
-    function exportSettings()
-    {
+    function exportSettings() {
         return {
-            previewRotation: previewRotation
+            "previewRotation": previewRotation
         };
     }
 
-    function applySettings(settings)
-    {
-        if (!settings)
-        {
+    function applySettings(settings) {
+        if (!settings) {
             return;
         }
-
         const value = settings.previewRotation !== undefined ? settings.previewRotation : 90;
         previewRotation = ((parseInt(value) % 360) + 360) % 360;
     }
 
-    function onSelectorClicked(xPosition, yPosition)
-    {
+    function onSelectorClicked(xPosition, yPosition) {
         transform_engine.updatePoint(Qt.point(xPosition, yPosition));
     }
 
-    function updatePreview()
-    {
+    function updatePreview() {
         preview_image.source = "image://live/frame?t=" + Date.now();
     }
 
-    background: Rectangle
-    {
+    background: Rectangle {
         color: "white"
     }
 
-    contentItem: Item
-    {
+    contentItem: Item {
         anchors.fill: parent
 
-        Image
-        {
+        Image {
             id: preview_image
             anchors.fill: parent
             scale: root.zoomFactor
@@ -59,8 +49,7 @@ Control
             cache: false
         }
 
-        Button
-        {
+        Button {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.margins: 8
@@ -69,12 +58,10 @@ Control
         }
     }
 
-    Connections
-    {
+    Connections {
         target: transform_engine
-        function onTransformReadyForQml()
-        {
-            root.updatePreview()
+        function onTransformReadyForQml() {
+            root.updatePreview();
         }
     }
 }

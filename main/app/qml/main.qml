@@ -9,8 +9,7 @@ import "MainMenu"
 import "Dialogs" as AppDialogs
 import "Utils"
 
-ApplicationWindow
-{
+ApplicationWindow {
     id: root
     width: 1300
     height: 600
@@ -27,216 +26,172 @@ ApplicationWindow
     property bool settingsHydrationInProgress: false
     property var drawingItem: null
 
-    function collectCurrentState()
-    {
+    function collectCurrentState() {
         return {
-            controls: {
-                transform: transform_parameters.exportSettings(),
-                render: render_parameters.exportSettings()
+            "controls": {
+                "transform": transform_parameters.exportSettings(),
+                "render": render_parameters.exportSettings()
             },
-            view: {
-                showSelectedImage: mainMenu.showSelectedImage.checked,
-                showRenderedPreview: mainMenu.showRenderedPreview.checked,
-                previewRotation: output_preview.previewRotation
+            "view": {
+                "showSelectedImage": mainMenu.showSelectedImage.checked,
+                "showRenderedPreview": mainMenu.showRenderedPreview.checked,
+                "previewRotation": output_preview.previewRotation
             },
-            selection: {
-                pointX: Math.max(0, Math.round(lastSelectedPoint.x)),
-                pointY: Math.max(0, Math.round(lastSelectedPoint.y))
+            "selection": {
+                "pointX": Math.max(0, Math.round(lastSelectedPoint.x)),
+                "pointY": Math.max(0, Math.round(lastSelectedPoint.y))
             }
         };
     }
 
-    function buildSettingsPayload()
-    {
+    function buildSettingsPayload() {
         const defaults = settings_manager.defaultSettings();
         return {
-            $schema: settings_manager.schemaPath,
-            version: 1,
-            defaults: defaults.defaults,
-            current: collectCurrentState(),
-            files: {
-                lastLoadedFile: file_manager.lastLoadedPath ? file_manager.lastLoadedPath : "",
-                lastSavedFile: file_manager.lastSavedPath ? file_manager.lastSavedPath : ""
+            "$schema": settings_manager.schemaPath,
+            "version": 1,
+            "defaults": defaults.defaults,
+            "current": collectCurrentState(),
+            "files": {
+                "lastLoadedFile": file_manager.lastLoadedPath ? file_manager.lastLoadedPath : "",
+                "lastSavedFile": file_manager.lastSavedPath ? file_manager.lastSavedPath : ""
             }
         };
     }
 
-    function persistSettings()
-    {
-        if (settingsHydrationInProgress)
-        {
+    function persistSettings() {
+        if (settingsHydrationInProgress) {
             return;
         }
-
         const saveOk = settings_manager.saveSettings(buildSettingsPayload());
-        if (!saveOk && settings_manager.lastError)
-        {
+        if (!saveOk && settings_manager.lastError) {
             console.warn("Failed to save settings: " + settings_manager.lastError);
         }
     }
 
-    function scheduleSettingsSave()
-    {
-        if (settingsHydrationInProgress)
-        {
+    function scheduleSettingsSave() {
+        if (settingsHydrationInProgress) {
             return;
         }
         settingsSaveTimer.restart();
     }
 
-    function applyLoadedSettings(settings)
-    {
-        if (!settings || !settings.current)
-        {
+    function applyLoadedSettings(settings) {
+        if (!settings || !settings.current) {
             return;
         }
-
         settingsHydrationInProgress = true;
-
         const current = settings.current;
-
-        if (current.controls)
-        {
+        if (current.controls) {
             transform_parameters.applySettings(current.controls.transform);
             render_parameters.applySettings(current.controls.render);
         }
-
-        if (current.view)
-        {
+        if (current.view) {
             mainMenu.showSelectedImage.checked = !!current.view.showSelectedImage;
             mainMenu.showRenderedPreview.checked = !!current.view.showRenderedPreview;
             output_preview.applySettings(current.view);
         }
-
-        if (current.selection)
-        {
+        if (current.selection) {
             const pointX = Math.max(0, Math.round(current.selection.pointX || 0));
             const pointY = Math.max(0, Math.round(current.selection.pointY || 0));
             lastSelectedPoint = Qt.point(pointX, pointY);
         }
-
-        if (settings.files && settings.files.lastLoadedFile)
-        {
+        if (settings.files && settings.files.lastLoadedFile) {
             const lastPath = settings.files.lastLoadedFile;
-            if (file_manager.loadPixMapFromLocalPath(lastPath))
-            {
+            if (file_manager.loadPixMapFromLocalPath(lastPath)) {
                 selector.img_source = file_manager.toFileUrl(lastPath);
                 imageSelected = true;
                 output_preview.onSelectorClicked(lastSelectedPoint.x, lastSelectedPoint.y);
             }
         }
-
         settingsHydrationInProgress = false;
         scheduleSettingsSave();
     }
 
-    function importSettingsFromUrl(fileUrl)
-    {
+    function importSettingsFromUrl(fileUrl) {
         const imported = settings_manager.loadSettingsFromFile(fileUrl);
-        if (settings_manager.lastError)
-        {
+        if (settings_manager.lastError) {
             messageDialog.showMessageBox("Settings import failed", settings_manager.lastError);
             return;
         }
-
         applyLoadedSettings(imported);
         persistSettings();
     }
 
-    function exportSettingsToUrl(fileUrl)
-    {
+    function exportSettingsToUrl(fileUrl) {
         const ok = settings_manager.saveSettingsToFile(fileUrl, buildSettingsPayload());
-        if (!ok)
-        {
+        if (!ok) {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown export error.";
             messageDialog.showMessageBox("Settings export failed", reason);
         }
     }
 
-    function resetSettingsToDefaults()
-    {
+    function resetSettingsToDefaults() {
         const defaults = settings_manager.defaultSettings();
-
         settingsHydrationInProgress = true;
         imageSelected = false;
         selector.img_source = "";
         lastSelectedPoint = Qt.point(0, 0);
         settingsHydrationInProgress = false;
-
         applyLoadedSettings(defaults);
-
         const resetPayload = {
-            $schema: settings_manager.schemaPath,
-            version: 1,
-            defaults: defaults.defaults,
-            current: defaults.current,
-            files: {
-                lastLoadedFile: "",
-                lastSavedFile: ""
+            "$schema": settings_manager.schemaPath,
+            "version": 1,
+            "defaults": defaults.defaults,
+            "current": defaults.current,
+            "files": {
+                "lastLoadedFile": "",
+                "lastSavedFile": ""
             }
         };
-
         const saveOk = settings_manager.saveSettings(resetPayload);
-        if (!saveOk)
-        {
+        if (!saveOk) {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown reset error.";
             messageDialog.showMessageBox("Reset settings failed", reason);
         }
     }
 
-    function createProjectFromUrl(folderUrl)
-    {
+    function createProjectFromUrl(folderUrl) {
         const ok = settings_manager.createProject(folderUrl);
-        if (!ok)
-        {
+        if (!ok) {
             const reason = settings_manager.lastError ? settings_manager.lastError : "Unknown project creation error.";
             messageDialog.showMessageBox("Create project failed", reason);
             return;
         }
-
         imageSelected = false;
         selector.img_source = "";
         lastSelectedPoint = Qt.point(0, 0);
-
         const loadedSettings = settings_manager.loadSettings();
         applyLoadedSettings(loadedSettings);
         persistSettings();
     }
 
-    onPreviewIsActiveChanged:
-    {
+    onPreviewIsActiveChanged: {
         selector.img_visible = imageSelected && previewIsActive;
         scheduleSettingsSave();
     }
 
-    onRenderedPreviewIsActiveChanged:
-    {
-        if (drawingItem)
-        {
+    onRenderedPreviewIsActiveChanged: {
+        if (drawingItem) {
             drawingItem.checkRenderedPreview(renderedPreviewIsActive);
         }
         scheduleSettingsSave();
     }
 
-    onClosing:
-    {
+    onClosing: {
         persistSettings();
     }
 
     /* Menu Bar */
-    menuBar: MainMenu
-    {
+    menuBar: MainMenu {
         id: mainMenu
         onResetSettingsRequested: root.resetSettingsToDefaults()
     }
 
-    RowLayout
-    {
+    RowLayout {
         spacing: 5
         anchors.fill: parent
 
-        TransformControl
-        {
+        TransformControl {
             id: transform_parameters
             Layout.fillHeight: true
             Layout.preferredWidth: 450
@@ -244,28 +199,24 @@ ApplicationWindow
             visible: true
         }
         /* Parameter adjustment section */
-        ColumnLayout
-        {
+        ColumnLayout {
             spacing: 5
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            RowLayout
-            {
+            RowLayout {
                 spacing: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                TransformSelector
-                {
+                TransformSelector {
                     id: selector
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     visible: true
                 }
 
-                RenderPreview
-                {
+                RenderPreview {
                     id: drawingPreview
                     Layout.fillHeight: true
                     Layout.fillWidth: true
@@ -274,8 +225,7 @@ ApplicationWindow
                 }
             }
 
-            TransformPreview
-            {
+            TransformPreview {
                 id: output_preview
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignBottom
@@ -283,8 +233,7 @@ ApplicationWindow
                 visible: true
             }
         }
-        RenderControl
-        {
+        RenderControl {
             id: render_parameters
             renderingActive: root.renderedPreviewIsActive
             Layout.fillHeight: true
@@ -294,26 +243,22 @@ ApplicationWindow
         }
     }
 
-    AppDialogs.FileDialog
-    {
+    AppDialogs.FileDialog {
         id: fileDialog
     }
 
-    AppDialogs.MessageDialog
-    {
+    AppDialogs.MessageDialog {
         id: messageDialog
     }
 
-    Timer
-    {
+    Timer {
         id: settingsSaveTimer
         interval: 250
         repeat: false
         onTriggered: root.persistSettings()
     }
 
-    Component.onCompleted:
-    {
+    Component.onCompleted: {
         /*
         * Emit initial values so controls and engine are synchronized on startup.
         */
@@ -321,8 +266,7 @@ ApplicationWindow
         transform_parameters.onAngResUpdate();
         transform_parameters.onZoomLoadUpdate();
         transform_parameters.onZoomOutUpdate();
-        if (drawingItem)
-        {
+        if (drawingItem) {
             drawingItem.requestRepaint();
         }
 
@@ -332,40 +276,33 @@ ApplicationWindow
         transform_parameters.radiusChanged.connect(selector.onRadiusChanged);
         transform_parameters.radiusChanged.connect(transform_engine.updateNoOfPixels);
         transform_parameters.angResChanged.connect(transform_engine.updateAngularResolution);
-         /*
+        /*
         * Connect zoom controls with input and output previews.
         */
-        transform_parameters.zoomChangedLoad.connect(function(zoomFactor)
-        {
-            selector.zoomFactor = zoomFactor;
-        });
-        transform_parameters.zoomChangedOut.connect(function(zoomFactor)
-        {
-            output_preview.zoomFactor = zoomFactor;
-        });
+        transform_parameters.zoomChangedLoad.connect(function (zoomFactor) {
+                selector.zoomFactor = zoomFactor;
+            });
+        transform_parameters.zoomChangedOut.connect(function (zoomFactor) {
+                output_preview.zoomFactor = zoomFactor;
+            });
 
         /*
         * Connect file metadata and selector clicks to preview updates.
         */
         file_manager.fileLoadedSize.connect(transform_parameters.onImgLoad);
         file_manager.fileErrLoad.connect(messageDialog.showMessageBox);
-
-        selector.pointUpdate.connect(function(xPosition, yPosition)
-        {
-            root.lastSelectedPoint = Qt.point(xPosition, yPosition);
-            output_preview.onSelectorClicked(xPosition, yPosition);
-            root.scheduleSettingsSave();
-        });
-
-        if (drawingItem)
-        {
+        selector.pointUpdate.connect(function (xPosition, yPosition) {
+                root.lastSelectedPoint = Qt.point(xPosition, yPosition);
+                output_preview.onSelectorClicked(xPosition, yPosition);
+                root.scheduleSettingsSave();
+            });
+        if (drawingItem) {
             render_parameters.ledNumChanged.connect(drawingItem.onLedNumChanged);
             render_parameters.ledRotationChanged.connect(drawingItem.onAngularResolutionChanged);
             render_parameters.ledSizeChanged.connect(drawingItem.onLedSizeChanged);
             render_parameters.ledDistanceChanged.connect(drawingItem.onLedDistanceChanged);
             render_parameters.ledRotationSpeedChanged.connect(drawingItem.onRotationSpeedChanged);
         }
-
         transform_parameters.radiusChanged.connect(root.scheduleSettingsSave);
         transform_parameters.angResChanged.connect(root.scheduleSettingsSave);
         transform_parameters.zoomChangedLoad.connect(root.scheduleSettingsSave);
@@ -378,15 +315,10 @@ ApplicationWindow
         output_preview.previewRotationChanged.connect(root.scheduleSettingsSave);
         file_manager.lastLoadedPathChanged.connect(root.scheduleSettingsSave);
         file_manager.lastSavedPathChanged.connect(root.scheduleSettingsSave);
-
         const loadedSettings = settings_manager.loadSettings();
-        if (settings_manager.lastError)
-        {
+        if (settings_manager.lastError) {
             console.warn("Settings load issue: " + settings_manager.lastError);
         }
         applyLoadedSettings(loadedSettings);
-
     }
 }
-
-

@@ -2,6 +2,9 @@
 
 #include <QObject>
 
+/**
+ * @brief Provides process CPU and RAM metrics for QML UI.
+ */
 class ProcessMonitor : public QObject
 {
     Q_OBJECT
@@ -9,14 +12,22 @@ class ProcessMonitor : public QObject
     Q_PROPERTY(double ramMb READ ramMb NOTIFY metricsChanged)
 
 public:
+    /**
+     * @brief Constructs process monitor.
+     * @param parent Optional QObject parent.
+     */
     explicit ProcessMonitor(QObject* parent = nullptr);
 
+    /** @brief Returns latest CPU usage percent. */
     double cpuPercent() const;
+    /** @brief Returns latest resident RAM usage in MB. */
     double ramMb() const;
 
+    /** @brief Refreshes CPU and RAM metrics from /proc. */
     Q_INVOKABLE void refresh();
 
 signals:
+    /** @brief Emitted when metrics are refreshed. */
     void metricsChanged();
 
 private:

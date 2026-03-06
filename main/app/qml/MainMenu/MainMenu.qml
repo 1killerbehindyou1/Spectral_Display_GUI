@@ -1,115 +1,104 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-MenuBar
-{
+MenuBar {
     id: root
     property alias showSelectedImage: showSelectedImage
     property alias showRenderedPreview: showRenderedPreview
-    signal resetSettingsRequested()
+    signal resetSettingsRequested
     property string configFolderUrl: settings_manager ? settings_manager.settingsFolderUrl : ""
 
     contentWidth: parent ? parent.width : implicitWidth
 
-    Menu
-    {
+    Menu {
         title: qsTr("&File")
-        Action
-        {
+        Action {
             text: qsTr("&Utwórz projekt")
-            onTriggered:
-            {
+            onTriggered: {
                 file_operation = "create_project";
                 fileDialog.title = "Wybierz katalog dla nowego projektu";
-                fileDialog.nameFilters = [ "All files (*)" ];
+                fileDialog.nameFilters = ["All files (*)"];
                 fileDialog.selectExisting = true;
                 fileDialog.selectFolder = true;
                 fileDialog.folder = settings_manager ? settings_manager.projectRootUrl : "";
                 fileDialog.open();
             }
         }
-        MenuSeparator { }
-        Action
-        {
+        MenuSeparator {
+        }
+        Action {
             text: qsTr("&Load Image...")
-            onTriggered:
-            {
+            onTriggered: {
                 file_operation = "load";
                 fileDialog.title = "Please choose a file";
-                fileDialog.nameFilters = [ "Image files (*.jpg *.png)", "All files (*)" ];
+                fileDialog.nameFilters = ["Image files (*.jpg *.png)", "All files (*)"];
                 fileDialog.selectExisting = true;
                 fileDialog.selectFolder = false;
                 fileDialog.folder = settings_manager ? settings_manager.sourceImagesFolderUrl : "";
                 fileDialog.open();
             }
         }
-        MenuSeparator { }
-        Action
-        {
+        MenuSeparator {
+        }
+        Action {
             text: qsTr("&Save Transformated Image...")
-            onTriggered:
-            {
+            onTriggered: {
                 file_operation = "save";
                 fileDialog.title = "Save to file";
-                fileDialog.nameFilters = [ "Image files (*.jpg *.png)" ];
+                fileDialog.nameFilters = ["Image files (*.jpg *.png)"];
                 fileDialog.selectExisting = false;
                 fileDialog.selectFolder = false;
                 fileDialog.folder = settings_manager ? settings_manager.transformedImagesFolderUrl : "";
                 fileDialog.open();
             }
         }
-        MenuSeparator { }
-        Action
-        {
+        MenuSeparator {
+        }
+        Action {
             text: qsTr("&Import Settings...")
-            onTriggered:
-            {
+            onTriggered: {
                 file_operation = "settings_import";
                 fileDialog.title = "Import settings from JSON";
-                fileDialog.nameFilters = [ "JSON files (*.json)", "All files (*)" ];
+                fileDialog.nameFilters = ["JSON files (*.json)", "All files (*)"];
                 fileDialog.selectExisting = true;
                 fileDialog.selectFolder = false;
                 fileDialog.folder = root.configFolderUrl;
                 fileDialog.open();
             }
         }
-        Action
-        {
+        Action {
             text: qsTr("&Export Settings...")
-            onTriggered:
-            {
+            onTriggered: {
                 file_operation = "settings_export";
                 fileDialog.title = "Export settings to JSON";
-                fileDialog.nameFilters = [ "JSON files (*.json)", "All files (*)" ];
+                fileDialog.nameFilters = ["JSON files (*.json)", "All files (*)"];
                 fileDialog.selectExisting = false;
                 fileDialog.selectFolder = false;
                 fileDialog.folder = root.configFolderUrl;
                 fileDialog.open();
             }
         }
-        MenuSeparator { }
-        Action
-        {
+        MenuSeparator {
+        }
+        Action {
             text: qsTr("&Reset Settings to Defaults")
             onTriggered: root.resetSettingsRequested()
         }
     }
 
-    Menu
-    {
+    Menu {
         title: qsTr("&View")
-        delegate: CheckBox{}
+        delegate: CheckBox {
+        }
 
-        Action
-        {
+        Action {
             id: showSelectedImage
             checked: false
             checkable: true
             text: "Preview selected image..."
         }
 
-        Action
-        {
+        Action {
             id: showRenderedPreview
             text: "Preview rendered image..."
             checked: false

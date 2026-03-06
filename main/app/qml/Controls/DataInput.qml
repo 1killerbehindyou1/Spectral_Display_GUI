@@ -2,38 +2,34 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 
-Control
-{
-   id: root
+Control {
+    id: root
     property alias label: label.text
     property alias value: control.value
     property int max
     property int min
     property int init_value
 
-    signal update()
+    signal update
 
-    function setCurrentValue(newValue)
-    {
+    function setCurrentValue(newValue) {
         control.value = newValue;
         slider.value = newValue;
     }
 
     implicitWidth: 270
 
-    contentItem: ColumnLayout
-    {
-        RowLayout
-        {
-            Text
-            {
-                font.pixelSize: 20
+    contentItem: ColumnLayout {
+        RowLayout {
+            Text {
                 id: label
+                font.pixelSize: 20
             }
-            Item{Layout.fillWidth: true}
+            Item {
+                Layout.fillWidth: true
+            }
 
-            SpinBox
-            {
+            SpinBox {
                 id: control
                 implicitHeight: 48
                 activeFocusOnTab: true
@@ -42,13 +38,11 @@ Control
                 to: max
                 editable: true
                 stepSize: 1
-                onValueModified:
-                {
+                onValueModified: {
                     slider.value = control.value;
                     root.update();
                 }
-                contentItem:TextField
-                {
+                contentItem: TextField {
                     id: textInp
                     z: 2
                     text: control.value
@@ -58,44 +52,42 @@ Control
                     font.bold: true
                     font.pixelSize: 20
                     activeFocusOnTab: true
-                    validator: IntValidator {bottom: min; top: max;}
+                    validator: IntValidator {
+                        bottom: min
+                        top: max
+                    }
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
-                    background: Rectangle
-                    {
+                    background: Rectangle {
                         id: rect
                         color: "transparent"
                     }
                 }
 
-                up.indicator: Rectangle
-                {
+                up.indicator: Rectangle {
                     radius: 8
                     implicitHeight: control.height
                     color: "#7799c6"
                     x: parent.width - width
                     implicitWidth: 40
-                    Text
-                    {
-                       text: "+"
-                       color: "#243956"
-                       font.bold: true
-                       font.pixelSize: textInp.font.pixelSize
-                       anchors.fill: parent
-                       fontSizeMode: Text.Fit
-                       horizontalAlignment: Text.AlignHCenter
-                       verticalAlignment: Text.AlignVCenter
+                    Text {
+                        text: "+"
+                        color: "#243956"
+                        font.bold: true
+                        font.pixelSize: textInp.font.pixelSize
+                        anchors.fill: parent
+                        fontSizeMode: Text.Fit
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
                     }
                 }
 
-                down.indicator: Rectangle
-                {
+                down.indicator: Rectangle {
                     x: 0
                     implicitWidth: 40
                     implicitHeight: control.height
                     radius: 8
                     color: "#7799c6"
-                    Text
-                    {
+                    Text {
                         text: "-"
                         color: "#243956"
                         font.bold: true
@@ -108,9 +100,10 @@ Control
                 }
             }
         }
-        Item{Layout.fillHeight: true}
-        Slider
-        {
+        Item {
+            Layout.fillHeight: true
+        }
+        Slider {
             id: slider
             stepSize: 1
             Layout.fillWidth: true
@@ -120,17 +113,15 @@ Control
             snapMode: Slider.SnapAlways
             activeFocusOnTab: false
 
-            onMoved:
-            {
+            onMoved: {
                 control.value = slider.value;
                 root.update();
             }
         }
     }
 
-    Component.onCompleted:
-    {
+    Component.onCompleted: {
         control.value = init_value;
-        slider.value  = init_value;
+        slider.value = init_value;
     }
 }
