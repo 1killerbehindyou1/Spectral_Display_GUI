@@ -1,8 +1,6 @@
 import QtQuick 2.15
-import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
 import Main 1.0
 import "../Controls"
 import "../Utils"
@@ -43,26 +41,21 @@ Control {
     }
 
     function onRadiusUpdate() {
-        console.log("radius changed: " + l_radius.value);
         root.radiusChanged(l_radius.value);
     }
     function onZoomOutUpdate() {
-        console.log("zoom changed: " + l_out_zoom.value);
         root.zoomChangedOut(l_out_zoom.value);
     }
 
     function onZoomLoadUpdate() {
-        console.log("zoom changed: " + l_load_zoom.value);
         root.zoomChangedLoad(l_load_zoom.value);
     }
 
     function onAngResUpdate() {
-        console.log("angular resolution changed: " + ang_res.value);
         root.angResChanged(ang_res.value);
     }
 
     function onImgLoad(width, height) {
-        console.log("size of loaded image: " + width + " x " + height);
         loadedImgSizeText.text = width + " x " + height;
     }
 
@@ -174,7 +167,8 @@ Control {
         }
     }
 
-    Component.onCompleted: {
+    Component.onCompleted:
+    {
         l_load_zoom.update.connect(onZoomLoadUpdate);
         l_out_zoom.update.connect(onZoomOutUpdate);
         l_radius.update.connect(onRadiusUpdate);

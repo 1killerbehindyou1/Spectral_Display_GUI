@@ -8,24 +8,21 @@ Control
     id: root
     implicitWidth: 270
 
-    //definitions of properties
     property alias label: label.text
     property alias value: control.value
     property int max
     property int min
     property int init_value
 
-    //signals
     signal update
 
-    //slots
     function setCurrentValue(newValue)
     {
         control.value = newValue;
         slider.value = newValue;
     }
 
-   contentItem: ColumnLayout
+    contentItem: ColumnLayout
     {
         RowLayout
         {
@@ -34,10 +31,8 @@ Control
                 id: label
                 font.pixelSize: 20
             }
-            Item
-            {
-                Layout.fillWidth: true
-            }
+
+            Item{Layout.fillWidth: true}
 
             AppControls.SpinBox
             {
@@ -51,10 +46,9 @@ Control
                 }
             }
         }
-        Item
-        {
-            Layout.fillHeight: true
-        }
+
+        Item{ Layout.fillHeight: true}
+        
         AppControls.Slider
         {
             id: slider
@@ -65,7 +59,6 @@ Control
         }
     }
 
-    //action on loaded
     Component.onCompleted:
     {
         control.value = init_value;

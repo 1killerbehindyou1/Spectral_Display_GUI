@@ -1,4 +1,3 @@
-import QtQuick.Window 2.15
 import Main 1.0
 import QtQuick 2.15
 import QtQuick.Controls 2.15
@@ -51,10 +50,6 @@ Control
     function requestRepaint() {
         renderItem.requestRepaint();
     }
-    function setPixmap(pixmapPointer) {
-        renderItem.setPixmap(pixmapPointer);
-        renderItem.requestRepaint();
-    }
     function syncWrapperFromRender() {
         wrapperLedSize = Math.max(1, renderItem.ledSize);
         wrapperLedDistance = Math.max(0, renderItem.ledDistance);
@@ -64,15 +59,18 @@ Control
     implicitHeight: 500
     implicitWidth: 720
 
-    Behavior on currentSpeedDegPerSecond {
-        SmoothedAnimation {
+    Behavior on currentSpeedDegPerSecond
+    {
+        SmoothedAnimation
+        {
             duration: 260
             maximumEasingTime: 400
             velocity: 200
         }
     }
 
-    Component.onCompleted: {
+    Component.onCompleted:
+    {
         root.syncWrapperFromRender();
         renderItem.requestRepaint();
     }
@@ -95,7 +93,8 @@ Control
         repeat: true
         running: root.renderingActive
 
-        onTriggered: {
+        onTriggered:
+        {
             root.currentSpeedDegPerSecond = root.targetSpeedDegPerSecond;
             root.rotationAngle = (root.rotationAngle + (root.currentSpeedDegPerSecond * interval / 1000.0)) % 360;
         }

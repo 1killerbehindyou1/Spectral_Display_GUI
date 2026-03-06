@@ -1,8 +1,6 @@
 import QtQuick 2.15
-import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
 import Main 1.0
 import "../Controls"
 import "../Utils"
@@ -179,30 +177,18 @@ Control
 
                     Button
                     {
-                        id: but_start
                         Layout.fillWidth: true
-                        enabled: true
+                        enabled: !root.renderingActive
                         text: "Start rendering"
-                        onClicked:
-                        {
-                            but_stop.enabled = true;
-                            but_start.enabled = false;
-                            root.renderingActive = true;
-                        }
+                        onClicked: root.startRenderingRequested()
                     }
 
                     Button
                     {
-                        id: but_stop
                         Layout.fillWidth: true
-                        enabled: false
+                        enabled: root.renderingActive
                         text: "Stop rendering"
-                        onClicked:
-                        {
-                            but_start.enabled = true;
-                            but_stop.enabled = false;
-                            root.renderingActive = false;
-                        }
+                        onClicked: root.stopRenderingRequested()
                     }
                 }
             }

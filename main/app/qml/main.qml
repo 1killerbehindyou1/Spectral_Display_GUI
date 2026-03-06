@@ -1,4 +1,4 @@
-// Main application window that wires controls, previews, dialogs, and settings persistence.
+
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
@@ -30,32 +30,38 @@ ApplicationWindow
 
     function collectCurrentState()
     {
-        return {
+        return
+        {
             "controls":
             {
                 "transform": transform_parameters.exportSettings(),
                 "render": render_parameters.exportSettings()
             },
-            "view": {
+            "view":
+            {
                 "showSelectedImage": mainMenu.showSelectedImage.checked,
                 "showRenderedPreview": mainMenu.showRenderedPreview.checked,
                 "previewRotation": output_preview.previewRotation
             },
-            "selection": {
+            "selection":
+            {
                 "pointX": Math.max(0, Math.round(lastSelectedPoint.x)),
                 "pointY": Math.max(0, Math.round(lastSelectedPoint.y))
             }
         };
     }
 
-    function buildSettingsPayload() {
+    function buildSettingsPayload()
+    {
         const defaults = settings_manager.defaultSettings();
-        return {
+        return
+        {
             "$schema": settings_manager.schemaPath,
             "version": 1,
             "defaults": defaults.defaults,
             "current": collectCurrentState(),
-            "files": {
+            "files":
+            {
                 "lastLoadedFile": file_manager.lastLoadedPath ? file_manager.lastLoadedPath : "",
                 "lastSavedFile": file_manager.lastSavedPath ? file_manager.lastSavedPath : ""
             }
@@ -253,11 +259,9 @@ ApplicationWindow
                     id: drawingPreview
                     Layout.fillHeight: true
                     Layout.fillWidth: true
-                    blurBase: 16
-                    currentSpeedDegPerSecond: 0
-
                     visible: true
                     renderingActive: root.renderedPreviewIsActive
+                    Component.onCompleted: root.drawingItem = drawingPreview
                 }
             }
 
@@ -273,16 +277,11 @@ ApplicationWindow
         RenderControl
         {
             id: render_parameters
+            renderingActive: root.renderedPreviewIsActive
             Layout.fillHeight: true
             Layout.preferredWidth: 350
             Layout.maximumWidth: 350
             visible: true
-            Component.onCompleted:
-            {
-                root.drawingItem = render_parameters.drawingItem;
-                root.renderedPreviewIsActive = true;
-
-            }
         }
     }
 
