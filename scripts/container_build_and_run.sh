@@ -6,6 +6,10 @@ cd "${repo_root}/container"
 
 mode="${1:-gui}"
 
+is_running_in_docker() {
+  [[ -f "/.dockerenv" ]] || grep -qaE "docker|containerd" /proc/1/cgroup 2>/dev/null
+}
+
 show_help() {
   cat <<'EOF'
 Usage:
@@ -23,6 +27,15 @@ case "${mode}" in
     exit 0
     ;;
   gui)
+    if ! command -v docker >/dev/null 2>&1; then
+      if is_running_in_docker; then
+        echo "[container] Docker CLI is not available inside container. Running GUI build directly in this container..."
+        exec ./run_in_container.sh
+      fi
+      echo "[container] Error: docker command not found on host." >&2
+      echo "Install Docker Engine and Docker Compose plugin, then re-run this script." >&2
+      exit 127
+    fi
     echo "[container] Building image..."
     docker compose build
     echo "[container] Starting interactive container shell..."
@@ -30,6 +43,15 @@ case "${mode}" in
     docker compose run --rm spectral-display-gui bash
     ;;
   install)
+    if ! command -v docker >/dev/null 2>&1; then
+      if is_running_in_docker; then
+        echo "[container] Docker CLI is not available inside container. Running install profile directly in this container..."
+        exec ./run_install_in_container.sh
+      fi
+      echo "[container] Error: docker command not found on host." >&2
+      echo "Install Docker Engine and Docker Compose plugin, then re-run this script." >&2
+      exit 127
+    fi
     echo "[container] Building image..."
     docker compose build
     echo "[container] Running install profile..."
