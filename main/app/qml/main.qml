@@ -30,8 +30,7 @@ ApplicationWindow
 
     function collectCurrentState()
     {
-        return
-        {
+        return {
             "controls":
             {
                 "transform": transform_parameters.exportSettings(),
@@ -54,8 +53,7 @@ ApplicationWindow
     function buildSettingsPayload()
     {
         const defaults = settings_manager.defaultSettings();
-        return
-        {
+        return {
             "$schema": settings_manager.schemaPath,
             "version": 1,
             "defaults": defaults.defaults,
