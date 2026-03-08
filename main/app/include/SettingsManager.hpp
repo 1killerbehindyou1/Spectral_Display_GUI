@@ -101,30 +101,115 @@ signals:
     void projectRootPathChanged();
 
 private:
+    /**
+     * @brief Loads settings from disk and optionally falls back to defaults.
+     * @param filePath Local settings file path.
+     * @param fallbackToDefault Whether to return defaults on failure.
+     * @return Loaded settings map.
+     */
     QVariantMap loadSettingsInternal(const QString& filePath,
                                      bool fallbackToDefault);
+    /**
+     * @brief Persists settings payload to disk.
+     * @param filePath Local destination file path.
+     * @param settings Settings payload.
+     * @return true on success, false otherwise.
+     */
     bool saveSettingsInternal(const QString& filePath,
                               const QVariantMap& settings);
+    /**
+     * @brief Converts file URL to normalized local path.
+     * @param path Source URL.
+     * @return Normalized local path.
+     */
     QString localPathFromUrl(const QUrl& path);
+    /**
+     * @brief Ensures settings directory exists for current project.
+     * @return true if directory is ready, false otherwise.
+     */
     bool ensureProjectConfigDirectory();
 
+    /** @brief Builds default settings JSON object used by serializer. */
     QJsonObject defaultSettingsJson() const;
+    /**
+     * @brief Validates full settings JSON structure.
+     * @param root Settings root object.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateSettings(const QJsonObject& root, QString* error) const;
+    /**
+     * @brief Validates "controls" section.
+     * @param controls Controls object.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateControlSettings(const QJsonObject& controls,
                                  QString* error) const;
+    /**
+     * @brief Validates "view" section.
+     * @param view View object.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateViewSettings(const QJsonObject& view, QString* error) const;
+    /**
+     * @brief Validates "selection" section.
+     * @param selection Selection object.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateSelectionSettings(const QJsonObject& selection,
                                    QString* error) const;
+    /**
+     * @brief Validates "files" section.
+     * @param files Files object.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateFilesSettings(const QJsonObject& files, QString* error) const;
+    /**
+     * @brief Validates integer key against expected range.
+     * @param object Source JSON object.
+     * @param key Key name to validate.
+     * @param minValue Accepted minimum value.
+     * @param maxValue Accepted maximum value.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateRange(const QJsonObject& object, const QString& key,
                        int minValue, int maxValue, QString* error) const;
+    /**
+     * @brief Validates boolean key.
+     * @param object Source JSON object.
+     * @param key Key name to validate.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateBool(const QJsonObject& object, const QString& key,
                       QString* error) const;
+    /**
+     * @brief Validates string key.
+     * @param object Source JSON object.
+     * @param key Key name to validate.
+     * @param error Output validation error.
+     * @return true when valid, false otherwise.
+     */
     bool validateString(const QJsonObject& object, const QString& key,
                         QString* error) const;
+    /**
+     * @brief Updates last error string and notifies observers.
+     * @param error New error message.
+     */
     void setLastError(const QString& error);
+    /**
+     * @brief Updates project root path and emits change notification.
+     * @param path New project root path.
+     */
     void setProjectRootPath(const QString& path);
 
+    /** @brief Last settings or filesystem error message. */
     QString m_last_error;
+    /** @brief Current project root path on local filesystem. */
     QString m_project_root_path;
 };

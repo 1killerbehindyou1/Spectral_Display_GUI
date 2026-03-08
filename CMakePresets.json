@@ -62,21 +62,26 @@
             "binaryDir": "${sourceDir}/build/install_build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "BUILD_UT": "OFF",
-                "BUILD_BENCHMARK_TESTS": "OFF",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/GUI_portable"
             }
         },
         {
             "name": "install-debug",
             "displayName": "Install Debug configure",
-            "inherits": "debug",
+            "inherits": "install",
             "binaryDir": "${sourceDir}/build/install_debug_build",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_UT": "OFF",
-                "BUILD_BENCHMARK_TESTS": "OFF",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/GUI_portable"
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "doxygen",
+            "displayName": "duild with documentation gen",
+            "inherits": "debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/docs",
+            "cacheVariables": {
+                "BUILD_DOCUMENTATION": "ON"
             }
         }
     ],
@@ -115,6 +120,12 @@
             "name": "install-debug",
             "inherits": "base",
             "configurePreset": "install-debug"
+        },
+        {
+            "name": "doxygen",
+            "inherits": "base",
+            "configurePreset": "doxygen"
         }
+
     ]
 }

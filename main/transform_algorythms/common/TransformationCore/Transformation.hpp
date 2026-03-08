@@ -39,7 +39,9 @@ public:
     QPolygonF operator()(const QRectF& rect) const;
 
 private:
+    /** @brief Rotation center in source coordinate space. */
     QPointF m_rotCenter;
+    /** @brief Rotation angle in radians. */
     double m_angle;
 };
 } // namespace common

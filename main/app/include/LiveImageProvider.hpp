@@ -22,14 +22,15 @@ public:
 
     /**
      * @brief Returns requested image frame for QML engine.
-     * @param Unused source identifier.
+      * @param str Unused source identifier.
      * @param size Optional output image size.
      * @param requestedSize Requested target size.
      * @return Stored image or scaled variant.
      */
-    QImage requestImage(const QString&, QSize* size,
+     QImage requestImage(const QString& str, QSize* size,
                         const QSize& requestedSize) override;
 
 private:
+    /** @brief Cached transformed image served to QML image provider requests. */
     QImage m_image_transformed;
 };

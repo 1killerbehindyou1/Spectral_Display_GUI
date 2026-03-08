@@ -83,10 +83,19 @@ signals:
     void lastSavedPathChanged();
 
 private:
+    /**
+     * @brief Loads image data from local file path into internal pixmap state.
+     * @param localPath Local path to image file.
+     * @return true on success, false otherwise.
+     */
     bool loadPixMapInternal(QString localPath);
 
+    /** @brief Internal pixmap storage used by QML and transform pipeline. */
     QPixmap m_pixmap;
+    /** @brief Generic path property exposed to QML. */
     QString m_path;
+    /** @brief Last successfully loaded local file path. */
     QString m_last_loaded_path;
+    /** @brief Last successfully saved local file path. */
     QString m_last_saved_path;
 };

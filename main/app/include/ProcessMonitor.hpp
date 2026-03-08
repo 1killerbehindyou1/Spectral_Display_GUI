@@ -31,13 +31,21 @@ signals:
     void metricsChanged();
 
 private:
+    /** @brief Reads total CPU jiffies from system statistics. */
     static quint64 readTotalCpuJiffies();
+    /** @brief Reads current process CPU jiffies from procfs. */
     static quint64 readProcessCpuJiffies();
+    /** @brief Reads resident process memory usage in MB. */
     static double readResidentRamMb();
 
+    /** @brief Previously sampled total CPU jiffies. */
     quint64 m_prevTotalCpuJiffies{0};
+    /** @brief Previously sampled process CPU jiffies. */
     quint64 m_prevProcessCpuJiffies{0};
+    /** @brief Last computed CPU utilization percentage. */
     double m_cpuPercent{0.0};
+    /** @brief Last computed resident memory usage in MB. */
     double m_ramMb{0.0};
+    /** @brief Indicates whether initial CPU baseline was captured. */
     bool m_hasCpuBaseline{false};
 };

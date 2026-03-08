@@ -85,11 +85,24 @@ signals:
     void transformReadyForQml();
 
 private:
+    /**
+     * @brief Executes transformation with explicit parameter snapshot.
+     * @param params Transformation parameters to use.
+     */
     void transformImage(const TransformParameters& params);
+    /**
+     * @brief Checks whether transformation parameters are valid.
+     * @param params Parameters to validate.
+     * @return true if parameters can be used for transformation.
+     */
     bool hasValidParams(const TransformParameters& params) const;
 
+    /** @brief Current transformation parameters. */
     TransformParameters m_params;
+    /** @brief Interpolator strategy used during transformation. */
     single::InterpolatorSingle m_interpolator;
+    /** @brief Source pixmap shared with image loading pipeline. */
     std::shared_ptr<QPixmap> m_pixmap = nullptr;
+    /** @brief Latest transformed image shared with QML layer. */
     std::shared_ptr<QImage> m_transformed_image = nullptr;
 };

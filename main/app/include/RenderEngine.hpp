@@ -106,16 +106,26 @@ public:
     Q_INVOKABLE void updateRotationSpeed(int speed);
 
 signals:
+    /** @brief Emitted when LED size changes. */
     void ledSizeChanged();
+    /** @brief Emitted when LED spacing changes. */
     void ledDistanceChanged();
+    /** @brief Emitted when LED count changes. */
     void ledCountChanged();
 
 private:
+    /** @brief Indicates whether render updates are active. */
     bool m_rendering{true};
-    QImage* m_image = nullptr; // Pointer to the image to be rendered
-    QImage m_owned_image; // Internal storage when source is provided as QPixmap
-    RenderParameters m_render_params; // Parameters for rendering
+    /** @brief Pointer to externally provided source image. */
+    QImage* m_image = nullptr;
+    /** @brief Internal image storage used when source is provided as pixmap. */
+    QImage m_owned_image;
+    /** @brief Runtime parameters controlling LED rendering. */
+    RenderParameters m_render_params;
+    /** @brief Timer driving periodic repaint requests. */
     QTimer* m_repaint_timer{nullptr};
+    /** @brief Clock used to compute current rotation angle over time. */
     QElapsedTimer* m_rotation_clock{nullptr};
+    /** @brief Current rotation angle in degrees. */
     qreal m_rotation_degrees{0.0};
 };

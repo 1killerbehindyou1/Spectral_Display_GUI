@@ -122,7 +122,39 @@ Raport HTML jest generowany w katalogu `build/coverage/`.
 
 Uwaga: konfiguracja coverage pomija `main/app/source/main.cpp`.
 
-## 5) Formatowanie kodu
+## 5) Dokumentacja API (Doxygen)
+
+Dokumentacja API jest generowana wyłącznie z produkcyjnych plików `.hpp`.
+
+Wymagania dodatkowe:
+
+- `doxygen`
+
+Przykładowa instalacja (Ubuntu/Debian):
+
+```bash
+sudo apt install -y doxygen
+```
+
+Konfiguracja z włączonym generowaniem dokumentacji:
+
+```bash
+cmake --preset debug -DBUILD_DOCUMENTATION=ON
+```
+
+Budowanie dokumentacji:
+
+```bash
+cmake --build build/debug --target documentation
+```
+
+Wynik HTML jest zapisywany w katalogu:
+
+- `build/debug/docs/html/`
+
+Zakres dokumentacji obejmuje tylko produkcyjne nagłówki z katalogów aplikacji i bibliotek transformacji. Pliki `.cpp`, testy, benchmarki, zależności zewnętrzne i pomocnicze nagłówki googletest są wykluczone.
+
+## 6) Formatowanie kodu
 
 ### C/C++ (`clang-format`)
 
@@ -147,7 +179,7 @@ Przykład ręcznie:
 qmlformat -i main/app/qml/RenderPart/RenderPreview.qml
 ```
 
-## 6) VS Code – formatowanie przy zapisie
+## 7) VS Code – formatowanie przy zapisie
 
 W repo jest gotowa konfiguracja workspace:
 
@@ -160,7 +192,7 @@ Aktualne zasady:
 - QML i QML types (`*.qml`, `*.qmltypes`): `qmlformat` przez `emeraldwalk.runonsave`
 - JS w ścieżkach QML: `prettier` (jeśli dostępny)
 
-## 7) Struktura repo (skrót)
+## 8) Struktura repo (skrót)
 
 - `main/` – kod aplikacji (`BasicGUI`)
 - `tests/` – testy jednostkowe/benchmarki
@@ -168,13 +200,14 @@ Aktualne zasady:
 - `utils/` – narzędzia CMake i wsparcie testów
 - `documentation/` – dodatkowe materiały
 
-## 8) Typowe problemy
+## 9) Typowe problemy
 
 - **Brak Qt/QML modułów**: doinstaluj pakiety Qt5 z sekcji „Wymagania”.
 - **Brak `clang-format`**: `sudo apt install clang-format`.
 - **Brak `qmlformat`**: doinstaluj narzędzia Qt Declarative dla swojej dystrybucji.
+- **Brak `doxygen`**: `sudo apt install doxygen`.
 
-## 9) Architektura aplikacji
+## 10) Architektura aplikacji
 
 ### Główne komponenty
 

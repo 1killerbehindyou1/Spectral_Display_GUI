@@ -39,6 +39,8 @@ public:
     Q_INVOKABLE void selectorResize(int no_pixels);
 
 private:
-    QPoint m_point; // środek odrysowywania
-    int m_radius;   // promień zaznaczenia
+    /** @brief Center point used for selector drawing. */
+    QPoint m_point;
+    /** @brief Selector radius in pixels. */
+    int m_radius;
 };
