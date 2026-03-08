@@ -77,6 +77,13 @@ cmake --build --preset install-debug
 cmake --build --preset install-debug --target install
 ```
 
+Alternatively (runs configuration, build and `install` in one step):
+
+```bash
+./scripts/linux_build.sh install       # lub
+./scripts/linux_build.sh install-debug
+```
+
 Wynik instalacji:
 
 - `README.md`
@@ -256,3 +263,5 @@ Dodatkowo rejestrowane są typy QML:
 
 - `RenderEngine` jako `Main 1.0 / RenderEngine`
 - `RenderSelector` jako `Main 1.0 / Selector`
+
+

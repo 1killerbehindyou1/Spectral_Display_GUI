@@ -40,9 +40,7 @@ target_link_libraries(BasicGUI
   SinglePointTransform
 )
 
-install(TARGETS BasicGUI
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+install(TARGETS BasicGUI RUNTIME DESTINATION . )
 
 set_target_properties(BasicGUI PROPERTIES
   INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
@@ -70,19 +68,19 @@ endif()
 
 set(QT_CONF_FILE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
 file(WRITE "${QT_CONF_FILE}" "[Paths]\nPrefix=..\nLibraries=lib\nPlugins=plugins\nQml2Imports=qml\n")
-install(FILES "${QT_CONF_FILE}" DESTINATION ${CMAKE_INSTALL_BINDIR})
 
+install(FILES "${QT_CONF_FILE}" DESTINATION .)
 install(FILES "${CMAKE_SOURCE_DIR}/README.md" DESTINATION .)
 
 install(PROGRAMS
   "${CMAKE_SOURCE_DIR}/scripts/run_portable.sh"
   "${CMAKE_SOURCE_DIR}/scripts/run_portable_debug.sh"
-  DESTINATION skrypts
+  DESTINATION scripts
 )
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation"
-  DESTINATION .
-)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/source_images" DESTINATION example_images)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/architecture" DESTINATION architecture)
+
 
 set(QT_RUNTIME_TARGETS
   Qt${QT_VERSION_MAJOR}::Core
@@ -114,43 +112,31 @@ if(QT_QML_DIR)
   install(DIRECTORY "${QT_QML_DIR}/" DESTINATION qml OPTIONAL)
 endif()
 
-install(CODE [[
-  set(archive_name "spectral_display_portable.tar.gz")
-  set(archive_path "${CMAKE_INSTALL_PREFIX}/${archive_name}")
-  set(archive_items
-    README.md
-    bin
-    lib
-    plugins
-    qml
-    skrypts
-    documentation
-  )
+# install(CODE [[
+#   set(archive_items
+#     README.md
+#     bin/BasicGui
+#     lib
+#     plugins
+#     documentation/architecture
+#     documentation/source_images
+#     scripts/run_portable.sh
+#     scripts/run_portable_debug.sh
+#     json_schema
+#     project_configuration
+#   )
 
-  file(REMOVE "${archive_path}")
+#   execute_process(
+#     COMMAND "${CMAKE_COMMAND}" -E tar "cfvz" "${archive_path}" --format=gnutar -- ${existing_items}
+#     WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+#     RESULT_VARIABLE archive_result
+#     OUTPUT_VARIABLE archive_stdout
+#     ERROR_VARIABLE archive_stderr
+#   )
 
-  set(existing_items)
-  foreach(item IN LISTS archive_items)
-    if(EXISTS "${CMAKE_INSTALL_PREFIX}/${item}")
-      list(APPEND existing_items "${item}")
-    endif()
-  endforeach()
+#   if(NOT archive_result EQUAL 0)
+#     message(FATAL_ERROR "Failed to create install archive: ${archive_stderr}")
+#   endif()
 
-  if(NOT existing_items)
-    message(FATAL_ERROR "No install artifacts found to archive in ${CMAKE_INSTALL_PREFIX}")
-  endif()
-
-  execute_process(
-    COMMAND "${CMAKE_COMMAND}" -E tar "cfvz" "${archive_path}" --format=gnutar -- ${existing_items}
-    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
-    RESULT_VARIABLE archive_result
-    OUTPUT_VARIABLE archive_stdout
-    ERROR_VARIABLE archive_stderr
-  )
-
-  if(NOT archive_result EQUAL 0)
-    message(FATAL_ERROR "Failed to create install archive: ${archive_stderr}")
-  endif()
-
-  message(STATUS "Created portable archive: ${archive_path}")
-]])
+#   message(STATUS "Created portable archive: ${archive_path}")
+# ]])

@@ -9,7 +9,15 @@ if [[ $# -lt 1 ]]; then
 	exit 2
 fi
 
+preset="$1"
+
 echo "Project dir: ${cmake_root_dir}"
 
-cd "${cmake_root_dir}" && cmake --preset "$1"
-cmake --build --preset "$1"
+cd "${cmake_root_dir}" && cmake --preset "${preset}"
+cmake --build --preset "${preset}"
+
+case "${preset}" in
+	install|install-debug)
+		cmake --build --preset "${preset}" --target install
+		;;
+esac
