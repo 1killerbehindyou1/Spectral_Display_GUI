@@ -1,0 +1,60 @@
+{
+    "$schema": "qrc:/json_schema/settings.schema.json",
+    "current": {
+        "controls": {
+            "render": {
+                "ledAngle": 5,
+                "ledCount": 25,
+                "ledDistance": 2,
+                "ledRotationSpeed": 1,
+                "ledSize": 5
+            },
+            "transform": {
+                "angularResolution": 1,
+                "loadZoom": 1,
+                "outputZoom": 3,
+                "radius": 100
+            }
+        },
+        "selection": {
+            "pointX": 241,
+            "pointY": 346
+        },
+        "view": {
+            "previewRotation": 180,
+            "showRenderedPreview": false,
+            "showSelectedImage": false
+        }
+    },
+    "defaults": {
+        "controls": {
+            "render": {
+                "ledAngle": 5,
+                "ledCount": 25,
+                "ledDistance": 2,
+                "ledRotationSpeed": 600,
+                "ledSize": 5
+            },
+            "transform": {
+                "angularResolution": 10,
+                "loadZoom": 1,
+                "outputZoom": 1,
+                "radius": 100
+            }
+        },
+        "selection": {
+            "pointX": 0,
+            "pointY": 0
+        },
+        "view": {
+            "previewRotation": 180,
+            "showRenderedPreview": false,
+            "showSelectedImage": false
+        }
+    },
+    "files": {
+        "lastLoadedFile": "",
+        "lastSavedFile": ""
+    },
+    "version": 1
+}

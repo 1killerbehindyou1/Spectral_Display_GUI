@@ -56,13 +56,18 @@ if(BUILD_DOCUMENTATION)
         @ONLY
     )
 
-    add_custom_target(documentation
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${DOXYGEN_OUTPUT_DIR}
+    add_custom_target(DoxygenDoc ALL
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         COMMENT "Generating API documentation with Doxygen"
         VERBATIM
     )
+
+    install(DIRECTORY "${DOXYGEN_OUTPUT_DIR}/"
+        DESTINATION documentation
+        OPTIONAL
+    )
+
 endif()
 
 if(BUILD_UT)
@@ -78,7 +83,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 add_subdirectory(main)
-
 
 
 

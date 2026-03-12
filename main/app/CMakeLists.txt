@@ -78,9 +78,12 @@ install(PROGRAMS
   DESTINATION scripts
 )
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/source_images" DESTINATION example_images)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/architecture" DESTINATION architecture)
+add_custom_target(ARCHITECTURE
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/architecture
+)
 
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/source_images" DESTINATION .)
+install(FILES "${CMAKE_SOURCE_DIR}/documentation/architecture/ClassHierarchy.drawio" DESTINATION architecture)
 
 set(QT_RUNTIME_TARGETS
   Qt${QT_VERSION_MAJOR}::Core
@@ -111,32 +114,3 @@ endif()
 if(QT_QML_DIR)
   install(DIRECTORY "${QT_QML_DIR}/" DESTINATION qml OPTIONAL)
 endif()
-
-# install(CODE [[
-#   set(archive_items
-#     README.md
-#     bin/BasicGui
-#     lib
-#     plugins
-#     documentation/architecture
-#     documentation/source_images
-#     scripts/run_portable.sh
-#     scripts/run_portable_debug.sh
-#     json_schema
-#     project_configuration
-#   )
-
-#   execute_process(
-#     COMMAND "${CMAKE_COMMAND}" -E tar "cfvz" "${archive_path}" --format=gnutar -- ${existing_items}
-#     WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
-#     RESULT_VARIABLE archive_result
-#     OUTPUT_VARIABLE archive_stdout
-#     ERROR_VARIABLE archive_stderr
-#   )
-
-#   if(NOT archive_result EQUAL 0)
-#     message(FATAL_ERROR "Failed to create install archive: ${archive_stderr}")
-#   endif()
-
-#   message(STATUS "Created portable archive: ${archive_path}")
-# ]])

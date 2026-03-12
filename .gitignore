@@ -5,7 +5,6 @@
 *.txt.user
 /.cache/
 /*build*
-.config/
 SpectralDisplayPro
 GUI_portable
 *.pro.user
