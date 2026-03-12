@@ -38,7 +38,7 @@ W środku kontenera:
 ./container/run_in_container.sh
 ```
 
-## 5) Portable install (`GUI_portable`) przez profil compose
+## 5) Portable install (`SpectralDisplay`) przez profil compose
 
 Na hoście:
 
@@ -55,8 +55,7 @@ Alternatywnie (z katalogu repo):
 
 Wynik:
 
-- `GUI_portable/` w katalogu głównym repozytorium
-- `GUI_portable/spectral_display_portable.tar.gz`
+- `SpectralDisplay/` w katalogu głównym repozytorium
 
 ## 6) Cofnięcie uprawnień X11 (opcjonalnie)
 

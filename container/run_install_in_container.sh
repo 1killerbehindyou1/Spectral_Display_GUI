@@ -8,4 +8,4 @@ cmake --preset install
 cmake --build --preset install
 cmake --build --preset install --target install
 
-echo "Portable artifacts generated in: ${repo_root}/GUI_portable"
+echo "Portable artifacts generated in: ${repo_root}/SpectralDisplay"

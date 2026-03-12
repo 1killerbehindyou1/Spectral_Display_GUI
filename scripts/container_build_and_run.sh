@@ -17,7 +17,7 @@ Usage:
 
 Modes:
   gui      Build image and run interactive GUI container shell (default)
-  install  Build image and run install profile (creates GUI_portable)
+  install  Build image and run install profile (creates SpectralDisplay)
 EOF
 }
 

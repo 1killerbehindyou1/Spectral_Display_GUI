@@ -54,9 +54,9 @@
             "name": "install",
             "displayName": "Install configure",
             "inherits": "release",
-            "binaryDir": "${sourceDir}/build/install_build",
+            "binaryDir": "${sourceDir}/build/release",
             "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/GUI_portable"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/SpectralDisplay"
             }
         },
         {
@@ -64,7 +64,7 @@
             "displayName": "Build with documentation generation",
             "inherits": "release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/docs",
+            "binaryDir": "${sourceDir}/build/doxygen",
             "cacheVariables": {
                 "BUILD_DOCUMENTATION": "ON"
             }

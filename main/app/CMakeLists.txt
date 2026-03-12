@@ -67,21 +67,16 @@ if(TARGET ${QT_QMAKE_TARGET})
 endif()
 
 set(QT_CONF_FILE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-file(WRITE "${QT_CONF_FILE}" "[Paths]\nPrefix=..\nLibraries=lib\nPlugins=plugins\nQml2Imports=qml\n")
+file(WRITE "${QT_CONF_FILE}" "[Paths]\nPrefix=.\nLibraries=lib\nPlugins=plugins\nQml2Imports=qml\n")
 
 install(FILES "${QT_CONF_FILE}" DESTINATION .)
 install(FILES "${CMAKE_SOURCE_DIR}/README.md" DESTINATION .)
-
-install(PROGRAMS
-  "${CMAKE_SOURCE_DIR}/scripts/run_portable.sh"
-  "${CMAKE_SOURCE_DIR}/scripts/run_portable_debug.sh"
-  DESTINATION scripts
-)
 
 add_custom_target(ARCHITECTURE
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/architecture
 )
 
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/main/app_config/config_sample" DESTINATION .)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/source_images" DESTINATION .)
 install(FILES "${CMAKE_SOURCE_DIR}/documentation/architecture/ClassHierarchy.drawio" DESTINATION architecture)
 

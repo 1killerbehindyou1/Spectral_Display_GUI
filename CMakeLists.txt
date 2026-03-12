@@ -31,30 +31,21 @@ if(BUILD_DOCUMENTATION)
         )
     endif()
 
-    set(DOXYGEN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/docs)
-    set(DOXYGEN_FILE_PATTERNS *.hpp)
-    set(DOXYGEN_INPUT_DIRS
-        ${CMAKE_SOURCE_DIR}/main/app/include
-        ${CMAKE_SOURCE_DIR}/main/transform_algorythms/common/InterpolationCore
-        ${CMAKE_SOURCE_DIR}/main/transform_algorythms/common/TransformationCore
-        ${CMAKE_SOURCE_DIR}/main/transform_algorythms/SinglePointTransform
-        ${CMAKE_SOURCE_DIR}/main/transform_algorythms/QPolygonTransform
-    )
-    set(DOXYGEN_EXCLUDE_DIRS
-        ${CMAKE_SOURCE_DIR}/tests
-        ${CMAKE_SOURCE_DIR}/depend
-        ${CMAKE_SOURCE_DIR}/utils/googletest_utils
-        ${CMAKE_SOURCE_DIR}/documentation/qml_example
-    )
-
-    string(JOIN " " DOXYGEN_INPUTS ${DOXYGEN_INPUT_DIRS})
-    string(JOIN " " DOXYGEN_EXCLUDES ${DOXYGEN_EXCLUDE_DIRS})
+    set(DOXYGEN_OUTPUT_ROOT "${CMAKE_SOURCE_DIR}/build")
+    set(DOXYGEN_HTML_SUBDIR "doxygen_html")
 
     configure_file(
         ${CMAKE_SOURCE_DIR}/documentation/Doxyfile.in
         ${CMAKE_BINARY_DIR}/Doxyfile
         @ONLY
     )
+
+    file(READ "${CMAKE_BINARY_DIR}/Doxyfile" DOXYFILE_CONTENT)
+    string(REGEX REPLACE "OUTPUT_DIRECTORY[ \t]*=[^\n]*"
+        "OUTPUT_DIRECTORY = ${DOXYGEN_OUTPUT_ROOT}" DOXYFILE_CONTENT "${DOXYFILE_CONTENT}")
+    string(REGEX REPLACE "HTML_OUTPUT[ \t]*=[^\n]*"
+        "HTML_OUTPUT = ${DOXYGEN_HTML_SUBDIR}" DOXYFILE_CONTENT "${DOXYFILE_CONTENT}")
+    file(WRITE "${CMAKE_BINARY_DIR}/Doxyfile" "${DOXYFILE_CONTENT}")
 
     add_custom_target(DoxygenDoc ALL
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
@@ -63,12 +54,12 @@ if(BUILD_DOCUMENTATION)
         VERBATIM
     )
 
-    install(DIRECTORY "${DOXYGEN_OUTPUT_DIR}/"
-        DESTINATION documentation
-        OPTIONAL
-    )
-
 endif()
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/build/doxygen_html/"
+    DESTINATION doxygen_html
+    OPTIONAL
+)
 
 if(BUILD_UT)
     include(CTest)

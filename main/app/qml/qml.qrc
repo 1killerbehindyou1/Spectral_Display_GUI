@@ -16,6 +16,6 @@
         <file>MainMenu/MainMenu.qml</file>
         <file>Dialogs/FileDialog.qml</file>
         <file>Dialogs/MessageDialog.qml</file>
-        <file alias="json_schema/settings.schema.json">../../json_schema/settings.schema.json</file>
+        <file alias="json_schema/settings.schema.json">../../app_config/json_schema/settings.schema.json</file>
     </qresource>
 </RCC>

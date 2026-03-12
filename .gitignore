@@ -6,7 +6,7 @@
 /.cache/
 /*build*
 SpectralDisplayPro
-GUI_portable
+SpectralDisplay
 *.pro.user
 *.tar.gz
 *~

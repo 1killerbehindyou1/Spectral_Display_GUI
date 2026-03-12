@@ -61,7 +61,7 @@ cmake --build --preset release
 ./scripts/linux_build.sh release
 ```
 
-### Instalacja do `GUI_portable` w katalogu głównym repozytorium
+### Instalacja do `SpectralDisplay` w katalogu głównym repozytorium
 
 ```bash
 cmake --preset install
@@ -69,44 +69,39 @@ cmake --build --preset install
 cmake --build --preset install --target install
 ```
 
-Wariant debug (także do `GUI_portable`):
+Alternatywnie (konfiguracja + build + `install` jednym poleceniem):
 
 ```bash
-cmake --preset install-debug
-cmake --build --preset install-debug
-cmake --build --preset install-debug --target install
-```
-
-Alternatively (runs configuration, build and `install` in one step):
-
-```bash
-./scripts/linux_build.sh install       # lub
-./scripts/linux_build.sh install-debug
+./scripts/linux_build.sh install
 ```
 
 Wynik instalacji:
 
+Przy presecie `install` (prefix `SpectralDisplay`) CMake dodatkowo kopiuje `build/doxygen_html` do `SpectralDisplay/doxygen_html`, jeśli źródłowy katalog istnieje.
+
 - `README.md`
-- `GUI_portable/README.md`
-- `GUI_portable/bin/BasicGUI`
-- `GUI_portable/bin/qt.conf` (lokalne ścieżki Qt dla trybu portable)
-- `GUI_portable/lib/` (runtime biblioteki Qt wymagane przez aplikację)
-- `GUI_portable/plugins/` (m.in. `platforms`, `imageformats`, `platformthemes`, `xcbglintegrations`)
-- `GUI_portable/qml/` (moduły QML wymagane przez Qt Quick/Controls)
-- `GUI_portable/skrypts/` (`run_portable.sh`, `run_portable_debug.sh`)
-- `GUI_portable/documentation/` (kopia katalogu dokumentacji)
-- `GUI_portable/spectral_display_portable.tar.gz` (archiwum `tar.gz` tworzone przez `cmake --install`)
+- `SpectralDisplay/README.md`
+- `SpectralDisplay/BasicGUI`
+- `SpectralDisplay/qt.conf` (lokalne ścieżki Qt dla trybu portable)
+- `SpectralDisplay/lib/` (runtime biblioteki Qt wymagane przez aplikację)
+- `SpectralDisplay/plugins/` (m.in. `platforms`, `imageformats`, `platformthemes`, `xcbglintegrations`)
+- `SpectralDisplay/qml/` (moduły QML wymagane przez Qt Quick/Controls)
+- `SpectralDisplay/scripts/` (`run_portable.sh`, `run_portable_debug.sh`)
+- `SpectralDisplay/config_sample/`
+- `SpectralDisplay/source_images/`
+- `SpectralDisplay/architecture/ClassHierarchy.drawio`
+- `SpectralDisplay/doxygen_html/` (jeśli istnieje `build/doxygen_html`)
 
 Uruchamianie wersji portable:
 
 ```bash
-./scripts/run_portable.sh
+./SpectralDisplay/scripts/run_portable.sh
 ```
 
 Uruchamianie wersji portable (debug):
 
 ```bash
-./scripts/run_portable_debug.sh
+./SpectralDisplay/scripts/run_portable_debug.sh
 ```
 
 ## 3) Testy jednostkowe
@@ -146,18 +141,21 @@ sudo apt install -y doxygen
 Konfiguracja z włączonym generowaniem dokumentacji:
 
 ```bash
-cmake --preset debug -DBUILD_DOCUMENTATION=ON
+cmake --preset doxygen
 ```
 
 Budowanie dokumentacji:
 
 ```bash
-cmake --build build/debug --target documentation
+cmake --build --preset doxygen
 ```
 
 Wynik HTML jest zapisywany w katalogu:
 
-- `build/debug/docs/html/`
+- `build/doxygen_html/`
+
+Podczas `install` (np. `./scripts/linux_build.sh install`) CMake kopiuje `build/doxygen_html` do `SpectralDisplay/doxygen_html`, jeśli katalog źródłowy istnieje.
+Ten krok nie wymusza generowania dokumentacji i jest pomijany, jeśli nie znaleziono żadnego katalogu z wcześniej wygenerowanym HTML.
 
 Zakres dokumentacji obejmuje tylko produkcyjne nagłówki z katalogów aplikacji i bibliotek transformacji. Pliki `.cpp`, testy, benchmarki, zależności zewnętrzne i pomocnicze nagłówki googletest są wykluczone.
 
