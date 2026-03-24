@@ -77,8 +77,6 @@ add_custom_target(ARCHITECTURE
 )
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/main/app_config/config_sample" DESTINATION .)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/documentation/source_images" DESTINATION .)
-install(FILES "${CMAKE_SOURCE_DIR}/documentation/architecture/ClassHierarchy.drawio" DESTINATION architecture)
 
 set(QT_RUNTIME_TARGETS
   Qt${QT_VERSION_MAJOR}::Core
