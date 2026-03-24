@@ -33,9 +33,9 @@ if(BUILD_DOCUMENTATION)
         VERBATIM
     )
 
+    install(DIRECTORY "${CMAKE_SOURCE_DIR}/build/doxygen_html/"
+        DESTINATION doxygen_html
+        OPTIONAL
+    )
 endif()
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/build/doxygen_html/"
-    DESTINATION doxygen_html
-    OPTIONAL
-)
