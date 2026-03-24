@@ -5,3 +5,11 @@
 *.txt.user
 /.cache/
 /*build*
+SpectralDisplayPro
+SpectralDisplay
+*.pro.user
+*.tar.gz
+*~
+.github/
+
+

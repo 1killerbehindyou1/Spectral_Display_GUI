@@ -1,64 +1,108 @@
 #pragma once
-#include <QDebug>
+#include <InterpolatorSingle.hpp>
+#include <QImage>
 #include <QObject>
 #include <QPixmap>
-#include <QUrl>
-#include <QImage>
 #include <memory>
 
-#include <InterpolatorQPoly.hpp>
-
-// Convenience alias for the interpolator type
-using Interpolator = poly::InterpolatorQPoly;
-
+/**
+ * @brief Input parameters for image transformation.
+ */
 struct TransformParameters
 {
-    int number_of_leds;
-    int rotation;
-    int size;
+    /** @brief Angular resolution in degrees. */
+    int ang_resolution;
+
+    /** @brief Number of output pixels. */
+    int no_pixels;
+
+    /** @brief Transformation center point in source image coordinates. */
     QPoint point;
 };
 
+/**
+ * @brief Backend component performing image transformation for QML layer.
+ */
 class TransformEngine : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QImage* transformedImage READ transformedImage NOTIFY transformReadyForQml)
-    Q_PROPERTY(int transformedWidth READ transformedWidth NOTIFY transformReadyForQml)
-    Q_PROPERTY(int transformedHeight READ transformedHeight NOTIFY transformReadyForQml)
+    Q_PROPERTY(QImage* transformedImage READ transformedImage NOTIFY
+                   transformReadyForQml)
+    Q_PROPERTY(
+        int transformedWidth READ transformedWidth NOTIFY transformReadyForQml)
+    Q_PROPERTY(int transformedHeight READ transformedHeight NOTIFY
+                   transformReadyForQml)
 
 public:
-    TransformEngine(QObject* parent = 0);
+    /**
+     * @brief Constructs transform engine.
+     * @param parent Optional QObject parent.
+     */
+    TransformEngine(QObject* parent = nullptr);
+
+    /** @brief Executes transformation using currently stored parameters. */
     void transformImage();
-    void transformImage(int number_of_leds, int rotation, int size, QPoint point);
-    QImage* transformedImage() const { return m_transformed_image.get(); }
-    int transformedWidth() const { return m_transformed_width; }
-    int transformedHeight() const { return m_transformed_height; }
+
+    /** @brief Returns pointer to transformed image. */
+    QImage* transformedImage() const;
+
+    /** @brief Returns transformed image width or zero if unavailable. */
+    int transformedWidth() const;
+
+    /** @brief Returns transformed image height or zero if unavailable. */
+    int transformedHeight() const;
 
 public slots:
-    void setPixmap(std::shared_ptr<QPixmap> pixmap)
-    {
-         m_pixmap = pixmap;
-            m_has_logged_missing_pixmap = false;
-         qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                  << "Pixmap set in TransformEngine with size:" << m_pixmap->size();
-    }
+
+    /** @brief Sets source pixmap used for transformation.
+     * @param pixmap Shared pointer to source pixmap.
+     */
+    void setPixmap(std::shared_ptr<QPixmap> pixmap);
+
+    /** @brief Updates transformation center point and triggers transform.
+     * @param point New center point.
+     */
     void updatePoint(QPoint point);
-    void updateTransformParameters(int number_of_leds, int rotation, int size, QPoint point);
-    void updateTransformParameters(int number_of_leds, int rotation, int size);
+
+    /** @brief Updates output pixel count and triggers transform.
+     * @param pixels New output pixel count.
+     */
+    void updateNoOfPixels(int pixels);
+
+    /** @brief Updates angular resolution and triggers transform.
+     * @param ang_res New angular resolution.
+     */
+    void updateAngularResolution(int ang_res);
 
 signals:
+    /**
+     * @brief Emitted when transformation result is ready.
+     * @param image Shared pointer to transformed image.
+     */
     void transformReady(std::shared_ptr<QImage> image);
+
+    /** @brief Emitted when transformed image data is ready for QML bindings. */
     void transformReadyForQml();
 
 private:
+    /**
+     * @brief Executes transformation with explicit parameter snapshot.
+     * @param params Transformation parameters to use.
+     */
     void transformImage(const TransformParameters& params);
-    bool warnNoPixmapIfNeeded();
+    /**
+     * @brief Checks whether transformation parameters are valid.
+     * @param params Parameters to validate.
+     * @return true if parameters can be used for transformation.
+     */
+    bool hasValidParams(const TransformParameters& params) const;
 
+    /** @brief Current transformation parameters. */
     TransformParameters m_params;
-    Interpolator m_interpolator;
+    /** @brief Interpolator strategy used during transformation. */
+    single::InterpolatorSingle m_interpolator;
+    /** @brief Source pixmap shared with image loading pipeline. */
     std::shared_ptr<QPixmap> m_pixmap = nullptr;
-    bool m_has_logged_missing_pixmap = false;
+    /** @brief Latest transformed image shared with QML layer. */
     std::shared_ptr<QImage> m_transformed_image = nullptr;
-    int m_transformed_width = 0;
-    int m_transformed_height = 0;
 };

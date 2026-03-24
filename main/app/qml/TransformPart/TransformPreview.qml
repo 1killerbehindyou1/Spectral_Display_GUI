@@ -1,47 +1,66 @@
 import QtQuick 2.15
-import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
 import Main 1.0
 
 Control
 {
     id: root
     property real zoomFactor: 3.0
+    property int previewRotation: 90
 
-    function onSelectorClicked(xPosition, yPosition)
-    {
+    function exportSettings() {
+        return {
+            "previewRotation": previewRotation
+        };
+    }
+
+    function applySettings(settings) {
+        if (!settings) {
+            return;
+        }
+        const value = settings.previewRotation !== undefined ? settings.previewRotation : 90;
+        previewRotation = ((parseInt(value) % 360) + 360) % 360;
+    }
+
+    function onSelectorClicked(xPosition, yPosition) {
         transform_engine.updatePoint(Qt.point(xPosition, yPosition));
     }
 
-    function updatePreview()
-    {
+    function updatePreview() {
         preview_image.source = "image://live/frame?t=" + Date.now();
     }
 
-    background: Rectangle
-    {
+    background: Rectangle {
         color: "white"
     }
 
-    contentItem: Image
-    {
-        id: preview_image
+    contentItem: Item {
         anchors.fill: parent
-        scale: root.zoomFactor
-        transformOrigin: Item.Center
-        fillMode: Image.PreserveAspectFit
-        rotation: 90
-        cache: false
+
+        Image {
+            id: preview_image
+            anchors.fill: parent
+            scale: root.zoomFactor
+            transformOrigin: Item.Center
+            fillMode: Image.PreserveAspectFit
+            rotation: root.previewRotation
+            cache: false
+        }
+
+        Button {
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.margins: 8
+            text: "Obróć 90°"
+            onClicked: root.previewRotation = (root.previewRotation + 90) % 360
+        }
     }
 
-    Connections
-    {
+    Connections {
         target: transform_engine
-        function onTransformReadyForQml()
-        {
-            root.updatePreview()
+        function onTransformReadyForQml() {
+            root.updatePreview();
         }
     }
 }

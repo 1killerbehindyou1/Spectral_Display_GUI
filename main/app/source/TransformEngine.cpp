@@ -1,48 +1,41 @@
 #include "TransformEngine.hpp"
 
-TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{} {}
-
-bool TransformEngine::warnNoPixmapIfNeeded()
+TransformEngine::TransformEngine(QObject* parent) : QObject(parent), m_params{}
 {
-    if (m_pixmap != nullptr)
-    {
-        m_has_logged_missing_pixmap = false;
-        return false;
-    }
-
-    if (!m_has_logged_missing_pixmap)
-    {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "No pixmap set for transformation.";
-        m_has_logged_missing_pixmap = true;
-    }
-
-    return true;
 }
 
-void TransformEngine::transformImage()
+QImage* TransformEngine::transformedImage() const
 {
-    if (warnNoPixmapIfNeeded())
-    {
-        return;
-    }
-    transformImage(m_params);
+    return m_transformed_image.get();
 }
+
+int TransformEngine::transformedWidth() const
+{
+    return m_transformed_image ? m_transformed_image->width() : 0;
+}
+
+int TransformEngine::transformedHeight() const
+{
+    return m_transformed_image ? m_transformed_image->height() : 0;
+}
+
+void TransformEngine::setPixmap(std::shared_ptr<QPixmap> pixmap)
+{
+    m_pixmap = pixmap;
+}
+
+bool TransformEngine::hasValidParams(const TransformParameters& params) const
+{
+    return params.no_pixels > 0 && params.ang_resolution > 0 &&
+           !params.point.isNull();
+}
+
+void TransformEngine::transformImage() { transformImage(m_params); }
 
 void TransformEngine::transformImage(const TransformParameters& params)
 {
-    if (warnNoPixmapIfNeeded())
+    if (m_pixmap == nullptr || !hasValidParams(params))
     {
-        return;
-    }
-
-    if (params.number_of_leds <= 0 || params.rotation <= 0 || params.size <= 0)
-    {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "Invalid transformation parameters:"
-                 << "Number of LEDs:" << params.number_of_leds
-                 << "Rotation:" << params.rotation
-                 << "Size:" << params.size;
         return;
     }
 
@@ -50,36 +43,19 @@ void TransformEngine::transformImage(const TransformParameters& params)
         params.point.x() >= m_pixmap->width() ||
         params.point.y() >= m_pixmap->height())
     {
-        qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-                 << "Invalid point for transformation:" << params.point
-                 << "with pixmap size:" << m_pixmap->size()
-                 << m_pixmap->width() << "x" << m_pixmap->height() << "y";
         return;
     }
 
-    qDebug() << "line:" << __LINE__ << ", file: TransformEngine.cpp\t"
-             << "Transforming image with parameters:"
-             << "Number of LEDs:" << params.number_of_leds
-             << "Rotation:" << params.rotation
-             << "Size:" << params.size
-             << "Point:" << params.point;
-
     // Perform the transformation using the interpolator
     auto transformed_image = m_interpolator.transformImage(
-        params.rotation, params.size, params.number_of_leds, params.point, m_pixmap.get());
+        params.ang_resolution, params.no_pixels, params.point, m_pixmap.get());
 
-    m_transformed_image = std::make_shared<QImage>(std::move(transformed_image));
-    m_transformed_width = m_transformed_image->width();
-    m_transformed_height = m_transformed_image->height();
+    m_transformed_image =
+        std::make_shared<QImage>(std::move(transformed_image));
 
     // Emit signal to notify that transformation is ready
     emit transformReady(m_transformed_image);
     emit transformReadyForQml();
-}
-
-void TransformEngine::transformImage(int number_of_leds, int rotation, int size, QPoint point)
-{
-    transformImage(TransformParameters{number_of_leds, rotation, size, point});
 }
 
 void TransformEngine::updatePoint(QPoint point)
@@ -88,16 +64,14 @@ void TransformEngine::updatePoint(QPoint point)
     transformImage(m_params);
 }
 
-void TransformEngine::updateTransformParameters(int number_of_leds, int rotation, int size, QPoint point)
+void TransformEngine::updateNoOfPixels(int pixels)
 {
-    m_params = TransformParameters{number_of_leds, rotation, size, point};
+    m_params.no_pixels = pixels;
     transformImage(m_params);
 }
 
-void TransformEngine::updateTransformParameters(int number_of_leds, int rotation, int size)
+void TransformEngine::updateAngularResolution(int ang_res)
 {
-    m_params.number_of_leds = number_of_leds;
-    m_params.rotation = rotation;
-    m_params.size = size;
+    m_params.ang_resolution = ang_res;
     transformImage(m_params);
 }

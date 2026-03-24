@@ -1,8 +1,8 @@
 
 #include "RenderSelector.hpp"
-#include <QDebug>
+#include <QColor>
+#include <QPainter>
 #include <QPen>
-#include <iostream>
 
 RenderSelector::RenderSelector(QQuickItem* parent)
     : QQuickPaintedItem(parent), m_point(200, 200), m_radius(100)
@@ -11,20 +11,16 @@ RenderSelector::RenderSelector(QQuickItem* parent)
 
 void RenderSelector::paint(QPainter* painter)
 {
-
     QPen pen = painter->pen();
     pen.setColor(Qt::transparent);
     painter->setPen(pen);
     painter->setBrush(QColor{255, 0, 0, 100});
-
     painter->drawEllipse(m_point, m_radius, m_radius);
 }
 
-void RenderSelector::selectorResize(int new_size)
+void RenderSelector::selectorResize(int no_pixels)
 {
-    qDebug() << "line:" << __LINE__ << ", file: RenderSelector.cpp\t"
-            << "Selector resize called with new size:" << new_size;
-    m_radius = new_size;
+    m_radius = no_pixels;
     update();
 }
 

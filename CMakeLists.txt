@@ -1,6 +1,8 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.28)
 
 project(SpectralDisplay VERSION 0.1 DESCRIPTION "General project SPRCTRAL DISPLAY" LANGUAGES CXX)
+
+include(GNUInstallDirs)
 
 set(CMAKE_UTILS ${CMAKE_CURRENT_SOURCE_DIR}/utils/cmake_utils)
 
@@ -17,6 +19,9 @@ set(QT_VERSION_MAJOR 5)
 
 option(BUILD_UT "Build unit tests" OFF)
 option(BUILD_BENCHMARK_TESTS "Build benchmark tests" OFF)
+option(BUILD_DOCUMENTATION "Generate API documentation with Doxygen" OFF)
+
+add_subdirectory(documentation)
 
 if(BUILD_UT)
     include(CTest)
@@ -31,7 +36,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 add_subdirectory(main)
-
 
 
 

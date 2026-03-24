@@ -28,7 +28,7 @@ TEST(RenderSelectorTest, defaultPaintColorsDefaultCenter)
     RenderSelector selector;
 
     const QImage image = paintSelector(selector);
-    const QColor centerColor = image.pixelColor(400, 400);
+    const QColor centerColor = image.pixelColor(200, 200);
 
     EXPECT_FALSE(isWhite(centerColor));
 }
@@ -45,19 +45,19 @@ TEST(RenderSelectorTest, setPointMovesPaintedArea)
     EXPECT_TRUE(isWhite(image.pixelColor(400, 400)));
 }
 
-    TEST(RenderSelectorTest, selectorUpdateChangesRadius)
-    {
-        RenderSelector selector;
-        selector.setPoint(QPoint{200, 200});
+TEST(RenderSelectorTest, selectorUpdateChangesRadius)
+{
+    RenderSelector selector;
+    selector.setPoint(QPoint{200, 200});
 
-        selector.selectorResize(1);
-        const QImage imageSmall = paintSelector(selector);
+    selector.selectorResize(1);
+    const QImage imageSmall = paintSelector(selector);
 
-        selector.selectorResize(20);
-        const QImage imageLarge = paintSelector(selector);
+    selector.selectorResize(20);
+    const QImage imageLarge = paintSelector(selector);
 
-        EXPECT_TRUE(isWhite(imageSmall.pixelColor(210, 200)));
-        EXPECT_FALSE(isWhite(imageLarge.pixelColor(210, 200)));
-    }
+    EXPECT_TRUE(isWhite(imageSmall.pixelColor(210, 200)));
+    EXPECT_FALSE(isWhite(imageLarge.pixelColor(210, 200)));
+}
 
 } // namespace
