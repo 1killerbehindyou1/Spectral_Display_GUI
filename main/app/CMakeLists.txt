@@ -72,12 +72,6 @@ file(WRITE "${QT_CONF_FILE}" "[Paths]\nPrefix=.\nLibraries=lib\nPlugins=plugins\
 install(FILES "${QT_CONF_FILE}" DESTINATION .)
 install(FILES "${CMAKE_SOURCE_DIR}/README.md" DESTINATION .)
 
-add_custom_target(ARCHITECTURE
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/architecture
-)
-
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/main/app_config/config_sample" DESTINATION .)
-
 set(QT_RUNTIME_TARGETS
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
